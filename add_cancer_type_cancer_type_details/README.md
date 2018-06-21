@@ -3,13 +3,12 @@ Add additional columns `CANCER_TYPE` and `CANCER_TYPE_DETAILS` according to valu
 
 ### Command Line
 ```
-oncotree_code_converter.py [-h] -o ONCOTREE_URL -c CLINICAL_FILE
+oncotree_code_converter.py [-h] -c CLINICAL_FILE [-o ONCOTREE_BASE_URL] [-v ONCOTREE_VERSION] [-f]
 ```
 
 ### Example
 ```
-python oncotree_code_converter.py --oncotree-url "http://oncotree.mskcc.org/oncotree/api/tumor_types.txt?oncotree_version=oncotree_development_release" --clinical-file data_clinical_samples.txt
-```
+python oncotree_code_converter.py --oncotree-url "http://oncotree.mskcc.org/" --oncotree-version oncotree_candidate_release --clinical-file data_clinical_sample.txt```
 
 ### Notes
-`clinicalfile_utils.py` and `clinicalfile_utils.pyc` are needed under the sample path. 
+`clinicalfile_utils.py` is needed under the sample path. 
