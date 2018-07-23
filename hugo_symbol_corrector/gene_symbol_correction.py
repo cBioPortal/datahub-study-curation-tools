@@ -16,8 +16,8 @@ with open(sys.argv[2],"r") as file:
 	for line in file:
 		values = line.split("\t")
 		values[0] = values[0].strip('\t')
-		if values[0] in gene_dict:
-			line = line.replace(values[0],gene_dict[values[0]])
+		if values[0].upper() in gene_dict:
+			line = line.replace(values[0],gene_dict[values[0].upper()])
 			data += line
 		else:
 			data += line
