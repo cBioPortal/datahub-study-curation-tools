@@ -3,8 +3,16 @@ AGE_AT_DIAGNOSIS_mel_cell_2016
 AGE_AT_DIAGNOSIS_mel_cell_2016_priority									
 AGE_CURRENT_mixedpact									
 AGE_CURRENT_mixedpact_priority									
+AGE_CURRENT_msk_solid_heme									
+AGE_CURRENT_msk_solid_heme_priority									
+AGE_CURRENT_mskarcher									
+AGE_CURRENT_mskarcher_priority									
 AGE_CURRENT_mskimpact									
+AGE_CURRENT_mskimpact_heme									
+AGE_CURRENT_mskimpact_heme_priority									
 AGE_CURRENT_mskimpact_priority									
+AGE_CURRENT_mskraindance									
+AGE_CURRENT_mskraindance_priority									
 AGE_CURRENT_sclc_mskimpact_2017									
 AGE_CURRENT_sclc_mskimpact_2017_priority									
 AGE_mixedpact									
@@ -70,7 +78,7 @@ AGE_AT_LAST_FOLLOWUP	Age At Last Follow-Up	Age At Last Follow-up	NUMBER	PATIENT	
 AGE_AT_PROCEDURE	Age at Procedure	Age recorded at procedure	NUMBER	SAMPLE	1				
 AGE_AT_PROCUREMENT	Age At Procurement	Age At Procurement Of The Submitted Specimen	NUMBER	PATIENT	1				
 AGE_AT_RELAPSE	Age at relapse	Age at relapse	NUMBER	PATIENT	1				
-AGE_AT_SEQ_REPORT	Age at Which Sequencing was Reported	Age (in days) at which sequencing was reported	NUMBER	SAMPLE	1				
+AGE_AT_SEQ_REPORT	Age at Which Sequencing was Reported (Days)	Age (in days) at which sequencing was reported	NUMBER	SAMPLE	1				
 AGE_AT_SURGERY	Age At Surgery	Age at surgery.	NUMBER	PATIENT	1				
 AGE_CELL_LINE_YEAR	Age of patient when cell line was established	Age of patient when cell line was established	NUMBER	PATIENT	1				
 AGE_CLASS	Age Class	Age Class	NUMBER	PATIENT	1				
@@ -1630,7 +1638,7 @@ INTERVAL_FROM_PRIMARY_TO_MBC_DX_YEARS	Interval from primary to MBC dx (years)	In
 INTERVAL_TO_METS	Interval to Mets	Interval to Mets	STRING	PATIENT	1				
 INTESTINAL_PERCENTAGE	% Intestinal	% Intestinal	NUMBER	SAMPLE	1				
 INTESTINAL_TYPE_SUBCLASS	Intestinal Type Subclass	Intestinal type subclass.	STRING	PATIENT	1				
-INTRANSIT_DESC	Regional Metastases Greater Than 2 cm From Primary Tumor	Describes site of first recurrence of patientï¿½ï¿½_ï¿½s primary melanoma.  Indicates if there are regional metastases greater than 2 cm from primary melanoma.	STRING	SAMPLE	1				
+INTRANSIT_DESC	Regional Metastases Greater Than 2 cm From Primary Tumor	Describes site of first recurrence of patient‰Ûªs primary melanoma.  Indicates if there are regional metastases greater than 2 cm from primary melanoma.	STRING	SAMPLE	1				
 INTRATUBULAR_GERM_CELL_NEOPLASM	Intratubular germ cell neoplasm	Intratubular germ cell neoplasm	STRING	PATIENT	1				
 INTRA_TUMORAL_HETEROGENEITY	Intra-tumoral Heterogeneity	Intra-tumoral Heterogeneity Y/N	STRING	SAMPLE	1				
 INT_ID	INT-ID	INT-ID.	STRING	PATIENT	1				
@@ -1744,7 +1752,7 @@ LNINTRMETS_DES	Patient has Regionally Recurrent Skin Metastases at Initial Prese
 LNMATTED_DESC	Presence or Absence of Matted Lymph Nodes	Indicates the presence or absence of matted lymph nodes (synonymous with extranodal extension).	STRING	SAMPLE	1				
 LNPROLYSCT_DES	Lymphoscintigraphy Performed	Indicates if lymphoscintigraphy has been performed.	STRING	SAMPLE	1				
 LNPROSUCC_DESC	Lymphoscintigraphy Successful	Indicates if lymphoscintigraphy was successful.	STRING	SAMPLE	1				
-LNSENTINBX_DES	Sentinel Node Biopsy Performed	Indicates if sentinel node biopsy was performed as part of patientï¿½ï¿½_ï¿½s initial diagnosis.	STRING	SAMPLE	1				
+LNSENTINBX_DES	Sentinel Node Biopsy Performed	Indicates if sentinel node biopsy was performed as part of patient‰Ûªs initial diagnosis.	STRING	SAMPLE	1				
 LNSENTINBX_YEA	Year Sentinel Node Biopsy Performed	Year when sentinel node biopsy was performed.	NUMBER	SAMPLE	1				
 LNSIZE	Size Of The Largest Clinically Positive Lymph Node Removed (cm)	Size of the largest clinically positive lymph node removed (cm)	STRING	SAMPLE	1				
 LNSIZE_UNK_DES	Indicates If Size Of Lymph Node Is Unknown	Indicates if size of lymph node is unknown.	STRING	SAMPLE	1				
@@ -1752,7 +1760,7 @@ LNSLNLARG_SIZE	Size Of The Largest Sentinel Lymph Node	Indicates the size of the
 LN_METASTASIS_2CAT	LN Metastasis 2CAT	LT metastasis 2CAT.	STRING	SAMPLE	1				
 LN_METS	LN Mets	LN mets.	STRING	PATIENT	1				
 LOCALIZED_VS_METS_AT_DX	Localized or Metastaic at Diagnosis	Localized or Metastaic at Diagnosis	STRING	PATIENT	1				
-LOCAL_DESC	Locally Recurrent Disease Within 2 Cm Of Primary Tumor	Describes site of first recurrence of patientï¿½ï¿½_ï¿½s primary melanoma.  Indicates whether locally recurrent disease within 2 cm of primary melanoma.	STRING	SAMPLE	1				
+LOCAL_DESC	Locally Recurrent Disease Within 2 Cm Of Primary Tumor	Describes site of first recurrence of patient‰Ûªs primary melanoma.  Indicates whether locally recurrent disease within 2 cm of primary melanoma.	STRING	SAMPLE	1				
 LOCAL_RECCURENCE_OR_DISTANT_MET	Local reccurence or distant met	Local reccurence or distant met	STRING	PATIENT	1				
 LOCAL_RECURRENCE	Local Recurrence	Local recurrence.	STRING	PATIENT	1				
 LOCAL_RECURRENCE_MONTHS	Local Recurrence (months)	Local recurrence (months).	NUMBER	PATIENT	1				
@@ -1889,7 +1897,6 @@ METASTATIC_DX_CONFIRMED_BY_OTHER	Metastatic Neoplasm Confirmed Diagnosis Method 
 METASTATIC_RESECTION	Resection of Mets	Resection of Mets	STRING	PATIENT	1				
 METASTATIC_SITE	Metastatic Site	The anatomic location to which the cancer has spread.	STRING	SAMPLE	1				
 METASTATIC_SITE_OTHER	Metastatic Site Other	Metastatic Site Other	STRING	SAMPLE	1				
-METASTATIC_STAGE	MET Stage	MET Stage	STRING	SAMPLE	1				
 METASTATIC_STAGE	MET Stage	MET Stage	STRING	SAMPLE	1				
 METASTATIC_TUMOR_INDICATOR	Metastatic tumor indicator	Distant metastasis present ind2	STRING	SAMPLE	1				
 METFORMIN_USE	Metformin Used	Metformin Used	STRING	PATIENT	1				
@@ -2091,7 +2098,6 @@ MUCOID_STOOL_WEEKS	Mucoid Stool (Weeks)	Mucoid Stool (Weeks)	NUMBER	PATIENT	1
 MULTICENTRICITY	Multicentricity	Multicentricity	STRING	SAMPLE	1				
 MULTIFOCAL	Multifocal	Multifocal	STRING	PATIENT	1				
 MULTIPLE_BREAST_PRIMARIES	Multiple Breast Primaries	Multiple Breast Primaries	STRING	PATIENT	1				
-MULTIPLE_BREAST_PRIMARIES	Multiple Breast Primaries	Multiple Breast Primaries	STRING	SAMPLE	1				
 MULTIPLE_BREAST_PRIMARIES_SEQUENCE	Multiple Breast Primaries Sequenced	Multiple Breast Primaries Sequenced	STRING	PATIENT	1				
 MULTIPLE_HN_CSCC	Multiple HN cSCC	Multiple Head and Neck cSCC	STRING	PATIENT	1				
 MULTIPLE_TUMORS	Multiple Tumors	Multiple Tumors	STRING	PATIENT	1				
@@ -2195,7 +2201,7 @@ NGS_TEST	NGS Tested	Sample was NGS tested	STRING	SAMPLE	1
 NI	Ni	Ni	NUMBER	PATIENT	1				
 NK_CELLS_ACTIVATED	NK cells activated	NK cells activated	NUMBER	SAMPLE	1				
 NK_CELLS_RESTING	NK cells resting	NK cells resting	NUMBER	SAMPLE	1				
-NODAL_DESC	If There Are/Is Metastases To The Regional Nodal Basin	Describes Site of first recurrence of patientï¿½ï¿½_ï¿½s primary melanoma. Describes if there are/is metastases to the regional nodal basin.	STRING	SAMPLE	1				
+NODAL_DESC	If There Are/Is Metastases To The Regional Nodal Basin	Describes Site of first recurrence of patient‰Ûªs primary melanoma. Describes if there are/is metastases to the regional nodal basin.	STRING	SAMPLE	1				
 NODAL_STAGE	Nodal stage	Nodal stage	STRING	PATIENT	1				
 NODAL_STATUS	Nodal Status	Nodal Status	STRING	SAMPLE	1				
 NODES	NODES	NODES	STRING	SAMPLE	1				
@@ -2590,7 +2596,7 @@ POS_LYMPH_NODE_LOCATION	Lymph node location positive pathology name	Lymph node l
 PPP2R1A_MUTATION	PPP2R1A Mutation	PPP2R1A Mutation	STRING	SAMPLE	1				
 PRD_DIAGNOSIS_LOC	PRD_Diagnosis Location	Patient reported response to the question: When you were first diagnosed with angiosarcoma, where in your body was it found (select all that apply)?	STRING	PATIENT	1				
 PRD_EVER_LOCATION	PRD_Ever Location	Patient reported response to the question: Please select all of the places in your body that you have ever had angiosarcoma (select all that apply).	STRING	PATIENT	1				
-PRD_LOCATION_AT_ENROLLMENT	PRD_Location of Disease at Time of Enrollment	Patient reported response to the question: Please select all of the places in your body where you currently have angiosarcoma (select all that apply). If you donï¿½ï¿½_ï¿½ï¿½_ï¿½ï¿½_t have evidence of disease, please select ï¿½ï¿½_ï¿½ï¿½_ï¿½ï¿½_ï¿½ï¿½_No Evidence of Disease (NED).	STRING	PATIENT	1				
+PRD_LOCATION_AT_ENROLLMENT	PRD_Location of Disease at Time of Enrollment	Patient reported response to the question: Please select all of the places in your body where you currently have angiosarcoma (select all that apply). If you donÌÄå¥t have evidence of disease, please select ÌÄåÕNo Evidence of Disease (NED).	STRING	PATIENT	1				
 PRD_OTHER_CANCER	PRD_Other Cancer	Patient reported response to the question: Were you ever diagnosed with any other kind of cancer(s)?	STRING	PATIENT	1				
 PRD_OTHER_CANCER_LIST	PRD_Other Cancer Type	Patient reported response to the question: Please list which cancer(s) and approximate year(s) of diagnosis.	STRING	PATIENT	1				
 PRD_OTHER_CANCER_RADIATION	PRD_Radiation for Other Cancers	Patient reported response to the question: Have you had radiation as a treatment for another cancer(s)?	STRING	PATIENT	1				
@@ -2956,7 +2962,6 @@ SAMPLE_SITE_SOURCE	Source of Sample Site	Source of Sample Site	STRING	SAMPLE	1
 SAMPLE_STATUS	Sample Status	Sample Status	STRING	SAMPLE	1				
 SAMPLE_TESTED_CATEGORY	Sample Tested Category	Sample Tested Category	STRING	SAMPLE	1				
 SAMPLE_TIMEPOINT	Sample Timepoint	Sample sequential timepoint (T1 = timepoint 1, T2 = timepoint 2, etc.)	STRING	SAMPLE	1				
-SAMPLE_TIMEPOINT	Sample Timepoint	Sample sequential timepoint (T1 = timepoint 1, T2 = timepoint 2, etc.)	STRING	SAMPLE	1				
 SAMPLE_TREATMENT	Sample Treatment	Sample Treatment	STRING	SAMPLE	1				
 SAMPLE_TYPE	Sample Type	The type of sample (i.e., normal, primary, met, recurrence).	STRING	SAMPLE	9				
 SAMPLE_TYPE_DETAIL	Sample Type Detail	Detailed Description of Sample Type	STRING	SAMPLE	1				
@@ -3190,7 +3195,7 @@ STROMA_PERCENTAGE	% Stroma	% Stroma	NUMBER	SAMPLE	1
 STRUCTURAL_VARIANTS	Structural Variants	Structural variants from WGS.	STRING	SAMPLE	1				
 STR_STATUS	STR (affected/tested)	Short Tandem Repeat Ratio	STRING	SAMPLE	1				
 STR_TESTED	STR Tested	STR Tested	STRING	SAMPLE	1				
-STS_SRCE_DESC	The Source Of The Last Known Disease Status	Indicates the source of the last known disease status. In EMR check the most recent note indicating the patientï¿½ï¿½_ï¿½ï¿½_ï¿½ï¿½_s last known disease status and by which source the date and status were updated.	STRING	PATIENT	1				
+STS_SRCE_DESC	The Source Of The Last Known Disease Status	Indicates the source of the last known disease status. In EMR check the most recent note indicating the patientÌ¢åÛåªs last known disease status and by which source the date and status were updated.	STRING	PATIENT	1				
 STUDY	Study	Study.	STRING	PATIENT	1				
 STUDY_ARM	study arm	study arm	STRING	PATIENT	1				
 STUDY_ID	Study ID	Study Identifier	STRING	PATIENT	1				
@@ -3250,7 +3255,7 @@ SYSTEMIC_THERAPY	Systemic Therapy	Systemic Therapy	STRING	PATIENT	1
 SYSTEMIC_TREATMENT	Systemic Treatment	Systemic Treatment	STRING	PATIENT	1				
 SYSTEMIC_TREATMENTS_OTHER	Systemic Treatments Other	Systemic Treatments Other	STRING	PATIENT	1				
 SYSTEM_VERSION	System Version	System Version	STRING	PATIENT	1				
-SYS_DESC	There Are/Is Metastases To Distant Skin/Soft Tissue, Nonregional Lymph Nodes And/Or Visceral Sites	Describes site of first recurrence of patientï¿½ï¿½_ï¿½ï¿½_ï¿½ï¿½_s primary melanoma.  Indicates if there are/is Metastases to distant skin/soft tissue, nonregional lymph nodes and/or visceral sites.	STRING	SAMPLE	1				
+SYS_DESC	There Are/Is Metastases To Distant Skin/Soft Tissue, Nonregional Lymph Nodes And/Or Visceral Sites	Describes site of first recurrence of patientÌ¢åÛåªs primary melanoma.  Indicates if there are/is Metastases to distant skin/soft tissue, nonregional lymph nodes and/or visceral sites.	STRING	SAMPLE	1				
 S_100_STAIN	S-100 stain	S-100 Stain	STRING	SAMPLE	1				
 S_STAGE	S Stage	S indicates the serum (blood) levels of tumor markers that are made by some testicular cancers	STRING	SAMPLE	1				
 TARGETED_MOLECULAR_THERAPY	Adjuvant Postoperative Targeted Therapy Administered Indicator	Text term to signify postoperative adjuvant cancer therapies which use drugs to act upon specific molecules, metabolic pathways or processes involved in carcinogenesis, tumor growth, or tumor spread. [Manually-curated]	STRING	PATIENT	1				
@@ -3447,7 +3452,7 @@ TUMOR_GRADE	Tumor Grade	Histologic grading criteria of Tumors	STRING	PATIENT	1
 TUMOR_INFILTRATING_LYMPHOCYTES	Tumor Infiltrating Lymphocytes	Tumor infiltrating lymphocytes (TILs) are a type of white blood cell found in tumors. TILs are implicated in killing tumor cells, and the presence of lymphocytes in tumors is often associated with better clinical outcomes.	STRING	SAMPLE	1				
 TUMOR_INFILTRATING_MACROPHAGES	Tumor Infiltrating Macrophages	Tumor Infiltrating Macrophages	STRING	SAMPLE	1				
 TUMOR_INVASION_PERCENT	Tumor invasion percent	Tumor invasion percent	NUMBER	PATIENT	1				
-TUMOR_LARGER_THAN_FOUR_CM	Tumor ï¿½ï¿½_ï¿½ï¿½_ï¿½ï¿½_ 4 cm	Tumor Larger Than 4 Cm	STRING	SAMPLE	1				
+TUMOR_LARGER_THAN_FOUR_CM	Tumor Ì¢åäå´ 4 cm	Tumor Larger Than 4 Cm	STRING	SAMPLE	1				
 TUMOR_LEVEL	Tumor Level	Tumor level.	STRING	SAMPLE	1				
 TUMOR_LOCATION	Tumor Location	Tumor Location	STRING	SAMPLE	1				
 TUMOR_LOCATION_DETAILED	Tumor Location Detailed	Specific Tumor Location	STRING	SAMPLE	1				
@@ -3714,10 +3719,69 @@ BRAIN_RECUR_STATUS	Brain Recur	Did patient ever have a brain recurrence?	STRING	
 BRAIN_RECUR_MONTHS	First Recur in Brain (months)	Months to first recurrence in (or death without recurrence) in brain	NUMBER	PATIENT	1				
 BONE_RECUR_STATUS	Bone Recur	Did patient ever have a bone recurrence?	STRING	PATIENT	1				
 DFS_BONE_RECUR_MONTHS	First Recur in Bone (months)	Months to first recurrence in (or death without recurrence) in bone	NUMBER	PATIENT	1				
+INITIAL_SAMPLE_WEIGHT_GRAMS	Initial Sample Weight Grams	Initial Sample Weight Grams	NUMBER	SAMPLE	1				
+X2YR_AIS	PRD More Than 2 Years Aromatase Inhibitors	Calculated based on patient-reported response to the question: If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on an aromatase inhibitors for more than 2 years.	STRING	PATIENT	1				
+X2YR_TAMOXIFEN	PRD More Than 2 Years Tamoxifen	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on tamoxifen for more than 2 years.	STRING	PATIENT	1				
+X2YR_ANTIHER2	PRD More Than 2 Years Anti-HER2	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on anti-HER2 therapy for more than 2 years.	STRING	PATIENT	1				
+X2YR_FULVESTRANT	PRD More Than 2 Years Fulvestrant	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on fulvestrant for more than 2 years.	STRING	PATIENT	1				
+X2YR_CAPECITABINE	PRD More Than 2 Years Capecitabine	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on capecitabine for more than 2 years.	STRING	PATIENT	1				
+X2YR_VEGF_INHIBITOR	PRD More Than 2 Years VEGF Inhibitor	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on a VEGF inhibitor for more than 2 years.	STRING	PATIENT	1				
+X2YR_ANTHRACYCLINE	PRD More Than 2 Years Anthracycline	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on an anthracycline for more than 2 years.	STRING	PATIENT	1				
+X2YR_ALKYLATING_AGENT	PRD More Than 2 Years Alkylating Agent	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on an alkylating agent for more than 2 years.	STRING	PATIENT	1				
+X2YR_CDK46	PRD More Than 2 Years CDK4/6 Inhibitor	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on a CDK4/6 inhibitor for more than 2 years.	STRING	PATIENT	1				
+X2YR_TAXANE	PRD More Than 2 Years Taxane	Calculated based on patient-reported response to the question:  If [you have been on any therapies for more than two years], please list the cancer therapies you have been on for more than 2 years, if you know their names. Listed as TRUE if patients reported being on a taxane for more than 2 years.	STRING	PATIENT	1				
+PATIENT_TREATMENT_MODE	Patient Treatment Mode	Patient Treatment Mode	STRING	PATIENT	1				
+REGIMEN	Regimen Details	Regimen	STRING	PATIENT	1				
+RELAPSE_SEQUENCED	Relapse/Sequenced	Relapse/Sequenced	STRING	SAMPLE	1				
+ETS_FUSION_DETAILS	ETS Fusion Details	ETS Fusion Details	STRING	SAMPLE	1				
+RAF1_BRAF_STATUS	RAF1/BRAF Status	RAF1/BRAF Alteration Status	STRING	SAMPLE	1				
+TMB_COHORT	TMB Score (Cohort)	TMB (Tumor Mutation Burden) Score Relative to Cohort	NUMBER	PATIENT	1				
+TMB_COHORT_PERCENTILE	TMB Score (Cohort Percentile)	TMB (Tumor Mutation Burden) Score Percentile Relative to Cohort	NUMBER	PATIENT	1				
+TMB_TT_COHORT	TMB Score (Tumor Type Cohort)	TMB (Tumor Mutation Burden) Score Relative to Tumor Type Cohort	NUMBER	PATIENT	1				
+TMB_TT_COHORT_PERCENTILE	TMB Score (Tumor Type Cohort Percentile)	TMB (Tumor Mutation Burden) Score Percentile Relative to Tumor Type Cohort	NUMBER	PATIENT	1				
+TMB_SCORE	TMB Score	TMB (Tumor Mutation Burden) Score	NUMBER	PATIENT	1				
+POLYA_ARV7_SRPM	polyA ARV7 SRPM spliced reads per million	polyA ARV7 SRPM spliced reads per million	NUMBER	SAMPLE	1				
+CAPTURE_ARV7_SRPM	Capture ARV7 SRPM spliced reads per million	Capture ARV7 SRPM spliced reads per million	NUMBER	SAMPLE	1				
+AR_POLYA_SCORE	AR Score (PolyA)	AR Score (PolyA)	NUMBER	PATIENT	1				
+AR_CAPTURE_SCORE	AR Score (Capture)	AR Score (Capture)	NUMBER	PATIENT	1				
+NEPC_CAPTURE_SCORE	NEPC Score (Capture)	NEPC Score (Capture)	NUMBER	PATIENT	1				
+NEPC_POLYA_SCORE	NEPC Score (PolyA)	NEPC Score (PolyA)	NUMBER	PATIENT	1				
+CVR_TMB_COHORT	TMB Score (Cohort)	Median TMB for MSK-IMPACT cohort	NUMBER	PATIENT	1				
+CVR_TMB_COHORT_PERCENTILE	TMB Score (Cohort Percentile)	Percentile for the TMB within the MSK-IMAPCT cohort	NUMBER	PATIENT	1				
+CVR_TMB_TT_COHORT	TMB Score (Tumor Type Cohort)	Median TMB for tumor type cohort	NUMBER	PATIENT	1				
+CVR_TMB_TT_COHORT_PERCENTILE	TMB Score (Tumor Type Cohort Percentile)	Percentile for the TMB within the Tumor type cohort (at least 10 cases are needed in that tumor type to have a result for this)	NUMBER	PATIENT	1				
+CVR_TMB_SCORE	TMB Score	Calculated TMB score	NUMBER	PATIENT	1				
+PASSAGE_ID	Passage ID	Passage ID	STRING	SAMPLE	1				
+PROCEDURE_TYPE	Procedure Type	Procedure Type	STRING	PATIENT	1				
+PRETREATED	Any Pretreatment	Pretreated	STRING	PATIENT	1				
+TREATED	Any Treatment	Treated	STRING	PATIENT	1				
+STAGE_AT_HCC_DIAGNOSIS	Stage of HCC at Diagnosis	Stage of HCC at Diagnosis	STRING	PATIENT	1				
+EARLY_RESISTANCE	Early Resistance	Early Resistance	STRING	PATIENT	1				
+AGE_AT_SEQ_REPORTED_YEARS	Age at Which Sequencing was Reported (Years)	Age (in years) at which sequencing was reported	NUMBER	SAMPLE	1				
+SEQ_YEAR	Sequence Year	Date sample was sequenced in years	NUMBER	SAMPLE	1				
+CANCER_STUDY_ID	Cancer Study ID	cBioPortal study identifier	STRING	SAMPLE	1				
+NONSYNONYMOUS_MUTATION_COUNT	Nonsynonymous Mutation Count	Nonsynonymous Mutation Count	NUMBER	SAMPLE	1				
+EXOME_COVERAGE	Exome Coverage	Exome Coverage	NUMBER	SAMPLE	1				
+CANCER_TYPE_DETAILED_msk_solid_heme									
+CANCER_TYPE_DETAILED_msk_solid_heme_priority									
+CANCER_TYPE_DETAILED_mskarcher									
+CANCER_TYPE_DETAILED_mskarcher_priority									
 CANCER_TYPE_DETAILED_mskimpact									
+CANCER_TYPE_DETAILED_mskimpact_heme									
+CANCER_TYPE_DETAILED_mskimpact_heme_priority									
 CANCER_TYPE_DETAILED_mskimpact_priority									
+CANCER_TYPE_DETAILED_mskraindance									
+CANCER_TYPE_DETAILED_mskraindance_priority									
+CANCER_TYPE_msk_solid_heme									
+CANCER_TYPE_msk_solid_heme_priority									
+CANCER_TYPE_mskarcher									
+CANCER_TYPE_mskarcher_priority									
 CANCER_TYPE_mskimpact									
+CANCER_TYPE_mskimpact_heme									
+CANCER_TYPE_mskimpact_heme_priority									
 CANCER_TYPE_mskimpact_priority									
+CANCER_TYPE_mskraindance									
+CANCER_TYPE_mskraindance_priority									
 CANCER_TYPE_sclc_mskimpact_2017									
 CANCER_TYPE_sclc_mskimpact_2017_priority									
 CBEST_B_MEM_mel_cell_2016									
@@ -3790,6 +3854,26 @@ ESTIMATE_SCORE_skcm_mskcc_2014
 ESTIMATE_SCORE_skcm_mskcc_2014_priority									
 ESTIMATE_SCORE_skcm_mskcc_2015									
 ESTIMATE_SCORE_skcm_mskcc_2015_priority									
+ETHNICITY_msk_solid_heme									
+ETHNICITY_msk_solid_heme_priority									
+ETHNICITY_mskarcher									
+ETHNICITY_mskarcher_priority									
+ETHNICITY_mskimpact									
+ETHNICITY_mskimpact_heme									
+ETHNICITY_mskimpact_heme_priority									
+ETHNICITY_mskimpact_priority									
+ETHNICITY_mskraindance									
+ETHNICITY_mskraindance_priority									
+GENE_PANEL_msk_solid_heme									
+GENE_PANEL_msk_solid_heme_priority									
+GENE_PANEL_mskarcher									
+GENE_PANEL_mskarcher_priority									
+GENE_PANEL_mskimpact									
+GENE_PANEL_mskimpact_heme									
+GENE_PANEL_mskimpact_heme_priority									
+GENE_PANEL_mskimpact_priority									
+GENE_PANEL_mskraindance									
+GENE_PANEL_mskraindance_priority									
 HLA_A_mel_cell_2016									
 HLA_A_mel_cell_2016_priority									
 HLA_A_skcm_mskcc_2014									
@@ -3814,6 +3898,16 @@ IMMUNE_SCORE_skcm_mskcc_2014
 IMMUNE_SCORE_skcm_mskcc_2014_priority									
 IMMUNE_SCORE_skcm_mskcc_2015									
 IMMUNE_SCORE_skcm_mskcc_2015_priority									
+INSTITUTE_msk_solid_heme									
+INSTITUTE_msk_solid_heme_priority									
+INSTITUTE_mskarcher									
+INSTITUTE_mskarcher_priority									
+INSTITUTE_mskimpact									
+INSTITUTE_mskimpact_heme									
+INSTITUTE_mskimpact_heme_priority									
+INSTITUTE_mskimpact_priority									
+INSTITUTE_mskraindance									
+INSTITUTE_mskraindance_priority									
 MUTATION_LOAD_mel_cell_2016									
 MUTATION_LOAD_mel_cell_2016_priority									
 M_STAGE_mel_cell_2016									
@@ -3836,21 +3930,59 @@ OS_STATUS_mel_cell_2016
 OS_STATUS_mel_cell_2016_priority									
 OS_STATUS_mixedpact									
 OS_STATUS_mixedpact_priority									
+OS_STATUS_msk_solid_heme									
+OS_STATUS_msk_solid_heme_priority									
+OS_STATUS_mskarcher									
+OS_STATUS_mskarcher_priority									
 OS_STATUS_mskimpact									
+OS_STATUS_mskimpact_heme									
+OS_STATUS_mskimpact_heme_priority									
 OS_STATUS_mskimpact_priority									
+OS_STATUS_mskraindance									
+OS_STATUS_mskraindance_priority									
 OS_STATUS_sclc_mskimpact_2017									
 OS_STATUS_sclc_mskimpact_2017_priority									
+PARTC_CONSENTED_12_245_msk_solid_heme									
+PARTC_CONSENTED_12_245_msk_solid_heme_priority									
+PARTC_CONSENTED_12_245_mskarcher									
+PARTC_CONSENTED_12_245_mskarcher_priority									
 PARTC_CONSENTED_12_245_mskimpact									
+PARTC_CONSENTED_12_245_mskimpact_heme									
+PARTC_CONSENTED_12_245_mskimpact_heme_priority									
 PARTC_CONSENTED_12_245_mskimpact_priority									
+PARTC_CONSENTED_12_245_mskraindance									
+PARTC_CONSENTED_12_245_mskraindance_priority									
 PATIENT_ID_mel_cell_2016									
 PATIENT_ID_mel_cell_2016_priority									
 PREVIOUS_MAPKI_mel_cell_2016									
 PREVIOUS_MAPKI_mel_cell_2016_priority									
 PRIMARY_SITE_mel_cell_2016									
 PRIMARY_SITE_mel_cell_2016_priority									
+RACE_msk_solid_heme									
+RACE_msk_solid_heme_priority									
+RACE_mskarcher									
+RACE_mskarcher_priority									
+RACE_mskimpact									
+RACE_mskimpact_heme									
+RACE_mskimpact_heme_priority									
+RACE_mskimpact_priority									
+RACE_mskraindance									
+RACE_mskraindance_priority									
+SAMPLE_COVERAGE_msk_solid_heme									
+SAMPLE_COVERAGE_msk_solid_heme_datatype									
+SAMPLE_COVERAGE_msk_solid_heme_priority									
+SAMPLE_COVERAGE_mskarcher									
+SAMPLE_COVERAGE_mskarcher_datatype									
+SAMPLE_COVERAGE_mskarcher_priority									
 SAMPLE_COVERAGE_mskimpact									
 SAMPLE_COVERAGE_mskimpact_datatype									
+SAMPLE_COVERAGE_mskimpact_heme									
+SAMPLE_COVERAGE_mskimpact_heme_datatype									
+SAMPLE_COVERAGE_mskimpact_heme_priority									
 SAMPLE_COVERAGE_mskimpact_priority									
+SAMPLE_COVERAGE_mskraindance									
+SAMPLE_COVERAGE_mskraindance_datatype									
+SAMPLE_COVERAGE_mskraindance_priority									
 SAMPLE_COVERAGE_sclc_mskimpact_2017									
 SAMPLE_COVERAGE_sclc_mskimpact_2017_datatype									
 SAMPLE_COVERAGE_sclc_mskimpact_2017_priority									
@@ -3858,25 +3990,61 @@ SAMPLE_ID_mel_cell_2016
 SAMPLE_ID_mel_cell_2016_priority									
 SAMPLE_TYPE_mixedpact									
 SAMPLE_TYPE_mixedpact_priority									
+SAMPLE_TYPE_msk_solid_heme									
+SAMPLE_TYPE_msk_solid_heme_priority									
+SAMPLE_TYPE_mskarcher									
+SAMPLE_TYPE_mskarcher_priority									
 SAMPLE_TYPE_mskimpact									
+SAMPLE_TYPE_mskimpact_heme									
+SAMPLE_TYPE_mskimpact_heme_priority									
 SAMPLE_TYPE_mskimpact_priority									
+SAMPLE_TYPE_mskraindance									
+SAMPLE_TYPE_mskraindance_priority									
 SAMPLE_TYPE_sclc_mskimpact_2017									
 SAMPLE_TYPE_sclc_mskimpact_2017_priority									
 SEX_mel_cell_2016									
 SEX_mel_cell_2016_priority									
+SEX_msk_solid_heme									
+SEX_msk_solid_heme_priority									
+SEX_mskarcher									
+SEX_mskarcher_priority									
 SEX_mskimpact									
+SEX_mskimpact_heme									
+SEX_mskimpact_heme_priority									
 SEX_mskimpact_priority									
+SEX_mskraindance									
+SEX_mskraindance_priority									
 SEX_sclc_mskimpact_2017									
 SEX_sclc_mskimpact_2017_priority									
+SOMATIC_STATUS_msk_solid_heme									
+SOMATIC_STATUS_msk_solid_heme_priority									
+SOMATIC_STATUS_mskarcher									
+SOMATIC_STATUS_mskarcher_priority									
 SOMATIC_STATUS_mskimpact									
+SOMATIC_STATUS_mskimpact_heme									
+SOMATIC_STATUS_mskimpact_heme_priority									
 SOMATIC_STATUS_mskimpact_priority									
+SOMATIC_STATUS_mskraindance									
+SOMATIC_STATUS_mskraindance_priority									
 STROMAL_SCORE_mel_cell_2016									
 STROMAL_SCORE_mel_cell_2016_priority									
 TREATMENT_mel_cell_2016									
 TREATMENT_mel_cell_2016_priority									
+TUMOR_PURITY_msk_solid_heme									
+TUMOR_PURITY_msk_solid_heme_datatype									
+TUMOR_PURITY_msk_solid_heme_priority									
+TUMOR_PURITY_mskarcher									
+TUMOR_PURITY_mskarcher_datatype									
+TUMOR_PURITY_mskarcher_priority									
 TUMOR_PURITY_mskimpact									
 TUMOR_PURITY_mskimpact_datatype									
+TUMOR_PURITY_mskimpact_heme									
+TUMOR_PURITY_mskimpact_heme_datatype									
+TUMOR_PURITY_mskimpact_heme_priority									
 TUMOR_PURITY_mskimpact_priority									
+TUMOR_PURITY_mskraindance									
+TUMOR_PURITY_mskraindance_datatype									
+TUMOR_PURITY_mskraindance_priority									
 TUMOR_PURITY_sclc_mskimpact_2017									
 TUMOR_PURITY_sclc_mskimpact_2017_datatype									
 TUMOR_PURITY_sclc_mskimpact_2017_priority									
