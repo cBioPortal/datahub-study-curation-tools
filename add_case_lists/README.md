@@ -11,7 +11,7 @@ generate_case_lists.py [-h] -c CASE_LIST_CONFIG_FILE -d CASE_LIST_DIR -s STUDY_D
 cd path/to/brca_tcga
 rm -rf case_lists #remove current case lists folder (if existed)
 mkdir case_lists
-python path/to/generate_case_lists.py -c path/to/case_list_conf.txt -s case_lists -s . -i brca_tcga
+python path/to/generate_case_lists.py -c path/to/case_list_conf.txt -d case_lists -s . -i brca_tcga
 ```
 
 ### Notes
