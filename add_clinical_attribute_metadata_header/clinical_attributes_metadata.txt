@@ -761,8 +761,7 @@ CYST_SIZE	Cyst Size (cm)	Cyst Size (cm)	NUMBER	SAMPLE	1
 CYTOGENETICS	Cytogenetics	Cytogenetics.	NUMBER	PATIENT	1				
 CYTOGENETICS_CATEGORY	Cytogenetics Category	Cytogenetics Category	STRING	PATIENT	1				
 CYTOGENETIC_ABNORMALITY_TYPE	Cytogenetic abnormality type	Cytogenetic abnormality type	STRING	PATIENT	1				
-CYTOGENETIC_CODE_OTHER	Cytogenetic Code (Other)	Cytogenetic code (other).	STRING	PATIENT	1				
-CYTOGENETIC_CODE_OTHER	Cytogenetic Code Other	Cytogenetic Abnormality Other Code Text	STRING	PATIENT	1				
+CYTOGENETIC_CODE_OTHER	Cytogenetic Code (Other)	Cytogenetic Abnormality Other Code Text	STRING	PATIENT	1				
 CYTOGENETIC_COMPLEXITY	Cytogenetic Complexity	Cytogenetic Abnormality Number of abnormalities	STRING	PATIENT	1				
 CYTOGENETIC_RELAPSE_SITE	Cytogenetic Relapse Site	Recurrent Disease Cytogenetics Present Indicator	STRING	PATIENT	1				
 CYTOLOGICAL_PHENOTYPE	Cytological Phenotype	Cytological Phenotype	STRING	SAMPLE	1				
@@ -3747,10 +3746,10 @@ AR_CAPTURE_SCORE	AR Score (Capture)	AR Score (Capture)	NUMBER	PATIENT	1
 NEPC_CAPTURE_SCORE	NEPC Score (Capture)	NEPC Score (Capture)	NUMBER	PATIENT	1				
 NEPC_POLYA_SCORE	NEPC Score (PolyA)	NEPC Score (PolyA)	NUMBER	PATIENT	1				
 CVR_TMB_COHORT	TMB Score (Cohort)	Median TMB for MSK-IMPACT cohort	NUMBER	PATIENT	1				
-CVR_TMB_COHORT_PERCENTILE	TMB Score (Cohort Percentile)	Percentile for the TMB within the MSK-IMAPCT cohort	NUMBER	PATIENT	1				
+CVR_TMB_COHORT_PERCENTILE	Impact TMB Percentile (Across All Tumor Types)	Percentile for the TMB within the MSK-IMAPCT cohort	NUMBER	SAMPLE	1				
 CVR_TMB_TT_COHORT	TMB Score (Tumor Type Cohort)	Median TMB for tumor type cohort	NUMBER	PATIENT	1				
-CVR_TMB_TT_COHORT_PERCENTILE	TMB Score (Tumor Type Cohort Percentile)	Percentile for the TMB within the Tumor type cohort (at least 10 cases are needed in that tumor type to have a result for this)	NUMBER	PATIENT	1				
-CVR_TMB_SCORE	TMB Score	Calculated TMB score	NUMBER	PATIENT	1				
+CVR_TMB_TT_COHORT_PERCENTILE	Impact TMB Percentile (Within Tumor Type)	Percentile for the TMB within the Tumor type cohort (at least 10 cases are needed in that tumor type to have a result for this)	NUMBER	SAMPLE	1				
+CVR_TMB_SCORE	Impact TMB Score	Calculated TMB score	NUMBER	SAMPLE	1				
 PASSAGE_ID	Passage ID	Passage ID	STRING	SAMPLE	1				
 PROCEDURE_TYPE	Procedure Type	Procedure Type	STRING	PATIENT	1				
 PRETREATED	Any Pretreatment	Pretreated	STRING	PATIENT	1				
@@ -3762,6 +3761,57 @@ SEQ_YEAR	Sequence Year	Date sample was sequenced in years	NUMBER	SAMPLE	1
 CANCER_STUDY_ID	Cancer Study ID	cBioPortal study identifier	STRING	SAMPLE	1				
 NONSYNONYMOUS_MUTATION_COUNT	Nonsynonymous Mutation Count	Nonsynonymous Mutation Count	NUMBER	SAMPLE	1				
 EXOME_COVERAGE	Exome Coverage	Exome Coverage	NUMBER	SAMPLE	1				
+EGFR_POSITIVE	EGFR Positive	Is the EGFR Status for sample positive?	STRING	SAMPLE	1				
+ALK_NEGATIVE	ALK Negative	Is the ALK Status negative?	STRING	SAMPLE	1				
+KRAS_NEGATIVE	KRAS Negative	Is the KRAS Status negative?	STRING	SAMPLE	1				
+OTHER_CONCURRENT_THERAPY	Other Concurrent Therapy	Did the patient receive any other concurrent therapy 	STRING	PATIENT	1				
+DRUG_TYPE	Drug Type	What type of drug was administered?	STRING	PATIENT	1				
+RECIST	RECIST	RECIST Status	STRING	PATIENT	1				
+VA_RESPONSE	VA Response	VA Response	STRING	PATIENT	1				
+ROH_RESPONSE	ROH Response	ROH Response	STRING	PATIENT	1				
+P16_ISH	p16 ISH	p16 ISH	STRING	PATIENT	1				
+AGE_START_IO	Age Start IO	Age Start IO	STRING	PATIENT	1				
+METASTATIC_SITE_PATIENT	Metastatic Site	The anatomic location to which the cancer has spread.	STRING	PATIENT	1				
+PRIMARY_SITE_PATIENT	Primary Tumor Site	Text term to describe the organ sub-division in an individual with cancer.	STRING	PATIENT	1				
+TUMOR_TISSUE_SITE_PATIENT	Tumor Disease Anatomic Site	Text term that describes the anatomic site of the tumor or disease.	STRING	PATIENT	1				
+PLATINUM_RESISTANT	Platinum Treatment Resistant	Platinum Resistant	STRING	PATIENT	1				
+PLATINUM_SENSITIVE	Platinum Treatment Sensitivity	Platinum Sensitivity	STRING	PATIENT	1				
+GRADE_1	Grade 1	Grade 1	STRING	PATIENT	1				
+GRADE_2	Grade 2	Grade 2	STRING	PATIENT	1				
+GRADE_3	Grade 3	Grade 3	STRING	PATIENT	1				
+RETINOBLASTOMA	Retinoblastoma	Retinoblastoma	STRING	PATIENT	1				
+ALK_POSITIVE	ALK Positive	ALK Positive	STRING	SAMPLE	1				
+AR_NEGATIVE	AR Negative	AR Negative	STRING	SAMPLE	1				
+AR_POSITIVE	AR Positive	AR Positive	STRING	SAMPLE	1				
+BRCA1_NEGATIVE	BRCA1 Negative	Is the BRCA1 status negative	STRING	SAMPLE	1				
+BRCA1_POSITIVE	BRCA1 Positive	Is BRCA1 status positive	STRING	SAMPLE	1				
+BRCA2_NEGATIVE	BRCA2 Negative	Is BRCA2 status negative	STRING	SAMPLE	1				
+BRCA2_POSITIVE	BRCA2 Positive	Is BRCA2 Status positive	STRING	SAMPLE	1				
+BREAST_IMPLANTS	Breast Implants	Breast Implants	STRING	PATIENT	1				
+C_MYC_NEGATIVE	c-MYC Negative	c-MYC Negative	STRING	SAMPLE	1				
+C_MYC_POSITIVE	c-MYC Positive	c-MYC Positive	STRING	SAMPLE	1				
+CROHN_DISEASE									
+EGFR_NEGATIVE	EGFR Negative	Is the EGFR status negative	STRING	SAMPLE	1				
+ER_NEGATIVE	ER Negative	Is the ER status negative	STRING	SAMPLE	1				
+ER_POSITIVE	ER Positive	Is the ER status positive	STRING	SAMPLE	1				
+HER2_NEGATIVE	HER2 Negative	Is the HER2 status negative	STRING	SAMPLE	1				
+HER2_POSITIVE	HER2 Positive	Is the HER2 status positive	STRING	SAMPLE	1				
+HPV_NEGATIVE	HPV Negative	Is the HPV status negative	String	SAMPLE	1				
+HPV_POSITIVE	HPV Positive	Is the HPV status positive	STRING	SAMPLE	1				
+IDH1_POSITIVE	IDH1 Positive	Is the IDH1 status positive	STRING	SAMPLE	1				
+IDH2_NEGATIVE	IDH2 Negative	Is the IDH2 status negative	STRING	SAMPLE	1				
+IDH2_POSITIVE	IDH2 Positive	Is the IDH2 status positive	STRING	SAMPLE	1				
+KRAS_POSITIVE	KRAS Positive	Is the KRAS status positive	STRING	SAMPLE	1				
+P16_NEGATIVE	P16 Negative	Is the P16 status negative	STRING	SAMPLE	1				
+P16_POSITIVE	P16 Positive	Is the P16 Status positive	STRING	SAMPLE	1				
+PDX_ID	PDX ID	Identifier for the PDX case	STRING	SAMPLE	1				
+PR_NEGATIVE	PR Negative	Is the PR Status Negative	STRING	SAMPLE	1				
+PR_POSITIVE									
+RESPONSE	Patient Response	Patient Response	STRING	PATIENT	1				
+TIME_TO_RECURRENCE	Time to Recurrence	Time to Recurrence	NUMBER	PATIENT	1				
+ULCERATIVE_COLITIS	Ulcerative Colitis	Does the patient have Ulcerative Colitis	STRING	PATIENT	1				
+UV_EXPOSURE	UV Exposure	UV Exposure	STRING	PATIENT	1				
+IDH1_NEGATIVE	IDH1 Negative	Is the IDH1 status negative	STRING	SAMPLE	1				
 CANCER_TYPE_DETAILED_msk_solid_heme									
 CANCER_TYPE_DETAILED_msk_solid_heme_priority									
 CANCER_TYPE_DETAILED_mskarcher									

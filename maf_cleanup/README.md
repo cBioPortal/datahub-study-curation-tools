@@ -34,9 +34,9 @@ ONCOTATOR_*
 
 ### Example
 ```
-python maf_cleanup.py -i <old_maf> -o <new_maf> -c gene_id.txt
+python maf_cleanup.py -i <old_maf> -o <new_maf> -c mapping.txt
 ```
 
 ### Notes
-`gene_id.txt` is a mapping between captured wrongly formatted gene symbols with the correct form.
+`mapping.txt` is a mapping between captured wrongly formatted gene symbols with the correct form.
 
