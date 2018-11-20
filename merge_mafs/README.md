@@ -1,5 +1,5 @@
 #### Usage
-Merge ```maf1.txt``` and ```maf2.txt`` to ```maf_combined.txt```
+Merge ```maf1.txt``` and ```maf2.txt``` to ```maf_combined.txt```
 
 #### Command Line
 ```
