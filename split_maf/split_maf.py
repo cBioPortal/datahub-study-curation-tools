@@ -7,6 +7,23 @@ parser.add_argument("annotated_maf", type=str, help="Annotated MAF filename")
 parser.add_argument("unannotated_maf", type=str, help="Unannotated MAF filename")
 args = parser.parse_args()
 
+filters = [
+	"targeted_region",
+	"splice_region",
+	"frame_shift_del",
+   	"frame_shift_ins",
+   	"missense_mutation",
+   	"missense",
+   	"in_frame_del",
+   	"inframe_del",
+   	"in_frame_del",
+   	"inframe_ins",
+   	"nonsense",
+   	"nonsense_mutation",
+   	"nonstop_mutation",
+   	"splice_site"
+ ]
+ 
 comment_lines = str()
 ann_data = str()
 unann_data = str()
@@ -25,15 +42,16 @@ try:
 				cols = line.split("\t")
 				try:
 					hgvsp_index = cols.index("HGVSp_Short")
+					varclas_index = cols.index("Variant_Classification")
 				except ValueError:
-					print("HGVSp_Short column is not found in the MAF file. Exiting..")
+					print("HGVSp_Short/Variant_Classification column is not found in the MAF file. Exiting..")
 					sys.exit()
 			else:
 					data = line.split("\t")
-					if data[hgvsp_index] != "":
-						ann_data += line
-					else:
+					if data[hgvsp_index] == "" and data[varclas_index].lower() in filters:
 						unann_data += line
+					else:
+						ann_data += line
 			
 except IOError:
 	print args.original_maf,"file does not exist."
