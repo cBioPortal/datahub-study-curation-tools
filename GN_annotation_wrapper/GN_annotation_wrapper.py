@@ -58,7 +58,7 @@ def merge(file1,output_file):
 	
 		if header1 != header2:
 			print("Can't merge the files since the MAF columns are not the same")
-			sys.exit()
+			sys.exit(1)
 
 		else:
 			with open(file1,'r') as file:
@@ -89,7 +89,7 @@ def rearrange_mafcols(ref_file,unan_file):
 		os.remove(file_name+"_rearranged.txt")
 
 def call_gn(annotator_jar,infile,GNout,isoform):
-	subprocess.call(['java','-jar',annotator_jarpath,'--filename',infile,'--output-filename',GNout,'--isoform-override',isoform])
+	subprocess.call(['java','-jar',annotator_jar,'--filename',infile,'--output-filename',GNout,'--isoform-override',isoform])
 
 def annotation_wrapper(annotator_jar,infile,outfile,GNout,isoform):
 	anfile = "an.txt"
