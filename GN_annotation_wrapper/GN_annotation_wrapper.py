@@ -88,7 +88,9 @@ def rearrange_mafcols(ref_file,unan_file):
 		shutil.copyfile(file_name+"_rearranged.txt",unan_file)
 		os.remove(file_name+"_rearranged.txt")
 
-def call_gn(annotator_jar,infile,GNout,isoform):
+def call_gn(annotator_jar,infile,GNout,isoform,i=[0]):
+	i[0] += 1
+	print("Annotation Round : "+str(i[0]))
 	subprocess.call(['java','-jar',annotator_jar,'--filename',infile,'--output-filename',GNout,'--isoform-override',isoform])
 
 def annotation_wrapper(annotator_jar,infile,outfile,GNout,isoform):
@@ -105,6 +107,7 @@ def annotation_wrapper(annotator_jar,infile,outfile,GNout,isoform):
 	else:
 		merge(GNout,outfile)
 		os.remove(GNout)
+		exit(0)
 	
 def main():
 	# get command line arguments
@@ -123,12 +126,10 @@ def main():
 	unan_file = "unan.txt"
 	
 	#STEP1: Call GN
-	print("Annotation Round : 1")
 	call_gn(annotator_jar,infile,GNout,isoform)
 	
 	if os.path.exists(GNout):
 		#STEP2: Read the GN annotated file and split and re annotate the unannotated part
-		print("Annotation Round : 2")
 		annotation_wrapper(annotator_jar,GNout,outfile,GNout,isoform)
 	
 		#STEP3: Check if re annotation improves the annotation status of the maf
@@ -139,7 +140,6 @@ def main():
 					break
 				else:
 					os.remove(unan_file)
-					print("Annotation Round : "+str(i+3))
 					annotation_wrapper(annotator_jar,GNout,outfile,GNout,isoform)
 					
 		merge(GNout,outfile)
