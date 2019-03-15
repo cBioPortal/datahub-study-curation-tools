@@ -6,149 +6,192 @@ import csv
 import shutil
 import argparse
 
-def split(infile,anfile,unanfile):
-	comment_lines = str()
-	ann_data = str()
-	unann_data = str()
+ANNOTATED_MAF_FILE_EXT = '.annotated'
+UNANNOTATED_MAF_FILE_EXT = '.unannotated'
+HGVSP_SHORT_COLUMN = 'HGVSp_Short'
 
-	with open(infile,'r') as file:
-		for line in file:
-			if line.startswith('#'):
-				comment_lines += line
-			elif line.upper().startswith('HUGO_SYMBOL'):
-				header = line
-				cols = line.split("\t")
-				hgvsp_index = cols.index("HGVSp_Short")
-			else:
-				data = line.split("\t")
-				if data[hgvsp_index] == "":
-					unann_data += line
-				else:
-					ann_data += line
-						
-	if unann_data != "":
-		ann_file = open(anfile,"w")
-		ann_file.write(comment_lines)
-		ann_file.write(header)
-		ann_file.write(ann_data)
-		ann_file.close()
-		unann_file = open(unanfile,"w")
-		unann_file.write(comment_lines)
-		unann_file.write(header)
-		unann_file.write(unann_data)
-		unann_file.close()
+MAX_ANNOTATION_ATTEMPTS = 10
 
-def get_header(file):
-	with open(file, "r") as header_source:
-		for line in header_source:
-			if not line.startswith("#"):
-				header = line
-				break
-	return header
-		
-def merge(file1,output_file):
-	out_file = open(output_file,"a+")
-	if os.path.getsize(output_file) == 0:
-		with open(file1,'r') as file:
-			for line in file:
-				out_file.write(line)
-	else:				
-		header1 = get_header(file1)
-		header2 = get_header(output_file)
-	
-		if header1 != header2:
-			print("Can't merge the files since the MAF columns are not the same")
-			sys.exit(1)
+def get_header(data_file):
+    '''
+        Returns file header.
+    '''
+    header = ''
+    with open(data_file, "rU") as f:
+        for line in f.readlines():
+            if not line.startswith("#"):
+                header = line
+                break
+    return header
 
-		else:
-			with open(file1,'r') as file:
-				for line in file:
-					if line.startswith('#') or line.upper().startswith('HUGO_SYMBOL') :
-						continue
-					else:
-						out_file.write(line)
-	out_file.close()
+def get_comments(data_file):
+    '''
+        Returns file comments.
+    '''
+    comments = []
+    with open(data_file, "rU") as f:
+        for line in f.readlines():
+            if line.startswith('#'):
+                comments.append(line)
+            else:
+                break
+    return comments
 
-def rearrange_mafcols(ref_file,unan_file):
-	ref_header = get_header(ref_file)
-	unan_header = get_header(unan_file)
+def write_records_to_maf(filename, comments, header, records):
+    '''
+        Writes MAF records to given file.
+    '''
+    data_file = open(filename, 'w')
+    if comments:
+        for comment in comments:
+            data_file.write(comment)
+    data_file.write(header)
+    for record in records:
+        data_file.write(record)
+    data_file.close()
 
-	if ref_header != unan_header:
-		file_name = unan_file[0:-4]
-		outfile = open(file_name+"_rearranged.txt",'w')
-		with open(unan_file,'r') as infile:
-			fieldnames = ref_header.split('\t')
-			writer = csv.DictWriter(outfile,fieldnames = fieldnames, delimiter = '\t')
-			writer.writeheader()
-			file_reader = csv.DictReader(filter(lambda row: row[0]!='#',infile), delimiter = '\t')
-			for row in file_reader:
-				writer.writerow(row)
-		outfile.close()
-		os.remove(unan_file)
-		shutil.copyfile(file_name+"_rearranged.txt",unan_file)
-		os.remove(file_name+"_rearranged.txt")
+def split_maf_file_records(filename, ordered_header_columns):
+    '''
+        Splits records from file into list of annotated and unannotated records.
+    '''
+    annotated_records = []
+    unannotated_records = []
 
-def call_gn(annotator_jar,infile,GNout,isoform,i=[0]):
-	i[0] += 1
-	print("Annotation Round : "+str(i[0]))
-	subprocess.call(['java','-jar',annotator_jar,'--filename',infile,'--output-filename',GNout,'--isoform-override',isoform])
+    comment_lines = get_comments(filename)
+    header = get_header(filename)
+    columns = map(str.strip, header.split('\t'))
+    if not ordered_header_columns:
+        ordered_header_columns = columns[:]
+    if not HGVSP_SHORT_COLUMN in columns:
+        print >> ERROR_FILE, 'Could not find %s column in file header - exiting...' % (HGVSP_SHORT_COLUMN)
+        sys.exit(1)
 
-def annotation_wrapper(annotator_jar,infile,outfile,GNout,isoform):
-	anfile = "an.txt"
-	unanfile = "unan.txt"
-	split(infile,anfile,unanfile)
-	
-	if os.path.exists(anfile):
-		os.remove(infile)
-		merge(anfile,outfile)
-		os.remove(anfile)
-		call_gn(annotator_jar,unanfile,GNout,isoform)
-		#rearrange_mafcols(outfile,GNout)
-	else:
-		merge(GNout,outfile)
-		os.remove(GNout)
-		exit(0)
-	
+    with open(filename, 'rU') as f:
+        header_processed = False
+        for line in f.readlines():
+            if line.startswith('#'):
+                continue
+            if not header_processed:
+                header_processed = True              
+                continue
+            # now split the records by annotated or unannotated
+            data = dict(zip(columns, map(str.strip, line.split('\t'))))
+            ordered_data = map(lambda x: data.get(x, ''), ordered_header_columns)
+            if data[HGVSP_SHORT_COLUMN] != '':
+                annotated_records.append('\t'.join(ordered_data) + '\n')
+            else:
+                unannotated_records.append('\t'.join(ordered_data) + '\n')
+    return annotated_records,unannotated_records
+
+def run_genome_nexus_annotator(annotator_jar, input_maf, output_maf, isoform, attempt_num, ordered_header_columns):
+    '''
+        Calls the Genome Nexus annotator and returns a list of annotated and unannotated records.
+        - annotated records:
+            - records which were succesfully annotated by Genone Nexus.
+        - unannotated records:
+            - records which were not successfully annotated by Genome Nexus OR
+            - records which were successfully annotated by Genome Nexus but are non-coding so HGVSp_Short column is empty.
+    '''
+    print('Annotation attempt: %s' % (str(attempt_num)))
+    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform])
+    annotated_records,unannotated_records = split_maf_file_records(output_maf, ordered_header_columns)
+    # split_maf_file_records() orders the data according to the ordered_header_columns if provided -
+    # therefore the header in the output MAF from GN may not match the column order of the data values
+    # in the returned annotated_records,unannotated_records. This is resolved by overwriting the output_maf
+    # with the values of annotated_records
+    if ordered_header_columns != []:
+        ordered_header = '\t'.join(ordered_header_columns) + '\n'
+        write_records_to_maf(output_maf, get_comments(output_maf), ordered_header, annotated_records)
+    return annotated_records,unannotated_records
+
+def delete_intermediate_mafs(intermediate_mafs):
+    '''
+        Deletes intermedite MAFs.
+    '''
+    print('Deleting %s intermediate MAFs:' % (str(len(intermediate_mafs))))
+    for maf in intermediate_mafs:
+        if os.path.exists(maf):
+            print('\tDeleting intermediate MAF "%s" ...' % (maf))
+            os.remove(maf)
+        else:
+            print('\tIntermediate MAF "%s" does not exist, nothing to delete. Continuing...' % (maf))
+
+def genome_nexus_annotator_wrapper(annotator_jar, input_maf, output_maf, isoform):
+    '''
+        Runs Genome Nexus annotator on input MAF and saves results to designated output MAF.
+        If all records are not successfully annotated on first attempt, then script will continue
+        running annotator on remaining unannotated records until one of the following conditions is met:
+        
+        1. The annotator did not successfully annotate
+    '''
+    attempt_num = 1
+    annotated_records,unannotated_records = run_genome_nexus_annotator(annotator_jar, input_maf, output_maf, isoform, attempt_num, [])
+    if len(unannotated_records) == 0:
+        print('All records annotated successfully on first attempt - nothing to do. Output file saved to: %s' % (output_maf))
+        return
+    annotated_file_comments = get_comments(output_maf)
+    annotated_file_header = get_header(output_maf)
+    ordered_header_columns = map(str.strip, annotated_file_header.split('\t'))
+
+    intermediate_mafs = []
+    while len(unannotated_records) > 0 and attempt_num <= MAX_ANNOTATION_ATTEMPTS:
+        attempt_num += 1
+        isoform_extension = '_%s_attempt_%s' % (isoform, str(attempt_num))
+        input_unannotated_maf = input_maf + UNANNOTATED_MAF_FILE_EXT + isoform_extension
+        output_reannotated_maf = input_maf + ANNOTATED_MAF_FILE_EXT + isoform_extension
+        intermediate_mafs.extend([input_unannotated_maf, output_reannotated_maf])
+        
+        # save unannotated records to new input maf and then run annotator again
+        write_records_to_maf(input_unannotated_maf, annotated_file_comments, annotated_file_header, unannotated_records)
+        input_unannotated_maf_header = get_header(input_unannotated_maf)
+        if input_unannotated_maf_header != annotated_file_header:
+            print('ERROR: header for %s does not match the output header in %s!' % (input_unannotated_maf, output_maf))
+            sys.exit(2)
+        new_annotated_records,unannotated_records = run_genome_nexus_annotator(annotator_jar, input_unannotated_maf, output_reannotated_maf, isoform, attempt_num, ordered_header_columns)
+
+        # if there aren't any new annotated records then no improvement was made - exit while loop
+        if len(new_annotated_records) == 0:
+            print('Annotation attempt %s did not produce any newly annotated records - saving data to output file: %s' % (str(attempt_num), output_maf))
+            break
+
+        output_reannotated_maf_header = get_header(output_reannotated_maf)
+        if output_reannotated_maf_header != annotated_file_header:
+            print('ERROR: header for %s does not match the header in %s!' % (output_reannotated_maf, output_maf))
+            sys.exit(2)
+        annotated_records.extend(new_annotated_records)
+
+    # log whether unannotated records remain and max number of attempts allowed has been reached
+    if len(unannotated_records) > 0 and attempt_num == MAX_ANNOTATION_ATTEMPTS:
+        print('Maximum number of attempts reached for annotating MAF - saving data to output file: %s' % (output_maf))
+
+    # combine annotated and unannotated records and save data to output maf
+    compiled_recoords = annotated_records[:]
+    compiled_recoords.extend(unannotated_records)
+    write_records_to_maf(output_maf, annotated_file_comments, annotated_file_header, compiled_recoords)
+    print('Saved compiled annotated and unannotated records to output file: %s' % (output_maf))
+
+    # remove intermediate MAFs
+    if len(intermediate_mafs) > 0:
+        delete_intermediate_mafs(intermediate_mafs)
+    
 def main():
-	# get command line arguments
-	parser = argparse.ArgumentParser()
-	parser.add_argument('-f', '--input_maf', required = True, help = 'Input maf file name',type = str)
-	parser.add_argument('-a', '--annotator_jar_path', required = True, help = 'Path to the annotator jar file.  An example can be found in "/data/curation/annotation/annotator/annotationPipeline-1.0.0.jar" on dashi-dev',type = str)
-	parser.add_argument('-i', '--isoform', required = True, help = 'uniprot/mskcc annotation isoform.',type = str)
-	parser.add_argument('-o', '--output_filename', required = True, help = 'Output maf file name',type = str)
-	args = parser.parse_args()
+    # get command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', '--input_maf', required = True, help = 'Input maf file name',type = str)
+    parser.add_argument('-a', '--annotator_jar_path', required = True, help = 'Path to the annotator jar file.  An example can be found in "/data/curation/annotation/annotator/annotationPipeline-1.0.0.jar" on dashi-dev',type = str)
+    parser.add_argument('-i', '--isoform', required = True, help = 'uniprot/mskcc annotation isoform.',type = str)
+    parser.add_argument('-o', '--output_maf', required = True, help = 'Output maf file name',type = str)
+    args = parser.parse_args()
 
-	infile = args.input_maf
-	outfile = args.output_filename
-	isoform = args.isoform
-	annotator_jar = args.annotator_jar_path
-	GNout = "GN_unannotated_"+isoform+".txt"
-	unan_file = "unan.txt"
-	
-	#STEP1: Call GN
-	call_gn(annotator_jar,infile,GNout,isoform)
-	
-	if os.path.exists(GNout):
-		#STEP2: Read the GN annotated file and split and re annotate the unannotated part
-		annotation_wrapper(annotator_jar,GNout,outfile,GNout,isoform)
-	
-		#STEP3: Check if re annotation improves the annotation status of the maf
-		for i in range(10): 
-			if os.path.exists(unan_file):
-				if filecmp.cmp(GNout,unan_file):
-					os.remove(unan_file)
-					break
-				else:
-					os.remove(unan_file)
-					annotation_wrapper(annotator_jar,GNout,outfile,GNout,isoform)
-					
-		merge(GNout,outfile)
-		os.remove(GNout)
-	else:
-		print("The input file could not be annotated.")
-		
+    input_maf = args.input_maf
+    output_maf = args.output_maf
+    isoform = args.isoform
+    annotator_jar = args.annotator_jar_path
+
+    genome_nexus_annotator_wrapper(annotator_jar, input_maf, output_maf, isoform)
+
 if __name__ == '__main__':
-	main()
-	
+    main()
+    
 
-	
+    
