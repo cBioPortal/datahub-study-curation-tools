@@ -6,7 +6,7 @@ The script outputs two files with annotated and unannotated records for further 
 
 ### Command Line
 ```
--h, --help            show this help message and exit
+  -h, --help            show this help message and exit
   -f INPUT_MAF, --input_maf INPUT_MAF
                         Input maf file name
   -a ANNOTATOR_JAR_PATH, --annotator_jar_path ANNOTATOR_JAR_PATH
