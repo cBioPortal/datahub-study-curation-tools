@@ -5,6 +5,7 @@ import filecmp
 import csv
 import shutil
 import argparse
+import datetime
 
 ANNOTATED_MAF_FILE_EXT = '.annotated'
 UNANNOTATED_MAF_FILE_EXT = '.unannotated'
@@ -93,7 +94,7 @@ def run_genome_nexus_annotator(annotator_jar, input_maf, output_maf, isoform, at
             - records which were successfully annotated by Genome Nexus but are non-coding so HGVSp_Short column is empty.
     '''
     print('Annotation attempt: %s' % (str(attempt_num)))
-    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform, '-r'])
+    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform, '-r'],stdout=sys.stdout)
     annotated_records,unannotated_records = split_maf_file_records(output_maf, ordered_header_columns)
     # split_maf_file_records() orders the data according to the ordered_header_columns if provided -
     # therefore the header in the output MAF from GN may not match the column order of the data values
@@ -115,6 +116,41 @@ def delete_intermediate_mafs(intermediate_mafs):
             os.remove(maf)
         else:
             print('\tIntermediate MAF "%s" does not exist, nothing to delete. Continuing...' % (maf))
+            
+def split_final_output(output_maf):
+	unann_data = ''
+	ann_data = ''
+	
+	filters = [
+	"Silent",
+	"Intron",
+	"3'UTR",
+	"5'UTR",
+	"3'Flank",
+	"IGR"
+	]
+	
+	with open(output_maf,'r') as file:
+		for line in file:
+			if line.startswith('#'):
+				comment_lines = line
+			elif line.upper().startswith('HUGO_SYMBOL'):
+				header = line
+				cols = line.split("\t")
+				try:
+					hgvsp_index = cols.index("HGVSp_Short")
+					varclas_index = cols.index("Variant_Classification")
+				except ValueError:
+					print("HGVSp_Short/Variant_Classification column is not found in the MAF file. File can't be split. Exiting..")
+					sys.exit(1)
+			else:
+					data = line.split("\t")
+					if data[hgvsp_index] == "" and data[varclas_index].lower() not in filters:
+						unann_data += line
+					else:
+						ann_data += line
+	os.remove(output_maf)
+	return ann_data,unann_data
 
 def genome_nexus_annotator_wrapper(annotator_jar, input_maf, output_maf, isoform):
     '''
@@ -127,7 +163,7 @@ def genome_nexus_annotator_wrapper(annotator_jar, input_maf, output_maf, isoform
     attempt_num = 1
     annotated_records,unannotated_records = run_genome_nexus_annotator(annotator_jar, input_maf, output_maf, isoform, attempt_num, [])
     if len(unannotated_records) == 0:
-        print('All records annotated successfully on first attempt - nothing to do. Output file saved to: %s' % (output_maf))
+        #print('All records annotated successfully on first attempt - nothing to do. Output file saved to: %s' % (output_maf))
         return
     annotated_file_comments = get_comments(output_maf)
     annotated_file_header = get_header(output_maf)
@@ -180,18 +216,52 @@ def main():
     parser.add_argument('-f', '--input_maf', required = True, help = 'Input maf file name',type = str)
     parser.add_argument('-a', '--annotator_jar_path', required = True, help = 'Path to the annotator jar file.  An example can be found in "/data/curation/annotation/annotator/annotationPipeline-1.0.0.jar" on dashi-dev',type = str)
     parser.add_argument('-i', '--isoform', required = True, help = 'uniprot/mskcc annotation isoform.',type = str)
-    parser.add_argument('-o', '--output_maf', required = True, help = 'Output maf file name',type = str)
+    parser.add_argument('-an', '--annotated_maf', required = True, help = 'Annotated output maf file name',type = str)
+    parser.add_argument('-unan', '--unannotated_maf', required = True, help = 'Unannotated output maf file name',type = str)
     args = parser.parse_args()
 
     input_maf = args.input_maf
-    output_maf = args.output_maf
+    output_maf = input_maf+"_annotated"
     isoform = args.isoform
     annotator_jar = args.annotator_jar_path
+    annotated_file = args.annotated_maf
+    unannotated_file = args.unannotated_maf
+
+    # Open a annotation_wrapper_logger and direct the stdout
+    sys.stdout = open("annotation_logger.txt", 'a')
+    if os.stat("annotation_logger.txt").st_size > 100000:
+        os.remove("annotation_logger.txt")
+        open("annotation_logger.txt",'w').close()
+    print('\n'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     genome_nexus_annotator_wrapper(annotator_jar, input_maf, output_maf, isoform)
+    
+    '''
+    Split the final output to two files 1) Annotated 2) Unannotated records
+    Records that fall into one of the two criteria are considered annotated: 
+      - Non-empty HGVSp_Short
+      - HGVSp_Short is empty but the variant_Classification is Silent, Intron, 3'UTR, 5'UTR, 3'Flank, IGR
+    If the HGVSp_Short is empty and the variant classification is not one of the above then the records are considered unannotated.
+    '''
+    
+    comments = '\n'.join(get_comments(output_maf))
+    header = get_header(output_maf)
+    annotated,unannotated = split_final_output(output_maf)
+	
+    if len(annotated) != 0 and len(unannotated) == 0:
+    	ann_data = comments+header+annotated
+    	open(annotated_file,'w').write(ann_data)
+    	print('All the records are annotated and the output is saved to file: %s' % (annotated_file))
+    elif len(annotated) != 0 and len(unannotated) != 0:
+    	ann_data = comments+header+annotated
+    	unan_data = comments+header+unannotated
+    	open(annotated_file,'w').write(ann_data)
+    	open(unannotated_file,'w').write(unan_data)
+    	print('Annoatated records are save to: %s and Unannotated records are saved to: %s' % (annotated_file,unannotated_file))
+    elif len(annotated) == 0 and len(unannotated) != 0:
+    	unan_data = comments+header+unannotated
+    	open(unannotated_file,'w').write(unan_data)
+    	print('No rows were annoated, the output is saved to file: %s' % (unannotated_file))
 
 if __name__ == '__main__':
     main()
-    
-
-    
