@@ -2,7 +2,7 @@
 
 This tool accounts for Genome Nexus annotation timeout issue. If all records are not successfully annotated on first attempt, then script will continue running annotator on remaining unannotated records until no new annotated records are produced in further attempts.
 
-The script outputs two files with annotated and unannotated records for further manual checking.
+The output of the script is two files with annotated and unannotated records for further manual checking.
 
 ### Command Line
 ```
