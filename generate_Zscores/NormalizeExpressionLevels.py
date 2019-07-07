@@ -34,6 +34,7 @@ import argparse
 # 		compute mean and standard deviation for samples ( n = # of samples where expression value is not Null, NA, NaN)
 #		for each sample:
 #		compute zScore when standard deviation != 0
+#		output NA for genes with standard deviation = 0
 #
 
 
@@ -55,7 +56,6 @@ def calculate_mean_std(line,start_position):
 	return(mu,sigma)
 
 # Calculate z_scores 	
-# TODO: what if standard deviation is 0.0?
 def calculate_z_scores(line,mu,sigma,start_position):
 	exp_values = line.split('\t')
 	z_scores = exp_values[:start_position]
@@ -67,10 +67,21 @@ def calculate_z_scores(line,mu,sigma,start_position):
 			try:
 				value = float(value)
 				z_cal = (value - mu) / sigma
+				z_cal = round(z_cal,4)
 				z_cal = str(z_cal)
 				z_scores.append(z_cal)
 			except ValueError:
-				print("Expression value is a String. Neither Null or NA")
+				print("Expression value is a String. Neither Null or NA or NaN")
+	normalised_scores = '\t'.join(z_scores)
+	return(normalised_scores)
+
+#If standard deviation is 0.0? print NA as the normalized z-score
+def zero_std(line,start_position):
+	exp_values = line.split('\t')
+	z_scores = exp_values[:start_position]
+	exp_values = exp_values[start_position:]
+	for value in exp_values:
+		z_scores.append('NA')
 	normalised_scores = '\t'.join(z_scores)
 	return(normalised_scores)
 
@@ -121,14 +132,17 @@ def main():
 	with open(args.input_file,'r') as exp_file:
 		for line in exp_file:
 			line = line.rstrip('\n')
-			if line.startswith('Composite.Element.REF') or line.startswith('Hugo_Symbol') or line.startswith('Entrez_Gene_Id'):
+			if line.startswith('#'):
+				outfile.write(line+'\n')
+			elif line.startswith('Composite.Element.REF') or line.startswith('Hugo_Symbol') or line.startswith('Entrez_Gene_Id'):
 				header = line
 				outfile.write(header+'\n')
 			else:
 				mu, sigma = calculate_mean_std(line, start_position)
 				# If standard deviation == 0 skip the normalization and the row
 				if sigma == 0:
-					continue
+					scores_std = zero_std(line,start_position)
+					outfile.write(scores_std+'\n')
 				else:
 					normalised_scores = calculate_z_scores(line,mu,sigma,start_position)
 					outfile.write(normalised_scores+'\n')
