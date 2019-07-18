@@ -39,7 +39,7 @@ import argparse
 
 
 # calculate mean and std for the samples whose values are not Null or NA (n)
-def calculate_mean_std(line,start_position):
+def calculate_mean_std(line,start_position,line_count):
 	data = line.split('\t')
 	data = data[start_position:]
 	# Remove strings '' or 'NA' from list 
@@ -48,7 +48,11 @@ def calculate_mean_std(line,start_position):
 			data.pop(data.index(elem))
 	# Convert string list to floats
 	for index, item in enumerate(data):
-		data[index] = float(item)
+		try:
+			data[index] = float(item)
+		except Exception:
+			print("Line ",line_count," has a non-numeric expression value '"+item+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
+			sys.exit(1)
 	# Calculate mean and std
 	n = len(data)
 	mu = statistics.mean(data)
@@ -56,24 +60,25 @@ def calculate_mean_std(line,start_position):
 	return(mu,sigma)
 
 # Calculate z_scores 	
-def calculate_z_scores(line,mu,sigma,start_position):
+def calculate_z_scores(line,mu,sigma,start_position,line_count):
 	exp_values = line.split('\t')
-	z_scores = exp_values[:start_position]
+	output_list = exp_values[:start_position]
 	exp_values = exp_values[start_position:]
 	for value in exp_values:
 		if value == '' or value == 'NA' or value == 'NaN':
-			z_scores.append('NA')
+			output_list.append('NA')
 		else:
 			try:
 				value = float(value)
 				z_cal = (value - mu) / sigma
 				z_cal = round(z_cal,4)
 				z_cal = str(z_cal)
-				z_scores.append(z_cal)
-			except ValueError:
-				print("Expression value is a String. Neither Null or NA or NaN")
-	normalised_scores = '\t'.join(z_scores)
-	return(normalised_scores)
+				output_list.append(z_cal)
+			except Exception:
+				print("Line ",line_count," has a non-numeric expression value '"+value+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
+				sys.exit(1)
+	normalized_exp_values = '\t'.join(output_list)
+	return(normalized_exp_values)
 
 #If standard deviation is 0.0? print NA as the normalized z-score
 def zero_std(line,start_position):
@@ -86,25 +91,28 @@ def zero_std(line,start_position):
 	return(normalised_scores)
 
 # Check the file type and sample start_position:	
-def sample_start_position(infile):
+def find_sample_startpos(infile):
 	with open(infile,'r') as data_file:
 		for line in data_file:
+			line = line.rstrip('\n')
 			if line.startswith('#'):
 				continue
 			else:
 				header = line
 				break
-	if header.startswith('Composite.Element.REF'):
+	
+	header_keywords = ['Composite.Element.REF', 'Hugo_Symbol', 'Entrez_Gene_Id']
+	if header.startswith(header_keywords[0]):
 		start_position = 1
-	elif header.startswith('Hugo_Symbol'):
+	elif header.startswith(header_keywords[1]):
 		data = header.split('\t')
-		if data[1] == 'Entrez_Gene_Id':
+		if data[1] == header_keywords[2]:
 			start_position = 2
 		else:
 			start_position = 1
-	elif header.startswith('Entrez_Gene_Id'):
+	elif header.startswith(header_keywords[2]):
 		data = header.split('\t')
-		if data[1] == 'Hugo_Symbol':
+		if data[1] == header_keywords[1]:
 			start_position = 2
 		else:
 			start_position = 1
@@ -112,8 +120,12 @@ def sample_start_position(infile):
 		print("Expression file header must contain at least one of the following: Composite.Element.REF, Hugo_Symbol, Entrez_Gene_Id\nExiting..")
 		sys.exit(1)
 	num_cols = len(header.split('\t'))
+	sample_count = num_cols - start_position
 	if start_position >= num_cols:
-		print("No Sample ID in expression file\nExiting..")
+		print("No Sample data in expression file\nExiting..")
+		sys.exit(1)
+	if sample_count <= 1:
+		print("Expression file contains just one sample. Cannot calculate Standard Deviation.\nExiting..")
 		sys.exit(1)
 	return(start_position)
 
@@ -124,13 +136,13 @@ def main():
 	parser.add_argument('-o', '--output_file', required = True, help = 'Output file name',type = str)
 	args = parser.parse_args()
 	
-	# Check the file type and sample start_position
+	# Check the file type and find the start_position of sample
 	# The first column should provide gene identifiers else exit
-	start_position = sample_start_position(args.input_file)
+	start_position = find_sample_startpos(args.input_file)
 	
 	outfile = open(args.output_file,'w')
 	with open(args.input_file,'r') as exp_file:
-		for line in exp_file:
+		for line_count, line in enumerate(exp_file):
 			line = line.rstrip('\n')
 			if line.startswith('#'):
 				outfile.write(line+'\n')
@@ -138,13 +150,13 @@ def main():
 				header = line
 				outfile.write(header+'\n')
 			else:
-				mu, sigma = calculate_mean_std(line, start_position)
-				# If standard deviation == 0 skip the normalization and the row
+				mu, sigma = calculate_mean_std(line, start_position,line_count)
+				# If standard deviation == 0 print NA as normalized values
 				if sigma == 0:
 					scores_std = zero_std(line,start_position)
 					outfile.write(scores_std+'\n')
 				else:
-					normalised_scores = calculate_z_scores(line,mu,sigma,start_position)
+					normalised_scores = calculate_z_scores(line,mu,sigma,start_position,line_count)
 					outfile.write(normalised_scores+'\n')
 			
 if __name__ == '__main__':
