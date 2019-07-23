@@ -160,6 +160,7 @@ def main():
 					sys.stdout.write('\rNormalizing row : '+str(line_count))
 					normalised_scores = calculate_z_scores(line,mu,sigma,start_position,line_count)
 					output_data += normalised_scores+'\n'
+	print("\nDONE!\n")
 	outfile.write(comments+'\n')
 	outfile.write(header+'\n')
 	outfile.write(output_data)
