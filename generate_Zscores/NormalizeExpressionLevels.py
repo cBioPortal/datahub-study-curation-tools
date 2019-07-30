@@ -147,7 +147,7 @@ def main():
 		for line_count, line in enumerate(exp_file):
 			line = line.rstrip('\n')
 			if line.startswith('#'):
-				comments += line+'\n'
+				outfile.write(line+'\n')
 			elif line.startswith('Composite.Element.REF') or line.startswith('Hugo_Symbol') or line.startswith('Entrez_Gene_Id'):
 				header = line
 			else:
@@ -161,9 +161,8 @@ def main():
 					normalised_scores = calculate_z_scores(line,mu,sigma,start_position,line_count)
 					output_data += normalised_scores+'\n'
 	print("\nDONE!\n")
-	outfile.write(comments+'\n')
 	outfile.write(header+'\n')
-	outfile.write(output_data)
+	outfile.write(output_data.rstrip('\n'))
 			
 if __name__ == '__main__':
 	main()
