@@ -51,7 +51,7 @@ def calculate_mean_std(line,start_position,line_count):
 		try:
 			data[index] = float(item)
 		except Exception:
-			print("Line ",line_count," has a non-numeric expression value '"+item+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
+			print("\nRow ",line_count," has a non-numeric expression value '"+item+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
 			sys.exit(1)
 	# Calculate mean and std
 	n = len(data)
@@ -75,7 +75,7 @@ def calculate_z_scores(line,mu,sigma,start_position,line_count):
 				z_cal = str(z_cal)
 				output_list.append(z_cal)
 			except Exception:
-				print("Line ",line_count," has a non-numeric expression value '"+value+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
+				print("\nRow ",line_count," has a non-numeric expression value '"+value+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
 				sys.exit(1)
 	normalized_exp_values = '\t'.join(output_list)
 	return(normalized_exp_values)
@@ -142,22 +142,27 @@ def main():
 	
 	outfile = open(args.output_file,'w')
 	with open(args.input_file,'r') as exp_file:
+		comments = ''
+		output_data = ''
 		for line_count, line in enumerate(exp_file):
 			line = line.rstrip('\n')
 			if line.startswith('#'):
 				outfile.write(line+'\n')
 			elif line.startswith('Composite.Element.REF') or line.startswith('Hugo_Symbol') or line.startswith('Entrez_Gene_Id'):
 				header = line
-				outfile.write(header+'\n')
 			else:
 				mu, sigma = calculate_mean_std(line, start_position,line_count)
 				# If standard deviation == 0 print NA as normalized values
 				if sigma == 0:
 					scores_std = zero_std(line,start_position)
-					outfile.write(scores_std+'\n')
+					output_data += scores_std+'\n'
 				else:
+					sys.stdout.write('\rNormalizing row : '+str(line_count))
 					normalised_scores = calculate_z_scores(line,mu,sigma,start_position,line_count)
-					outfile.write(normalised_scores+'\n')
+					output_data += normalised_scores+'\n'
+	print("\nDONE!\n")
+	outfile.write(header+'\n')
+	outfile.write(output_data.rstrip('\n'))
 			
 if __name__ == '__main__':
 	main()
