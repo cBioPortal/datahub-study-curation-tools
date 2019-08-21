@@ -43,20 +43,26 @@ def calculate_mean_std(line,start_position,line_count):
 	data = line.split('\t')
 	data = data[start_position:]
 	# Remove strings '' or 'NA' from list 
-	for elem in data:
-		if elem == '' or elem == 'NA' or elem == 'NaN':
-			data.pop(data.index(elem))
+	while 'NA' in data: data.remove('NA')
+	while '' in data: data.remove('')
+	while 'NaN' in data: data.remove('NaN')
 	# Convert string list to floats
 	for index, item in enumerate(data):
 		try:
 			data[index] = float(item)
 		except Exception:
+			print("\n",index)
+			print(data)
 			print("\nRow ",line_count," has a non-numeric expression value '"+item+"'\nAllowed non-numeric values are '', 'NA' and 'NaN'")
 			sys.exit(1)
 	# Calculate mean and std
 	n = len(data)
-	mu = statistics.mean(data)
-	sigma = statistics.stdev(data,mu)
+	if n == 1:
+		mu = 0
+		sigma = 0
+	else:
+		mu = statistics.mean(data)
+		sigma = statistics.stdev(data,mu)
 	return(mu,sigma)
 
 # Calculate z_scores 	
