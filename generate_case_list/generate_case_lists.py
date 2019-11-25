@@ -33,7 +33,7 @@
 
 # ------------------------------------------------------------------------------
 # Script which generates case lists given a cBioPortal study directory containing
-# genomic files, a directory to write the case list files to, a cancer study stable id, 
+# genomic files, a directory to write the case list files to, a cancer study stable id,
 # and a tab delimited case lists configuration file with the following columns:
 #   CASE_LIST_FILENAME
 #   STAGING_FILENAME
@@ -183,7 +183,7 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
                 # look for MAF file case id column header
                 # if this is not a MAF file and header contains the case ids, return here
                 # we are assuming the header contains the case ids because SAMPLE_ID_COLUMN_HEADER is missing
-                if MUTATION_CASE_ID_COLUMN_HEADER not in values and SAMPLE_ID_COLUMN_HEADER not in values:
+                if MUTATION_CASE_ID_COLUMN_HEADER not in values and SAMPLE_ID_COLUMN_HEADER not in [x.upper() for x in values]:
                     if verbose:
                         print "LOG: get_case_list_from_staging_file(), this is not a MAF header but has no '%s' column, we assume it contains sample ids..." % (SAMPLE_ID_COLUMN_HEADER)
                     for potential_case_id in values:
@@ -194,7 +194,7 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
                     break # got case ids from header, don't read the rest of the file
                 else:
                     # we know at this point one of these columns exists, so no fear of ValueError from index method
-                    id_column_index = values.index(MUTATION_CASE_ID_COLUMN_HEADER) if MUTATION_CASE_ID_COLUMN_HEADER in values else values.index(SAMPLE_ID_COLUMN_HEADER)
+                    id_column_index = values.index(MUTATION_CASE_ID_COLUMN_HEADER) if MUTATION_CASE_ID_COLUMN_HEADER in values else [x.upper() for x in values].index(SAMPLE_ID_COLUMN_HEADER)
                     if verbose:
                         print "LOG: get_case_list_from_staging_file(), this is a MAF or clinical file, samples ids in column with index: %d" % (id_column_index)
                 process_header = False
