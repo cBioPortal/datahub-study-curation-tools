@@ -94,7 +94,7 @@ def run_genome_nexus_annotator(annotator_jar, input_maf, output_maf, isoform, at
             - records which were successfully annotated by Genome Nexus but are non-coding so HGVSp_Short column is empty.
     '''
     print('Annotation attempt: %s' % (str(attempt_num)))
-    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform, '-r'],stdout=sys.stdout)
+    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform, '-r','-p','500'],stdout=sys.stdout)
     annotated_records,unannotated_records = split_maf_file_records(output_maf, ordered_header_columns)
     # split_maf_file_records() orders the data according to the ordered_header_columns if provided -
     # therefore the header in the output MAF from GN may not match the column order of the data values
