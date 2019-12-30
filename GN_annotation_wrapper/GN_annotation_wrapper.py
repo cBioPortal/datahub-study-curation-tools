@@ -244,7 +244,7 @@ def main():
     If the HGVSp_Short is empty and the variant classification is not one of the above then the records are considered unannotated.
     '''
     
-    comments = '\n'.join(get_comments(output_maf))
+    comments = ''.join(get_comments(output_maf))
     header = get_header(output_maf)
     annotated,unannotated = split_final_output(output_maf)
 	
