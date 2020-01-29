@@ -25,4 +25,4 @@ cases_rppa.txt	data_rppa.txt	<CANCER_STUDY>_rppa	all_cases_with_rppa_data	<CANCE
 cases_sequenced.txt	data_mutations_extended.txt|data_fusions.txt|data_mutations_mskcc.txt|data_mutations_uniprot.txt	<CANCER_STUDY>_sequenced	all_cases_with_mutation_data	<CANCER_STUDY>	Samples with mutation data	Samples with mutation data (<NUM_CASES> samples)
 cases_protein_quantification.txt	data_protein_quantification.txt	<CANCER_STUDY>_protein_quantification	other	<CANCER_STUDY>	Samples with protein data (Mass Spec)	Samples with protein data (Mass Spec) (<NUM_CASES> samples)
 cases_GSVA.txt	data_gsva_scores.txt|data_gsva_pvalues.txt	<CANCER_STUDY>_gsva_scores	all_cases_with_gsva_data	<CANCER_STUDY>	Samples with GSVA data	All samples with GSVA data
-cases_sv.txt	data_mutations_extended.txt|data_SV.txt	<CANCER_STUDY>_sv	all_cases_with_sv_data	<CANCER_STUDY>	Samples with SV data	Samples with SV data (<NUM_CASES> samples)
+cases_sv.txt	data_mutations_extended.txt&data_SV.txt	<CANCER_STUDY>_sv	all_cases_with_sv_data	<CANCER_STUDY>	Samples with SV data	Samples with SV data (<NUM_CASES> samples)
