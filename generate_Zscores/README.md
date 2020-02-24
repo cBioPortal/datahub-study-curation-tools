@@ -17,5 +17,5 @@ Use the `-l` option if the data needs to be log transformed before calculating z
 
 ### Example
 ```
-python NormalizeExpressionLevels.py -i <expression_file> -o <output_file> [-l]
+python NormalizeExpressionLevels_allsampleref.py -i <expression_file> -o <output_file> [-l]
 ```

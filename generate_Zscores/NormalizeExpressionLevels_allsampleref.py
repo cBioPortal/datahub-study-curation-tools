@@ -71,9 +71,9 @@
 # We require the mRNA expression data to be log transformed before calculating zscores on them.
 # If the data is not already log tranformed use the -l option to calculate log base 2 of the expression values.
 #
-# Here's how we handle the Negative values:
+# Here's how we handle the Negative values when log transforming:
 #
-# If the value(x) is <= 0 replace the value to 0 and then calculate the log of all values as by adding +1 as log(x+1)
+# If the value(x) is <= 0 replace the value to 0 and then calculate the log of all values by adding +1 as log(x+1)
 # example, if raw value is -1, the log transform would be log(0+1)
 #    	   if the value is 0, the log transform would be log(0+1)
 #          if the value is 1, the log transform would be log(1+1)
