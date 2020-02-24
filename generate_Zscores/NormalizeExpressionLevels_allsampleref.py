@@ -52,7 +52,7 @@
 #
 # The syntax is simple:
 #
-# python NormalizeExpressionLevels.py -i <expression_file> -o <output_file>
+# python NormalizeExpressionLevels.py -i <expression_file> -o <output_file> [-l]
 #
 # The output is written onto a file named "output_file"
 #
