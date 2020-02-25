@@ -1,18 +1,21 @@
 ### Usage
 
-Given expression data for a set of samples, this tool generates normalized expression values (Independant of unaltered status from CNA file)
+Given the expression data for a set of samples, this script generates normalized expression values with the reference population of all samples independent of sample diploid status.
+
+Use the `-l` option if the data needs to be log transformed before calculating z-scores.
 
 ### Command Line
 ```
--h, --help            show this help message and exit
--i INPUT_FILE, --input_file INPUT_FILE
-                        Expression file for which z-score has to be computed
--o OUTPUT_FILE, --output_file OUTPUT_FILE
-                        Output file name
+  -h, --help            show this help message and exit
+  -i INPUT_EXPRESSION_FILE, --input-expression-file INPUT_EXPRESSION_FILE
+                        The expression filename to normalize
+  -o OUTPUT_FILENAME, --output-filename OUTPUT_FILENAME
+                        The filename to which normalized data has to be saved
+  -l, --log-transform   Pass this argument to log transform the data before
+                        calculating zscores
 ```
 
 ### Example
 ```
-python NormalizeExpressionLevels.py -i <expression_file> -o <output_file>
-```   
-                    
+python NormalizeExpressionLevels_allsampleref.py -i <expression_file> -o <output_file> [-l]
+```
