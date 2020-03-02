@@ -31,11 +31,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from __future__ import division
 import sys
 import os
 import argparse
 import math
-from __future__ import division
 
 
 HEADER_KEYWORDS = ['Composite.Element.REF','Hugo_Symbol','Entrez_Gene_Id']
