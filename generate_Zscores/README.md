@@ -36,7 +36,7 @@ Any number of columns may precede the data. However, the following must be satis
 ```
 Input expression file
 for each gene:
-  log-transform the raw value, if -l is passed
+  log-transform the raw data, if -l is passed
   compute mean and standard deviation for samples ( n = # of samples where expression value is not Zero, Null, NA, NaN)
   for each sample:
   compute Zscore when standard deviation != 0
