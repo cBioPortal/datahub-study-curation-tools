@@ -39,8 +39,8 @@ for each gene:
   log-transform the raw data, if -l is passed
   compute mean and standard deviation for samples ( n = # of samples where expression value is not Zero, Null, NA, NaN)
   for each sample:
-  compute Zscore when standard deviation != 0
-  output NA for genes with standard deviation = 0
+    compute Zscore when standard deviation != 0
+    output NA for genes with standard deviation = 0
 ```
 #### Log-transforming the data
 Using the `-l` option above calculates log base 2 of the expression values.
