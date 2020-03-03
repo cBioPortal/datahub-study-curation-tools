@@ -2,7 +2,7 @@
 
 Given the expression data for a set of samples, this script generates normalized expression values with the reference population of all samples independent of sample diploid status.
 
-#### Method:
+#### Method
 Each gene is normalized separately. The reference population for the given gene is all samples with expression values (excludes zeros, non-numeric values like NA, NaN or Null). 
 First, the expression distribution of the gene is estimated by calculating the mean and variance of the expression values for all samples whose values are not Zero, Null, NA or NaN.
 
@@ -32,7 +32,7 @@ Use the `-l` option if the data needs to be log transformed before calculating z
 Any number of columns may precede the data. However, the following must be satisfied:
  - the first column provides gene identifiers
 
-#### Algorithm:
+#### Algorithm
 ```
 Input expression file
 for each gene:
@@ -47,7 +47,7 @@ Using the `-l` option above calculates log base 2 of the expression values.
 
 Here's how we handle the Negative values when log transforming:
 ```
-If the value(x) is <= 0, replace the value to 0 and calculate the log of all values by adding +1 as log(x+1)
+Replace the negative values to 0 and add a constant value(+1) to data pior to applying log transform.
 example, if raw value is -1, the log transform would be log(0+1)
          if the value is 0, the log transform would be log(0+1)
          if the value is 1, the log transform would be log(1+1)
