@@ -86,11 +86,11 @@ def calc_zscores(_inputFileName, _refDict):
 				_zscore = ""
 
 				# log transform positive raw exp value
-				if float(_rawVal) > 0:
+				if _rawVal != "NA" and float(_rawVal) > 0:
 					_val = math.log(float(_rawVal) + 1, 2)
 				
 				# calculate zscore
-				if _refDict[_entrezID]["std"] == 0: 
+				if _rawVal == "NA" or _refDict[_entrezID]["std"] == 0: 
 					_zscore = "NA" # if STD is 0, zscore is NA
 				else: 
 					_zscore = str(round((_val - _refDict[_entrezID]["mean"]) / _refDict[_entrezID]["std"],4))
