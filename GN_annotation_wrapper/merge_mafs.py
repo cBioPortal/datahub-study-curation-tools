@@ -26,7 +26,7 @@ def main():
 	header2 = get_header(args.input_maf2)
 	
 	if header1 != header2:
-		print('Header for ',args.input_maf1,' does not match the header in ',args.input_maf2,' Exiting..')
+		print('Header of \''+args.input_maf1+'\' does not match the header in \''+args.input_maf2+'\'\nPlease check if the column headers and the order are the same. Exiting..')
 		sys.exit(1)
 	
 	with open(args.input_maf1,'r') as file:

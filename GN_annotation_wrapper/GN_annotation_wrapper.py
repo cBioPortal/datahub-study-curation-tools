@@ -94,7 +94,7 @@ def run_genome_nexus_annotator(annotator_jar, input_maf, output_maf, isoform, at
             - records which were successfully annotated by Genome Nexus but are non-coding so HGVSp_Short column is empty.
     '''
     print('Annotation attempt: %s' % (str(attempt_num)))
-    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform, '-r','-p','500'],stdout=sys.stdout)
+    subprocess.call(['java', '-jar', annotator_jar, '--filename', input_maf, '--output-filename', output_maf, '--isoform-override', isoform, '-r','-p','500'])
     annotated_records,unannotated_records = split_maf_file_records(output_maf, ordered_header_columns)
     # split_maf_file_records() orders the data according to the ordered_header_columns if provided -
     # therefore the header in the output MAF from GN may not match the column order of the data values
@@ -121,14 +121,8 @@ def split_final_output(output_maf):
 	unann_data = ''
 	ann_data = ''
 	
-	filters = [
-	"Silent",
-	"Intron",
-	"3'UTR",
-	"5'UTR",
-	"3'Flank",
-	"IGR"
-	]
+	filters = ["Silent", "Intron", "3'UTR", "5'UTR", "3'Flank", "5'Flank", "IGR"]
+	filters = [element.lower() for element in filters]
 	
 	with open(output_maf,'r') as file:
 		for line in file:
@@ -227,13 +221,6 @@ def main():
     annotated_file = args.annotated_maf
     unannotated_file = args.unannotated_maf
 
-    # Open a annotation_wrapper_logger and direct the stdout
-    sys.stdout = open("annotation_logger.txt", 'a')
-    if os.stat("annotation_logger.txt").st_size > 100000:
-        os.remove("annotation_logger.txt")
-        open("annotation_logger.txt",'w').close()
-    print('\n'+datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
     genome_nexus_annotator_wrapper(annotator_jar, input_maf, output_maf, isoform)
     
     '''
@@ -261,7 +248,7 @@ def main():
     elif len(annotated) == 0 and len(unannotated) != 0:
     	unan_data = comments+header+unannotated
     	open(unannotated_file,'w').write(unan_data)
-    	print('No rows were annoated, the output is saved to file: %s' % (unannotated_file))
+    	print('No records were annoated, the output is saved to file: %s' % (unannotated_file))
 
 if __name__ == '__main__':
     main()
