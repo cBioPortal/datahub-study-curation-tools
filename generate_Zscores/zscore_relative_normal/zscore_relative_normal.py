@@ -35,7 +35,7 @@ def calc_ref(_inputFileName):
 			
 			# log transform
 			for _item in _items[_pos+1:len(_items)]:
-				if float(_item) > 0:
+				if _item != "NA" and float(_item) > 0:
 					_vals.append(math.log(float(_item) + 1, 2))
 			# calculate mean and std for each gene/row	
 
