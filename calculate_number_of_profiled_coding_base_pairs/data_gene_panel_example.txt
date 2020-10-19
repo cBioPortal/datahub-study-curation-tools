@@ -1,0 +1,3 @@
+stable_id: IMPACT410
+description: Targeted (410 cancer genes) sequencing of various tumor types via MSK-IMPACT on Illumina HiSeq sequencers.
+gene_list:	ABL1	ACVR1
