@@ -21,8 +21,10 @@ def update_file(args):
 
     # get protein length by gene name
     df_uniprot_gene_name_with_protein_length = pd.read_csv(uniprotFile, sep='\t')
-    gene_name_to_length_dict = dict()
-    df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (primary )'], row['Length'], gene_name_to_length_dict), axis=1)
+    gene_name_to_length_dict_primary = dict()
+    gene_name_to_length_dict_synonym = dict()
+    df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (primary )'], row['Length'], gene_name_to_length_dict_primary), axis=1)
+    df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (synonym )'], row['Length'], gene_name_to_length_dict_synonym), axis=1)
 
     # write files
     input = open(inputFile, 'rt')
@@ -39,8 +41,10 @@ def update_file(args):
                 genes.pop(0)
             for gene in genes:
                 gene = gene.strip()
-                if gene in gene_name_to_length_dict:
-                    count += gene_name_to_length_dict[gene]
+                if gene in gene_name_to_length_dict_primary:
+                    count += gene_name_to_length_dict_primary[gene]
+                elif gene in gene_name_to_length_dict_synonym:
+                    count += gene_name_to_length_dict_synonym[gene]
                 else:
                     print(gene + " not found in UniProt file")
             # CDS size is calculated by sum(protein length * 3)
@@ -48,7 +52,7 @@ def update_file(args):
             if not genes[-1].endswith("\n"):
                 output.write("\n")
             output.write("number_of_profiled_coding_base_pairs: " + str(count))
-            print("number of profiled coding base pairs found: " + str(count))
+            #print("number_of_profiled_coding_base_pairs: " + str(count))
     input.close()
     output.close()
 
