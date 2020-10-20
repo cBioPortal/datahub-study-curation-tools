@@ -36,6 +36,9 @@ import sys
 import os
 import argparse
 import math
+import numpy
+
+LOG_STR = ""
 
 # WGS/WES CDS
 WES_WGS_CDS = 30
@@ -66,6 +69,7 @@ MATRIX_MUT_COL = "mutations"
 
 # names - clinical file
 CLIN_INPUT_FILE_NAME = "data_clinical_sample.txt"
+CLIN_INPUT_BCR_FILE_NAME = "data_bcr_clinical_data_sample.txt"
 CLIN_OUTPUT_FILE_NAME = "tmb_output_data_clinical_sample.txt"
 CLIN_ID_COL_ID = "SAMPLE_ID"
 CLIN_TMB_COL_ID = "TMB_NONSYNONYMOUS"
@@ -113,6 +117,7 @@ def extractCDS(_inputStudyFolder, _panelFolderPath, _sampleMap):
 				_sampleID = _items[_posSampleId]
 				_panelID = _items[_posMutPanel]
 				_cds = _cdsMap[_panelID]
+
 				if _sampleMap.has_key(_sampleID):
 					_sampleMap[_sampleID]["cds"] = _cds
 				else:
@@ -169,8 +174,14 @@ def cntVariants(_inputStudyPath):
 ######
 def calcTMB(_sampleMap):
 
+	_tmbs = []
+
 	for _sampleID in _sampleMap:
+		_tmb = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
 		_sampleMap[_sampleID]["tmb"] = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
+		_tmbs.append(_tmb)
+
+	sys.stdout.write(str(max(_tmbs)) + "\t" + str(min(_tmbs)) + "\t" + str(numpy.median(_tmbs)) + "\n")
 
 	return _sampleMap
 
@@ -190,7 +201,13 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 	_posSampleID = -1
 	_outputClinFile = open(_inputStudyFolder + "/" + CLIN_OUTPUT_FILE_NAME,'w')
 
-	with open(_inputStudyFolder + "/" + CLIN_INPUT_FILE_NAME,'r') as _inputClinFile:
+	_inputFilePath = ""
+	if os.path.isfile(_inputStudyFolder + "/" + CLIN_INPUT_FILE_NAME):
+		_inputFilePath = _inputStudyFolder + "/" + CLIN_INPUT_FILE_NAME
+	elif os.path.isfile(_inputStudyFolder + "/" + CLIN_INPUT_BCR_FILE_NAME):
+		_inputFilePath = _inputStudyFolder + "/" + CLIN_INPUT_BCR_FILE_NAME
+	
+	with open(_inputFilePath,'r') as _inputClinFile:
 
 		for _line in _inputClinFile:
 			
@@ -217,15 +234,28 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 def main():
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-i','--input-study-folder', action = 'store', dest = 'input_study_folder', required = False, help = 'Input Study folder')	
-	parser.add_argument('-p','--input-gene-panel-folder', action = 'store', dest = 'input_gene_panel_folder', required = False, help = 'Gene Panel folder')	
+	parser.add_argument('-i','--input-study-folder', action = 'store', dest = 'input_study_folder', required = True, help = 'Input Study folder')	
+	parser.add_argument('-p','--input-gene-panel-folder', action = 'store', dest = 'input_gene_panel_folder', required = True, help = 'Gene Panel folder (optional)')	
 	args = parser.parse_args()
 
 	_genePanelFolder = args.input_gene_panel_folder
 	_inputStudyFolder = args.input_study_folder
+	_sampleTmbMap = {}
 
-	_sampleTmbMap = calcTMB(extractCDS(_inputStudyFolder, _genePanelFolder, cntVariants(_inputStudyFolder)))
-	addTMB(_inputStudyFolder, _sampleTmbMap)
+	sys.stdout.write(os.path.basename(_inputStudyFolder) + "\t")
+
+	if os.path.isdir(_inputStudyFolder) and os.path.isdir(_genePanelFolder):
+		# Find matrix file -> targeted sequenced studies
+		if os.path.isfile(_inputStudyFolder + "/" + MATRIX_FILE_NAME):
+			sys.stdout.write("Targeted\t")
+			_sampleTmbMap = calcTMB(extractCDS(_inputStudyFolder, _genePanelFolder, cntVariants(_inputStudyFolder)))
+		else: # No matrix file -> WGS/WES studies
+			sys.stdout.write("WGS/WES\t")
+			_sampleTmbMap = calcTMB(cntVariants(_inputStudyFolder))
+		addTMB(_inputStudyFolder, _sampleTmbMap)
+	else:
+		print("Error input folder path(s)!")
+		sys.exit(2)
 
 if __name__ == '__main__':
 	main()

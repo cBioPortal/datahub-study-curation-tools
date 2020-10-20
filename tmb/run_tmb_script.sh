@@ -1,0 +1,1 @@
+python calc_nonsyn_tmb.py -p /Users/suny1/github/datahub/reference_data/gene_panels/ -i /Users/suny1/github/datahub/public/$1
