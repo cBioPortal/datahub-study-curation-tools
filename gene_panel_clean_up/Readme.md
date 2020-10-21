@@ -2,7 +2,7 @@
 Replace gene symbols in gene panels according to the mapping file. 
 
 ### Command Line
-
+```
 usage: cleanup_gene_panel.py [-h] -p INPUT_GENE_PANEL_FOLDER -m
                              INPUT_GENE_MAPPING_FILE -o
                              OUTPUT_GENE_PANEL_FOLDER
@@ -15,7 +15,7 @@ optional arguments:
                         Gene Mapping
   -o OUTPUT_GENE_PANEL_FOLDER, --output-gene-panel-folder OUTPUT_GENE_PANEL_FOLDER
                         Output Folder for Updated Panels
-
+```
 ### Example
 
 ```
