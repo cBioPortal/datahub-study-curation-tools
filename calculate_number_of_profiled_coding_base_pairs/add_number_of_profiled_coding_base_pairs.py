@@ -19,7 +19,7 @@ def update_file(args):
     input_file = args.input_file
     uniprot_file = args.uniprot_file or os.getcwd() + "/uniprot_gene_name_with_protein_length.tab"
     output_file = args.output_file or os.path.dirname(input_file) + "/output_" + ntpath.basename(input_file)
-    source = args.source or "map"
+    source = args.source or "combined"
     genome_nexus_domain = args.genome_nexus_domain or "https://www.genomenexus.org"
     mapping_file = args.mapping_file or os.getcwd() + "/mapping_per_gene.tsv"
 
@@ -27,8 +27,48 @@ def update_file(args):
     input = open(input_file, 'rt')
     output = open(output_file, 'wt')
 
+    # first check mapping spreadsheet, if gene not found then check Uniprot file.
+    if source == "combined":
+        # get protein length by gene name from mapping file
+        df_mapping_per_gene = pd.read_csv(mapping_file, sep='\t')
+        gene_name_to_length_dict = dict()
+        df_mapping_per_gene.apply(lambda row: generate_dict(row['Gene_Symbol'], row['uniprot_protein_length'], gene_name_to_length_dict), axis=1)
+        
+        # get protein length from Uniprot
+        df_uniprot_gene_name_with_protein_length = pd.read_csv(uniprot_file, sep='\t')
+        gene_name_to_length_dict_primary = dict()
+        gene_name_to_length_dict_synonym = dict()
+        df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (primary )'], row['Length'], gene_name_to_length_dict_primary), axis=1)
+        df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (synonym )'], row['Length'], gene_name_to_length_dict_synonym), axis=1)
+
+        for row in input.readlines():
+            output.write(row)
+            # find the gene list
+            split_row = row.split(":")
+            if len(split_row) == 2 and split_row[0] == "gene_list":
+                genes = split_row[1].split('\t')
+                count = 0
+                if genes[0] == "":
+                    genes.pop(0)
+                for gene in genes:
+                    gene = gene.strip()
+                    if gene in gene_name_to_length_dict:
+                        count += gene_name_to_length_dict[gene]
+                    elif gene in gene_name_to_length_dict_primary:
+                        count += gene_name_to_length_dict_primary[gene]
+                    elif gene in gene_name_to_length_dict_synonym:
+                        count += gene_name_to_length_dict_synonym[gene]
+                    else:
+                        print(gene + " not found")
+                # CDS size is calculated by sum(protein length * 3)
+                count = count * 3
+                if not genes[-1].endswith("\n"):
+                    output.write("\n")
+                output.write("number_of_profiled_coding_base_pairs: " + str(count))
+
+
     # source is local map
-    if source == "map":
+    elif source == "map":
         # get protein length by gene name from mapping file
         df_mapping_per_gene = pd.read_csv(mapping_file, sep='\t')
         gene_name_to_length_dict = dict()
@@ -136,7 +176,7 @@ def check_output_file_path(output_file):
         sys.exit(2)
 
 def check_source(source):
-    if source != "genomenexus" and source != "uniprot" and source != "map":
+    if source != "genomenexus" and source != "uniprot" and source != "map" and source != "combined":
         print('Source is not valid, please set souce as one of the options: genomenexus | uniprot | map')
         sys.exit(2)
 
@@ -150,7 +190,7 @@ def interface():
     parser.add_argument('-o', '--output-file', dest = 'output_file', type=str, required=False, 
                         help='absolute path to save the output file')
     parser.add_argument('-s', '--source', dest = 'source', type=str, required=False,
-                        help='set protein length data source. Options: genomenexus | uniprot | map')
+                        help='set protein length data source. Options: genomenexus | uniprot | map | combined')
     parser.add_argument('-g', '--genome-nexus-domain', dest = 'genome_nexus_domain', type=str, required=False, 
                         help='custom Genome Nexus domain, using uniprot or map as source will ignore this variable')
     parser.add_argument('-m', '--mapping-file', dest = 'mapping_file', type=str, required=False, 

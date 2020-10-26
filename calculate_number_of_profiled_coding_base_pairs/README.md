@@ -28,19 +28,26 @@ Command variables:
 - `-i`, `--input-file`, required, absolute path to the input meta file
 - `-u`, `--uniprot-file`, optional, absolute path to the UniProt file, by default will use `uniprot_gene_name_with_protein_length.tab` file under the same directory
 - `-o`, `--output-file`, optional, absolute path to save the new file, by default will save the output file with `output_` as prefix under the same directory
-- `-s`, `--source`, optional, set data source for getting protein length , must be either `genomenexus`,  `uniprot` or `map`, by default is set to `map`
+- `-s`, `--source`, optional, set data source for getting protein length , must be either `genomenexus`,  `uniprot`, `map` or `combined`, by default is set to `combined`
 - `-g`, `--genome-nexus-domain`, optional, domain for genome nexus, by default `genome-nexus-domain` is set to `https://www.genomenexus.org`
 - `-m`, `--mapping-file`, optional, absolute path to mapping file, by default will use `mapping_per_gene.tsv` file under the same directory
 
 Example command:
-- Using mapping file
+- Using combined mapping method
 ```
 python add_number_of_profiled_coding_base_pairs.py -i /YOUR_PATH/data_gene_panel_example.txt
+```
+
+- Using mapping file
+```
+python add_number_of_profiled_coding_base_pairs.py -i /YOUR_PATH/data_gene_panel_example.txt -s map
+
 ```
 - Using Genome Nexus
 ```
 python add_number_of_profiled_coding_base_pairs.py -i /YOUR_PATH/data_gene_panel_example.txt -s genomenexus
 ```
+
 - Using Uniprot
 ```
 python add_number_of_profiled_coding_base_pairs.py -i /YOUR_PATH/data_gene_panel_example.txt -s uniprot
