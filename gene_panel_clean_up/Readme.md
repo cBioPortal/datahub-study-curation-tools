@@ -27,3 +27,4 @@ Gene mapping file currenctly includes panel genes that are:
 - alias <> main
 - outdated <> current
 - typo <> correct
+* all new symbols are in public DB gene table
