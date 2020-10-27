@@ -24,7 +24,8 @@ python cleanup_gene_panel.py -p path/to/gene_panels -m gene_mapping.txt -o path/
 
 ### Notes
 Gene mapping file currenctly includes panel genes that are:
+(all new symbols are in public DB gene table)
 - alias <> main
 - outdated <> current
 - typo <> correct
-* all new symbols are in public DB gene table
+
