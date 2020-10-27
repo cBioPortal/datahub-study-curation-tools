@@ -15,6 +15,15 @@ def generate_dict(key, value, dictionary):
         for gene in genes:
             dictionary[gene] = value
 
+def get_protein_length_from_uniprot(uniprot_file, gene_name_to_length_dict_primary, gene_name_to_length_dict_synonym):
+    df_uniprot_gene_name_with_protein_length = pd.read_csv(uniprot_file, sep='\t')
+    df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (primary )'], row['Length'], gene_name_to_length_dict_primary), axis=1)
+    df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (synonym )'], row['Length'], gene_name_to_length_dict_synonym), axis=1)
+
+def get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict):
+    df_mapping_per_gene = pd.read_csv(mapping_file, sep='\t')
+    df_mapping_per_gene.apply(lambda row: generate_dict(row['Gene_Symbol'], row['uniprot_protein_length'], gene_name_to_length_dict), axis=1)
+
 def update_file(args):
     input_file = args.input_file
     uniprot_file = args.uniprot_file or os.getcwd() + "/uniprot_gene_name_with_protein_length.tab"
@@ -27,29 +36,25 @@ def update_file(args):
     input = open(input_file, 'rt')
     output = open(output_file, 'wt')
 
-    # first check mapping spreadsheet, if gene not found then check Uniprot file.
-    if source == "combined":
-        # get protein length by gene name from mapping file
-        df_mapping_per_gene = pd.read_csv(mapping_file, sep='\t')
-        gene_name_to_length_dict = dict()
-        df_mapping_per_gene.apply(lambda row: generate_dict(row['Gene_Symbol'], row['uniprot_protein_length'], gene_name_to_length_dict), axis=1)
-        
-        # get protein length from Uniprot
-        df_uniprot_gene_name_with_protein_length = pd.read_csv(uniprot_file, sep='\t')
-        gene_name_to_length_dict_primary = dict()
-        gene_name_to_length_dict_synonym = dict()
-        df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (primary )'], row['Length'], gene_name_to_length_dict_primary), axis=1)
-        df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (synonym )'], row['Length'], gene_name_to_length_dict_synonym), axis=1)
-
-        for row in input.readlines():
+    for row in input.readlines():
+        split_row = row.split(":")
+        count = 0
+        # find the gene list
+        if len(split_row) == 2 and split_row[0] == "gene_list":
             output.write(row)
-            # find the gene list
-            split_row = row.split(":")
-            if len(split_row) == 2 and split_row[0] == "gene_list":
-                genes = split_row[1].split('\t')
-                count = 0
-                if genes[0] == "":
-                    genes.pop(0)
+            genes = split_row[1].split('\t')
+            if genes[0] == "":
+                genes.pop(0)
+
+            # first check mapping spreadsheet, if gene not found then check Uniprot file.
+            if source == "combined":
+                # get protein length by gene name from mapping file
+                gene_name_to_length_dict = dict()
+                get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict)
+                # get protein length from Uniprot
+                gene_name_to_length_dict_primary = dict()
+                gene_name_to_length_dict_synonym = dict()
+                get_protein_length_from_uniprot(uniprot_file, gene_name_to_length_dict_primary, gene_name_to_length_dict_synonym)
                 for gene in genes:
                     gene = gene.strip()
                     if gene in gene_name_to_length_dict:
@@ -62,27 +67,11 @@ def update_file(args):
                         print(gene + " not found")
                 # CDS size is calculated by sum(protein length * 3)
                 count = count * 3
-                if not genes[-1].endswith("\n"):
-                    output.write("\n")
-                output.write("number_of_profiled_coding_base_pairs: " + str(count))
-
-
-    # source is local map
-    elif source == "map":
-        # get protein length by gene name from mapping file
-        df_mapping_per_gene = pd.read_csv(mapping_file, sep='\t')
-        gene_name_to_length_dict = dict()
-        df_mapping_per_gene.apply(lambda row: generate_dict(row['Gene_Symbol'], row['uniprot_protein_length'], gene_name_to_length_dict), axis=1)
-
-        for row in input.readlines():
-            output.write(row)
-            # find the gene list
-            split_row = row.split(":")
-            if len(split_row) == 2 and split_row[0] == "gene_list":
-                genes = split_row[1].split('\t')
-                count = 0
-                if genes[0] == "":
-                    genes.pop(0)
+            # source is local map
+            elif source == "map":
+                # get protein length by gene name from mapping file
+                gene_name_to_length_dict = dict()
+                get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict)
                 for gene in genes:
                     gene = gene.strip()
                     if gene in gene_name_to_length_dict:
@@ -91,22 +80,9 @@ def update_file(args):
                         print(gene + " not found in mapping file")
                 # CDS size is calculated by sum(protein length * 3)
                 count = count * 3
-                if not genes[-1].endswith("\n"):
-                    output.write("\n")
-                output.write("number_of_profiled_coding_base_pairs: " + str(count))
-
-
-    # source is genome nexus
-    elif source == "genomenexus":
-        for row in input.readlines():
-            output.write(row)
-            # find the gene list
-            split_row = row.split(":")
-            if len(split_row) == 2 and split_row[0] == "gene_list":
-                genes = split_row[1].split('\t')
-                count = 0
-                if genes[0] == "":
-                    genes.pop(0)
+            
+            # source is genome nexus
+            elif source == "genomenexus":
                 for gene in genes:
                     gene = gene.strip()
                     gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urllib.parse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
@@ -126,28 +102,13 @@ def update_file(args):
                         print("HTTP Status " + str(gn_response_status) + " for " + gene)
                 # CDS size is calculated by sum(protein length * 3)
                 count = count * 3
-                if not genes[-1].endswith("\n"):
-                    output.write("\n")
-                output.write("number_of_profiled_coding_base_pairs: " + str(count))
-   
-   # source is uniprot
-    else:
-        # get protein length by gene name
-        df_uniprot_gene_name_with_protein_length = pd.read_csv(uniprot_file, sep='\t')
-        gene_name_to_length_dict_primary = dict()
-        gene_name_to_length_dict_synonym = dict()
-        df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (primary )'], row['Length'], gene_name_to_length_dict_primary), axis=1)
-        df_uniprot_gene_name_with_protein_length.apply(lambda row: generate_dict(row['Gene names  (synonym )'], row['Length'], gene_name_to_length_dict_synonym), axis=1)
-
-        for row in input.readlines():
-            output.write(row)
-            # find the gene list
-            split_row = row.split(":")
-            if len(split_row) == 2 and split_row[0] == "gene_list":
-                genes = split_row[1].split('\t')
-                count = 0
-                if genes[0] == "":
-                    genes.pop(0)
+        
+        # source is uniprot
+            elif source == "uniprot":
+                # get protein length by gene name from uniprot
+                gene_name_to_length_dict_primary = dict()
+                gene_name_to_length_dict_synonym = dict()
+                get_protein_length_from_uniprot(uniprot_file, gene_name_to_length_dict_primary, gene_name_to_length_dict_synonym)
                 for gene in genes:
                     gene = gene.strip()
                     if gene in gene_name_to_length_dict_primary:
@@ -158,9 +119,17 @@ def update_file(args):
                         print(gene + " not found in UniProt file")
                 # CDS size is calculated by sum(protein length * 3)
                 count = count * 3
-                if not genes[-1].endswith("\n"):
-                    output.write("\n")
-                output.write("number_of_profiled_coding_base_pairs: " + str(count))
+
+            # write number_of_profiled_coding_base_pairs to output file
+            if not genes[-1].endswith("\n"):
+                output.write("\n")
+            output.write("number_of_profiled_coding_base_pairs: " + str(count))
+        
+        # for files already have number_of_profiled_coding_base_pairs, ignore the existing value
+        elif len(split_row) == 2 and split_row[0] == "number_of_profiled_coding_base_pairs":
+            pass
+        else:
+            output.write(row)
     input.close()
     output.close()
 
@@ -177,7 +146,7 @@ def check_output_file_path(output_file):
 
 def check_source(source):
     if source != "genomenexus" and source != "uniprot" and source != "map" and source != "combined":
-        print('Source is not valid, please set souce as one of the options: genomenexus | uniprot | map')
+        print('Source is not valid, please set souce as one of the options: genomenexus | uniprot | map | combined')
         sys.exit(2)
 
 def interface():
