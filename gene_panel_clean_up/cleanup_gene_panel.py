@@ -71,7 +71,7 @@ def main():
 							_updatedPanelGenes.append(_geneMapping[_panelGene])
 						else: 
 							_updatedPanelGenes.append(_panelGene)
-					_outputPanelFile.write(PANEL_FILE_GENE_LIST_FIELD_NAME + " " + '\t'.join(_updatedPanelGenes))
+					_outputPanelFile.write(PANEL_FILE_GENE_LIST_FIELD_NAME + " " + '\t'.join(_updatedPanelGenes) + "\n")
 				else:
 					_outputPanelFile.write(_line)
 

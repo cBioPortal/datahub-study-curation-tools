@@ -7,7 +7,7 @@ import ntpath
 import requests
 import json
 import re
-import urllib.parse
+import urlparse
 
 def generate_dict(key, value, dictionary):
     if not pd.isnull(key):
@@ -85,7 +85,7 @@ def update_file(args):
             elif source == "genomenexus":
                 for gene in genes:
                     gene = gene.strip()
-                    gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urllib.parse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
+                    gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urlparse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
                     # get json response from genome nexus
                     raw_gn_response = requests.get(gn_request)
                     gn_response_status = raw_gn_response.status_code
