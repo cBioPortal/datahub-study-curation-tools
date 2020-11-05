@@ -7,7 +7,7 @@ import ntpath
 import requests
 import json
 import re
-import urlparse
+import urllib.parse
 
 def generate_dict(key, value, dictionary):
     if not pd.isnull(key):
@@ -26,7 +26,7 @@ def get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict
 
 def look_up_in_genome_nexus(gene, genome_nexus_domain):
     gene = gene.strip()
-    gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urlparse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
+    gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urllib.parse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
     # get json response from genome nexus
     return requests.get(gn_request)    
 
