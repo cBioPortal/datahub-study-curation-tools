@@ -28,5 +28,5 @@ python hgnc_data_file_migration.py [-h] -path SOURCE_PATH [-l | -o | -n]
 -n | --create_new_file: Save the migrated data to new file without overriding the old files.
 ```
 
-**Note**
+**Note:**
 The arguments -l, -o and -n are mutually exclusive.
