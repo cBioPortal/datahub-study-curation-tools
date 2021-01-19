@@ -1,12 +1,12 @@
 ## HGNC Genomic Data Migration Tool
 
 This tool is intended to migrate the changes in entrez ids and hugo symbols based on HGNC in data files. The tool,
-1. Replaces the outdated entrez ids to new entrez ids. The outdated to new entrez id mapping file is pre-defined based on our analysis and is  included in the script folder.
+1. Replaces the outdated entrez ids/hugo symbols to new entrez ids/hugo symbols. The outdated to new entrez id/hugo symbols mappings are pre-defined based on our analysis and is included in the script folder.
 2. Updates the non-matching hugo symbols based on the entrez ids. 
 For example, if the data file contains hugo symbol entrez id pair `MST4	6788`, the hugo symbol `MST4` gets updated to `STK3` since MST4 is not a valid symbol for entrez id 6788.
 
 ### Prerequisites
-The Migration tool runs on python 3 and requires `pandas` library. `pandas` be installed using
+The Migration tool runs on python 3 and requires `pandas` library. `pandas` can be installed using
 ```
 pip3 install pandas
  ```
@@ -21,7 +21,6 @@ python hgnc_data_file_migration.py [-h] -path SOURCE_PATH [-l | -o | -n]
 
 **Options**
 ```
--h | --help: show this help message and exit
 -path | --source_path: Path to the data file or directory (of files) that needs to be migrated.
 -l | --stdout_log: Dry-run the script. Preview the changes that will be made to the files.
 -o | --override_file:  Override the old data files.
@@ -29,4 +28,4 @@ python hgnc_data_file_migration.py [-h] -path SOURCE_PATH [-l | -o | -n]
 ```
 
 **Note:**
-The arguments -l, -o and -n are mutually exclusive.
+The arguments -l, -o and -n are mutually exclusive with -l as default.

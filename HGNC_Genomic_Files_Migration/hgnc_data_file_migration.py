@@ -3,7 +3,6 @@ import os
 import argparse
 import pandas as pd
 
-#---Read command line arguments--->
 def interface():
 	parser = argparse.ArgumentParser(description='Script to propagate changes in hugo symbols and entrez gene ids in data files based on HGNC.')
 	parser.add_argument('-path', '--source_path', required=True, help='Path to the data file or directory that needs to be migrated.')
@@ -26,10 +25,14 @@ def hgnc_gene_data():
 	alias_table_entrez_dict = dict(zip(alias_table_df1['entrez_id'],alias_table_df1['symbol']))
 
 	#Read the outdated to new entrez id mapping file (consolidated from all sub categories of the analysis)
-	outdated_entrez_df = pd.read_csv('outdated_entrez_ID_mappings.txt', sep='\t', header=0, keep_default_na=False, dtype=str)
+	outdated_entrez_df = pd.read_csv('outdated_entrez_ids.txt', sep='\t', header=0, keep_default_na=False, dtype=str)
 	outdated_entrez_dict = dict(zip(outdated_entrez_df['old_entrez_id'],outdated_entrez_df['updated_entrez_id']))
 	
-	return main_table_entrez_dict,alias_table_entrez_dict,outdated_entrez_dict
+	#Read the outdated to new hugo symbol mapping file (for cases where the file has only hugo symbol column)
+	outdated_hugo_df = pd.read_csv('outdated_hugo_symbols.txt', sep='\t', header=0, dtype=str)
+	outdated_hugo_dict = dict(zip(outdated_hugo_df['outdated_hugo_symbol'],outdated_hugo_df['new_hugo_symbol']))
+	
+	return main_table_entrez_dict, alias_table_entrez_dict, outdated_entrez_dict, outdated_hugo_dict
 
 #---Check the input type (file/directory) and get the list of files (1 or many)--->
 def check_path(source_path):
@@ -67,7 +70,7 @@ def update_outdated_entrezids(entrez_index, data_file, outdated_entrez_dict):
 		return updated_data,log
 
 #---If the file has both hugo_symbol and entrez_id columns, update outdated entrez ids first and then update the invalid hugo symbols based on entrez ids--->	
-def update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dict, main_table_entrez_dict, alias_table_entrez_dict):
+def update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dict, outdated_hugo_dict, main_table_entrez_dict, alias_table_entrez_dict):
 	with open(data_file,'r') as datafile:
 		updated_data = ""
 		log = ""
@@ -125,9 +128,32 @@ def update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dic
 						line1[gene_index] = ""
 						log += hugo+'\t'+entrez+'\t\t---hugo symbol updated to empty---\t\t'+""+'\t'+entrez+'\n'
 						updated_data += '\t'.join(line1)+'\n'
+					elif hugo in outdated_hugo_dict:
+						line1[gene_index] = outdated_hugo_dict[hugo]
+						log += hugo+'\t'+entrez+'\t\t---hugo symbol updated to---\t\t'+outdated_hugo_dict[hugo]+'\t'+entrez+'\n'
+						updated_data += '\t'.join(line1)+'\n'
 					else:
 						updated_data += line
 		
+		return updated_data,log
+		
+#---If the file has only hugo_symbol column, update the symbol if outdated. The outdated list is pre-defined from our analysis--->
+def update_outdated_hugo_symbols(gene_index, data_file, outdated_hugo_dict):
+	with open(data_file,'r') as datafile:
+		updated_data = ""
+		log = ""
+		for line in datafile:
+			if line.startswith('#') or line.startswith('Hugo_Symbol'):
+				updated_data += line
+			else:
+				line1 = line.strip('\n').split('\t')
+				hugo = line1[gene_index]
+				if hugo in outdated_hugo_dict:
+					log += hugo+'\t\t---hugo symbol replaced to---\t\t'+outdated_hugo_dict[hugo]+'\n'
+					line1[gene_index] = outdated_hugo_dict[hugo]
+					updated_data += '\t'.join(line1)+'\n'
+				else:
+					updated_data += line
 		return updated_data,log
 		
 #---based on the output mode passed by the user, either overwrite the file or create new file with _updated suffix--->		
@@ -159,7 +185,7 @@ def main(parsed_args):
 	for data_file in files_list: print(data_file)
 
 	#---Create hgnc gene, alias, outdated entrez dictionaries--->
-	main_table_entrez_dict,alias_table_entrez_dict,outdated_entrez_dict = hgnc_gene_data()
+	main_table_entrez_dict,alias_table_entrez_dict,outdated_entrez_dict,outdated_hugo_dict = hgnc_gene_data()
 	
 	data_log = ""
 	for data_file in files_list:
@@ -173,7 +199,7 @@ def main(parsed_args):
 					if 'Entrez_Gene_Id' in header_cols and 'Hugo_Symbol' in header_cols:
 						entrez_index = header_cols.index('Entrez_Gene_Id')
 						gene_index = header_cols.index('Hugo_Symbol')
-						updated_data,log = update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dict, main_table_entrez_dict, alias_table_entrez_dict)
+						updated_data,log = update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dict, outdated_hugo_dict, main_table_entrez_dict, alias_table_entrez_dict)
 						if log != "":
 							data_log += "<-------------------------------------"+data_file+"--------------------------------->\n\n"
 							data_log += log+'\n'
@@ -185,6 +211,15 @@ def main(parsed_args):
 					elif 'Entrez_Gene_Id' in header_cols and 'Hugo_Symbol' not in header_cols:
 						entrez_index = header_cols.index('Entrez_Gene_Id')
 						updated_data,log = update_outdated_entrezids(entrez_index, data_file, outdated_entrez_dict)
+						if log != "":
+							data_log += "<-------------------------------------"+data_file+"--------------------------------->\n\n"
+							data_log += log+'\n'
+							update_datafile_mode(parsed_args.override_file, parsed_args.create_new_file, updated_data, data_file)
+						else:
+							print("No updates to file: "+data_file)
+					elif 'Entrez_Gene_Id' not in header_cols and 'Hugo_Symbol' in header_cols:
+						gene_index = header_cols.index('Hugo_Symbol')
+						updated_data,log = update_outdated_hugo_symbols(gene_index, data_file, outdated_hugo_dict)
 						if log != "":
 							data_log += "<-------------------------------------"+data_file+"--------------------------------->\n\n"
 							data_log += log+'\n'
