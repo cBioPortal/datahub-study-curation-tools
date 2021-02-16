@@ -6,6 +6,13 @@ Scripts to build an input file, to be used by importer to build/update seedDB ge
 
 #### First, download latest HGNC table
 
+Run commandline
+```
+wget ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
+```
+
+OR
+
 Go to `https://www.genenames.org/download/statistics-and-files/`  
 Under `Complete dataset download links` section `Complete HGNC approved dataset`  
 
