@@ -18,7 +18,8 @@ So we need to fill these genes back up using this sheet: https://rb.gy/pqg455
 100874024: TRPC7-AS1, TRPC7-AS2
 1550: CYP2A7P2,CYP2A7P1
 
-### Step 4 - Remove all miRNA entries
+### Step 4 - Remove all miRNA genes
+Remove all entires with `locus_type` value as `RNA, micro`
 
 ### Step 5 - Extract columns from HGNC table
 
