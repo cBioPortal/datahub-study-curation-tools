@@ -30,11 +30,6 @@ ensembl_id
 
 ## Resources
 
-`entrez-id-mapping.txt` generated from  
-https://rb.gy/pqg455
-
-`type-mapping.txt` generated from 
-https://rb.gy/4wfl2k
-
-`location-mapping.txt` generated from
-https://rb.gy/vt2wsc
+`entrez-id-mapping.txt` is generated from https://rb.gy/pqg455
+`type-mapping.txt` is generated from https://rb.gy/4wfl2k
+`location-mapping.txt` is generated from https://rb.gy/vt2wsc
