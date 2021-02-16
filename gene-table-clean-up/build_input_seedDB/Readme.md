@@ -1,21 +1,22 @@
-## What is this? 
+## Introduction
 
 Scripts to build an input file, which is used by importer to build/update seedDB gene tables.
 
 ## Usage
 
-- First, download latest HGNC table
+#### First, download latest HGNC table
 
 Go to `https://www.genenames.org/download/statistics-and-files/`
 Under `Complete dataset download links` section `Complete HGNC approved dataset`
 Save as `hgnc_download_date.txt`
 
-- Then, Run the script
+#### Then, Run the script
 
 ```
 python build-gene-table.py
 ```
-- The final output file should include fields
+
+#### The final output file should include fields
 
 ```
 entrez_id
