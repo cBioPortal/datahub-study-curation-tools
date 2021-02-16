@@ -1,10 +1,11 @@
-Below are steps for building an input file, to be used by importer to build/update seedDB gene tables
+## What is this?
+Follow the steps below for building an input file, to be used by importer to build/update seedDB gene tables
 
 ### Step 1 - Download HGNC table
 
 Go to `https://www.genenames.org/download/statistics-and-files/`
 
-Under `Complete dataset download links` section: `Complete HGNC approved dataset`
+Under `Complete dataset download links` section `Complete HGNC approved dataset`
 
 ### Step 2 - Fill up empty entrez IDs
 
