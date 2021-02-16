@@ -7,6 +7,7 @@ Scripts to build an input file, which is used by importer to build/update seedDB
 #### First, download latest HGNC table
 
 Go to `https://www.genenames.org/download/statistics-and-files/`
+
 Under `Complete dataset download links` section `Complete HGNC approved dataset`
 Save as `hgnc_download_date.txt`
 
