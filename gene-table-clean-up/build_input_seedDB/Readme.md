@@ -48,7 +48,7 @@ cytoband
 type
 synonyms
 hgnc_id (unique)
-ensembl_id (unique)
+ensembl_gene_id (unique)
 ```
 
 ## Mappings
