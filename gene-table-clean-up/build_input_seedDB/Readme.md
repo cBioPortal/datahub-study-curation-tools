@@ -68,7 +68,7 @@ For `location` values that follows the standard format
 - Parse by arms `q` or `p` (e.g. `19q13.12`, `4q31.21-q31.22`) to obtain `chromosome`
 - For empty values, use `-`
 
-## Supp Files
+## Supp Files & Trouble Shooting
 To reduce data loss caused by gene table udpates, we supplemental some important genes.  
 Details at [HGNC vs current DB data availibility comparison analysis](https://rb.gy/rbfdnl)
 
