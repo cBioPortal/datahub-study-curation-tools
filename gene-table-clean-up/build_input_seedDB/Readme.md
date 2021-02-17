@@ -76,18 +76,17 @@ Details at [HGNC vs current DB data availibility comparison analysis](https://rb
 Genes to supplement to HGNC download as main genes.
 
 ##### Troubleshoot #1
-When running the script with the updated HGNC download, some supplemental main entries would became part of updated HGNC, 
-and cause ERRORS as below 
+When running the script with the updated HGNC download, some supplemental main entries would became available in the "new" HGNC.
+This would cause ERRORs and script to exit.
 ```
 Error: Duplicate entrez ID detected ...
-```
-, which would cause the script to exit.  
+``` 
 To resolve ERRORs, remove this entry from `main-supp.txt`, or make it as an alias.
 
 #### Supplemental alias genes `alias-supp.txt`
 
 ##### Troubleshoot #1
-With HGNC update, some entrez IDs may become unavailable, and cause WARNINGs as below
+With HGNC update, some entrez IDs may become unavailable, and cause WARNINGs.
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
@@ -114,14 +113,14 @@ To resolve ERRORs, add logged entries to `entrez-id-supp.txt` and give each a `S
 `cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
 
 ##### Troubleshoot #1
-With HGNC update, some entries may get new location information in HGNC, and cause WARNINGs as below 
+With HGNC update, some entries may get new location information in HGNC, and cause WARNINGs.
 ```
 WARNING: ... entry already have location info. (Redundancy and possible conflicts)
 ```
 To clear WARNINGs, remove this entry from `location-supp.txt`
 
 ##### Troubleshoot #2
-With HGNC update, some entrez ID may become unavailable, and cause WARNINGs as below
+With HGNC update, some entrez ID may become unavailable, and cause WARNINGs.
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
