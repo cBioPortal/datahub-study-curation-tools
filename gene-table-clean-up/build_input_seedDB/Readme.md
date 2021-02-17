@@ -76,9 +76,11 @@ to enable to script to run successfully.
 Mapping between HGNC `locus_group` and `locus_type` vs. portal DB `type`
 
 #### Location mapping `location-mapping.txt`
-Mapping between HGNC `location` vs. portal DB `chromosome` and `cytoband`
+Define mapping between HGNC `location` vs. portal DB `chromosome` and `cytoband`  
 This list contains all the "unconvention" values in the HGNC `location` columns, and their corresponding values in portal DB. 
-For `location` values that follows the standard format (e.g. `19q13.12`, `4q31.21-q31.22`), just parsing by arms (`q` or `p`) to obtain `chromosome`.
+For `location` values that follows the standard format 
+- Parse by arms `q` or `p` (e.g. `19q13.12`, `4q31.21-q31.22`) to obtain `chromosome`
+- For empty values, use `-`
 
 ## Supp Files
 To reduce data loss caused by gene table udpates, we supplemental some important genes.  
