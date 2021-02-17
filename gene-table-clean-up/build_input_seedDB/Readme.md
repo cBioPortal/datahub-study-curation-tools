@@ -87,12 +87,16 @@ Details at [HGNC vs current DB data availibility comparison analysis](https://rb
 #### Supplemental main genes `supp-main.txt`
 Genes to supplement to HGNC download as main genes.
 When running the script with the updated HGNC download, some supplemental main entries would became part of updated HGNC, 
-and cuase errors as below 
+and cause ERRORS as below 
 ```
 Error: Duplicate entrez ID detected
 ```
 which would cause the script to exit. 
-Remove this gene from supp-main, or make it as an alias, to enable to script to run successfully. 
+Remove this entry from supp-main, or make it as an alias, to enable to script to run successfully. 
 
 #### Supplemental alias genes `supp-alias.txt`
-
+With HGNC update, some entrez ID may become unavailable, and cause WARNINGS as below
+```
+entry is skipped - entrez ID does not exist in main table
+```
+Remove this entry from supp-alias, to clear warnings.
