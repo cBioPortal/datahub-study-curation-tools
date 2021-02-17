@@ -53,5 +53,5 @@ When running the script with the updated HGNC download, some new entries would c
 Error: assign entrez ID to (OR delete) :
 ```
 which would cause the script to exit. 
-These new entries needs to be added to this mapping, and given a `STATUS` (entrez ID OR `R`),
+These new entries need to be added to this mapping files, and given a `STATUS` (entrez ID OR `R`),
 to enable to script to run successfully. 
