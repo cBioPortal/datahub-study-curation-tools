@@ -37,8 +37,8 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
 ```
 
 ## Output
-- Gene data file: the output file would be deposited under the same directory and named as `final-import-gene-data-_date_.txt` if not specified otherwise
-- Log file: a log file would be generated under the same directory and named `build-gene-table-import-_date_.log` 
+- Gene data file: the output file would be deposited under the same directory and named as `gene-import-input-_date_.txt` if not specified otherwise
+- Log file: a log file would be generated under the same directory and named `gene-import-input-_date_.log` 
 #### Content
 The final output file should include fields below
 | FIELD_NAME | VALUE|CAN BE NULL?| DISTINCT? |
