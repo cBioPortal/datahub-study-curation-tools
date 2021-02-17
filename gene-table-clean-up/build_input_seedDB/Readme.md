@@ -28,14 +28,14 @@ python build-gene-table-input.py -i hgnc_complete_set.txt -m supp-files/main-sup
 ##### Commandline
 ```
   -h, --help            show this help message and exit
-  -i INPUT_HGNC_FILE_NAME, --input-hgnc-file-name INPUT_HGNC_FILE_NAME
-                        downloaded HGNC file
-  -m INPUT_SUPP_MAIN_FILE_NAME, --input-supp-main-name INPUT_SUPP_MAIN_FILE_NAME
-                        File of genes to supplement to main table
-  -a INPUT_SUPP_ALIAS_FILE_NAME, --input-supp-alias-name INPUT_SUPP_ALIAS_FILE_NAME
-                        File of genes to supplement to alias table
+  -i INPUT_HGNC_FILE, --input-hgnc-file INPUT_HGNC_FILE
+                        (Required)Downloaded HGNC file
+  -m INPUT_SUPP_MAIN_FILE, --input-supp-main-file INPUT_SUPP_MAIN_FILE
+                        (Required)File of genes to supplement to main table
+  -a INPUT_SUPP_ALIAS_FILE, --input-supp-alias-file INPUT_SUPP_ALIAS_FILE
+                        (Required)File of genes to supplement to alias table
   -o OUTPUT_FILE_NAME, --output-file-name OUTPUT_FILE_NAME
-                        Name of the output file
+                        (Required)Name of the output file
 ```
 
 ## Output
