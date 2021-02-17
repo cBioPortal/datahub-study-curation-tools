@@ -1,0 +1,15 @@
+hgnc_location	db_chr	db_cytoband
+(empty)	-	-
+reserved	-	reserved
+not on reference assembly	-	not on reference assembly
+unplaced	-	unplaced
+19q13.12	19	19q13.12
+4q31.21-q31.22	4	4q31.21-q31.22
+Xp22.33 and Yp11.32	X	Xp22.33 and Yp11.32
+22q13 alternate reference locus	22	22q13
+21p11.1 not on reference assembly	21	21p11.1
+13cen, GRCh38 novel patch	13	13cen, GRCh38 novel patch
+22pter-q11	22	22pter-q11
+14 unplaced	14	14 unplaced
+22 unplaced	22	22 unplaced
+mitochondria	M	mitochondria
