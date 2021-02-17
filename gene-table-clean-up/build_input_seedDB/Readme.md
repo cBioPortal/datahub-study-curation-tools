@@ -4,9 +4,8 @@ Scripts to build an input file, to be used by importer to build/update seedDB ge
 
 ## Usage
 
-#### First, download latest HGNC table
+#### Step 1 - download latest HGNC table
 
-Run commandline
 ```
 wget ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
 ```
@@ -14,9 +13,9 @@ wget ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
 OR
 
 Go to `https://www.genenames.org/download/statistics-and-files/`  
-Under `Complete dataset download links` section `Complete HGNC approved dataset`  
+Under `Complete dataset download links` section, click `Complete HGNC approved dataset`  
 
-#### Then, Run the script
+#### Step 2 - Run the script
 
 ```
 python build-gene-table.py -i hgnc_download_nov_2_2020.txt -o final_gene_list_import.txt -m main-supp.txt -a alias-supp.txt
