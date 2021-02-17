@@ -4,7 +4,7 @@ Scripts to build an input file, to be used by importer to build/update seedDB ge
 
 ## Usage
 
-#### Step 1 - download latest HGNC table
+#### Step 1 - Download latest HGNC gene table
 
 ```
 wget ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
@@ -17,8 +17,21 @@ Under `Complete dataset download links` section, click `Complete HGNC approved d
 
 #### Step 2 - Run the script
 
+##### Example
 ```
-python build-gene-table.py -i hgnc_download_nov_2_2020.txt -o final_gene_list_import.txt -m main-supp.txt -a alias-supp.txt
+python build-gene-table.py -i hgnc_complete_set.txt -o final_gene_list_import.txt -m main-supp.txt -a alias-supp.txt
+```
+##### Commandline
+```
+  -h, --help            show this help message and exit
+  -i INPUT_HGNC_FILE_NAME, --input-hgnc-file-name INPUT_HGNC_FILE_NAME
+                        downloaded HGNC file
+  -m INPUT_SUPP_MAIN_FILE_NAME, --input-supp-main-name INPUT_SUPP_MAIN_FILE_NAME
+                        File of genes to supplement to main table
+  -a INPUT_SUPP_ALIAS_FILE_NAME, --input-supp-alias-name INPUT_SUPP_ALIAS_FILE_NAME
+                        File of genes to supplement to alias table
+  -o OUTPUT_FILE_NAME, --output-file-name OUTPUT_FILE_NAME
+                        Name of the output file
 ```
 
 ## Output
