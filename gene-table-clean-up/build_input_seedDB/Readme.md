@@ -70,3 +70,9 @@ Error: assign entrez ID to (OR delete) :
 which would cause the script to exit. 
 These new entries need to be added to this mapping files, and given a `STATUS` (entrez ID OR `R`),
 to enable to script to run successfully. 
+
+#### Type mapping `type-mapping.txt`
+Mapping between HGNC `locus_group` and `locus_type` vs. portal DB `type`
+
+#### Location mapping `location-mapping.txt`
+Mapping between HGNC `location` vs. portal DB `chromosome` and `cytoband`
