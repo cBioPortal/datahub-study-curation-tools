@@ -23,7 +23,7 @@ Under `Complete dataset download links` section, click `Complete HGNC approved d
 
 ##### Example
 ```
-python build-gene-table.py -i hgnc_complete_set.txt -o final_gene_list_import.txt -m main-supp.txt -a alias-supp.txt
+python build-gene-table-input.py -i hgnc_complete_set.txt -m supp-files/main-supp/complete_supp_main.txt -a supp-files/alias-supp.txt -o final_gene_import_file.txt
 ```
 ##### Commandline
 ```
