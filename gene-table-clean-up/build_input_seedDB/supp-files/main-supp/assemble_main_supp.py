@@ -9,7 +9,7 @@ def main():
 	_gene_info_dict = {}
 	_main_dict = {}
 
-	_outputF = open("complete_supp_main.txt", "w")
+	_outputF = open("complete-supp-main.txt", "w")
 
 	with open("bare-main-supp.txt", "r") as _input_main_supp:
 		_header = _input_main_supp.readline()
@@ -18,8 +18,8 @@ def main():
 			_main_dict[_items[0]] = {
 				"entrez_id": _items[0],
 				"symbol": _items[1],
-				"chromosome": "",
-				"cytoband": "",
+				"chromosome": "-",
+				"cytoband": "-",
 				"type": _items[2],
 				"ensembl_gene_id": ""
 			}
@@ -49,7 +49,10 @@ def main():
 	for _main_gene_obj in _main_dict.values():
 		_entrezID = _main_gene_obj["entrez_id"]
 		if _gene_info_dict.has_key(_entrezID):
-			_main_gene_obj["chromosome"] = _gene_info_dict[_entrezID]["chr"]
+			if _gene_info_dict[_entrezID]["chr"] == "Un":
+				_main_gene_obj["chromosome"] = "-" #handle speical chr value case
+			else:
+				_main_gene_obj["chromosome"] = _gene_info_dict[_entrezID]["chr"]
 			_main_gene_obj["cytoband"] = _gene_info_dict[_entrezID]["map_location"]
 		if _ensembl_dict.has_key(_entrezID):
 			_main_gene_obj["ensembl_gene_id"] = _ensembl_dict[_entrezID]

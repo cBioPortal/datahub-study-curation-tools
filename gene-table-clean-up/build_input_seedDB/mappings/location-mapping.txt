@@ -1,82 +1,83 @@
-hgnc_location	db_chr
-	-
-reserved	-
-not on reference assembly	-
-unplaced	-
-13cen, GRCh38 novel patch	13
-22pter-q11	22
-14 unplaced	14
-22 unplaced	22
-mitochondria	M
-1	1
-2	2
-3	3
-4	4
-5	5
-6	6
-7	7
-8	8
-9	9
-10	10
-11	11
-12	12
-13	13
-14	14
-15	15
-16	16
-17	17
-18	18
-19	19
-20	20
-21	21
-22	22
-X	X
-Y	Y
-1 not on reference assembly	1
-2 not on reference assembly	2
-3 not on reference assembly	3
-4 not on reference assembly	4
-5 not on reference assembly	5
-6 not on reference assembly	6
-7 not on reference assembly	7
-8 not on reference assembly	8
-9 not on reference assembly	9
-10 not on reference assembly	10
-11 not on reference assembly	11
-12 not on reference assembly	12
-13 not on reference assembly	13
-14 not on reference assembly	14
-15 not on reference assembly	15
-16 not on reference assembly	16
-17 not on reference assembly	17
-18 not on reference assembly	18
-19 not on reference assembly	19
-20 not on reference assembly	20
-21 not on reference assembly	21
-22 not on reference assembly	22
-X not on reference assembly	X
-Y not on reference assembly	Y
-1 alternate reference locus	1
-2 alternate reference locus	2
-3 alternate reference locus	3
-4 alternate reference locus	4
-5 alternate reference locus	5
-6 alternate reference locus	6
-7 alternate reference locus	7
-8 alternate reference locus	8
-9 alternate reference locus	9
-10 alternate reference locus	10
-11 alternate reference locus	11
-12 alternate reference locus	12
-13 alternate reference locus	13
-14 alternate reference locus	14
-15 alternate reference locus	15
-16 alternate reference locus	16
-17 alternate reference locus	17
-18 alternate reference locus	18
-19 alternate reference locus	19
-20 alternate reference locus	20
-21 alternate reference locus	21
-22 alternate reference locus	22
-X alternate reference locus	X
-Y alternate reference locus	Y
+hgnc_location	db_chr	db_cytoband
+	-	-
+reserved	-	reserved
+not on reference assembly	-	not on reference assembly
+unplaced	-	unplaced
+Un	Un	-
+13cen, GRCh38 novel patch	13	13cen, GRCh38 novel patch
+22pter-q11	22	22pter-q11
+14 unplaced	14	14 unplaced
+22 unplaced	22	22 unplaced
+mitochondria	M	mitochondria
+1	1	1
+2	2	2
+3	3	3
+4	4	4
+5	5	5
+6	6	6
+7	7	7
+8	8	8
+9	9	9
+10	10	10
+11	11	11
+12	12	12
+13	13	13
+14	14	14
+15	15	15
+16	16	16
+17	17	17
+18	18	18
+19	19	19
+20	20	20
+21	21	21
+22	22	22
+X	X	X
+Y	Y	Y
+1 not on reference assembly	1	1 not on reference assembly
+2 not on reference assembly	2	2 not on reference assembly
+3 not on reference assembly	3	3 not on reference assembly
+4 not on reference assembly	4	4 not on reference assembly
+5 not on reference assembly	5	5 not on reference assembly
+6 not on reference assembly	6	6 not on reference assembly
+7 not on reference assembly	7	7 not on reference assembly
+8 not on reference assembly	8	8 not on reference assembly
+9 not on reference assembly	9	9 not on reference assembly
+10 not on reference assembly	10	10 not on reference assembly
+11 not on reference assembly	11	11 not on reference assembly
+12 not on reference assembly	12	12 not on reference assembly
+13 not on reference assembly	13	13 not on reference assembly
+14 not on reference assembly	14	14 not on reference assembly
+15 not on reference assembly	15	15 not on reference assembly
+16 not on reference assembly	16	16 not on reference assembly
+17 not on reference assembly	17	17 not on reference assembly
+18 not on reference assembly	18	18 not on reference assembly
+19 not on reference assembly	19	19 not on reference assembly
+20 not on reference assembly	20	20 not on reference assembly
+21 not on reference assembly	21	21 not on reference assembly
+22 not on reference assembly	22	22 not on reference assembly
+X not on reference assembly	X	X not on reference assembly
+Y not on reference assembly	Y	Y not on reference assembly
+1 alternate reference locus	1	1 alternate reference locus
+2 alternate reference locus	2	2 alternate reference locus
+3 alternate reference locus	3	3 alternate reference locus
+4 alternate reference locus	4	4 alternate reference locus
+5 alternate reference locus	5	5 alternate reference locus
+6 alternate reference locus	6	6 alternate reference locus
+7 alternate reference locus	7	7 alternate reference locus
+8 alternate reference locus	8	8 alternate reference locus
+9 alternate reference locus	9	9 alternate reference locus
+10 alternate reference locus	10	10 alternate reference locus
+11 alternate reference locus	11	11 alternate reference locus
+12 alternate reference locus	12	12 alternate reference locus
+13 alternate reference locus	13	13 alternate reference locus
+14 alternate reference locus	14	14 alternate reference locus
+15 alternate reference locus	15	15 alternate reference locus
+16 alternate reference locus	16	16 alternate reference locus
+17 alternate reference locus	17	17 alternate reference locus
+18 alternate reference locus	18	18 alternate reference locus
+19 alternate reference locus	19	19 alternate reference locus
+20 alternate reference locus	20	20 alternate reference locus
+21 alternate reference locus	21	21 alternate reference locus
+22 alternate reference locus	22	22 alternate reference locus
+X alternate reference locus	X	X alternate reference locus
+Y alternate reference locus	Y	Y alternate reference locus
