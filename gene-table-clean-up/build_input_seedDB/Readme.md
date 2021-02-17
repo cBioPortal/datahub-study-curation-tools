@@ -47,7 +47,7 @@ The final output file should include fields below
 |----------|----------|---------|-----|
 | entrez_id | NUM | NO |YES |
 |symbol| STR | NO | YES |
-|chromosome |`1-22`,`M`, `X`, `Y`, `-`]|NO|NO|
+|chromosome |`1-22`,`M`, `X`, `Y`, `-`|NO|NO|
 |cytoband |STR, `-`|NO|NO|
 |type |`protein-coding`, `ncRNA`, `rRNA`, `tRNA`, `snRNA`, `snoRNA`, `pseudogene`, `unknown`, `other`|NO|NO|
 |synonyms |STR(separate with `\|`)|YES|NO|
