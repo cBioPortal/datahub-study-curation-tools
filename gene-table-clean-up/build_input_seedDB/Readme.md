@@ -41,16 +41,16 @@ python build-gene-table-input.py -i hgnc_complete_set.txt -m supp-files/main-sup
 ## Output
 
 The final output file should include fields below
-| FIELD_NAME | VALUE| DISTINCT? |
-|----------|----------|---------|
-| entrez_id | NOT NULL| YES |
-|symbol| NOT NULL | YES |
-|chromosome |1-22, M, X, Y, NULL|NO|
-|cytoband |could be NULL|NO|
-|type |protein-coding, ncRNA, rRNA, tRNA, snRNA, snoRNA, pseudogene, unknown, other|NO|
-|synonyms |separate with `\|`|NO|
-|hgnc_id |could be NULL|YES|
-|ensembl_gene_id |could be NULL|YES|
+| FIELD_NAME | VALUE|CAN BE NULL?| DISTINCT? |
+|----------|----------|---------|-----|
+| entrez_id | NUM | NO |YES |
+|symbol| STR | NO | YES |
+|chromosome |`1-22`,`M`, `X`, `Y`, `-`]|NO|NO|
+|cytoband |STR, `-`|NO|NO|
+|type |`protein-coding`, `ncRNA`, `rRNA`, `tRNA`, `snRNA`, `snoRNA`, `pseudogene`, `unknown`, `other`|NO|NO|
+|synonyms |STR(separate with `\|`)|YES|NO|
+|hgnc_id |STR (start with `HGNC:`)|YES|NO|
+|ensembl_gene_id |STR|YES|YES|
 
 ## Mappings
 The files under `mappings` folders define some rules and/or mappings between HGNC vs. Portal, used by the script. 
