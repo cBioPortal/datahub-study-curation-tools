@@ -37,8 +37,8 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
 ```
 
 ## Output
-By dafault, the output file would be deposited under the same directory and named as `final_gene_list_import.txt`.
-
+- Gene data file: the output file would be deposited under the same directory and named as `final-import-gene-data-_date_.txt` if not specified otherwise
+- Log file: a log file would be generated under the same directory and named `build-gene-table-import-_date_.log` 
 #### Content
 The final output file should include fields below
 | FIELD_NAME | VALUE|CAN BE NULL?| DISTINCT? |
@@ -74,20 +74,24 @@ Details at [HGNC vs current DB data availibility comparison analysis](https://rb
 
 #### Supplemental main genes `main-supp.txt`
 Genes to supplement to HGNC download as main genes.
+
+##### Troubleshoot #1
 When running the script with the updated HGNC download, some supplemental main entries would became part of updated HGNC, 
 and cause ERRORS as below 
 ```
 Error: Duplicate entrez ID detected ...
 ```
-which would cause the script to exit. 
-Remove this entry from `main-supp.txt`, or make it as an alias, to enable to script to run successfully. 
+, which would cause the script to exit.  
+To resolve ERRORs, remove this entry from `main-supp.txt`, or make it as an alias.
 
 #### Supplemental alias genes `alias-supp.txt`
-With HGNC update, some entrez ID may become unavailable, and cause WARNINGS as below
+
+##### Troubleshoot #1
+With HGNC update, some entrez ID may become unavailable, and cause WARNINGs as below
 ```
-WARNING: ... entry is skipped - entrez ID does not exist in main table
+WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
-Remove this entry from `alias-supp.txt`, to clear warnings.
+To clear WARNINGs, remove this entry from `alias-supp.txt`.
 
 #### Supplemental Entrez ID `entrez-id-supp.txt`
 
@@ -98,20 +102,28 @@ For each symbol, it is either:
 - marched as `R` - meaning this entry will be exclude from the new/updated gene tables
 in the 2nd column `STATUS`
 
+##### Troubleshoot #1
 When running the script with the updated HGNC download, some new entries in data files would come up as 
 ```
 Error: assign entrez ID to (OR delete)
 ```
-which would cause the script to exit. 
-These new entries must be added to `entrez-id-supp.txt` and given a `STATUS` (assign an `entrez ID` OR `R`),
-to enable to script to run successfully. 
+, which would cause the script to exit. 
+To resolve ERRORs, add logged entries to `entrez-id-supp.txt` and give each a `STATUS` (assign an `entrez ID` OR `R`).
 
 #### Supplemental Location `location-supp.txt`
 `cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
 
-With HGNC update, some entries may get new location information in HGNC, and cause warnings as below 
+##### Troubleshoot #1
+With HGNC update, some entries may get new location information in HGNC, and cause WARNINGs as below 
 ```
-WARNING: ... entry already have location info. 
+WARNING: ... entry already have location info. (Redundancy and possible conflicts)
 ```
-Remove this entry from `location-supp.txt`, to clear warnings.
+To clear WARNINGs, remove this entry from `location-supp.txt`
+
+##### Troubleshoot #2
+With HGNC update, some entrez ID may become unavailable, and cause WARNINGs as below
+```
+WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
+```
+To clear WARNINGs, remove this entry from `location-supp.txt`
 
