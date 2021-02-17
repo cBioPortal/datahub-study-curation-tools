@@ -15,6 +15,8 @@ OR
 Go to `https://www.genenames.org/download/statistics-and-files/`  
 Under `Complete dataset download links` section, click `Complete HGNC approved dataset`  
 
+```Note: please remove the double quotes from the file```
+
 #### Step 2 - Run the script
 
 ##### Example
