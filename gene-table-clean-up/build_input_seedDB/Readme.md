@@ -54,7 +54,7 @@ The files under `mappings` folders define some rules and/or mappings between HGN
 
 #### Entrez ID mapping `entrez-id-mapping.txt`
 
-This file lists all the genes (`HUGO_GENE_SYMBOL`) in HGNC download file, that does not have an entrez_ID associated
+This file lists all the genes (`HUGO_GENE_SYMBOL`) in HGNC download file, that does not have an entrez_ID associated originally
 
 For each symbol, it is either:
 - assigned an entrez ID
