@@ -65,7 +65,7 @@ in the 2nd column `STATUS`
 
 When running the script with the updated HGNC download, some new entries would come up as 
 ```
-Error: assign entrez ID to (OR delete) :
+Error: assign entrez ID to (OR delete)
 ```
 which would cause the script to exit. 
 These new entries need to be added to this mapping files, and given a `STATUS` (entrez ID OR `R`),
@@ -78,3 +78,22 @@ Mapping between HGNC `locus_group` and `locus_type` vs. portal DB `type`
 Mapping between HGNC `location` vs. portal DB `chromosome` and `cytoband`
 This list contains all the "unconvention" values in the HGNC `location` columns, and their corresponding values in portal DB. 
 For `location` values that follows the standard format (e.g. `19q13.12`, `4q31.21-q31.22`), just parsing by arms (`q` or `p`) to obtain `chromosome`.
+
+## Supp Files
+To reduce data loss caused by gene table udpates, we supplemental some important genes. 
+Details please go to:
+** link to news release
+** link to gene table update slides
+
+#### Supplemental main genes `supp-main.txt`
+Genes to supplement to HGNC download as main genes.
+When running the script with the updated HGNC download, some supplemental main entries would became part of updated HGNC, 
+and cuase errors as below 
+```
+Error: Duplicate entrez ID detected
+```
+which would cause the script to exit. 
+Remove this gene from supp-main, or make it as an alias, to enable to script to run successfully. 
+
+#### Supplemental alias genes `supp-alias.txt`
+
