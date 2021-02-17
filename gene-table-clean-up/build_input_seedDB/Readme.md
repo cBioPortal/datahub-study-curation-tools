@@ -1,6 +1,8 @@
 ## Introduction
 
-Scripts to build an input file, to be used by importer to build/update seedDB gene tables.
+Scripts to build an input file, to be used by importer to build/update seedDB gene tables.  
+- [Project Background Presentation](https://rb.gy/4rvgf9) 
+- [News Release](https://rb.gy/njmzom)
 
 ## Usage
 
@@ -80,10 +82,8 @@ This list contains all the "unconvention" values in the HGNC `location` columns,
 For `location` values that follows the standard format (e.g. `19q13.12`, `4q31.21-q31.22`), just parsing by arms (`q` or `p`) to obtain `chromosome`.
 
 ## Supp Files
-To reduce data loss caused by gene table udpates, we supplemental some important genes. 
-Details please go to:
-** link to news release
-** link to gene table update slides
+To reduce data loss caused by gene table udpates, we supplemental some important genes.  
+Details at [HGNC vs current DB data availibility comparison analysis](https://rb.gy/rbfdnl)
 
 #### Supplemental main genes `supp-main.txt`
 Genes to supplement to HGNC download as main genes.
