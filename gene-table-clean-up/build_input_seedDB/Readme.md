@@ -41,17 +41,16 @@ python build-gene-table.py -i hgnc_complete_set.txt -o final_gene_list_import.tx
 ## Output
 
 The final output file should include fields below
-
-```
-entrez_id (not null, unique)
-symbol (not null, unique)
-chromosome (1-22, M, X, Y, "-")
-cytoband
-type
-synonyms
-hgnc_id (unique)
-ensembl_gene_id (unique)
-```
+| FIELD_NAME | VALUE| DISTINCT? |
+|----------|----------|---------|
+| entrez_id | NOT NULL| YES |
+|symbol| NOT NULL | YES |
+|chromosome |1-22, M, X, Y, NULL|NO|
+|cytoband |could be NULL|NO|
+|type |protein-coding, ncRNA, rRNA, tRNA, snRNA, snoRNA, pseudogene, unknown, other|NO|
+|synonyms |separate with `\|`|NO|
+|hgnc_id |could be NULL|YES|
+|ensembl_gene_id |could be NULL|YES|
 
 ## Mappings
 The files under `mappings` folders define some rules and/or mappings between HGNC vs. Portal, used by the script. 
