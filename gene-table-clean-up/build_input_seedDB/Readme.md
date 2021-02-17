@@ -37,6 +37,7 @@ ensembl_id (unique)
 ```
 
 ## Mappings
+The files under `mappings` folders define some rules and/or mappings between HGNC vs. Portal, used by the script. 
 
 #### Entrez ID mapping `entrez-id-mapping.txt`
 
