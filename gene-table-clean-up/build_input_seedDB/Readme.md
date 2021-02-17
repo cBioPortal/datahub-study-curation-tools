@@ -87,7 +87,7 @@ To resolve ERRORs, remove this entry from `main-supp.txt`, or make it as an alia
 #### Supplemental alias genes `alias-supp.txt`
 
 ##### Troubleshoot #1
-With HGNC update, some entrez ID may become unavailable, and cause WARNINGs as below
+With HGNC update, some entrez IDs may become unavailable, and cause WARNINGs as below
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
@@ -103,11 +103,11 @@ For each symbol, it is either:
 in the 2nd column `STATUS`
 
 ##### Troubleshoot #1
-When running the script with the updated HGNC download, some new entries in data files would come up as 
+When running the script with the updated HGNC download, some new entries would come up and without an entrez ID assigned.  
+This would cause ERRORs and script to exit.
 ```
 Error: assign entrez ID to (OR delete)
 ```
-, which would cause the script to exit. 
 To resolve ERRORs, add logged entries to `entrez-id-supp.txt` and give each a `STATUS` (assign an `entrez ID` OR `R`).
 
 #### Supplemental Location `location-supp.txt`
