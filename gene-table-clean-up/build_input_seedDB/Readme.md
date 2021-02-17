@@ -1,9 +1,10 @@
+
+## Introduction
+Scripts to build an input file, to be used by importer to build/update seedDB gene tables.  
+
 ## Background
 - [Project Presentation](https://rb.gy/4rvgf9) 
 - [News Release](https://rb.gy/njmzom)
-
-## Introduction - what is this?
-Scripts to build an input file, to be used by importer to build/update seedDB gene tables.  
 
 ## Usage
 
