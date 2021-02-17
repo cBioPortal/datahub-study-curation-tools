@@ -72,7 +72,7 @@ For `location` values that follows the standard format
 To reduce data loss caused by gene table udpates, we supplemental some important genes.  
 Details at [HGNC vs current DB data availibility comparison analysis](https://rb.gy/rbfdnl)
 
-#### Supplemental main genes `supp-main.txt`
+#### Supplemental main genes `main-supp.txt`
 Genes to supplement to HGNC download as main genes.
 When running the script with the updated HGNC download, some supplemental main entries would became part of updated HGNC, 
 and cause ERRORS as below 
@@ -80,14 +80,14 @@ and cause ERRORS as below
 Error: Duplicate entrez ID detected ...
 ```
 which would cause the script to exit. 
-Remove this entry from supp-main, or make it as an alias, to enable to script to run successfully. 
+Remove this entry from `main-supp.txt`, or make it as an alias, to enable to script to run successfully. 
 
-#### Supplemental alias genes `supp-alias.txt`
+#### Supplemental alias genes `alias-supp.txt`
 With HGNC update, some entrez ID may become unavailable, and cause WARNINGS as below
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table
 ```
-Remove this entry from supp-alias, to clear warnings.
+Remove this entry from `alias-supp.txt`, to clear warnings.
 
 #### Supplemental Entrez ID `entrez-id-supp.txt`
 
@@ -98,10 +98,20 @@ For each symbol, it is either:
 - marched as `R` - meaning this entry will be exclude from the new/updated gene tables
 in the 2nd column `STATUS`
 
-When running the script with the updated HGNC download, some new entries would come up as 
+When running the script with the updated HGNC download, some new entries in data files would come up as 
 ```
 Error: assign entrez ID to (OR delete)
 ```
 which would cause the script to exit. 
-These new entries need to be added to this mapping files, and given a `STATUS` (entrez ID OR `R`),
+These new entries must be added to `entrez-id-supp.txt` and given a `STATUS` (assign an `entrez ID` OR `R`),
 to enable to script to run successfully. 
+
+#### Supplemental Location `location-supp.txt`
+`cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
+
+With HGNC update, some entries may get new location information in HGNC, and cause warnings as below 
+```
+WARNING: ... entry already have location info. 
+```
+Remove this entry from `location-supp.txt`, to clear warnings.
+
