@@ -43,7 +43,7 @@ The final output file should include fields below
 ```
 entrez_id (not null, unique)
 symbol (not null, unique)
-chromosome
+chromosome (1-22, M, X, Y, "-")
 cytoband
 type
 synonyms
