@@ -53,7 +53,7 @@ The final output file should include fields below
 |ensembl_gene_id |STR|YES|YES|
 
 #### Example
-See example here: Feb 17, 2021 build
+See example here: [Feb 17, 2021 build](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-clean-up/build_input_seedDB/Feb-17-2021-output)
 
 ## Mappings
 The files under `mappings` folders define some rules and/or mappings between HGNC vs. Portal, used by the script. 
