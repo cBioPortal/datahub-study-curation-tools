@@ -7,7 +7,7 @@ import ntpath
 import requests
 import json
 import re
-import urlparse
+import urllib.parse
 
 def generate_dict(key, value, dictionary):
     if not pd.isnull(key):
@@ -24,11 +24,17 @@ def get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict
     df_mapping_per_gene = pd.read_csv(mapping_file, sep='\t')
     df_mapping_per_gene.apply(lambda row: generate_dict(row['Gene_Symbol'], row['uniprot_protein_length'], gene_name_to_length_dict), axis=1)
 
+def look_up_in_genome_nexus(gene, genome_nexus_domain):
+    gene = gene.strip()
+    gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urllib.parse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
+    # get json response from genome nexus
+    return requests.get(gn_request)    
+
 def update_file(args):
     input_file = args.input_file
     uniprot_file = args.uniprot_file or os.getcwd() + "/uniprot_gene_name_with_protein_length.tab"
     output_file = args.output_file or os.path.dirname(input_file) + "/output_" + ntpath.basename(input_file)
-    source = args.source or "combined"
+    source = args.source or "all"
     genome_nexus_domain = args.genome_nexus_domain or "https://www.genomenexus.org"
     mapping_file = args.mapping_file or os.getcwd() + "/mapping_per_gene.tsv"
 
@@ -46,8 +52,40 @@ def update_file(args):
             if genes[0] == "":
                 genes.pop(0)
 
+            # first check mapping sheet, then Uniprot, and genome nexus
+            if source == "all":
+                # get protein length by gene name from mapping file
+                gene_name_to_length_dict = dict()
+                get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict)
+                # get protein length from Uniprot
+                gene_name_to_length_dict_primary = dict()
+                gene_name_to_length_dict_synonym = dict()
+                get_protein_length_from_uniprot(uniprot_file, gene_name_to_length_dict_primary, gene_name_to_length_dict_synonym)
+                for gene in genes:
+                    gene = gene.strip()
+                    if gene in gene_name_to_length_dict:
+                        count += gene_name_to_length_dict[gene]
+                    elif gene in gene_name_to_length_dict_primary:
+                        count += gene_name_to_length_dict_primary[gene]
+                    elif gene in gene_name_to_length_dict_synonym:
+                        count += gene_name_to_length_dict_synonym[gene]
+                    else:
+                        raw_gn_response = look_up_in_genome_nexus(gene, genome_nexus_domain)
+                        if raw_gn_response.status_code == 200:
+                            gn_response = raw_gn_response.json()
+                            if 'message' in gn_response:
+                                print(gn_response['message'])
+                            elif 'proteinLength' in gn_response:
+                                count += gn_response['proteinLength']
+                            else:
+                                print(gene + " does not have protein length")
+                        else:
+                            print(gene + " not found")
+                        
+                # CDS size is calculated by sum(protein length * 3)
+                count = count * 3
             # first check mapping spreadsheet, if gene not found then check Uniprot file.
-            if source == "combined":
+            elif source == "combined":
                 # get protein length by gene name from mapping file
                 gene_name_to_length_dict = dict()
                 get_protein_length_from_mapping_sheet(mapping_file, gene_name_to_length_dict)
@@ -84,12 +122,8 @@ def update_file(args):
             # source is genome nexus
             elif source == "genomenexus":
                 for gene in genes:
-                    gene = gene.strip()
-                    gn_request = genome_nexus_domain + '/ensembl/canonical-transcript/hgnc/' + urlparse.quote(gene, safe='') + '?isoformOverrideSource=uniprot'
-                    # get json response from genome nexus
-                    raw_gn_response = requests.get(gn_request)
-                    gn_response_status = raw_gn_response.status_code
-                    if gn_response_status == 200:  
+                    raw_gn_response = look_up_in_genome_nexus(gene, genome_nexus_domain)
+                    if raw_gn_response.status_code == 200:  
                         gn_response = raw_gn_response.json()
                         if 'message' in gn_response:
                             print(gn_response['message'])
@@ -99,7 +133,7 @@ def update_file(args):
                         else:
                             print(gene + " does not have protein length")
                     else:
-                        print("HTTP Status " + str(gn_response_status) + " for " + gene)
+                        print(gene + " HTTP Status " + str(raw_gn_response.status_code))
                 # CDS size is calculated by sum(protein length * 3)
                 count = count * 3
         
@@ -145,8 +179,8 @@ def check_output_file_path(output_file):
         sys.exit(2)
 
 def check_source(source):
-    if source != "genomenexus" and source != "uniprot" and source != "map" and source != "combined":
-        print('Source is not valid, please set souce as one of the options: genomenexus | uniprot | map | combined')
+    if source != "genomenexus" and source != "uniprot" and source != "map" and source != "map+uniprot" and source != "all":
+        print('Source is not valid, please set souce as one of the options: genomenexus | uniprot | map | map+uniprot | all')
         sys.exit(2)
 
 def interface():
@@ -159,7 +193,7 @@ def interface():
     parser.add_argument('-o', '--output-file', dest = 'output_file', type=str, required=False, 
                         help='absolute path to save the output file')
     parser.add_argument('-s', '--source', dest = 'source', type=str, required=False,
-                        help='set protein length data source. Options: genomenexus | uniprot | map | combined')
+                        help='set protein length data source. Options: genomenexus | uniprot | map | map+uniprot | all')
     parser.add_argument('-g', '--genome-nexus-domain', dest = 'genome_nexus_domain', type=str, required=False, 
                         help='custom Genome Nexus domain, using uniprot or map as source will ignore this variable')
     parser.add_argument('-m', '--mapping-file', dest = 'mapping_file', type=str, required=False, 
