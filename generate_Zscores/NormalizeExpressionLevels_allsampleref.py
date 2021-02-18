@@ -59,16 +59,18 @@ def calculate_std(data,n,mu):
 	return(std)
 
 # calculate mean and std for the samples whose values are not Null or NA (n)
-def calculate_mean_std(line,start_position):
+# for rnaseq data we ignore the negative and zero values. 
+def calculate_mean_std(line,start_position,data_type):
 	expression_data = line.rstrip('\n').rstrip('\r').split('\t')
 	expression_values = expression_data[start_position:]
 
-	# Remove strings ('' or 'NA' or 'NaN') and Zeros from the expression list
 	filtered_expression_values = []
 	for item in expression_values:
 		try:
 			val = float(item)
-			if val != 0:
+			if data_type == 'rnaseq' and val > 0:
+				filtered_expression_values.append(val)
+			if data_type == 'microarray' or data_type == 'rppa':
 				filtered_expression_values.append(val)
 		except:
 			continue
@@ -81,8 +83,7 @@ def calculate_mean_std(line,start_position):
 	else:
 		mu = calculate_mean(filtered_expression_values,n)
 		sigma = calculate_std(filtered_expression_values,n,mu)
-		#mu = statistics.mean(data)
-		#sigma = statistics.stdev(data,mu)
+		print(mu,sigma)
 	return(mu,sigma)
 
 #If standard deviation is 0.0? print NA as the normalized z-score
@@ -175,7 +176,7 @@ def log_transform_data(input_filename,sample_position):
 	log_transformed_list = log_transformed_data.split('\n')
 	return(log_transformed_list)
 
-def z_scores(data_list,sample_position):
+def z_scores(data_list,sample_position,data_type):
 	zscores_data = ""
 	for line_count,line in enumerate(data_list):
 		line = line.rstrip('\n')
@@ -184,7 +185,7 @@ def z_scores(data_list,sample_position):
 		elif line.startswith('Composite.Element.REF') or line.startswith('Hugo_Symbol') or line.startswith('Entrez_Gene_Id'):
 			zscores_data =  zscores_data + line + '\n'
 		else:
-			mu, sigma = calculate_mean_std(line, sample_position)
+			mu, sigma = calculate_mean_std(line, sample_position, data_type)
 			# If standard deviation == 0 print NA as normalized values
 			if sigma == 0:
 				scores_std = zero_std(line,sample_position)
@@ -199,11 +200,13 @@ def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-i','--input-expression-file', action = 'store', dest = 'input_expression_file', required = True, help = 'The expression filename to normalize')
 	parser.add_argument('-o','--output-filename', action = 'store', dest = 'output_filename', required = True, help = 'The filename to which normalized data has to be saved')
+	parser.add_argument('-d','--data-type', action = 'store', dest = 'data_type', required = True, help = 'The input file data type. The options should be on of microarray, rnaseq or rppa')
 	parser.add_argument('-l','--log-transform', action = 'store_true', dest = 'log_transform', required = False, help = 'Pass this argument to log transform the data before calculating zscores')
 	args = parser.parse_args()
 
 	input_filename = args.input_expression_file
 	output_filename = args.output_filename
+	data_type = args.data_type
 	log_transform = args.log_transform
 
 	# check if the input file exists
@@ -211,6 +214,11 @@ def main():
 		print("ERROR: The file %s doesn't exist or is not a file" % (input_filename))
 		parser.print_help()
 		sys.exit(2)
+		
+	# check if the data_type is one of microarray, rnaseq, rppa
+	allowed_datatypes = ['microarray', 'rnaseq', 'rppa']
+	if data_type not in allowed_datatypes:
+		print("ERROR: Please check the input datatype. It must be one of the microarray, rnaseq, rppa.")
 
 	# check if the file format is correct and get the sample position
 	sample_position = find_sample_position(input_filename)
@@ -218,7 +226,7 @@ def main():
 	# If -l is passed, log transform the data before calculating zscores
 	if log_transform:
 		log_transformed_list = log_transform_data(input_filename,sample_position)
-		zscores_data = z_scores(log_transformed_list,sample_position)
+		zscores_data = z_scores(log_transformed_list,sample_position,data_type)
 	else:
 		data_list = [line.rstrip('\n') for line in open(input_filename)]
 		zscores_data = z_scores(data_list,sample_position)
