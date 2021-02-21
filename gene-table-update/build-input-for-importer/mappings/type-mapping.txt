@@ -1,0 +1,27 @@
+locus_group	locus_type	type
+protein-coding gene	gene with protein product	protein-coding
+non-coding RNA	RNA, long non-coding	ncRNA
+pseudogene	pseudogene	pseudogene
+other	virus integration site	other
+other	readthrough	other
+other	unknown	unknown
+other	region	other
+other	endogenous retrovirus	other
+other	fragile site	other
+other	immunoglobulin gene	other
+pseudogene	immunoglobulin pseudogene	pseudogene
+non-coding RNA	RNA, ribosomal	rRNA
+non-coding RNA	RNA, transfer	tRNA
+other	complex locus constituent	other
+other	protocadherin	other
+non-coding RNA	RNA, cluster	ncRNA
+non-coding RNA	RNA, misc	ncRNA
+non-coding RNA	RNA, small nuclear	snRNA
+non-coding RNA	RNA, small nucleolar	snoRNA
+non-coding RNA	RNA, Y	ncRNA
+other	T cell receptor gene	other
+pseudogene	T cell receptor pseudogene	pseudogene
+non-coding RNA	RNA, vault	ncRNA
+other		other
+non-coding RNA		ncRNA
+pseudogene		pseudogene

@@ -1,0 +1,1 @@
+python gene_symbol_correction.py path/to/mapping_file path/to/file
