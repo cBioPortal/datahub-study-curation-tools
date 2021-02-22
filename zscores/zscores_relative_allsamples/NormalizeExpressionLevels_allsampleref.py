@@ -59,7 +59,7 @@ def calculate_std(data,n,mu):
 	return(std)
 
 # calculate mean and std for the samples whose values are not Null or NA (n)
-# for rnaseq data, ignore the negative and zero values. 
+# for rnaseq data, ignore the negative and zero values.
 def calculate_mean_std(line, start_position, data_type):
 	expression_data = line.rstrip('\n').rstrip('\r').split('\t')
 	expression_values = expression_data[start_position:]
@@ -102,7 +102,7 @@ def zero_std(line, start_position):
 	return(normalised_scores)
 
 # Calculate z_scores for each gene record
-def zscores_eachrow(line,mu,sigma,start_position):
+def zscores_eachrow(line, mu, sigma, start_position):
 	exp_values = line.split('\t')
 	output_list = exp_values[:start_position]
 	exp_values = exp_values[start_position:]
@@ -135,7 +135,7 @@ def find_sample_position(infile):
 	if header[1] in HEADER_KEYWORDS:
 		sample_position = 2
 	if header[0] not in HEADER_KEYWORDS and header[1] in HEADER_KEYWORDS:
-		print("ERROR: The following columns are required in the order specified:\nOne or both of:\n1. Hugo_Symbol\n2. Entrez_Gene_Id\nExiting..")
+		print("ERROR: The first column must be a gene identifier. It should be either one of Hugo_Symbol, Entrez_Gene_Id or Composite.Element.REF\nExiting..")
 		sys.exit(2)
 	if header[0] not in HEADER_KEYWORDS and header[1] not in HEADER_KEYWORDS:
 		print("ERROR: Expression file must contain at least one of the following: Hugo_Symbol, Entrez_Gene_Id, Composite.Element.REF\nExiting..")
@@ -204,8 +204,8 @@ def z_scores(data_list, sample_position, data_type):
 
 def main():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-i','--input-expression-file', action = 'store', dest = 'input_expression_file', required = True, help = 'The name of the expression file to normalize')
-	parser.add_argument('-o','--output-filename', action = 'store', dest = 'output_filename', required = True, help = 'The filename to which normalized data has to be saved')
+	parser.add_argument('-i','--input-expression-file', action = 'store', dest = 'input_expression_file', required = True, help = 'The expression file to normalize')
+	parser.add_argument('-o','--output-filename', action = 'store', dest = 'output_filename', required = True, help = 'The file to which normalized data has to be saved')
 	parser.add_argument('-d','--data-type', action = 'store', dest = 'data_type', required = True, help = 'The input file data type. The options should be one of microarray, rnaseq or rppa')
 	parser.add_argument('-l','--log-transform', action = 'store_true', dest = 'log_transform', required = False, help = 'Pass this argument to log transform the data before calculating zscores')
 	args = parser.parse_args()

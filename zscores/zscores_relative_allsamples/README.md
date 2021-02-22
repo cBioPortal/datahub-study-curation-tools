@@ -4,7 +4,10 @@ Given the expression data for a set of samples, this script generates normalized
 
 #### Method
 Each gene is normalized separately. The expression distribution of the gene is estimated by calculating the mean and variance of the expression values for all samples in the reference poplulation.
-For RNA-seq data (RPKM, FPKM..), the reference population is defined by any non-zero, non-negative numeric values. For microarray or RPPA, the reference population is defined by any numeric values. 
+
+For RNA-seq data (read counts, rpkm, fpkm etc.,), the reference population is defined by any non-zero, non-negative numeric values. As raw expression counts or normalized units (rpkm, fpkm..) provide a measure of the abundance of transcripts, we exclude any negative counts and the rationale to exclude 0's is that the values could be due to technical biases.
+
+For microarray or RPPA data, the reference population is defined by any numeric values. 
 
 If the gene has samples whose expression values are all zero's or non-numeric (NA, Null or NaN), then its normalized expression is reported as `NA`. Otherwise, for every sample, the gene's normalized expression is reported as
 ```
