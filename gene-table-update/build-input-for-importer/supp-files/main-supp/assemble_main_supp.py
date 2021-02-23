@@ -25,6 +25,7 @@ def main():
 			}
 	_input_main_supp.close()
 
+	# add locations
 	with open("ncbi-download/gene_info.txt", "r") as _geneInfo:
 		_header = _geneInfo.readline()
 		for _line in _geneInfo:
@@ -38,6 +39,7 @@ def main():
 				}
 	_geneInfo.close()
 
+	# add ensembl ID
 	with open("ncbi-download/gene2ensembl.txt", "r") as _gene2ensembl:
 		_header = _gene2ensembl.readline()
 		for _line in _gene2ensembl:
