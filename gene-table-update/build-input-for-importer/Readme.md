@@ -101,6 +101,8 @@ For each symbol, it is either:
 - marched as `R` - meaning this entry will be exclude from the new/updated gene tables
 in the 2nd column `STATUS`
 
+** gene entries with empty chromosome value will not be imported to the DB. 
+
 ##### Troubleshoot #1
 When running the script with the updated HGNC download, some new entries would come up and without an entrez ID assigned.  
 This would cause ERRORs and script to exit.
