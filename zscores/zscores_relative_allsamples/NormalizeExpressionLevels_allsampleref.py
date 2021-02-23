@@ -60,12 +60,12 @@ def calculate_std(data,n,mu):
 
 # calculate mean and std for the samples whose values are not Null or NA (n)
 # for rnaseq data, ignore the negative and zero values.
-def calculate_mean_std(line, start_position, data_type):
+def calculate_mean_std(line, start_position, exclude_zero_negative_values):
 	expression_data = line.rstrip('\n').rstrip('\r').split('\t')
 	expression_values = expression_data[start_position:]
 
 	filtered_expression_values = []
-	if data_type == 'rnaseq':
+	if exclude_zero_negative_values:
 		for item in expression_values:
 			try:
 				val = float(item)
@@ -73,7 +73,7 @@ def calculate_mean_std(line, start_position, data_type):
 					filtered_expression_values.append(val)
 			except:
 				continue
-	elif data_type == 'microarray' or data_type == 'rppa':
+	else:
 		for item in expression_values:
 			try:
 				val = float(item)
@@ -182,7 +182,7 @@ def log_transform_data(input_filename, sample_position):
 	log_transformed_list = log_transformed_data.split('\n')
 	return(log_transformed_list)
 
-def z_scores(data_list, sample_position, data_type):
+def z_scores(data_list, sample_position, exclude_zero_negative_values):
 	zscores_data = ""
 	for line_count,line in enumerate(data_list):
 		line = line.rstrip('\n')
@@ -191,7 +191,7 @@ def z_scores(data_list, sample_position, data_type):
 		elif line.startswith('Composite.Element.REF') or line.startswith('Hugo_Symbol') or line.startswith('Entrez_Gene_Id'):
 			zscores_data +=  line + '\n'
 		else:
-			mu, sigma = calculate_mean_std(line, sample_position, data_type)
+			mu, sigma = calculate_mean_std(line, sample_position, exclude_zero_negative_values)
 			# If standard deviation == 0 print NA as normalized z-score values
 			if sigma == 0:
 				scores_std = zero_std(line, sample_position)
@@ -204,16 +204,17 @@ def z_scores(data_list, sample_position, data_type):
 
 def main():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-i','--input-expression-file', action = 'store', dest = 'input_expression_file', required = True, help = 'The expression file to normalize')
+	parser.add_argument('-i','--input-data-filename', action = 'store', dest = 'input_data_filename', required = True, help = 'The expression file to normalize')
 	parser.add_argument('-o','--output-filename', action = 'store', dest = 'output_filename', required = True, help = 'The file to which normalized data has to be saved')
-	parser.add_argument('-d','--data-type', action = 'store', dest = 'data_type', required = True, help = 'The input file data type. The options should be one of microarray, rnaseq or rppa')
 	parser.add_argument('-l','--log-transform', action = 'store_true', dest = 'log_transform', required = False, help = 'Pass this argument to log transform the data before calculating zscores')
+	parser.add_argument('-e','--exclude-zero-negative-values', action = 'store_true', dest = 'exclude_zero_negative_values', required = False, help = 'Pass this argument to exclude zero\'s or negative counts when normalizing the data.')
+	
 	args = parser.parse_args()
 
-	input_filename = args.input_expression_file
+	input_filename = args.input_data_filename
 	output_filename = args.output_filename
-	data_type = args.data_type
 	log_transform = args.log_transform
+	exclude_zero_negative_values = args.exclude_zero_negative_values
 
 	# check if the input file is valid
 	if not os.path.isfile(input_filename):
@@ -221,10 +222,8 @@ def main():
 		parser.print_help()
 		sys.exit(2)
 		
-	# check if the input data type is one of microarray, rnaseq, rppa
-	allowed_datatypes = ['microarray', 'rnaseq', 'rppa']
-	if data_type not in allowed_datatypes:
-		print("ERROR: Please check the input datatype. The allowed data types are microarray, rnaseq or rppa.")
+	if exclude_zero_negative_values:
+		print("Zero's and negative counts will be excluded from the reference population when calculating the zscores.")
 
 	# check if the file format is correct and get the sample position
 	sample_position = find_sample_position(input_filename)
@@ -232,10 +231,10 @@ def main():
 	# If -l is passed, log transform the data before calculating zscores
 	if log_transform:
 		log_transformed_list = log_transform_data(input_filename, sample_position)
-		zscores_data = z_scores(log_transformed_list, sample_position, data_type)
+		zscores_data = z_scores(log_transformed_list, sample_position, exclude_zero_negative_values)
 	else:
 		data_list = [line.rstrip('\n').rstrip('\r') for line in open(input_filename)]
-		zscores_data = z_scores(data_list, sample_position, data_type)
+		zscores_data = z_scores(data_list, sample_position, exclude_zero_negative_values)
 	
 	outfile = open(output_filename,'w')
 	sys.stdout.write("\nWriting to file..")

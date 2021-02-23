@@ -20,7 +20,7 @@ where `r` is the raw expression value, and `mu` and `sigma` are the mean and sta
 Input expression file
 for each gene:
   log-transform the raw data, if -l is passed
-  identify the base population (For RNA-seq, n = # of samples where expression value is non-zero, non-negative numeric values. For microarray or RPPA, n = # of samples where expression value is numeric)
+  identify the base population (if -e is passed, n = # of samples where expression value is non-zero, non-negative numeric values. else, n = # of samples where expression value is numeric)
   compute mean and standard deviation for samples in the base poplulation 
   for each sample in the input set:
     Z-Score <- (value - mean)/sd when standard deviation != 0
@@ -30,17 +30,19 @@ for each gene:
 ### Running the tool
 The tool can be run with the following command:
 ```
-python NormalizeExpressionLevels_allsampleref.py -i <expression_file> -o <output_file> -d <data_type> [-l]
+python NormalizeExpressionLevels_allsampleref.py -i <expression_file> -o <output_file> [-l] [-e]
 ```
 Use the `-l` option if the data needs to be log transformed before calculating z-scores.
+
+Use the `-e` option to exclude zero's or negative counts from the reference population when calculating the zscores.
 
 #### Options
 
 ```
   -i | --input-expression-file: This is the path to the source file to normalize.
   -o | --output-filename: This is the path to the target file to which normalized data will be saved.
-  -d | --data-type: The source file data type. The options should be one of the rnaseq, microarray or rppa
   -l | --log-transform:  Pass this argument to log transform the data before calculating zscores.
+  -e | --exclude-zero-negative-values: Pass this argument to exclude zero's or negative counts when normalizing the data.
 ```
 
 #### Log-transforming the data
