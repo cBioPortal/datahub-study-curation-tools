@@ -72,7 +72,6 @@ For `location` values that follows the standard format
 To reduce data loss caused by gene table udpates, we supplemental some important genes.  
 Reference for previous analysis: [HGNC vs current DB data availibility comparison analysis](https://rb.gy/rbfdnl)
 
-### Steps for updating supp files
 #### Supplemental main genes `main-supp.txt`
 Genes to supplement to HGNC download as main genes.
 
@@ -90,6 +89,7 @@ in the 2nd column `STATUS`
 #### Supplemental Location `location-supp.txt`
 `cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
 
+### Steps for updating supp files
 #### Step 1 - List all genes used by any data files in all public studies 
 - fields: `hugo_symbol` + `entrez_id` as combo key
 - `miRNA`, `phosphoprotein` excluded
