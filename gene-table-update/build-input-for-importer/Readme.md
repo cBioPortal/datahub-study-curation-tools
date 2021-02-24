@@ -90,13 +90,16 @@ in the 2nd column `STATUS`
 `cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
 
 ### Steps for updating supp files
-#### Step 1 - List all genes used by any data files in all public studies 
-- fields: `hugo_symbol` + `entrez_id` as combo key
-- `miRNA`, `phosphoprotein` excluded
+#### Step 1 - Generate a list to include ALL genes
+- used by at least one profile in any public study
+- include field `hugo_symbol`, `entrez_id`
+- exclude `miRNA`, `phosphoprotein` genes
 
 #### Step 2 - Compare list with HGNC
 - compare lastest HGNC download with current list
--- perfect match
+- combine `hugo_symbol` & `entrez_id` as combo key
+- manually curate for each results
+-- hugo_symbol match, entrez_id match
 -- hugo_symbol match, entrez_id unmatch
 -- hugo_symbol unmatch, entrez_id match
 -- hugo_symbol unmatch, entrez_id unmatch
@@ -104,7 +107,6 @@ in the 2nd column `STATUS`
 #### Step 3 - Adjust supplemental lists
 -- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists
 -- for exisitng genes updated, add gene to list under `data-file-migration`  
-
 
 ## Troubleshooting
 
