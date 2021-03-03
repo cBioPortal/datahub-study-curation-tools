@@ -68,14 +68,49 @@ For `location` values that follows the standard format
 - Parse by arms `q` or `p` (e.g. `19q13.12`, `4q31.21-q31.22`) to obtain `chromosome`
 - For empty values, use `-`
 
-## Supp Files & Trouble Shooting
+## Supp Files
 To reduce data loss caused by gene table udpates, we supplemental some important genes.  
-Details at [HGNC vs current DB data availibility comparison analysis](https://rb.gy/rbfdnl)
+Reference for previous analysis: [HGNC vs current DB data availibility comparison analysis](https://rb.gy/rbfdnl)
 
 #### Supplemental main genes `main-supp.txt`
 Genes to supplement to HGNC download as main genes.
 
-##### Troubleshoot #1
+#### Supplemental alias genes `alias-supp.txt`
+Genes to supplemen to HGNC download as alias genes.
+
+#### Supplemental Entrez ID `entrez-id-supp.txt`
+This file lists all the genes (`HUGO_GENE_SYMBOL`) in HGNC download file, that does not have an entrez_ID associated originally
+For each symbol, it is either:
+- assigned an entrez ID
+- marched as `R` - meaning this entry will be exclude from the new/updated gene tables
+in the 2nd column `STATUS`
+** gene entries with empty chromosome value will not be imported to the DB. 
+
+#### Supplemental Location `location-supp.txt`
+`cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
+
+### Steps for updating supp files
+#### Step 1 - Generate a list to include ALL genes
+- used by at least one profile in any public study
+- include field `hugo_symbol`, `entrez_id`
+- exclude `miRNA`, `phosphoprotein` genes
+
+#### Step 2 - Compare list with HGNC
+- compare lastest HGNC download with current list
+- combine `hugo_symbol` & `entrez_id` as combo key
+- manually curate for each results
+-- hugo_symbol match, entrez_id match
+-- hugo_symbol match, entrez_id unmatch
+-- hugo_symbol unmatch, entrez_id match
+-- hugo_symbol unmatch, entrez_id unmatch
+
+#### Step 3 - Adjust supplemental lists
+-- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists
+-- for exisitng genes updated, add gene to list under `data-file-migration`  
+
+## Troubleshooting
+
+#### Case #1
 When running the script with the updated HGNC download, some supplemental main entries would became available in the "new" HGNC.
 This would cause ERRORs and script to exit.
 ```
@@ -83,27 +118,14 @@ Error: Duplicate entrez ID detected ...
 ``` 
 To resolve ERRORs, remove this entry from `main-supp.txt`, or make it as an alias.
 
-#### Supplemental alias genes `alias-supp.txt`
-
-##### Troubleshoot #1
+#### Case #2
 With HGNC update, some entrez IDs may become unavailable, and cause WARNINGs.
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
 To clear WARNINGs, remove this entry from `alias-supp.txt`.
 
-#### Supplemental Entrez ID `entrez-id-supp.txt`
-
-This file lists all the genes (`HUGO_GENE_SYMBOL`) in HGNC download file, that does not have an entrez_ID associated originally
-
-For each symbol, it is either:
-- assigned an entrez ID
-- marched as `R` - meaning this entry will be exclude from the new/updated gene tables
-in the 2nd column `STATUS`
-
-** gene entries with empty chromosome value will not be imported to the DB. 
-
-##### Troubleshoot #1
+#### Case #3
 When running the script with the updated HGNC download, some new entries would come up and without an entrez ID assigned.  
 This would cause ERRORs and script to exit.
 ```
@@ -111,17 +133,14 @@ Error: assign entrez ID to (OR delete)
 ```
 To resolve ERRORs, add logged entries to `entrez-id-supp.txt` and give each a `STATUS` (assign an `entrez ID` OR `R`).
 
-#### Supplemental Location `location-supp.txt`
-`cytoband` and/or `chromosome` info from NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
-
-##### Troubleshoot #1
+#### Case #4
 With HGNC update, some entries may get new location information in HGNC, and cause WARNINGs.
 ```
 WARNING: ... entry already have location info. (Redundancy and possible conflicts)
 ```
 To clear WARNINGs, remove this entry from `location-supp.txt`
 
-##### Troubleshoot #2
+#### Case #5
 With HGNC update, some entrez ID may become unavailable, and cause WARNINGs.
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
