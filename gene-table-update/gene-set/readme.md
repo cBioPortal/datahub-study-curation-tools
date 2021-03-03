@@ -1,10 +1,10 @@
-#### gene sets used by portal are listed at:
+### gene sets used by portal are listed at:
 https://github.com/cBioPortal/cbioportal/blob/master/core/src/test/scripts/test_data/study_es_0/data_gsva_scores.txt
 
-#### lists of genes are downloaded from MSigDB:
+### lists of genes are downloaded from MSigDB:
 http://www.gsea-msigdb.org/gsea/msigdb/index.jsp
 
-#### Missing Genes Mar 3 2021:
+### Missing Genes Mar 3 2021:
 
 ##### GO_CARDIAC_CHAMBER_DEVELOPMENT (174 genes)
 MIR1-1
