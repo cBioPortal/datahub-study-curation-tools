@@ -7,11 +7,15 @@ http://www.gsea-msigdb.org/gsea/msigdb/index.jsp
 ### Missing Genes Mar 3 2021:
 
 ##### GO_CARDIAC_CHAMBER_DEVELOPMENT (174 genes)
+```
 MIR1-1  
 MIR1-2
+```
 
 ##### GO_CARBOHYDRATE_CATABOLIC_PROCESS (200 genes)
+```
 MIR210   
+```
 
 ##### GO_ATP_DEPENDENT_CHROMATIN_REMODELING (90 genes)
 (no missing genes)
@@ -23,6 +27,7 @@ MIR210
 (no missing genes)
 
 ##### GO_ANATOMICAL_STRUCTURE_FORMATION_INVOLVED_IN_MORPHOGENESIS (1202 genes)
+```
 MIR1-1  
 MIR1-2  
 MIR101-1  
@@ -127,9 +132,12 @@ MIRLET7B
 MIRLET7F1  
 MIRLET7F2  
 MIRLET7G
+```
 
 ##### GO_ACYLGLYCEROL_HOMEOSTASIS (39 genes)
+```
 MIR208A  
 MIR33A  
 MIR34A  
 MIR379
+```
