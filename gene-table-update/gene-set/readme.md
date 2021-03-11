@@ -1,0 +1,143 @@
+### gene sets used by portal are listed at:
+https://github.com/cBioPortal/cbioportal/blob/master/core/src/test/scripts/test_data/study_es_0/data_gsva_scores.txt
+
+### lists of genes are downloaded from MSigDB:
+http://www.gsea-msigdb.org/gsea/msigdb/index.jsp
+
+### Missing Genes Mar 3 2021:
+
+##### GO_CARDIAC_CHAMBER_DEVELOPMENT (174 genes)
+```
+MIR1-1  
+MIR1-2
+```
+
+##### GO_CARBOHYDRATE_CATABOLIC_PROCESS (200 genes)
+```
+MIR210   
+```
+
+##### GO_ATP_DEPENDENT_CHROMATIN_REMODELING (90 genes)
+(no missing genes)
+
+##### GO_APICAL_PROTEIN_LOCALIZATION (14 genes)
+(no missing genes)
+
+##### GO_ANTEROGRADE_AXONAL_TRANSPORT (48 genes)
+(no missing genes)
+
+##### GO_ANATOMICAL_STRUCTURE_FORMATION_INVOLVED_IN_MORPHOGENESIS (1202 genes)
+```
+MIR1-1  
+MIR1-2  
+MIR101-1  
+MIR101-2  
+MIR106B  
+MIR10A  
+MIR10B  
+MIR1224  
+MIR125A  
+MIR125B1  
+MIR125B2  
+MIR126  
+MIR1298  
+MIR130A  
+MIR132  
+MIR137  
+MIR138-1  
+MIR138-2  
+MIR143  
+MIR145  
+MIR146A  
+MIR149  
+MIR150  
+MIR15A  
+MIR15B  
+MIR16-1  
+MIR16-2  
+MIR17  
+MIR181B1  
+MIR181B2  
+MIR185  
+MIR188  
+MIR18A  
+MIR1908  
+MIR193A  
+MIR196A1  
+MIR196A2  
+MIR199A1  
+MIR199A2  
+MIR199B  
+MIR19A  
+MIR19B1  
+MIR19B2  
+MIR200B  
+MIR200C  
+MIR206  
+MIR20A  
+MIR20B  
+MIR21  
+MIR210  
+MIR212  
+MIR214  
+MIR217  
+MIR22  
+MIR221  
+MIR222  
+MIR2355  
+MIR23A  
+MIR24-1  
+MIR24-2  
+MIR26A1  
+MIR26A2  
+MIR27A  
+MIR27B  
+MIR296  
+MIR29A  
+MIR29C  
+MIR30A  
+MIR30B  
+MIR30C1  
+MIR30C2  
+MIR30E  
+MIR31  
+MIR320A  
+MIR329-1  
+MIR329-2  
+MIR342  
+MIR34A  
+MIR34B  
+MIR34C  
+MIR361  
+MIR375  
+MIR377  
+MIR378A  
+MIR410  
+MIR424  
+MIR451A  
+MIR483  
+MIR487B  
+MIR492  
+MIR494  
+MIR495  
+MIR497  
+MIR503  
+MIR505  
+MIR640  
+MIR92A1  
+MIR92A2  
+MIR939  
+MIR99B  
+MIRLET7B  
+MIRLET7F1  
+MIRLET7F2  
+MIRLET7G
+```
+
+##### GO_ACYLGLYCEROL_HOMEOSTASIS (39 genes)
+```
+MIR208A  
+MIR33A  
+MIR34A  
+MIR379
+```
