@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 import logging
+import shutil
 from datetime import date
 
 # define path to mappings
@@ -194,7 +195,10 @@ def translate_location():
 			for _index in range(len(_gene_obj["location"])):
 				if _gene_obj["location"][_index] in ["q", "p"]:
 					_gene_obj["chromosome"] = _gene_obj["location"].split(_gene_obj["location"][_index])[0]
-					_gene_obj["cytoband"] = _gene_obj["location"]
+					if "not on reference assembly" in _gene_obj["location"]:
+						_gene_obj["cytoband"] = _gene_obj["location"].replace(" not on reference assembly", "")
+					else:
+						_gene_obj["cytoband"] = _gene_obj["location"]
 					break
 		
 	logging.info("Finished translating HGNC location >>>>>>>>>>>>>\n")
@@ -325,7 +329,9 @@ def main():
 
 	# output folder & file name
 	_output_dir = date.today().strftime("%b-%d-%Y") + "-output"
-	os.mkdir(_output_dir)
+	if os.path.exists(_output_dir):
+	    shutil.rmtree(_output_dir)
+	os.makedirs(_output_dir)
 	if args.output_file_name is None:
 		_output_file_name = _output_dir + "/" + "gene-import-input-" + date.today().strftime("%b-%d-%Y") + ".txt"
 	else:

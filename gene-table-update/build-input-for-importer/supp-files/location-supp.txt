@@ -5,7 +5,7 @@ entrez_id	symbol	chromosome	cytoband
 100130026	RPL38P5	2	2q33.1
 -3	EGFRVIII	7	7p12
 1574	CYP3A	7	7q21.3-q22.1
-2575	GAGE3	X	Xp11.23 not on reference assembly
+2575	GAGE3	X	Xp11.23
 3262	HPVC1	7	7p11.2
 10638	SPHAR	1	1q42.13
 10896	OCLM	1	1q31.1
