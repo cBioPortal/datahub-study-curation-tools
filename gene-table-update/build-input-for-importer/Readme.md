@@ -1,3 +1,4 @@
+**ALWAYS update the supp files first before running the scripts. Instructions [HERE]()**
 
 ## Introduction
 Scripts to build an input file, to be used by importer to build/update seedDB gene tables.  
