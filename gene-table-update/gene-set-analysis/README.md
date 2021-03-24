@@ -1,10 +1,10 @@
 ## Introduction
-Scripts to compare all gene sets in msigDB [HERE]() to latest HGNC-based gene tables [HERE](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/Mar-11-2021-output/gene-import-input-Mar-11-2021.txt)
+Scripts to compare all gene sets in msigDB used by current version of seedDB, described [HERE](https://github.com/cBioPortal/datahub/blob/gene_update_doc/seedDB/Release-Notes.md#seed-database-schema-273) to latest HGNC-based gene tables, described [HERE](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/Mar-11-2021-output/gene-import-input-Mar-11-2021.txt)
 
 ## Usage
-
+```
 geneSetComp.py [-h] -i INPUT_MSIGDB_FILE -r INPUT_HGNC_FILE
-
+```
 ##### Example
 ```
 python geneSetComp.py -i msigdb_download/msigdb_v6.1.xml -r ../build-input-for-importer/Mar-11-2021-output/gene-import-input-Mar-11-2021.txt
