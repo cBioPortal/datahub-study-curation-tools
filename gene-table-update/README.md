@@ -2,6 +2,7 @@
 This folder includes all the scripts needed to, for each new release:
 - generate `gene_info.txt` (input file for importer) to build gene tables in seedDB. 
 - update exisitng data files accordingly
+- Analyze gene loss in msigDB gene sets
 
 ## Before running the scripts
 ### 
