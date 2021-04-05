@@ -1,4 +1,4 @@
-### Usage
+### Data files migration script usage
 
 This tool is intended to update data files in accordance to the updates made to cBioPortal's gene tables (see the [news release](https://github.com/cBioPortal/datahub/blob/0d21da85619bcc3e66c4eaf04675d3393e640306/seedDB/gene_update_dec_16_2020.md)) and [seed_DB](https://github.com/cBioPortal/datahub/tree/master/seedDB).
 
@@ -24,7 +24,7 @@ pip3 install pandas
 
 The tool can be run with the following command:
 ```
-python hgnc_data_file_migration.py [-h] -path SOURCE_PATH [-l | -o | -n]
+python3 gene_cleanup_data_file_migration.py [-h] -path SOURCE_PATH [-l | -o | -n]
 ````
 
 
@@ -63,3 +63,26 @@ Updates the hugo symbols in data files based on entrez ids.
 **Step3:**
 
 Replaces the outdated hugo symbols to new hugo symbols in data files, if the file has only hugo symbol column. The mapping can be found here [outdated_hugo_symbols.txt](https://github.com/cBioPortal/datahub-study-curation-tools/blob/19661e9998bf74836a037a6285153796b07d5318/HGNC_Genomic_Files_Migration/outdated_hugo_symbols.txt).
+
+### Gene panel files migration script usage
+
+This tool is intended to update outdated gene symbols in the panel files.
+
+#### Command line
+
+The tool can be run with the following command:
+```
+python3 gene_cleanup_panel_file_migration.py [-h] -path SOURCE_PATH [-o | -n]
+````
+
+**Options**
+```
+-path | --source_path: Path to the gene panel file to be updated.
+-o | --override_file:  Override the old panel file.
+-n | --create_new_file: Save the updated data to new file without overriding the old file.
+```
+
+**Note:**
+The arguments `-o` and `-n` are mutually exclusive with `-n` as default.
+
+
