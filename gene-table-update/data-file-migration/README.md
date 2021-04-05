@@ -84,5 +84,4 @@ python3 gene_cleanup_panel_file_migration.py [-h] -path SOURCE_PATH [-o | -n]
 
 **Note:**
 The arguments `-o` and `-n` are mutually exclusive with `-n` as default.
-
-
+Could omit missing microRNA genes (it's always shown as missing but we actually have them in the DB *TODO*
