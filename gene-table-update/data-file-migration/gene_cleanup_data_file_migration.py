@@ -17,12 +17,16 @@ def interface():
 #---Currently reading from a file. This logic will be replaced to read the gene/alias data from cbioportal API once the new gene tables become available--->
 def fetch_gene_info():
 	print("\nFetching the reference gene and gene-alias info..\n")
-	main_table_df = pd.read_csv('gene_table.txt', sep='\t', header=0, keep_default_na=False, dtype=str, low_memory=False)
-	alias_table_df = pd.read_csv('gene_alias_table.txt', sep='\t', header=0, keep_default_na=False, dtype=str, low_memory=False)
-	alias_table_df1 = alias_table_df.groupby(['entrez_id'],sort=False)['symbol'].unique().apply(list).reset_index()
+	df = pd.read_csv('gene_info.txt', sep='\t', header=0, keep_default_na=False, dtype=str, low_memory=False)
+	main_table_entrez_dict = dict(zip(df['entrez_id'],df['symbol']))
+	alias_table_entrez_dict = dict(zip(df['entrez_id'],df['synonyms'].str.split("|", n=-1, expand=False)))
 
-	main_table_entrez_dict = dict(zip(main_table_df['entrez_id'],main_table_df['symbol']))
-	alias_table_entrez_dict = dict(zip(alias_table_df1['entrez_id'],alias_table_df1['symbol']))
+	keys_with_no_synonyms = []
+	for key in alias_table_entrez_dict:
+		if len(alias_table_entrez_dict[key]) == 1 and alias_table_entrez_dict[key][0] == '':
+			keys_with_no_synonyms.append(key)
+	for key in keys_with_no_synonyms:
+		del alias_table_entrez_dict[key]
 
 	#Read the outdated to new entrez id mapping file (consolidated from all sub categories of the analysis)
 	outdated_entrez_df = pd.read_csv('outdated_entrez_ids.txt', sep='\t', header=0, keep_default_na=False, dtype=str)
