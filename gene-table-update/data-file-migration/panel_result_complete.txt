@@ -1,0 +1,1528 @@
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_AmpliSeq.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt ---------------------------------->
+
+WARNING: BOD1L is an alias symbol
+WARNING: C10orf118 is an alias symbol
+WARNING: C10orf28 is an alias symbol
+WARNING: CCDC67 is an alias symbol
+WARNING: FAM154B is an alias symbol
+WARNING: FAM40B is an alias symbol
+WARNING: FAM57B is an alias symbol
+WARNING: FAM5C is an alias symbol
+WARNING: FAM65A is an alias symbol
+WARNING: FAM70B is an alias symbol
+WARNING: GALNTL4 is an alias symbol
+WARNING: GPR112 is an alias symbol
+WARNING: KIAA0240 is an alias symbol
+WARNING: KIAA1267 is an alias symbol
+WARNING: KIAA1529 is an alias symbol
+WARNING: KIAA1683 is an alias symbol
+ERROR: MIR142 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: MLL3 is an alias symbol
+WARNING: PCDHB18 is an alias symbol
+ERROR: LOC730032 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: FLJ43860 is an alias symbol
+ERROR: LOC100129218 symbol not known to the cBioPortal instance. This panel will not be loaded.
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_acyc_fmi_27.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt ---------------------------------->
+
+WARNING: ATP5L is an alias symbol
+WARNING: C11orf73 is an alias symbol
+WARNING: C19orf34 is an alias symbol
+WARNING: C21orf34 is an alias symbol
+WARNING: C6orf204 is an alias symbol
+WARNING: C9orf53 is an alias symbol
+WARNING: COPG is an alias symbol
+WARNING: FAM190A is an alias symbol
+WARNING: KGFLP2 is an alias symbol
+ERROR: LOC440300 symbol not known to the cBioPortal instance. This panel will not be loaded.
+ERROR: MIR1288 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: MLLT4 is an alias symbol
+WARNING: PLAC1L is an alias symbol
+WARNING: VPRBP is an alias symbol
+WARNING: WHSC1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_archer_heme.txt ---------------------------------->
+
+WARNING: KIAA0101 is an alias symbol
+WARNING: LRMP is an alias symbol
+WARNING: MKL1 is an alias symbol
+WARNING: MLLT4 is an alias symbol
+ERROR: PYRY8 symbol not known to the cBioPortal instance. This panel will not be loaded.
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_archer_heme.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_archer_solid.txt ---------------------------------->
+
+WARNING: MGEA5 is an alias symbol
+WARNING: MKL2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_archer_solid.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_baitv3.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: PKM2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_baitv3.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_baitv4.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: PKM2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_baitv4.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_baitv5.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: PKM2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_baitv5.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_bcc_unige_2016_cancer_panel.txt ---------------------------------->
+
+WARNING: BAI3 is an alias symbol
+WARNING: DIEXF is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: NGFRAP1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+WARNING: WISP3 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_bcc_unige_2016_cancer_panel.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_cmo_hemepact_v3.txt ---------------------------------->
+
+WARNING: C17orf39 is an alias symbol
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: GRAF is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H1D is an alias symbol
+WARNING: HIST1H1E is an alias symbol
+WARNING: HIST1H2AC is an alias symbol
+WARNING: HIST1H2AG is an alias symbol
+WARNING: HIST1H2AL is an alias symbol
+WARNING: HIST1H2AM is an alias symbol
+WARNING: HIST1H2BC is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H2BJ is an alias symbol
+WARNING: HIST1H2BK is an alias symbol
+WARNING: HIST1H2BO is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: ICK is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: MYST3 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: TMSL3 is an alias symbol
+WARNING: TNFRSF6 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: WISP3 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_cmo_hemepact_v3.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_dfci_504.txt ---------------------------------->
+
+WARNING: SEPT5 is an alias symbol
+WARNING: SEPT9 is an alias symbol
+WARNING: C1orf144 is an alias symbol
+WARNING: CARS is an alias symbol
+WARNING: CASC5 is an alias symbol
+WARNING: CCDC132 is an alias symbol
+WARNING: CXCR7 is an alias symbol
+WARNING: ERBB2IP is an alias symbol
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: LPHN2 is an alias symbol
+WARNING: LPHN3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: MRE11A is an alias symbol
+ERROR: MTORFrap1 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: TBC1D29 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_dfci_504.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt ---------------------------------->
+
+WARNING: WTX is an alias symbol
+WARNING: GRAF is an alias symbol
+WARNING: PDL1 is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: TNFRSF6 is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H1D is an alias symbol
+WARNING: HIST1H1E is an alias symbol
+WARNING: HIST1H2AC is an alias symbol
+WARNING: HIST1H2AG is an alias symbol
+WARNING: HIST1H2AL is an alias symbol
+WARNING: HIST1H2AM is an alias symbol
+WARNING: HIST1H2BC is an alias symbol
+WARNING: HIST1H2BJ is an alias symbol
+WARNING: HIST1H2BK is an alias symbol
+WARNING: HIST1H2BO is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: ICK is an alias symbol
+WARNING: SHIP is an alias symbol
+WARNING: MYST3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PDL2 is an alias symbol
+WARNING: TMSL3 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: WISP3 is an alias symbol
+WARNING: ZSCAN3 is an alias symbol
+WARNING: CARS is an alias symbol
+WARNING: FGFR1OP is an alias symbol
+WARNING: HIST1H4I is an alias symbol
+WARNING: MKL1 is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: SEPT5 is an alias symbol
+WARNING: SEPT6 is an alias symbol
+WARNING: SEPT9 is an alias symbol
+WARNING: STL is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt ---------------------------------->
+
+WARNING: WTX is an alias symbol
+WARNING: GRAF is an alias symbol
+WARNING: PDL1 is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: TNFRSF6 is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H1D is an alias symbol
+WARNING: HIST1H1E is an alias symbol
+WARNING: HIST1H2AC is an alias symbol
+WARNING: HIST1H2AG is an alias symbol
+WARNING: HIST1H2AL is an alias symbol
+WARNING: HIST1H2AM is an alias symbol
+WARNING: HIST1H2BC is an alias symbol
+WARNING: HIST1H2BJ is an alias symbol
+WARNING: HIST1H2BK is an alias symbol
+WARNING: HIST1H2BO is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: ICK is an alias symbol
+WARNING: SHIP is an alias symbol
+WARNING: MYST3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PDL2 is an alias symbol
+WARNING: SHP-1 is an alias symbol
+WARNING: E2A is an alias symbol
+WARNING: TCL1 is an alias symbol
+WARNING: TMSL3 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: WISP3 is an alias symbol
+WARNING: ZSCAN3 is an alias symbol
+WARNING: CARS is an alias symbol
+WARNING: CEP110 is an alias symbol
+WARNING: FGFR1OP is an alias symbol
+WARNING: HIST1H4I is an alias symbol
+WARNING: MKL1 is an alias symbol
+WARNING: ENL is an alias symbol
+WARNING: AF10 is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: BCL8 is an alias symbol
+WARNING: ETO is an alias symbol
+WARNING: SEPT5 is an alias symbol
+WARNING: SEPT6 is an alias symbol
+WARNING: SEPT9 is an alias symbol
+WARNING: RUNDC2A is an alias symbol
+WARNING: STL is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t4b.txt ---------------------------------->
+
+ERROR: WG symbol not known to the cBioPortal instance. This panel will not be loaded.
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t4b.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t5a.txt ---------------------------------->
+
+WARNING: C11orf30 is an alias symbol
+WARNING: WISP3 is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: PAK7 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t5a.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t7.txt ---------------------------------->
+
+WARNING: MRE11A is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: C11orf30 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: WISP3 is an alias symbol
+WARNING: GPR124 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t7.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_gbm_tcga_pub.txt ---------------------------------->
+
+WARNING: BAI1 is an alias symbol
+WARNING: BAI3 is an alias symbol
+WARNING: C11orf17 is an alias symbol
+WARNING: C20orf112 is an alias symbol
+WARNING: C20orf160 is an alias symbol
+WARNING: C20orf4 is an alias symbol
+WARNING: C5orf13 is an alias symbol
+WARNING: CECR5 is an alias symbol
+WARNING: CENTG1 is an alias symbol
+WARNING: CXCR7 is an alias symbol
+WARNING: ERBB2IP is an alias symbol
+WARNING: FAM119B is an alias symbol
+WARNING: FRAP1 is an alias symbol
+WARNING: GEFT is an alias symbol
+WARNING: GRLF1 is an alias symbol
+WARNING: H2AFX is an alias symbol
+WARNING: KIAA1632 is an alias symbol
+WARNING: MARCH9 is an alias symbol
+WARNING: MKL1 is an alias symbol
+WARNING: MLL4 is an alias symbol
+WARNING: MYST4 is an alias symbol
+WARNING: P2RY5 is an alias symbol
+WARNING: PHLPP is an alias symbol
+WARNING: PRKCB1 is an alias symbol
+ERROR: RP6-213H19.1 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: SNF1LK2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_gbm_tcga_pub.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel1.txt ---------------------------------->
+
+WARNING: PARK2 is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: H3F3A is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel1.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt ---------------------------------->
+
+WARNING: PARK2 is an alias symbol
+WARNING: GNB2L1 is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: H3F3A is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel3.txt ---------------------------------->
+
+WARNING: MRE11A is an alias symbol
+WARNING: C17orf70 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+WARNING: PVRL4 is an alias symbol
+WARNING: BRE is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: C19orf40 is an alias symbol
+WARNING: TCEB1 is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: C1orf86 is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: WHSC1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel3.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_mskcc_2019_fmi_t5.txt ---------------------------------->
+
+WARNING: FAM46C is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: C11orf30 is an alias symbol
+WARNING: WISP3 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_mskcc_2019_fmi_t5.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_mskcc_2019_fmi_t7.txt ---------------------------------->
+
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: C11orf30 is an alias symbol
+WARNING: WISP3 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_mskcc_2019_fmi_t7.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_grail_cfdna_508.txt ---------------------------------->
+
+WARNING: C11orf30 is an alias symbol
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: HIST1H3D is an alias symbol
+WARNING: HIST1H3E is an alias symbol
+WARNING: HIST1H3F is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+WARNING: HIST1H3H is an alias symbol
+WARNING: HIST1H3I is an alias symbol
+WARNING: HIST1H3J is an alias symbol
+WARNING: HIST2H3C is an alias symbol
+WARNING: HIST2H3D is an alias symbol
+WARNING: HIST3H3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: TCEB1 is an alias symbol
+WARNING: WISP3 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_grail_cfdna_508.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_guardant_73.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_heme400.txt ---------------------------------->
+
+WARNING: PAK7 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: HIST1H1B is an alias symbol
+WARNING: SETD8 is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H1D is an alias symbol
+WARNING: HIST1H1E is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: HIST1H2AC is an alias symbol
+WARNING: HIST1H2AG is an alias symbol
+WARNING: HIST1H2AL is an alias symbol
+WARNING: HIST1H2AM is an alias symbol
+WARNING: HIST1H2BC is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H2BG is an alias symbol
+WARNING: HIST1H2BJ is an alias symbol
+WARNING: HIST1H2BK is an alias symbol
+WARNING: HIST1H2BO is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_heme400.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_heme_hotspot.txt ---------------------------------->
+
+WARNING: MLL4 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_heme_hotspot.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact230.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: PKM2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact230.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact279.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PKM2 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact279.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact300.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: PKM2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact300.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact341.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact341.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact410.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: HIST1H3D is an alias symbol
+WARNING: HIST1H3E is an alias symbol
+WARNING: HIST1H3F is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+WARNING: HIST1H3H is an alias symbol
+WARNING: HIST1H3I is an alias symbol
+WARNING: HIST1H3J is an alias symbol
+WARNING: HIST2H3C is an alias symbol
+WARNING: HIST2H3D is an alias symbol
+WARNING: HIST3H3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: TCEB1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact410.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact468.txt ---------------------------------->
+
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: FAM58A is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: HIST1H3D is an alias symbol
+WARNING: HIST1H3E is an alias symbol
+WARNING: HIST1H3F is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+WARNING: HIST1H3H is an alias symbol
+WARNING: HIST1H3I is an alias symbol
+WARNING: HIST1H3J is an alias symbol
+WARNING: HIST2H3C is an alias symbol
+WARNING: HIST2H3D is an alias symbol
+WARNING: HIST3H3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MLL4 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: SETD8 is an alias symbol
+WARNING: TCEB1 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact468.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_mds_mskcc_2020_Papaemmanuil_NEJM_2016_MDS_2013_panel.txt ---------------------------------->
+
+WARNING: FAM175B is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MLL5 is an alias symbol
+WARNING: NRD1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_mds_mskcc_2020_Papaemmanuil_NEJM_2016_MDS_2013_panel.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_metabric_173.txt ---------------------------------->
+
+WARNING: MLL2 is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: LARGE is an alias symbol
+WARNING: HIST1H2BC is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_metabric_173.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_mskcc_blca_15.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_myb_impact341.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_myb_impact341.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_myb_impact410.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: HIST1H3D is an alias symbol
+WARNING: HIST1H3E is an alias symbol
+WARNING: HIST1H3F is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+WARNING: HIST1H3H is an alias symbol
+WARNING: HIST1H3I is an alias symbol
+WARNING: HIST1H3J is an alias symbol
+WARNING: HIST2H3C is an alias symbol
+WARNING: HIST2H3D is an alias symbol
+WARNING: HIST3H3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: TCEB1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_myb_impact410.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_myb_impact468.txt ---------------------------------->
+
+WARNING: FAM123B is an alias symbol
+WARNING: FAM175A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: FAM58A is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: HIST1H3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: HIST1H3D is an alias symbol
+WARNING: HIST1H3E is an alias symbol
+WARNING: HIST1H3F is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+WARNING: HIST1H3H is an alias symbol
+WARNING: HIST1H3I is an alias symbol
+WARNING: HIST1H3J is an alias symbol
+WARNING: HIST2H3C is an alias symbol
+WARNING: HIST2H3D is an alias symbol
+WARNING: HIST3H3 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: PARK2 is an alias symbol
+WARNING: RAD51L1 is an alias symbol
+WARNING: RAD51L3 is an alias symbol
+WARNING: RFWD2 is an alias symbol
+WARNING: TCEB1 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_myb_impact468.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt ---------------------------------->
+
+WARNING: RTCD1 is an alias symbol
+WARNING: C1orf183 is an alias symbol
+WARNING: FAM132A is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: NOTCH2NL is an alias symbol
+ERROR: LOC728989 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: LASS2 is an alias symbol
+WARNING: KIAA0907 is an alias symbol
+WARNING: C1orf61 is an alias symbol
+WARNING: MST1P9 is an alias symbol
+WARNING: FAM5B is an alias symbol
+WARNING: C1orf125 is an alias symbol
+ERROR: FLJ23867 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: GLT25D2 is an alias symbol
+WARNING: FAM129A is an alias symbol
+WARNING: KIAA1751 is an alias symbol
+WARNING: CAMSAP1L1 is an alias symbol
+WARNING: MFSD4 is an alias symbol
+WARNING: RAB7L1 is an alias symbol
+WARNING: FAIM3 is an alias symbol
+WARNING: C1orf86 is an alias symbol
+WARNING: CABC1 is an alias symbol
+WARNING: C1orf69 is an alias symbol
+WARNING: PCNXL2 is an alias symbol
+WARNING: KIAA1804 is an alias symbol
+WARNING: ADSS is an alias symbol
+WARNING: IL28RA is an alias symbol
+WARNING: KIAA0495 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: ZNF643 is an alias symbol
+WARNING: ZNF642 is an alias symbol
+WARNING: KIAA0467 is an alias symbol
+WARNING: C1orf223 is an alias symbol
+WARNING: NRD1 is an alias symbol
+WARNING: FAM159A is an alias symbol
+WARNING: C1orf175 is an alias symbol
+WARNING: C1orf173 is an alias symbol
+WARNING: C1orf180 is an alias symbol
+WARNING: TMEM56 is an alias symbol
+WARNING: C10orf32 is an alias symbol
+WARNING: NEURL is an alias symbol
+WARNING: OBFC1 is an alias symbol
+WARNING: C10orf81 is an alias symbol
+WARNING: C10orf140 is an alias symbol
+WARNING: KIAA1462 is an alias symbol
+WARNING: C10orf72 is an alias symbol
+WARNING: TTC18 is an alias symbol
+WARNING: MYST4 is an alias symbol
+WARNING: MARCH5 is an alias symbol
+WARNING: KIAA1377 is an alias symbol
+WARNING: C11orf92 is an alias symbol
+WARNING: CSNK2A1P is an alias symbol
+WARNING: FAM55A is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: CARS is an alias symbol
+WARNING: C11orf41 is an alias symbol
+WARNING: KIAA0652 is an alias symbol
+WARNING: PCNXL3 is an alias symbol
+WARNING: ADRBK1 is an alias symbol
+WARNING: SUV420H1 is an alias symbol
+WARNING: MTL5 is an alias symbol
+WARNING: ORAOV1 is an alias symbol
+WARNING: PRKRIR is an alias symbol
+WARNING: C11orf30 is an alias symbol
+WARNING: C11orf67 is an alias symbol
+WARNING: LRDD is an alias symbol
+WARNING: C11orf75 is an alias symbol
+WARNING: MRE11A is an alias symbol
+WARNING: C12orf51 is an alias symbol
+WARNING: WDR66 is an alias symbol
+WARNING: LOH12CR1 is an alias symbol
+WARNING: GPR133 is an alias symbol
+WARNING: SFRS8 is an alias symbol
+WARNING: H2AFJ is an alias symbol
+WARNING: KIAA0528 is an alias symbol
+WARNING: LRMP is an alias symbol
+WARNING: LYRM5 is an alias symbol
+WARNING: KLHDC5 is an alias symbol
+WARNING: C12orf5 is an alias symbol
+WARNING: SFRS2IP is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: LASS5 is an alias symbol
+WARNING: WIBG is an alias symbol
+WARNING: OBFC2B is an alias symbol
+WARNING: MARS is an alias symbol
+WARNING: LOC100130776 is an alias symbol
+WARNING: MARCH9 is an alias symbol
+WARNING: FAM119B is an alias symbol
+WARNING: C12orf66 is an alias symbol
+WARNING: LHFP is an alias symbol
+WARNING: C13orf31 is an alias symbol
+WARNING: FAM194B is an alias symbol
+WARNING: RAGE is an alias symbol
+WARNING: KIAA0284 is an alias symbol
+WARNING: JUB is an alias symbol
+WARNING: C14orf21 is an alias symbol
+WARNING: C14orf147 is an alias symbol
+WARNING: CTAGE5 is an alias symbol
+WARNING: SDCCAG1 is an alias symbol
+WARNING: ATP5S is an alias symbol
+WARNING: RAD51L1 is an alias symbol
+WARNING: UPF0639 is an alias symbol
+WARNING: PCNX is an alias symbol
+WARNING: C14orf43 is an alias symbol
+WARNING: C14orf115 is an alias symbol
+WARNING: TMEM90A is an alias symbol
+WARNING: C14orf118 is an alias symbol
+WARNING: C14orf4 is an alias symbol
+ERROR: C14orf184 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: KIAA1409 is an alias symbol
+WARNING: C14orf139 is an alias symbol
+WARNING: C15orf2 is an alias symbol
+WARNING: C15orf29 is an alias symbol
+WARNING: C15orf55 is an alias symbol
+WARNING: CASC5 is an alias symbol
+WARNING: CASC4 is an alias symbol
+WARNING: C15orf21 is an alias symbol
+WARNING: NARG2 is an alias symbol
+WARNING: C15orf38 is an alias symbol
+WARNING: C16orf75 is an alias symbol
+WARNING: MKL2 is an alias symbol
+WARNING: KIAA0430 is an alias symbol
+WARNING: CRAMP1L is an alias symbol
+WARNING: TCEB2 is an alias symbol
+WARNING: RUNDC2C is an alias symbol
+WARNING: C16orf53 is an alias symbol
+WARNING: SEPT1 is an alias symbol
+WARNING: NCRNA00095 is an alias symbol
+WARNING: BTBD12 is an alias symbol
+WARNING: PAPD5 is an alias symbol
+ERROR: DKFZP434H168 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: NARFL is an alias symbol
+WARNING: KIAA1609 is an alias symbol
+WARNING: C16orf68 is an alias symbol
+WARNING: FAM38A is an alias symbol
+WARNING: C17orf39 is an alias symbol
+WARNING: C17orf103 is an alias symbol
+WARNING: LRRC37B2 is an alias symbol
+WARNING: GSG2 is an alias symbol
+WARNING: C17orf37 is an alias symbol
+WARNING: NT5C3L is an alias symbol
+WARNING: FAM134C is an alias symbol
+WARNING: CCDC56 is an alias symbol
+WARNING: KIAA1267 is an alias symbol
+WARNING: ATP5G1 is an alias symbol
+WARNING: MYST2 is an alias symbol
+WARNING: DULLARD is an alias symbol
+WARNING: C17orf54 is an alias symbol
+WARNING: C17orf28 is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: SEPT9 is an alias symbol
+WARNING: C18orf1 is an alias symbol
+WARNING: KIAA0802 is an alias symbol
+WARNING: LPPR2 is an alias symbol
+WARNING: LPHN1 is an alias symbol
+WARNING: PLK5P is an alias symbol
+WARNING: C19orf62 is an alias symbol
+WARNING: C19orf34 is an alias symbol
+WARNING: C19orf35 is an alias symbol
+WARNING: C19orf2 is an alias symbol
+WARNING: MLL4 is an alias symbol
+WARNING: PAPL is an alias symbol
+WARNING: ADCK4 is an alias symbol
+WARNING: CYP2B7P1 is an alias symbol
+WARNING: ATP5SL is an alias symbol
+WARNING: C19orf61 is an alias symbol
+WARNING: PVRL2 is an alias symbol
+WARNING: CD3EAP is an alias symbol
+WARNING: PNMAL1 is an alias symbol
+WARNING: GRLF1 is an alias symbol
+WARNING: GLTSCR1 is an alias symbol
+WARNING: ZNF816A is an alias symbol
+WARNING: ZNF542 is an alias symbol
+WARNING: MARCH2 is an alias symbol
+WARNING: PQLC3 is an alias symbol
+WARNING: YSK4 is an alias symbol
+WARNING: ZAK is an alias symbol
+WARNING: RQCD1 is an alias symbol
+WARNING: KIAA1486 is an alias symbol
+WARNING: CXCR7 is an alias symbol
+WARNING: MTERFD2 is an alias symbol
+ERROR: LOC375190 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: C2orf53 is an alias symbol
+WARNING: C2orf28 is an alias symbol
+WARNING: C2orf71 is an alias symbol
+WARNING: C2orf56 is an alias symbol
+WARNING: SFRS7 is an alias symbol
+WARNING: C2orf63 is an alias symbol
+WARNING: SMEK2 is an alias symbol
+WARNING: FAM176A is an alias symbol
+WARNING: C2orf3 is an alias symbol
+WARNING: ANKRD20B is an alias symbol
+WARNING: CSRP2BP is an alias symbol
+WARNING: FRG1B is an alias symbol
+WARNING: C20orf112 is an alias symbol
+WARNING: C20orf24 is an alias symbol
+WARNING: KIAA0406 is an alias symbol
+WARNING: L3MBTL is an alias symbol
+WARNING: WISP2 is an alias symbol
+WARNING: FAM65C is an alias symbol
+WARNING: C20orf11 is an alias symbol
+ERROR: FLJ16779 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: C20orf54 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: DOPEY2 is an alias symbol
+WARNING: DSCR3 is an alias symbol
+WARNING: MCM3APAS is an alias symbol
+WARNING: CECR6 is an alias symbol
+WARNING: DGCR14 is an alias symbol
+WARNING: SEPT5 is an alias symbol
+WARNING: C22orf25 is an alias symbol
+WARNING: ADRBK2 is an alias symbol
+WARNING: C22orf30 is an alias symbol
+WARNING: H1F0 is an alias symbol
+WARNING: MKL1 is an alias symbol
+WARNING: SEPT3 is an alias symbol
+WARNING: KIAA1644 is an alias symbol
+ERROR: LOC730668 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: C3orf24 is an alias symbol
+WARNING: KIAA2018 is an alias symbol
+WARNING: QTRTD1 is an alias symbol
+WARNING: TMEM22 is an alias symbol
+WARNING: C3orf72 is an alias symbol
+WARNING: C3orf16 is an alias symbol
+WARNING: LOC401093 is an alias symbol
+WARNING: LEPREL1 is an alias symbol
+WARNING: C3orf21 is an alias symbol
+WARNING: KIAA0226 is an alias symbol
+WARNING: CCBP2 is an alias symbol
+WARNING: C3orf64 is an alias symbol
+WARNING: DHFRL1 is an alias symbol
+WARNING: PHF17 is an alias symbol
+WARNING: KIAA1712 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+WARNING: WHSC2 is an alias symbol
+WARNING: C4orf6 is an alias symbol
+WARNING: C4orf40 is an alias symbol
+WARNING: C4orf23 is an alias symbol
+WARNING: C4orf12 is an alias symbol
+WARNING: C5orf13 is an alias symbol
+WARNING: SEPT8 is an alias symbol
+WARNING: PHF15 is an alias symbol
+WARNING: HARS is an alias symbol
+WARNING: FAM105A is an alias symbol
+WARNING: FAM105B is an alias symbol
+WARNING: C5orf33 is an alias symbol
+WARNING: MGC42105 is an alias symbol
+WARNING: C5orf28 is an alias symbol
+WARNING: FLJ37543 is an alias symbol
+WARNING: SFRS12IP1 is an alias symbol
+WARNING: ERBB2IP is an alias symbol
+WARNING: COL4A3BP is an alias symbol
+ERROR: LOC644936 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: AIM1 is an alias symbol
+WARNING: C6orf204 is an alias symbol
+ERROR: Unknown symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: C6orf97 is an alias symbol
+WARNING: FGFR1OP is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: FAM65B is an alias symbol
+WARNING: HIST1H4I is an alias symbol
+WARNING: ZNF192 is an alias symbol
+WARNING: ZNF187 is an alias symbol
+WARNING: ZNF323 is an alias symbol
+WARNING: BAT1 is an alias symbol
+WARNING: BAT3 is an alias symbol
+WARNING: BAT5 is an alias symbol
+WARNING: DOM3Z is an alias symbol
+WARNING: C6orf227 is an alias symbol
+WARNING: C6orf106 is an alias symbol
+WARNING: SFRS3 is an alias symbol
+WARNING: ICK is an alias symbol
+WARNING: C6orf142 is an alias symbol
+WARNING: BAI3 is an alias symbol
+WARNING: C6orf167 is an alias symbol
+WARNING: SFRS18 is an alias symbol
+WARNING: EMID2 is an alias symbol
+WARNING: C7orf68 is an alias symbol
+WARNING: FLJ45340 is an alias symbol
+WARNING: FAM40B is an alias symbol
+WARNING: TRYX3 is an alias symbol
+WARNING: ABP1 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: WDR60 is an alias symbol
+WARNING: ISPD is an alias symbol
+WARNING: TWISTNB is an alias symbol
+WARNING: DFNA5 is an alias symbol
+WARNING: GARS is an alias symbol
+ERROR: LOC646999 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: KIAA0415 is an alias symbol
+WARNING: C7orf42 is an alias symbol
+WARNING: PMS2L5 is an alias symbol
+WARNING: PMS2L3 is an alias symbol
+WARNING: PION is an alias symbol
+WARNING: C7orf64 is an alias symbol
+WARNING: GATS is an alias symbol
+WARNING: NACAP1 is an alias symbol
+WARNING: NOV is an alias symbol
+WARNING: WDR67 is an alias symbol
+WARNING: KIAA0196 is an alias symbol
+WARNING: C8orf79 is an alias symbol
+WARNING: BAI1 is an alias symbol
+WARNING: KIAA1875 is an alias symbol
+WARNING: ZNF252 is an alias symbol
+WARNING: C8orf41 is an alias symbol
+WARNING: PPAPDC1B is an alias symbol
+WARNING: WHSC1L1 is an alias symbol
+WARNING: AGPAT6 is an alias symbol
+WARNING: MYST3 is an alias symbol
+WARNING: C8orf42 is an alias symbol
+WARNING: IMPAD1 is an alias symbol
+WARNING: C8orf84 is an alias symbol
+WARNING: KIAA1429 is an alias symbol
+WARNING: C8orf38 is an alias symbol
+WARNING: KIAA1529 is an alias symbol
+WARNING: C9orf5 is an alias symbol
+WARNING: C9orf91 is an alias symbol
+WARNING: CEP110 is an alias symbol
+WARNING: FAM125B is an alias symbol
+WARNING: FAM129B is an alias symbol
+WARNING: C9orf9 is an alias symbol
+WARNING: C9orf96 is an alias symbol
+WARNING: C9orf7 is an alias symbol
+WARNING: TMEM2 is an alias symbol
+WARNING: ZCCHC6 is an alias symbol
+WARNING: C9orf170 is an alias symbol
+WARNING: CTSL1 is an alias symbol
+WARNING: CTSL3 is an alias symbol
+WARNING: C9orf79 is an alias symbol
+WARNING: IARS is an alias symbol
+WARNING: FAM22F is an alias symbol
+WARNING: HIATL1 is an alias symbol
+WARNING: CTSL2 is an alias symbol
+WARNING: TMEM35 is an alias symbol
+WARNING: SEPT6 is an alias symbol
+WARNING: ODZ1 is an alias symbol
+WARNING: MST4 is an alias symbol
+WARNING: GPR112 is an alias symbol
+WARNING: FIGF is an alias symbol
+WARNING: MTCP1NB is an alias symbol
+WARNING: FAM48B1 is an alias symbol
+WARNING: CXorf36 is an alias symbol
+WARNING: ITIH5L is an alias symbol
+WARNING: FAM123B is an alias symbol
+WARNING: KIAA2022 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_nsclc_unito_2016_panel.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_prad_mskcc_sanger.txt ---------------------------------->
+
+WARNING: KIAA1804 is an alias symbol
+WARNING: KIAA1921 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_prad_mskcc_sanger.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_prad_mskcc_sequenom.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_prad_mskcc_sequenom_sanger.txt ---------------------------------->
+
+WARNING: KIAA1804 is an alias symbol
+WARNING: KIAA1921 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_prad_mskcc_sequenom_sanger.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_rbl_cfdna_msk_2020.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_rdtb49.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_rdts30.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_sarc_mskcc.txt ---------------------------------->
+
+WARNING: ACK1 is an alias symbol
+WARNING: CDC2 is an alias symbol
+WARNING: DKFZp761P1010 is an alias symbol
+WARNING: FRAP1 is an alias symbol
+WARNING: KIAA1079 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: MYCL2 is an alias symbol
+WARNING: PIK4CA is an alias symbol
+WARNING: PTCH is an alias symbol
+WARNING: TIE is an alias symbol
+WARNING: VEGF is an alias symbol
+WARNING: PIK4CB is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_sarc_mskcc.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_ucla_1202.txt ---------------------------------->
+
+WARNING: ADRBK2 is an alias symbol
+WARNING: BAI1 is an alias symbol
+WARNING: BAI3 is an alias symbol
+WARNING: BHD is an alias symbol
+WARNING: BPIL2 is an alias symbol
+WARNING: C10orf118 is an alias symbol
+WARNING: C11orf48 is an alias symbol
+WARNING: C12orf12 is an alias symbol
+WARNING: C14orf43 is an alias symbol
+WARNING: C16orf62 is an alias symbol
+WARNING: C16orf70 is an alias symbol
+WARNING: C17orf104 is an alias symbol
+WARNING: C17orf57 is an alias symbol
+WARNING: C18orf34 is an alias symbol
+WARNING: C1orf106 is an alias symbol
+WARNING: C1orf65 is an alias symbol
+WARNING: C22orf25 is an alias symbol
+WARNING: C2orf55 is an alias symbol
+WARNING: C5orf42 is an alias symbol
+WARNING: C5orf44 is an alias symbol
+WARNING: C8orf45 is an alias symbol
+WARNING: C9orf103 is an alias symbol
+WARNING: C9orf170 is an alias symbol
+WARNING: C9orf84 is an alias symbol
+WARNING: COPEB is an alias symbol
+WARNING: DPCR1 is an alias symbol
+WARNING: EIF2C1 is an alias symbol
+WARNING: EMR3 is an alias symbol
+WARNING: EPT1 is an alias symbol
+WARNING: FAM122B is an alias symbol
+WARNING: FAM160A1 is an alias symbol
+WARNING: FAM179B is an alias symbol
+WARNING: FAM194A is an alias symbol
+WARNING: FAM196B is an alias symbol
+WARNING: FAM208B is an alias symbol
+WARNING: FAM46C is an alias symbol
+WARNING: FAM48B2 is an alias symbol
+WARNING: FAM55A is an alias symbol
+WARNING: FAM5C is an alias symbol
+WARNING: FAM75D4 is an alias symbol
+WARNING: GPR112 is an alias symbol
+WARNING: GPR124 is an alias symbol
+WARNING: GPR98 is an alias symbol
+WARNING: GRAF is an alias symbol
+WARNING: H1FOO is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: HARS is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2AG is an alias symbol
+WARNING: HIST1H2BG is an alias symbol
+WARNING: HIST1H4A is an alias symbol
+WARNING: HIST2H2AC is an alias symbol
+WARNING: HIST2H2BF is an alias symbol
+WARNING: HRPT2 is an alias symbol
+WARNING: IFLTD1 is an alias symbol
+WARNING: ITFG3 is an alias symbol
+WARNING: KIAA0947 is an alias symbol
+WARNING: KIAA1009 is an alias symbol
+WARNING: KIAA1429 is an alias symbol
+WARNING: KIAA1432 is an alias symbol
+WARNING: KIAA1804 is an alias symbol
+WARNING: LDOC1L is an alias symbol
+WARNING: LINS is an alias symbol
+WARNING: LPPR4 is an alias symbol
+WARNING: MADH4 is an alias symbol
+WARNING: MARCH4 is an alias symbol
+WARNING: MARCH5 is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: MLL2 is an alias symbol
+WARNING: MLL3 is an alias symbol
+WARNING: MLLT4 is an alias symbol
+WARNING: MTERFD1 is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: NBS1 is an alias symbol
+WARNING: OR2W5 is an alias symbol
+WARNING: PHF17 is an alias symbol
+WARNING: PKM2 is an alias symbol
+WARNING: PNMAL1 is an alias symbol
+WARNING: PRSS46 is an alias symbol
+WARNING: PTCH is an alias symbol
+WARNING: RGNEF is an alias symbol
+WARNING: RQCD1 is an alias symbol
+WARNING: SDH5 is an alias symbol
+WARNING: SELO is an alias symbol
+WARNING: SEPT2 is an alias symbol
+WARNING: SSFA2 is an alias symbol
+WARNING: TARSL2 is an alias symbol
+WARNING: TCF1 is an alias symbol
+WARNING: TMEM2 is an alias symbol
+WARNING: TNFRSF6 is an alias symbol
+WARNING: TTC18 is an alias symbol
+WARNING: WDR66 is an alias symbol
+WARNING: WDR92 is an alias symbol
+WARNING: WTX is an alias symbol
+WARNING: YSK4 is an alias symbol
+WARNING: ZCCHC5 is an alias symbol
+WARNING: ZNF167 is an alias symbol
+WARNING: ZNF643 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_ucla_1202.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_wustl_dfci_623.txt ---------------------------------->
+
+WARNING: CDC2L5 is an alias symbol
+WARNING: ALS2CR2 is an alias symbol
+WARNING: TUSC4 is an alias symbol
+WARNING: PIK4CA is an alias symbol
+WARNING: TCF1 is an alias symbol
+WARNING: ALS2CR7 is an alias symbol
+WARNING: PCTK2 is an alias symbol
+WARNING: SGKL is an alias symbol
+WARNING: PCQAP is an alias symbol
+WARNING: EVI1 is an alias symbol
+WARNING: TP73L is an alias symbol
+WARNING: ARMET is an alias symbol
+WARNING: PCTK1 is an alias symbol
+WARNING: ZNF312 is an alias symbol
+WARNING: CCRK is an alias symbol
+ERROR: MGC16703 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: CRK7 is an alias symbol
+WARNING: FLJ25006 is an alias symbol
+WARNING: PRKCB1 is an alias symbol
+WARNING: PFTK1 is an alias symbol
+WARNING: NCYM is an alias symbol
+WARNING: ADRBK1 is an alias symbol
+WARNING: C3orf45 is an alias symbol
+WARNING: ADRBK2 is an alias symbol
+WARNING: KELCHL is an alias symbol
+WARNING: TRIP is an alias symbol
+WARNING: PTCH is an alias symbol
+WARNING: MYCL1 is an alias symbol
+WARNING: FLJ30473 is an alias symbol
+WARNING: LYK5 is an alias symbol
+WARNING: DUSP24 is an alias symbol
+WARNING: PCTK3 is an alias symbol
+WARNING: FOXO3A is an alias symbol
+WARNING: STK6 is an alias symbol
+WARNING: HD is an alias symbol
+WARNING: MLL is an alias symbol
+WARNING: TU3A is an alias symbol
+WARNING: RAGE is an alias symbol
+WARNING: HRPT2 is an alias symbol
+WARNING: SGK is an alias symbol
+WARNING: CDC2L6 is an alias symbol
+WARNING: CDC2 is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: P2RY5 is an alias symbol
+WARNING: FOXO1A is an alias symbol
+WARNING: MST4 is an alias symbol
+WARNING: ZAK is an alias symbol
+WARNING: GBL is an alias symbol
+WARNING: CDC2L2 is an alias symbol
+WARNING: DKFZp434N035 is an alias symbol
+WARNING: KIAA1804 is an alias symbol
+WARNING: NOTCH2NL is an alias symbol
+WARNING: STK23 is an alias symbol
+WARNING: P2RXL1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_wustl_dfci_623.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/msk_access129_gene_panel.txt ---------------------------------->
+
+WARNING: H3F3A is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: PAK7 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/msk_access129_gene_panel.txt
+
+
+Fetching the reference gene and gene-alias info..
+
+<----------------------- Processing file: /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact505.txt ---------------------------------->
+
+ERROR: CXORF67 symbol not known to the cBioPortal instance. This panel will not be loaded.
+WARNING: EIF2C1 is an alias symbol
+WARNING: FTSJD1 is an alias symbol
+WARNING: HIST1H1C is an alias symbol
+WARNING: HIST1H2BD is an alias symbol
+WARNING: H3F3A is an alias symbol
+WARNING: H3F3B is an alias symbol
+WARNING: HIST3H3 is an alias symbol
+WARNING: H3F3C is an alias symbol
+WARNING: HIST1H3A is an alias symbol
+WARNING: HIST1H3H is an alias symbol
+WARNING: HIST1H3I is an alias symbol
+WARNING: HIST1H3J is an alias symbol
+WARNING: HIST2H3D is an alias symbol
+WARNING: HIST2H3C is an alias symbol
+WARNING: HIST1H3B is an alias symbol
+WARNING: HIST1H3C is an alias symbol
+WARNING: HIST1H3D is an alias symbol
+WARNING: HIST1H3E is an alias symbol
+WARNING: HIST1H3F is an alias symbol
+WARNING: HIST1H3G is an alias symbol
+WARNING: PAK7 is an alias symbol
+WARNING: WHSC1 is an alias symbol
+
+
+No updates to file /Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_impact505.txt
+
