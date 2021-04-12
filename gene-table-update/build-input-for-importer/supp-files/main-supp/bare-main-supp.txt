@@ -424,3 +424,10 @@ entrez_id	symbol	type
 100288908	LOC100288908	protein-coding
 100128795	LOC100128795	protein-coding
 -3	EGFRVIII	protein-coding
+440300	LOC440300	pseudogene
+474168	WG	unknown
+728989	LOC728989	pseudogene
+100192386	FLJ16779	ncRNA
+730668	LOC730668	pseudogene
+644936	LOC644936	pseudogene
+646999	LOC646999	pseudogene

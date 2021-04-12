@@ -424,3 +424,10 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 143286	LOC143286	-	-	protein-coding	
 390877	LOC390877	19	19p13.3	protein-coding	ENSG00000214347
 286191	LOC286191	-	-	protein-coding	
+440300	LOC440300	15	15q25.2	pseudogene
+474168	WG	6	6p21.3	unknown
+728989	LOC728989	1	1q21.1	pseudogene
+100192386	FLJ16779	20	20q13.33	ncRNA
+730668	LOC730668	22	22q13.31	pseudogene
+644936	LOC644936	5	5q14.1	pseudogene
+646999	LOC646999	7	7p14.1	pseudogene
