@@ -15,18 +15,20 @@ def interface():
 def fetch_gene_info():
 	print("\nFetching the reference gene and gene-alias info..\n")
 	df = pd.read_csv('gene_info.txt', sep='\t', header=0, keep_default_na=False, dtype=str, low_memory=False)
-	main_symbols = df['symbol'].unique().tolist()
+	main_symbols_list = df['symbol'].unique().tolist()
+	main_symbols = [symbol.upper() for symbol in main_symbols_list]
 
-	alias_symbols = set()
+	alias_symbols_list = set()
 	for value in df['synonyms']:
-		alias_symbols.update(value.split('|'))
-	if '' in alias_symbols:
-		alias_symbols.remove('')
-	alias_symbols = list(alias_symbols)
+		alias_symbols_list.update(value.split('|'))
+	if '' in alias_symbols_list:
+		alias_symbols_list.remove('')
+	alias_symbols = [symbol.upper() for symbol in alias_symbols_list]
 
 	#Read the outdated to new hugo symbol mapping file (for cases where the file has only hugo symbol column)
 	outdated_hugo_df = pd.read_csv('outdated_hugo_symbols.txt', sep='\t', header=0, dtype=str)
 	outdated_hugo_dict = dict(zip(outdated_hugo_df['outdated_hugo_symbol'],outdated_hugo_df['new_hugo_symbol']))
+	outdated_hugo_dict = {k.upper():v.upper() for k,v in outdated_hugo_dict.items()}
 
 	return main_symbols, alias_symbols, outdated_hugo_dict
 
@@ -34,14 +36,11 @@ def update_hugo_symbols(gene_symbols, main_symbol_list, alias_symbol_list, outda
 	updated_symbols = []
 	log = ""
 	for gene in gene_symbols:
-		if gene in main_symbol_list:
+		if gene.upper() in main_symbol_list or gene.upper() in alias_symbol_list:
 			updated_symbols.append(gene)
-		elif gene in alias_symbol_list:
-			updated_symbols.append(gene)
-			log += "WARNING: "+gene+" is an alias symbol\n"
-		elif gene in outdated_hugo_dict:
-			updated_symbols.append(outdated_hugo_dict[gene])
-			log += gene+'\t\t---hugo symbol updated to---\t\t'+outdated_hugo_dict[gene]+'\n'
+		elif gene.upper() in outdated_hugo_dict:
+			updated_symbols.append(outdated_hugo_dict[gene.upper()])
+			log += gene+'\t\t---hugo symbol updated to---\t\t'+outdated_hugo_dict[gene.upper()]+'\n'
 		else:
 			updated_symbols.append(gene)
 			log += "ERROR: "+gene+" symbol not known to the cBioPortal instance. This panel will not be loaded.\n"
@@ -75,7 +74,7 @@ def main(parsed_args):
 		for line in datafile:
 			if line.startswith('gene_list'):
 				gene_symbols = line.split(':')[1].strip().split('\t')
-				updated_symbols, log = update_hugo_symbols(gene_symbols, main_symbol_list,alias_symbol_list,outdated_hugo_dict)
+				updated_symbols, log = update_hugo_symbols(gene_symbols, main_symbol_list, alias_symbol_list, outdated_hugo_dict)
 				if log != "":
 					print("<----------------------- Processing file: "+parsed_args.source_path+" ---------------------------------->\n")
 					print(log+'\n')
