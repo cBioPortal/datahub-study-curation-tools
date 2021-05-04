@@ -1,4 +1,3 @@
-Column 1	Column 2	Column 3	Column 4	Column 5	Column 6
 entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 100132071	LOC100132071	-	-	protein-coding	
 100130857	LOC100130857	-	-	protein-coding	
