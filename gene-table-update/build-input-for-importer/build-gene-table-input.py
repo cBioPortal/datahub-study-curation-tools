@@ -4,6 +4,10 @@ import argparse
 import logging
 import shutil
 from datetime import date
+import pandas as pd
+import numpy as np
+import download_transcript_info_from_ensembl
+import make_one_canonical_transcript_per_gene
 
 # define path to mappings
 TYPE_MAPPING_PATH = "mappings/type-mapping.txt"
@@ -14,6 +18,22 @@ MAIN_SUPP_PATH = "supp-files/main-supp/complete-supp-main.txt"
 ALIAS_SUPP_PATH = "supp-files/alias-supp.txt"
 ENTREZ_ID_SUPP_PATH = "supp-files/entrez-id-supp.txt"
 LOCATION_SUPP_PATH = "supp-files/location-supp.txt"
+
+# define path to transcript id mapping files
+grch37_ensembl92 = "mappings/transcripts/grch37_ensembl92"
+grch38_ensembl92 = "mappings/transcripts/grch38_ensembl92"
+grch37_ensembl92_geneids = grch37_ensembl92 + "/ensembl_biomart_geneids.txt"
+grch38_ensembl92_geneids = grch38_ensembl92 + "/ensembl_biomart_geneids.txt"
+grch37_ensembl92_canonical_data = grch37_ensembl92 + "/ensembl_canonical_data.txt"
+grch38_ensembl92_canonical_data = grch38_ensembl92 + "/ensembl_canonical_data.txt"
+query_size = 1000
+
+#vcf2maf_raw_url = 'https://raw.githubusercontent.com/mskcc/vcf2maf/2b4cb6aefca4a46402d06beb3690d7e86cc1856e'
+#uniprot_isoform = VCF2MAF_RAW_URL + '/data/isoform_overrides_uniprot_from_biomart_91'
+#msk_isoform = VCF2MAF_RAW_URL + '/data/isoform_overrides_at_mskcc'
+uniprot_isoform =  "mappings/transcripts/isoform_overrides_uniprot.txt"
+msk_isoform = "mappings/transcripts/isoform_overrides_at_mskcc.txt"
+genome_nexus_isoform = "mappings/transcripts/isoform_overrides_genome_nexus.txt"	
 
 # global gene data dictionary
 # entrez id is key
@@ -73,7 +93,7 @@ def cleanup_entrez_id(_input_file_name):
 					_exiting_flag = 1 # found HGNC genes with no entrez ID/delete status already defined
 
 			# extract essential columns from HGNC for building new tables
-			if gene_dict.has_key(_entrez_id):
+			if _entrez_id in gene_dict:
 				# merge entry with same entrez ID into prev symbol of exisitng
 				logging.info("Merge " + _hugo_symbol + " into " + gene_dict[_entrez_id]["symbol"] + " as prev symbols.")
 				gene_dict[_entrez_id]["prev_symbol"] = gene_dict[_entrez_id]["prev_symbol"] + "|" + _hugo_symbol
@@ -108,7 +128,7 @@ def cleanup_entrez_id(_input_file_name):
 def remove_mirna():
 	
 	logging.info("Removing miRNA entries >>>>>>>>>>>>>>>")
-	for _key in gene_dict.keys():
+	for _key in list(gene_dict):	
 		_gene_obj = gene_dict[_key]
 		if _gene_obj["locus_type"] == "RNA, micro":
 			del gene_dict[_key]
@@ -146,27 +166,27 @@ def merge_alias():
 	for _gene_obj in gene_dict.values():
 		_prev_symbols = _gene_obj["prev_symbol"].split("|")
 		for _prev_symbol in _prev_symbols:
-			if _unavailable_symbols_for_alias.has_key(_prev_symbol):
+			if _prev_symbol in _unavailable_symbols_for_alias:
 				continue
 			elif _prev_symbol != "":
 				_unavailable_symbols_for_alias[_prev_symbol] = ""
-			 	if _gene_obj["synonyms"].strip() == "":
-			 		_gene_obj["synonyms"] = _prev_symbol
-			 	else:
-			 		_gene_obj["synonyms"] = _gene_obj["synonyms"] + "|" + _prev_symbol
+				if _gene_obj["synonyms"].strip() == "":
+					_gene_obj["synonyms"] = _prev_symbol
+				else:
+					_gene_obj["synonyms"] = _gene_obj["synonyms"] + "|" + _prev_symbol
 
 	logging.info("Merging Alias (from Alias Symbols) >>>>>>>>>>>>>>>")
 	for _gene_obj in gene_dict.values():
 		_alias_symbols = _gene_obj["alias_symbol"].split("|")
 		for _alias_symbol in _alias_symbols:
-			if _unavailable_symbols_for_alias.has_key(_alias_symbol):
+			if _alias_symbol in _unavailable_symbols_for_alias:
 				continue
 			elif _alias_symbol != "":
 				_unavailable_symbols_for_alias[_alias_symbol] = ""
-			 	if _gene_obj["synonyms"].strip() == "":
-			 		_gene_obj["synonyms"] = _alias_symbol
-			 	else:
-			 		_gene_obj["synonyms"] = _gene_obj["synonyms"] + "|" + _alias_symbol
+				if _gene_obj["synonyms"].strip() == "":
+					_gene_obj["synonyms"] = _alias_symbol
+				else:
+					_gene_obj["synonyms"] = _gene_obj["synonyms"] + "|" + _alias_symbol
 
 	logging.info("Finished Merging Alias .....\n")
 
@@ -186,7 +206,7 @@ def translate_location():
 
 	logging.info("Translating HGNC location >>>>>>>>>>>>>")
 	for _gene_obj in gene_dict.values():
-		if _location_mapping_dict.has_key(_gene_obj["location"]):
+		if _gene_obj["location"] in _location_mapping_dict:
 			# special format (ref mapping)
 			_gene_obj["chromosome"] = _location_mapping_dict[_gene_obj["location"]]["chr"]
 			_gene_obj["cytoband"] = _location_mapping_dict[_gene_obj["location"]]["cytoband"]
@@ -212,8 +232,8 @@ def add_supp_main():
 		_headers = _input_main_supp.readline()
 		_exiting_flag = 0
 		for _line in _input_main_supp:
-			_items = _line.rstrip("\r").rstrip("\n").split('\t')	
-			if gene_dict.has_key(_items[0]):
+			_items = _line.rstrip("\r").rstrip("\n").split('\t')
+			if _items[0] in gene_dict:
 				_exiting_flag = 1
 				logging.error("Duplicate entrez ID detected:" + _items[1] + "\t" + _items[0])
 			else:
@@ -255,7 +275,7 @@ def add_supp_alias():
 	_input_alias_supp.close()
 
 	for _key in _alias_items.keys():
-		if gene_dict.has_key(_key): 
+		if _key in gene_dict: 
 			if gene_dict[_key]["synonyms"] == "":
 				gene_dict[_key]["synonyms"] = _alias_items[_key]
 			else:
@@ -285,7 +305,7 @@ def add_supp_location():
 	_input_location_supp.close()
 
 	for _key in _location_supp_items.keys():
-		if gene_dict.has_key(_key): 
+		if _key in gene_dict: 
 			if gene_dict[_key]["chromosome"] != "-" and gene_dict[_key]["cytoband"] != "-":
 				# with HGNC update, some location information may become available.
 				# the location info in the supp file here needs to be removed, to reduce redundancy and also avoid conflicts
@@ -334,11 +354,13 @@ def main():
 	os.makedirs(_output_dir)
 	if args.output_file_name is None:
 		_output_file_name = _output_dir + "/" + "gene-import-input-" + date.today().strftime("%b-%d-%Y") + ".txt"
+		_tmp_file_name = _output_file_name + ".tmp"
 	else:
-		_output_file_name = _output_dir + "/" + + args.output_file_name 
+		_output_file_name = _output_dir + "/" + args.output_file_name
+		_tmp_file_name = _output_file_name + ".tmp"
 
 	# logging
-	logging.basicConfig(filename= _output_dir + "/gene-import-input-" + date.today().strftime("%b-%d-%Y") + ".log", encoding='utf-8', level=logging.DEBUG)
+	logging.basicConfig(handlers=[logging.FileHandler(filename= _output_dir + "/gene-import-input-" + date.today().strftime("%b-%d-%Y") + ".log",  encoding='utf-8')], level=logging.DEBUG)
 
 	# steps
 	cleanup_entrez_id(_input_hgnc_file)
@@ -349,7 +371,19 @@ def main():
 	add_supp_main()
 	add_supp_alias()
 	add_supp_location()
-	generate_output(_output_file_name)
+	generate_output(_tmp_file_name)
+	
+	#Query the Ensembl API to derive whether each transcript is a canonical transcript for that gene.
+	logging.info("Querying the Ensembl API for canonical transcript info >>>>>>>>>>>>>")
+	download_transcript_info_from_ensembl.main(grch37_ensembl92_geneids, grch37_ensembl92_canonical_data, query_size)
+	#download_transcript_info_from_ensembl.main(grch38_ensembl92_geneids, grch38_ensembl92_canonical_data, query_size)
+
+	# Add ensembl, uniprot, mskcc, genome nexus transcripts
+	logging.info("Adding ensembl, uniprot, mskcc, genome nexus transcript IDs >>>>>>>>>>>>>")
+	data = make_one_canonical_transcript_per_gene.main(grch37_ensembl92_canonical_data, _tmp_file_name, uniprot_isoform, msk_isoform, genome_nexus_isoform)
+	data.to_csv(_output_file_name, sep='\t', index=False)
+	os.remove(_tmp_file_name)
+
 
 if __name__ == '__main__':
 	main()
