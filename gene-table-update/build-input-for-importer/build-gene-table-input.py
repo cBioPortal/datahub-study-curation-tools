@@ -19,21 +19,20 @@ ALIAS_SUPP_PATH = "supp-files/alias-supp.txt"
 ENTREZ_ID_SUPP_PATH = "supp-files/entrez-id-supp.txt"
 LOCATION_SUPP_PATH = "supp-files/location-supp.txt"
 
-# define path to transcript id mapping files
-grch37_ensembl92 = "mappings/transcripts/grch37_ensembl92"
-grch38_ensembl92 = "mappings/transcripts/grch38_ensembl92"
+# define paths to transcript id mapping files
+grch37_ensembl92 = "mappings/transcript-mapping/grch37_ensembl92"
+grch38_ensembl92 = "mappings/transcript-mapping/grch38_ensembl92"
 grch37_ensembl92_geneids = grch37_ensembl92 + "/ensembl_biomart_geneids.txt"
 grch38_ensembl92_geneids = grch38_ensembl92 + "/ensembl_biomart_geneids.txt"
 grch37_ensembl92_canonical_data = grch37_ensembl92 + "/ensembl_canonical_data.txt"
 grch38_ensembl92_canonical_data = grch38_ensembl92 + "/ensembl_canonical_data.txt"
 query_size = 1000
 
-#vcf2maf_raw_url = 'https://raw.githubusercontent.com/mskcc/vcf2maf/2b4cb6aefca4a46402d06beb3690d7e86cc1856e'
-#uniprot_isoform = VCF2MAF_RAW_URL + '/data/isoform_overrides_uniprot_from_biomart_91'
-#msk_isoform = VCF2MAF_RAW_URL + '/data/isoform_overrides_at_mskcc'
-uniprot_isoform =  "mappings/transcripts/isoform_overrides_uniprot.txt"
-msk_isoform = "mappings/transcripts/isoform_overrides_at_mskcc.txt"
-genome_nexus_isoform = "mappings/transcripts/isoform_overrides_genome_nexus.txt"	
+# define paths to uniprot, mskcc overrides
+grch37_uniprot_isoform =  "mappings/transcript-mapping/input/isoform_overrides_uniprot.txt"
+grch37_msk_isoform = "mappings/transcript-mapping/input/isoform_overrides_at_mskcc.txt"
+grch38_msk_isoform = "mappings/transcript-mapping/input/isoform_overrides_at_mskcc_grch38.txt"
+genome_nexus_isoform = "mappings/transcript-mapping/input/isoform_overrides_genome_nexus.txt"	
 
 # global gene data dictionary
 # entrez id is key
@@ -374,16 +373,23 @@ def main():
 	generate_output(_tmp_file_name)
 	
 	#Query the Ensembl API to derive whether each transcript is a canonical transcript for that gene.
-	logging.info("Querying the Ensembl API for canonical transcript info >>>>>>>>>>>>>")
+	logging.info("Querying the Ensembl API for GRCh37 canonical transcript info >>>>>>>>>>>>>")
 	download_transcript_info_from_ensembl.main(grch37_ensembl92_geneids, grch37_ensembl92_canonical_data, query_size)
-	#download_transcript_info_from_ensembl.main(grch38_ensembl92_geneids, grch38_ensembl92_canonical_data, query_size)
+	
+	logging.info("Querying the Ensembl API for GRCh38 canonical transcript info >>>>>>>>>>>>>")
+	download_transcript_info_from_ensembl.main(grch38_ensembl92_geneids, grch38_ensembl92_canonical_data, query_size)
 
 	# Add ensembl, uniprot, mskcc, genome nexus transcripts
-	logging.info("Adding ensembl, uniprot, mskcc, genome nexus transcript IDs >>>>>>>>>>>>>")
-	data = make_one_canonical_transcript_per_gene.main(grch37_ensembl92_canonical_data, _tmp_file_name, uniprot_isoform, msk_isoform, genome_nexus_isoform)
-	data.to_csv(_output_file_name, sep='\t', index=False)
+	logging.info("Adding GRCh37 ensembl, uniprot, mskcc, genome nexus transcript IDs >>>>>>>>>>>>>")
+	data = make_one_canonical_transcript_per_gene.main(grch37_ensembl92_canonical_data, _tmp_file_name, grch37_uniprot_isoform, grch37_msk_isoform, genome_nexus_isoform, 'grch37')
 	os.remove(_tmp_file_name)
-
+	data.to_csv(_tmp_file_name, sep='\t', index=False)
+	
+	logging.info("Adding GRCh38 ensembl, uniprot, mskcc, genome nexus transcript IDs >>>>>>>>>>>>>")
+	data = make_one_canonical_transcript_per_gene.main(grch38_ensembl92_canonical_data, _tmp_file_name, grch37_uniprot_isoform, grch38_msk_isoform, genome_nexus_isoform, 'grch38')
+	os.remove(_tmp_file_name)
+	del data['ensembl_id']
+	data.to_csv(_output_file_name, sep='\t', index=False)
 
 if __name__ == '__main__':
 	main()

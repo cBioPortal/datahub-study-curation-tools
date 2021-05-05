@@ -84,9 +84,10 @@ def main(ensembl_biomart_geneids_transcript_info,
          hgnc_complete_set,
          isoform_overrides_uniprot,
          isoform_overrides_at_mskcc,
-         isoform_overrides_genome_nexus):
+         isoform_overrides_genome_nexus,
+         build):
     # input files
-    transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t', dtype={'is_canonical':bool})
+    transcript_info_df = pd.read_csv(ensembl_biomart_geneids_transcript_info, sep='\t')
     transcript_info_df = transcript_info_df.drop_duplicates()
     uniprot = pd.read_csv(isoform_overrides_uniprot, sep='\t')\
         .rename(columns={'enst_id':'isoform_override'})\
@@ -171,11 +172,11 @@ def main(ensembl_biomart_geneids_transcript_info,
     )
     one_transcript_per_hugo_symbol.index = hugos
     one_transcript_per_hugo_symbol.index.name = 'hgnc_symbol'
+    one_transcript_per_hugo_symbol = one_transcript_per_hugo_symbol.add_suffix('_'+build)
 
     # merge in other hgnc fields
     merged = pd.merge(hgnc_df.reset_index(), one_transcript_per_hugo_symbol.reset_index(), left_on='symbol', right_on='hgnc_symbol')
     del merged['hgnc_symbol']
-    del merged['ensembl_id']
     merged = merged[['entrez_id'] + [col for col in merged.columns if col != 'entrez_id']]
     return(merged)
     
@@ -188,4 +189,5 @@ if __name__ == "__main__":
          hgnc_complete_set,
          isoform_overrides_uniprot,
          isoform_overrides_at_mskcc,
-         isoform_overrides_genome_nexus)
+         isoform_overrides_genome_nexus,
+         build)
