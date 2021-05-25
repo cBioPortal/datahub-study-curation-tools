@@ -5,21 +5,21 @@ cBioPortal file formats: https://docs.cbioportal.org/5.1-data-loading/data-loadi
 
 # Installation
 
-###Python3
+### Python3
 Make sure `python3.x` is installed. Official information at https://www.python.org/downloads/
 
-###yaml
+### yaml
 ```
 python3 -m pip install pyymal
 ```
 
-###jinja2
+### jinja2
 ```
 python3 -m pip install jinja2
 ```
-###set system environment
-set env `PYTHONPATH` to path to cbioportal repo scripts folder (`cbioportal/core/src/main/scripts`) on your local machine. 
-Use command line every time before running the script (in the same session)
+### set PYTHONPATH
+set variant `PYTHONPATH` in system environment, to the path to your local cbioportal repo scripts folder (`cbioportal/core/src/main/scripts`). 
+Run below command line every time before running the script (in the same session, and modify the path to your local setting)
 ```
 export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
 ```
@@ -27,7 +27,7 @@ export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
 # Usage
 
 ```
-python3 validateStudies.py -d /Users/suny1/github/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html ~/Desktop/
+python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html ~/Desktop/
 ```
 
 ```
