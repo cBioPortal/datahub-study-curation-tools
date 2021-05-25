@@ -42,8 +42,14 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
 - Log file: a log file would be generated under the same directory and named `gene-import-input-_date_.log` 
 - Rename the output file `gene-import-input-_date.txt` (or customized name) to `gene_info.txt`, and archive the output into the `archive` folder
 
-#### Content
-The final output file should include fields below
+#### What's in the output file 
+##### Header
+Below header must be included in the output file as the first line.
+```
+entrez_id	symbol	chromosome	cytoband	type	synonyms	hgnc_id	ensembl_id
+```
+##### Content
+The final output file should include fields below (NO SPACE should be included in any of the values listed below)
 | FIELD_NAME | VALUE|CAN BE NULL?| DISTINCT? |
 |----------|----------|---------|-----|
 | entrez_id | NUM | NO |YES |
