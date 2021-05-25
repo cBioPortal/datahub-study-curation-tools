@@ -1,6 +1,6 @@
 # Introduction
 
-The scripts validate folder(s) of study formatted in cBioPortal format. 
+The scripts validate folder(s) of study formatted in cBioPortal format.   
 cBioPortal file formats: https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats
 
 # Installation
@@ -18,16 +18,17 @@ python3 -m pip install pyymal
 python3 -m pip install jinja2
 ```
 ### set PYTHONPATH
-set variant `PYTHONPATH` in system environment, to the path to your local cbioportal repo scripts folder (`cbioportal/core/src/main/scripts`). 
-Run below command line every time before running the script (in the same session, and modify the path to your local setting)
+set variant `PYTHONPATH` in system environment , with the path to your local cbioportal repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
+##### Method 1: Run below command line every time before running the script (in the same session, and modify the path to your local setting) 
 ```
 export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
 ```
+##### Method 2: Modify `.bashrc`
 
 # Usage
 
 ```
-python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html ~/Desktop/
+python3 validateStudies.py -d path/to/root/directory -l study_id -u cbioportal_server -html path/to/report/dir
 ```
 
 ```
@@ -66,6 +67,7 @@ optional arguments:
                         report all genes that could not be loaded, instead of
                         reporting "GeneA, GeneB, GeneC, 213 more"
 ```
+
 #### Example
 ```
 python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html path/to/html_report/
