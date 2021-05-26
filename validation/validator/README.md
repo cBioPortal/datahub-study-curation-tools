@@ -1,7 +1,8 @@
 # Introduction
 
-The scripts validate folder(s) of study formatted in cBioPortal format.   
-cBioPortal file formats: https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats
+This is a standalone version of cBioPortal data validator (which also runs automatically by [circle CI](https://github.com/cBioPortal/datahub/tree/master/.circleci) in our [Datahub](https://github.com/cBioPortal/datahub) on each submitted pull request and all public studies weekly [(example)](https://app.circleci.com/pipelines/github/cBioPortal/datahub/1449/workflows/111e5187-9565-490b-97a4-356ccb477bc8/jobs/6489/artifacts).
+  
+Validator validates single or multiple studies formatted in [cBioPortal format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats), and outputs reports in both plain txt and HTML format.
 
 # Installation
 
@@ -19,11 +20,13 @@ python3 -m pip install jinja2
 ```
 ### set PYTHONPATH
 set variant `PYTHONPATH` in system environment , with the path to your local cbioportal repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
-##### Method 1: Run below command line every time before running the script (in the same window where the scripts run, and modify the path to your local setting) 
+##### Method 1: 
+Run below command line every time before running the script (in the same window where the scripts run, and modify the path to your local setting) 
 ```
 export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
 ```
-##### Method 2: Modify `.bashrc`
+##### Method 2: 
+Modify [system login script](https://www.marquette.edu/high-performance-computing/bashrc.php) `.bashrc` by including new `PYTHONPATH` variant
 
 # Usage
 
