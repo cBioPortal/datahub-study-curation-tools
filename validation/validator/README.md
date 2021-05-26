@@ -19,7 +19,7 @@ python3 -m pip install jinja2
 ```
 ### set PYTHONPATH
 set variant `PYTHONPATH` in system environment , with the path to your local cbioportal repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
-##### Method 1: Run below command line every time before running the script (in the same session, and modify the path to your local setting) 
+##### Method 1: Run below command line every time before running the script (in the same window where the scripts run, and modify the path to your local setting) 
 ```
 export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
 ```
@@ -72,3 +72,5 @@ optional arguments:
 ```
 python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html path/to/html_report/
 ```
+# How to update (to the latest version/in sync with cbioportal repo)
+Copy files listed above here from `https://github.com/cBioPortal/cbioportal/tree/master/core/src/main/scripts/importer`
