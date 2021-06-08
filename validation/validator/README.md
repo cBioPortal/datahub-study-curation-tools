@@ -1,7 +1,8 @@
 # Introduction
 
-The scripts validate folder(s) of study formatted in cBioPortal format. 
-cBioPortal file formats: https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats
+This is a standalone version of cBioPortal data validator (which also runs automatically by [circle CI](https://github.com/cBioPortal/datahub/tree/master/.circleci) in our [Datahub](https://github.com/cBioPortal/datahub) on each submitted pull request and all public studies weekly [(example)](https://app.circleci.com/pipelines/github/cBioPortal/datahub/1449/workflows/111e5187-9565-490b-97a4-356ccb477bc8/jobs/6489/artifacts).
+  
+Validator validates single or multiple studies formatted in [cBioPortal format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats), and outputs reports in both plain txt and HTML format.
 
 # Installation
 
@@ -18,16 +19,19 @@ python3 -m pip install pyymal
 python3 -m pip install jinja2
 ```
 ### set PYTHONPATH
-set variant `PYTHONPATH` in system environment, to the path to your local cbioportal repo scripts folder (`cbioportal/core/src/main/scripts`). 
-Run below command line every time before running the script (in the same session, and modify the path to your local setting)
+set variant `PYTHONPATH` in system environment , with the path to your local cbioportal repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
+##### Method 1: 
+Run below command line every time before running the script (in the same window where the scripts run, and modify the path to your local setting) 
 ```
 export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
 ```
+##### Method 2: 
+Modify [system login script](https://www.marquette.edu/high-performance-computing/bashrc.php) `.bashrc` by including new `PYTHONPATH` variant
 
 # Usage
 
 ```
-python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html ~/Desktop/
+python3 validateStudies.py -d path/to/root/directory -l study_id -u cbioportal_server -html path/to/report/dir
 ```
 
 ```
@@ -66,7 +70,10 @@ optional arguments:
                         report all genes that could not be loaded, instead of
                         reporting "GeneA, GeneB, GeneC, 213 more"
 ```
+
 #### Example
 ```
 python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html path/to/html_report/
 ```
+# How to update (to the latest version/in sync with cbioportal repo)
+Copy files listed above here from `https://github.com/cBioPortal/cbioportal/tree/master/core/src/main/scripts/importer`
