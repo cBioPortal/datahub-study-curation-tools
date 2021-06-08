@@ -1,3 +1,4 @@
+STUDY_ID	STUDY_TYPE	MAX_TMB	MIN_TMB	MEDIAN_TMB
 acc_tcga	WGS/WES	65.8666666667	1.26666666667	2.95
 acc_tcga_pan_can_atlas_2018	WGS/WES	62.0666666667	0.133333333333	0.9
 acyc_jhu_2016	WGS/WES	1.1	0.0666666666667	0.4666666666666667
@@ -184,16 +185,6 @@ prad_eururol_2017	WGS/WES	2.43333333333	0.0333333333333	0.6333333333333333
 prad_fhcrc	WGS/WES	38.7666666667	0.1	1.4333333333333333
 prad_mich	WGS/WES	24.3333333333	0.466666666667	1.3333333333333333
 prad_mpcproject_2018	WGS/WES	23.3333333333	1.1	2.7666666666666666
-
-prad_mskcc_2014	WGS/WES	Traceback (most recent call last):
-  File "calc_nonsyn_tmb.py", line 261, in <module>
-    main()
-  File "calc_nonsyn_tmb.py", line 254, in main
-    _sampleTmbMap = calcTMB(cntVariants(_inputStudyFolder))
-  File "calc_nonsyn_tmb.py", line 139, in cntVariants
-    with open(_inputStudyPath + "/" + MAF_FILE_NAME,'r') as _maf:
-
-IOError: [Errno 2] No such file or directory: '/Users/suny1/github/datahub/public/prad_mskcc_2014/data_mutations_extended.txt'
 prad_mskcc_cheny1_organoids_2014	WGS/WES	10.46666666670.966666666667	1.7
 prad_p1000	WGS/WES	201.7	0.0333333333333	1.0333333333333334
 prad_su2c_2015	WGS/WES	42.0333333333	0.933333333333	2.4166666666666665
