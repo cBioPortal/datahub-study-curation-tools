@@ -78,9 +78,9 @@ def update_file(args):
                             elif 'proteinLength' in gn_response:
                                 count += gn_response['proteinLength']
                             else:
-                                print(gene + " does not have protein length")
+                                print(input_file + "\t" + gene)
                         else:
-                            print(gene + " not found")
+                            print(input_file + "\t" + gene)
                         
                 # CDS size is calculated by sum(protein length * 3)
                 count = count * 3

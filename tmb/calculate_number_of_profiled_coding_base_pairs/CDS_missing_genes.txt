@@ -1,123 +1,90 @@
-EEF1A1P29
-HSP90B3P
-SBF1P1
-ST13P13
-LOC730032
-LOC100132800
-LOC100129218
-MIR99AHG
-CDKN2B-AS1
-FGF7P3
-SELENOKP3
-USP32P2
-LINC00927
-LINC01566
-LINC01091
-GOLGA2P7
-LINC02232
-LOC440300
-SLC6A10P
-PYRY8
-UTP25
-RMRP
-TMSB4XP8
-MTORFrap1
-TMSB4XP8
-TMSB4XP8
-LOC105379528
-IGK
-TRG
-RNF217-AS1
-TMSB4XP8
-TMSB4XP8
-LOC105379528
-IGK
-TRG
-RNF217-AS1
-WG
-TERC
-RPL21P44
-RP6-213H19.1
-TRAJ33
-TRAJ36
-TRAJ40
-TRAJ61
-TRGJP2
-TRGV11
-TRAJ28
-TRAJ47
-IGLJ3
-TRGJP1
-IGLJ7
-TRAJ16
-IGLJ4
-TRAJ24
-TRGJP
-IGLJ2
-TRAJ9
-IGLJ5
-TRAJ2
-TRGJ2
-IGLJ6
-CYP2D8P
-PPP1R26P2
-TERC
-LINC00662
-LINC00894
-GOLGA2P4
-CDKN2B-AS1
-TERC
-TERC
-LOC728989
-FLJ23867
-MIR205HG
-TP73-AS1
-NFYC-AS1
-HSP90B3P
-AGAP2-AS1
-TRHDE-AS1
-WASH8P
-LINC00552
-CTAGE10P
-LINC00914
-ADAM6
-C14orf184
-TCL6
-HERC2P2
-SSTR5-AS1
-ABCC6P1
-SLC6A10P
-DKFZP434H168
-LRRC37BP1
-AOC4P
-CYP2B7P
-CXCR2P1
-MYADML
-FRG1BP
-FLJ16779
-MCM3AP-AS1
-LINC00634
-LOC730668
-MBNL1-AS1
-WDFY3-AS2
-TMED7-TICAM2
-ANKHD1-EIF4EBP3
-ZNF300P1
-LOC644936
-Unknown
-HLA-L
-HLA-DPB2
-PIP5K1P1
-LINC01000
-RPS2P32
-LOC646999
-RNF5P1
-ADAM3A
-PTGES2-AS1
-PTENP1
-UXT-AS1
-TERC
-C11ORF98
-LOC643802
-MGC16703
-LINC00914
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt	EEF1A1P29
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt	HSP90B3P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt	MIR142
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt	SBF1P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt	ST13P13
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_RMG.txt	LOC100132800
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	C21orf34
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	CDKN2B-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	DLEU2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	KGFLP2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	SELENOKP3
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	USP32P2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	LINC00927
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	LINC01566
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	LINC01091
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	GOLGA2P7
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	LINC02232
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	LOC440300
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	MIR1288
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_agilent.txt	SLC6A10P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_cmo_hemepact_v3.txt	RMRP
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_cmo_hemepact_v3.txt	TMSL3
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt	TMSL3
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt	IGH
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt	IGK
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt	IGL
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt	TRG
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_d2.txt	STL
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt	TMSL3
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt	IGH
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt	IGK
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt	IGL
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt	TRG
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_r2.txt	STL
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t4b.txt	WG
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_fmi_t7.txt	TERC
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_gbm_tcga_pub.txt	RPL21P44
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt	CYP2D8P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt	PPP1R26P2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt	TERC
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt	LINC00662
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt	LINC00894
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel2.txt	GOLGA2P4
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_dfci_2020_dfci_oncopanel3.txt	CDKN2B-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_glioma_mskcc_2019_fmi_t7.txt	TERC
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_grail_cfdna_508.txt	TERC
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LOC728989
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	MIR205HG
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	KIAA0495
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	NFYC-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	HSP90B3P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	TRHDE-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	WASH8P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LINC00552
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	CTAGE10P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	TCL6
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	HERC2P2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	SSTR5-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	ABCC6P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	SLC6A10P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	GNAO1-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LRRC37B2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	AOC4P
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	CYP2B7P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	CXCR2P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	MYADML
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	FLJ16779
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	MCM3APAS
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LINC00634
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LOC730668
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LOC401093
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	C4orf12
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	ZNF300P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LOC644936
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	HLA-L
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	HLA-DPB2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	PIP5K1P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	FLJ45340
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	RPS2P32
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	LOC646999
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	ZNF252
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	RNF5P1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	ADAM3A
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	PALM2AKAP2
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	PTGES2-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	PTENP1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_novartis_broad_1651.txt	UXT-AS1
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_sarc_mskcc.txt	TERC
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_ucla_1202.txt	LOC643802
+/Users/suny1/github/datahub/reference_data/gene_panels/data_gene_panel_wustl_dfci_623.txt	DKFZp434N035

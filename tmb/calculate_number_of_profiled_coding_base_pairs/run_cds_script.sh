@@ -1,1 +1,1 @@
-python add_number_of_profiled_coding_base_pairs.py -i ~/Desktop/cleaned_gene_panels/$1 -o ~/Desktop/CDS_added_panels/output_$1
+python3 add_number_of_profiled_coding_base_pairs.py -i /Users/suny1/github/datahub/reference_data/gene_panels/$1 -o ~/Desktop/CDS_added_panels/$1

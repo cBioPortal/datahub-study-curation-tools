@@ -29,6 +29,8 @@ bash run_tmb_script.sh hcc_msk_venturaa_2018
 bash run_tmb_script.sh hcc_mskimpact_2018
 bash run_tmb_script.sh histiocytosis_cobi_msk_2019
 bash run_tmb_script.sh hnc_mskcc_2016
+bash run_tmb_script.sh ihch_msk_2021
+bash run_tmb_script.sh ihch_mskcc_2020
 bash run_tmb_script.sh luad_mskcc_2020
 bash run_tmb_script.sh luad_tsp
 bash run_tmb_script.sh lung_msk_2017
