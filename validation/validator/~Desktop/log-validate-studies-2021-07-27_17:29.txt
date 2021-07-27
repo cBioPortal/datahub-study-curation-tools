@@ -1,0 +1,102 @@
+=== Validation study: /Users/suny1/github/datahub/public/blca_tcga_pan_can_atlas_2018
+DEBUG: -: Requesting info from portal at 'http://cbioportal.org'
+DEBUG: -: Requesting cancer-types from portal at 'http://cbioportal.org'
+DEBUG: -: Requesting genes from portal at 'http://cbioportal.org'
+DEBUG: -: Requesting genesets from portal at 'http://cbioportal.org'
+DEBUG: -: Requesting genesets_version from portal at 'http://cbioportal.org'
+DEBUG: -: Requesting gene-panels from portal at 'http://cbioportal.org'
+
+DEBUG: meta_CNA.txt: Starting validation of meta file
+INFO: meta_CNA.txt: Validation of meta file complete
+
+DEBUG: meta_RNA_Seq_v2_expression_median.txt: Starting validation of meta file
+INFO: meta_RNA_Seq_v2_expression_median.txt: Validation of meta file complete
+
+DEBUG: meta_RNA_Seq_v2_mRNA_median_Zscores.txt: Starting validation of meta file
+INFO: meta_RNA_Seq_v2_mRNA_median_Zscores.txt: Validation of meta file complete
+
+DEBUG: meta_RNA_Seq_v2_mRNA_median_Zscores_normals.txt: Starting validation of meta file
+INFO: meta_RNA_Seq_v2_mRNA_median_Zscores_normals.txt: Validation of meta file complete
+
+DEBUG: meta_RNA_Seq_v2_mRNA_median_all_sample_Zscores.txt: Starting validation of meta file
+INFO: meta_RNA_Seq_v2_mRNA_median_all_sample_Zscores.txt: Validation of meta file complete
+
+DEBUG: meta_RNA_Seq_v2_mRNA_median_all_sample_ref_normal_Zscores.txt: Starting validation of meta file
+INFO: meta_RNA_Seq_v2_mRNA_median_all_sample_ref_normal_Zscores.txt: Validation of meta file complete
+
+DEBUG: meta_RNA_Seq_v2_mRNA_median_normals.txt: Starting validation of meta file
+INFO: meta_RNA_Seq_v2_mRNA_median_normals.txt: Validation of meta file complete
+
+DEBUG: meta_clinical_patient.txt: Starting validation of meta file
+INFO: meta_clinical_patient.txt: Validation of meta file complete
+
+DEBUG: meta_clinical_sample.txt: Starting validation of meta file
+INFO: meta_clinical_sample.txt: Validation of meta file complete
+
+DEBUG: meta_cna_hg19_seg.txt: Starting validation of meta file
+INFO: meta_cna_hg19_seg.txt: Validation of meta file complete
+
+DEBUG: -: Retrieving chromosome lengths from '/Users/suny1/github/datahub-study-curation-tools/validation/validator/chromosome_sizes.json'
+
+DEBUG: meta_fusions.txt: Starting validation of meta file
+INFO: meta_fusions.txt: Validation of meta file complete
+
+DEBUG: meta_log2CNA.txt: Starting validation of meta file
+INFO: meta_log2CNA.txt: Validation of meta file complete
+
+DEBUG: meta_microbiome.txt: Starting validation of meta file
+INFO: meta_microbiome.txt: Validation of meta file complete
+
+DEBUG: meta_mutations_extended.txt: Starting validation of meta file
+INFO: meta_mutations_extended.txt: Validation of meta file complete
+
+DEBUG: meta_rppa.txt: Starting validation of meta file
+INFO: meta_rppa.txt: Validation of meta file complete
+
+DEBUG: meta_rppa_Zscores.txt: Starting validation of meta file
+INFO: meta_rppa_Zscores.txt: Validation of meta file complete
+
+DEBUG: meta_study.txt: Starting validation of meta file
+INFO: meta_study.txt: Validation of meta file complete
+INFO: meta_study.txt: No reference genome specified -- using default (hg19)
+
+DEBUG: data_clinical_sample.txt: Starting validation of file
+INFO: data_clinical_sample.txt: Validation of file complete
+INFO: data_clinical_sample.txt: Read 416 lines. Lines with warning: 0. Lines with error: 0
+
+DEBUG: -: Validating case lists
+
+DEBUG: case_lists/cases_complete.txt: Starting validation of meta file
+INFO: case_lists/cases_complete.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_RNA_Seq_v2_mRNA.txt: Starting validation of meta file
+INFO: case_lists/cases_RNA_Seq_v2_mRNA.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_cna.txt: Starting validation of meta file
+INFO: case_lists/cases_cna.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_microbiome.txt: Starting validation of meta file
+INFO: case_lists/cases_microbiome.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_sequenced.txt: Starting validation of meta file
+INFO: case_lists/cases_sequenced.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_log2CNA.txt: Starting validation of meta file
+INFO: case_lists/cases_log2CNA.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_cnaseq.txt: Starting validation of meta file
+INFO: case_lists/cases_cnaseq.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_all.txt: Starting validation of meta file
+INFO: case_lists/cases_all.txt: Validation of meta file complete
+
+DEBUG: case_lists/cases_rppa.txt: Starting validation of meta file
+INFO: case_lists/cases_rppa.txt: Validation of meta file complete
+
+INFO: -: Validation of case list folder complete
+
+DEBUG: data_CNA.txt: Starting validation of file
+WARNING: data_CNA.txt: lines [12, 13, 18, (397 more)]: Entrez gene id exists, but gene symbol specified is not known to the cBioPortal instance. The gene symbol will be ignored. Might be wrong mapping, new or deprecated gene symbol.; values encountered: ['C1ORF233', 'C1ORF86', 'CPSF3L', '(397 more)']
+WARNING: data_CNA.txt: lines [37, 39, 40, (599 more)]: Entrez gene id not known to the cBioPortal instance. This record will not be loaded. Might be new or deprecated Entrez gene id.; values encountered: ['100129534', '100133331', '100133445', '(596 more)']
+WARNING: data_CNA.txt: line 4828: Duplicate line for a previously listed feature/gene, this line will be ignored.; value encountered: '151887 (already defined on line 4827)'
+WARNING: data_CNA.txt: line 6696: Entrez gene id and gene symbol do not match. The gene symbol will be ignored. Might be wrong mapping or recycled gene symbol.; value encountered: '(GUSBP9, 100049076)'

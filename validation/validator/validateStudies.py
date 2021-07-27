@@ -35,7 +35,6 @@ def main(args):
     # When both root directory and list of studies are given, create list of study files
     if root_dir is not None and studies is not None and os.path.dirname != "normals":
         list_studies = [os.path.join(root_dir, study) for study in list_studies]
-        print(list_studies)
 
     # Get current date and time to write to logfilename
     d_date = datetime.datetime.now()
