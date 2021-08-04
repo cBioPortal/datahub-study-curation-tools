@@ -56,6 +56,10 @@ VC_NONSYNONYMOUS_LIST = [
 	"Splice_Region"
 ]
 
+# names - case list file
+SEQ_CASE_LIST_FILE_NAME = "cases_sequenced.txt"
+SEQ_CASE_LIST_FIELD_NAME = "case_list_ids:"
+
 # names - MAF file
 MAF_FILE_NAME = "data_mutations_extended.txt"
 MAF_VC_COL_ID = "Variant_Classification"
@@ -198,8 +202,20 @@ def calcTMB(_sampleMap):
 ######
 def addTMB(_inputStudyFolder, _sampleTmbMap):
 
+	# extract list of sequenced smaple IDs
+	_seqSampleIds = [] 
+	if os.path.isfile(_inputStudyFolder + "/case_lists/" + SEQ_CASE_LIST_FILE_NAME):
+		_caseListPath = _inputStudyFolder + "/case_lists/" + SEQ_CASE_LIST_FILE_NAME
+		with open(_caseListPath,'r') as _caseList:
+			for _line in _caseList:
+				if _line.startswith(SEQ_CASE_LIST_FIELD_NAME):
+					_seqSampleIds = _panelID = _line.split(':')[1].strip().split("\t")
+	else:
+		print("Can't find sequenced case list file!")
+		sys.exit(2)
 
 
+	# header for the new column in clinical sample file
 	_headerItems = [	
 		CLIN_TMB_COL_ID,	
 		CLIN_TMB_COL_PRIORITY,
@@ -236,7 +252,10 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 				if _sampleTmbMap.has_key(_sampleID):
 					_newline = _line.rstrip("\n") + "\t" + str(_sampleTmbMap[_sampleID]["tmb"])
 				else:
-					_newline = _line.rstrip("\n") + "\t" + "0"
+					if _sampleID in _seqSampleIds:
+						_newline = _line.rstrip("\n") + "\t" + "0"
+					else:
+						_newline = _line.rstrip("\n") + "\t" + "NA"
 
 			_outputClinFile.write(_newline + "\n")
 
