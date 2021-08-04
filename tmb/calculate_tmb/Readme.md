@@ -1,6 +1,5 @@
 ### Usage
-Calculate somatic TMB (non-synonymous) for a specific study
- the total number of non-synonymous, somatic mutations identified per megabase
+Calculate somatic TMB (non-synonymous) of all sequenced samples for a specific study. TMB is the total number of non-synonymous, somatic mutations identified per megabase
 (Mb) of the genome coding area of DNA (a megabase is 1,000,000 DNA basepairs)
 
 ### Method
@@ -21,13 +20,13 @@ Step 2: Calculate TMB for each sequenced sample
 ```
 TMB = N/L
 ```
-- `L` is the size of genome coding area of DNA in megabase(Mb, 1,000,000 DNA basepairs)
-	- For WES/WGS: L = 30M
+- `L` is the size of genome coding area of DNA in megabase(Mb)
+	- For WES/WGS: L = 30
 	- For targeted sequenced: refer to the `CDS` field in related gene panel files
 	  (if used panel size is <0.2M, the TMB is not calculated and marked as "NA")
-- For not sequenced samples (list from `cases_sequenced.txt`), the TMB is marked as "NA" 
+- For not sequenced samples (refer to `cases_sequenced.txt` for each study), the TMB is marked as "NA" 
 
-Step 4: Append TMB scores as an additional column in sample clinical file.
+Step 3: Append TMB scores as an additional column in sample clinical file.
 
 
 ### Command Line
