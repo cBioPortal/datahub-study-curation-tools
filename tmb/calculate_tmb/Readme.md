@@ -4,7 +4,7 @@ Calculate somatic TMB (non-synonymous) of all sequenced samples for a specific s
 
 ### Method
 
-Step 1: Calculate Total number of non-synonymous, somatic mutations with eligible classification (list below) in MAF (N)
+Step 1: Calculate Total number `N` of non-synonymous, somatic mutations with eligible classification (list below) in MAF
 ```
 	"Frame_Shift_Del"
 	"Frame_Shift_Ins" 
@@ -16,18 +16,18 @@ Step 1: Calculate Total number of non-synonymous, somatic mutations with eligibl
 	"Nonstop_Mutation" 
 	"Splice_Region"
 ```
-Step 2: Calculate TMB for each sequenced sample
+Step 2: Determine the size `L` of genome coding area of DNA in megabase(Mb)
+- For WES/WGS: L = 30
+- For targeted sequenced: refer to the `CDS` field in related gene panel files
+
+Step 3: Calculate TMB for each sequenced sample
 ```
 TMB = N/L
 ```
-- `L` is the size of genome coding area of DNA in megabase(Mb)
-	- For WES/WGS: L = 30
-	- For targeted sequenced: refer to the `CDS` field in related gene panel files
-	  (if used panel size is <0.2M, the TMB is not calculated and marked as "NA")
+- For sequenced sample: if used panel size is <0.2M, the TMB is not calculated and marked as "NA"
 - For not sequenced samples (refer to `cases_sequenced.txt` for each study), the TMB is marked as "NA" 
 
-Step 3: Append TMB scores as an additional column in sample clinical file.
-
+Step 4: Append TMB scores as an additional column in sample clinical file.
 
 ### Command Line
 ```
