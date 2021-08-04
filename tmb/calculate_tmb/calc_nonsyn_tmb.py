@@ -236,7 +236,7 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 				if _sampleTmbMap.has_key(_sampleID):
 					_newline = _line.rstrip("\n") + "\t" + str(_sampleTmbMap[_sampleID]["tmb"])
 				else:
-					_newline = _line.rstrip("\n") + "\t" + "NA"
+					_newline = _line.rstrip("\n") + "\t" + "0"
 
 			_outputClinFile.write(_newline + "\n")
 
