@@ -240,6 +240,5 @@ bash run_tmb_script.sh utuc_igbmc_2021
 bash run_tmb_script.sh uvm_tcga
 bash run_tmb_script.sh uvm_tcga_pan_can_atlas_2018
 bash run_tmb_script.sh vsc_cuk_2018
-bash run_tmb_script.sh wt_stjude_2017
 bash run_tmb_script.sh wt_target_2018_pub
 bash run_tmb_script.sh acbc_mskcc_2015

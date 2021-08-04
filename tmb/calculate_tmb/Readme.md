@@ -21,7 +21,7 @@ Step 1: Calculate Total number of non-synonymous, somatic mutations with eligibl
 Step 2: Extract the size of genome coding area of DNA in megabase(Mb) within the study (L)
 - a megabase is 1,000,000 DNA basepairs
 - For WES/WGS: L = 30M
-- For targeted sequenced studies: refer to the `CDS` field in related gene panel files
+- For targeted sequenced studies: refer to the `CDS` field in related gene panel files (for panels size <0.2M, TMB is not calculated and marked as "NA")
 
 Step 3: Calculate TMB
 `TMB = N/L`

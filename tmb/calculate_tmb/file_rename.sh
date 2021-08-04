@@ -1,1 +1,0 @@
-mv /Users/suny1/github/datahub/public/$1/tmb_output_data_clinical_sample.txt /Users/suny1/github/datahub/public/$1/data_clinical_sample.txt

@@ -82,6 +82,9 @@ CLIN_TMB_COL_NAME = "TMB (nonsynonymous)"
 PANEL_STABLE_ID_FIELD_NAME = "stable_id:"
 PANEL_CDS_FIELD_NAME = "number_of_profiled_coding_base_pairs:"
 
+# msgs
+PANEL_THRESHOLD = 0.2
+PANEL_THRESHOLD_MSG = "NA"
 
 ###### 
 # extract coding sequence length from gene panels and map to each sample
@@ -178,10 +181,15 @@ def calcTMB(_sampleMap):
 
 	for _sampleID in _sampleMap:
 		_tmb = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
-		_sampleMap[_sampleID]["tmb"] = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
-		_tmbs.append(_tmb)
-
-	sys.stdout.write(str(max(_tmbs)) + "\t" + str(min(_tmbs)) + "\t" + str(numpy.median(_tmbs)) + "\n")
+		if _sampleMap[_sampleID]["cds"] < PANEL_THRESHOLD:
+			_sampleMap[_sampleID]["tmb"] = PANEL_THRESHOLD_MSG
+		else:
+			_sampleMap[_sampleID]["tmb"] = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
+			_tmbs.append(_tmb)
+	if len(_tmbs) != 0:	
+		sys.stdout.write(str(max(_tmbs)) + "\t" + str(min(_tmbs)) + "\t" + str(numpy.median(_tmbs)) + "\n")
+	else: 
+		sys.stdout.write("No TMBs calculated.\n")
 
 	return _sampleMap
 
@@ -189,6 +197,8 @@ def calcTMB(_sampleMap):
 # add TMB column to clinical file
 ######
 def addTMB(_inputStudyFolder, _sampleTmbMap):
+
+
 
 	_headerItems = [	
 		CLIN_TMB_COL_ID,	
@@ -252,7 +262,15 @@ def main():
 		else: # No matrix file -> WGS/WES studies
 			sys.stdout.write("WGS/WES\t")
 			_sampleTmbMap = calcTMB(cntVariants(_inputStudyFolder))
-		addTMB(_inputStudyFolder, _sampleTmbMap)
+		
+		# check if any TMB are generated, otherwise skip modifying clinical file
+		_update_flag = "false"
+		for _sampleTmbInst in _sampleTmbMap.values():
+			if _sampleTmbInst["tmb"] != PANEL_THRESHOLD_MSG:
+				_update_flag = "true"
+		if _update_flag == "true":
+			addTMB(_inputStudyFolder, _sampleTmbMap)
+	
 	else:
 		print("Error input folder path(s)!")
 		sys.exit(2)

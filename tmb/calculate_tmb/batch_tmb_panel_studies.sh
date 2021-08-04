@@ -67,3 +67,5 @@ bash run_tmb_script.sh usarc_msk_2020
 bash run_tmb_script.sh utuc_msk_2019
 bash run_tmb_script.sh utuc_mskcc_2015
 bash run_tmb_script.sh utuc_pdx_msk_2019
+bash run_tmb_script.sh luad_msk_npjpo_2021
+bash run_tmb_script.sh luad_mskimpact_2021
