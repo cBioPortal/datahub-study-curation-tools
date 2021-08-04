@@ -1,11 +1,9 @@
 acc_2019	Targeted	93.6509704265	0.0	4.518916183142635
 acyc_fmi_2014	Targeted	No TMBs calculated.
->>>No updating to clinical sample file<<<
 all_stjude_2015	Targeted	23.467449809	0.0	1.67624641492798
 bcc_unige_2016	Targeted	235.424293433	0.0	44.0
 blca_msk_tcga_2020	Targeted	134.207791372	0.0	5.872318185688573
 blca_mskcc_solit_2012	Targeted	No TMBs calculated.
->>>No updating to clinical sample file<<<
 blca_mskcc_solit_2014	Targeted	53.4394687652	1.16172758185	9.293820654819369
 blca_nmibc_2017	Targeted	73.4039773211	0.0	8.808477278532859
 blca_plasmacytoid_mskcc_2016	Targeted	128.662014869	0.978719697615	7.796922342551082
@@ -48,7 +46,6 @@ msk_access_2021	Targeted	128.840016153	0.0	4.922083419469793
 msk_impact_2017	Targeted	445.317462415	0.0	3.9148787904590487
 nsclc_pd1_msk_2018	Targeted	96.496511152	0.864698094984	7.773184979518354
 nsclc_unito_2016	Targeted	No TMBs calculated.
->>>No updating to clinical sample file<<<
 odg_msk_2017	Targeted	52.8508636712	1.95743939523	6.263624994637458
 prad_cdk12_mskcc_2020	Targeted	17.7464848096	0.0	2.2183106011954474
 prad_mcspc_mskcc_2020	Targeted	65.7170552188	0.0	2.594094284950881
@@ -56,7 +53,6 @@ prad_msk_2019	Targeted	9.51167904482	0.0	1.2970471424754404
 prad_mskcc	Targeted	133.863537935	0.0	0.03333333333333333
 prad_mskcc_2017	Targeted	49.9119885269	0.0	2.2183106011954474
 rbl_cfdna_msk_2020	Targeted	No TMBs calculated.
->>>No updating to clinical sample file<<<
 rbl_mskcc_2020	Targeted	28.5350371345	0.0	0.8646980949836269
 rectal_msk_2019	Targeted	339.615735072	0.0	5.872318185688573
 sarc_mskcc	Targeted	5.59390488124	0.0	0.0
