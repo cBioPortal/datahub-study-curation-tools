@@ -182,11 +182,10 @@ class Jinja2HtmlHandler(logging.handlers.BufferingHandler):
 
     """Logging handler that formats aggregated HTML reports using Jinja2."""
 
-    def __init__(self, study_dir, output_filename, max_reported_values, *args, **kwargs):
+    def __init__(self, study_dir, output_filename, *args, **kwargs):
         """Set study directory name, output filename and buffer size."""
         self.study_dir = study_dir
         self.output_filename = output_filename
-        self.max_reported_values = max_reported_values
         self.max_level = logging.NOTSET
         self.closed = False
         # get the directory name of the currently running script,
@@ -231,7 +230,6 @@ class Jinja2HtmlHandler(logging.handlers.BufferingHandler):
         template = j_env.get_template('validation_report_template.html.jinja')
         doc = template.render(
             study_dir=self.study_dir,
-            max_reported_values=self.max_reported_values,
             record_list=self.buffer,
             max_level=logging.getLevelName(self.max_level),
             **kwargs)
@@ -730,6 +728,20 @@ class Validator(object):
                        'cause': sample_id})
             return False
         return True
+    
+    def checkPatientId(self, patient_id, column_number):
+        """Check whether a patient id is defined, logging an error if not.
+
+        Return True if the patient id was valid, False otherwise.
+        """
+        if patient_id not in PATIENTS_WITH_SAMPLES:
+            self.logger.error(
+                'Patient ID not defined in clinical file',
+                extra={'line_number': self.line_number,
+                       'column_number': column_number,
+                       'cause': patient_id})
+            return False
+        return True
 
     # TODO: let this function know the column numbers for logging messages
     def checkGeneIdentification(self, gene_symbol=None, entrez_id=None):
@@ -1088,10 +1100,21 @@ class FeaturewiseFileValidator(Validator):
         # set self.sampleIds to the list of sample column names
         self.sampleIds = self.cols[self.num_nonsample_cols:]
         # validate each sample id
+        num_errors += self.checkId()
+        return num_errors
+
+    def checkId(self):
+        # check either sample Id or patient Id
+        # override this to check Id
+        return 0
+    
+    def checkIdInSamples(self):
+        # check sample Id
+        num_errors = 0
         for index, sample_id in enumerate(self.sampleIds):
             if not self.checkSampleId(
-                    sample_id,
-                    column_number=self.num_nonsample_cols + index + 1):
+                sample_id,
+                column_number=self.num_nonsample_cols + index + 1):
                 num_errors += 1
             if ' ' in sample_id:
                 self.logger.error(
@@ -1154,6 +1177,9 @@ class GenewiseFileValidator(FeaturewiseFileValidator):
             if entrez_id == '':
                 entrez_id = None
         return self.checkGeneIdentification(hugo_symbol, entrez_id)
+
+    def checkId(self):
+        return self.checkIdInSamples()
 
 
 class ContinuousValuesValidator(GenewiseFileValidator):
@@ -3404,6 +3430,9 @@ class ProteinLevelValidator(FeaturewiseFileValidator):
                                      'column_number': col_index + 1,
                                      'cause': value})
 
+    def checkId(self):
+        return self.checkIdInSamples()
+
 
 class TimelineValidator(Validator):
 
@@ -3444,7 +3473,6 @@ class CancerTypeValidator(Validator):
     COLS = (
         'type_of_cancer',
         'name',
-        'clinical_trial_keywords',
         'color',
         'parent_type_of_cancer'
     )
@@ -3469,9 +3497,9 @@ class CancerTypeValidator(Validator):
         self.logger.logger.addHandler(tracking_handler)
         try:
             super(CancerTypeValidator, self).checkLine(data)
-            if len(data) != 5:
+            if len(data) != 4:
                 self.logger.error('Lines in cancer type files must have these '
-                                  '5 columns, in order: [%s]',
+                                  '4 columns, in order: [%s]',
                                   ', '.join(self.cols),
                                   extra={'line_number': self.line_number,
                                          'cause': '<%d columns>' % len(data)})
@@ -4316,6 +4344,9 @@ class MultipleDataFileValidator(FeaturewiseFileValidator, metaclass=ABCMeta):
 
         super(MultipleDataFileValidator, self).onComplete()
 
+    def checkId(self):
+        return self.checkIdInSamples()
+
 class GsvaWiseFileValidator(MultipleDataFileValidator, metaclass=ABCMeta):
     """Groups multiple gene set data files from a study to ensure consistency.
 
@@ -4420,6 +4451,34 @@ class GenericAssayWiseFileValidator(FeaturewiseFileValidator):
                                      'column_number': 1,
                                      'cause': nonsample_col_vals[0]})
         return value
+    
+    def checkId(self):
+        """Check if patient/sample IDs are imported"""
+        num_errors = 0
+        is_patient_level = True if 'patient_level' in self.meta_dict and self.meta_dict['patient_level'].strip().lower() == 'true' else False
+        # self.sampleIds can save either patient ids or sample ids
+        ids = self.sampleIds
+        for index, id in enumerate(ids):
+            if ' ' in id:
+                self.logger.error(
+                    'White space in id is not supported',
+                    extra={'line_number': self.line_number,
+                           'column_number': self.num_nonsample_cols + index + 1,
+                           'cause': id})
+                num_errors += 1
+            elif is_patient_level:
+                # check patient id for patient level data
+                if not self.checkPatientId(
+                        id,
+                        column_number=self.num_nonsample_cols + index + 1):
+                    num_errors += 1
+            else:           
+                # check sample id for non patient level data
+                if not self.checkSampleId(
+                        id,
+                        column_number=self.num_nonsample_cols + index + 1):
+                    num_errors += 1
+        return num_errors
 
 class GenericAssayContinuousValidator(GenericAssayWiseFileValidator):
 
@@ -5225,14 +5284,6 @@ def interface(args=None):
                         action='store_true', default=False,
                         help='Option to enable strict mode for validator when '
                              'validating mutation data')
-    parser.add_argument('-a', '--max_reported_values', required=False,
-                        type=int, default=3,
-                        help='Cutoff in HTML report for the maximum number of line numbers '
-                             'and values encountered to report for each message. '
-                             'For example, set this to a high number to '
-                             'report all genes that could not be loaded, instead '
-                             'of reporting "GeneA, GeneB, GeneC, 213 more"')
-
     parser = parser.parse_args(args)
     return parser
 
@@ -5477,7 +5528,6 @@ def main_validate(args):
     html_output_filename = args.html_table
     relaxed_mode = args.relaxed_clinical_definitions
     strict_maf_checks = args.strict_maf_checks
-    max_reported_values = args.max_reported_values
 
     # determine the log level for terminal and html output
     output_loglevel = logging.INFO
@@ -5510,7 +5560,6 @@ def main_validate(args):
         html_handler = Jinja2HtmlHandler(
             study_dir,
             html_output_filename,
-            max_reported_values=max_reported_values,
             capacity=1e5)
         # TODO extend CollapsingLogMessageHandler to flush to multiple targets,
         # and get rid of the duplicated buffering of messages here
