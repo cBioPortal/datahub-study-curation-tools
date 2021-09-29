@@ -18,7 +18,8 @@ Step 1: Calculate Total number `N` of non-synonymous, somatic mutations with eli
 ```
 Step 2: Determine the size `L` of genome coding area of DNA in megabase(Mb)
 - For WES/WGS: L = 30
-- For targeted sequenced: refer to the `CDS` field in related gene panel files
+- For targeted sequenced: refer to the `CDS` field in related gene panel files (need to be divided by 1M) 
+![Screen Shot 2020-10-05 at 6 55 06 PM](https://user-images.githubusercontent.com/5973438/95140207-4ca13e80-073c-11eb-8350-01f6a9ccba79.png)
 
 Step 3: Calculate TMB for each sequenced sample
 ```
@@ -28,6 +29,7 @@ TMB = N/L
 - For not sequenced samples (refer to `cases_sequenced.txt` for each study), the TMB is marked as "NA" 
 
 Step 4: Append TMB scores as an additional column in sample clinical file.
+<img width="1185" alt="Screen Shot 2020-10-05 at 7 08 47 PM" src="https://user-images.githubusercontent.com/5973438/95141042-309e9c80-073e-11eb-8140-abde3c032ab4.png">
 
 ### Command Line
 ```

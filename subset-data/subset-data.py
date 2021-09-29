@@ -21,6 +21,10 @@ def subset_by_ID(study_dir, file, ids_list, output_dir, index_column):
 	header_cols = extract_header(study_dir, file).strip('\n').split('\t')
 	header_data = ""
 	data = ""
+	#if file in ['data_mutations_manual.txt', 'data_mutations_nonsignedout.txt', 'data_clinical_ddp.txt']:
+	#	return(None)
+	print('Processing file '+file+'...')
+	
 	with open(study_dir+'/'+file,'r') as data_file:
 		for line in data_file:
 			if line.startswith('#') or line.startswith(header_cols[0]):
@@ -29,11 +33,15 @@ def subset_by_ID(study_dir, file, ids_list, output_dir, index_column):
 				values = line.strip('\n').split('\t')
 				if values[index_column] in ids_list:
 					data += line
+					
 	if data != "":
+		print("Writing subset data to "+output_dir+'/'+file+'\n')	
 		outfile = open(output_dir+'/'+file, 'w')
 		outfile.write(header_data)
 		outfile.write(data)
 		outfile.close()
+	else:
+		print('Sample IDs to subset are not present in file. Skipping..')
 
 def subset_by_matrix_type(study_dir, file, sample_ids_list, outdir, data_cols):
 	data = ""
@@ -46,6 +54,7 @@ def subset_by_matrix_type(study_dir, file, sample_ids_list, outdir, data_cols):
 	if len(data_cols) == data_cols_len:
 		return(None)
 
+	print('Processing file '+file+'...')
 	with open(study_dir+'/'+file,'r') as data_file:
 		for line in data_file:
 			if line.startswith('#'):
@@ -56,19 +65,23 @@ def subset_by_matrix_type(study_dir, file, sample_ids_list, outdir, data_cols):
 				line = line.strip('\n').split('\t')
 				if '' in set([line[i] for i in data_cols]) and len(set([line[i] for i in data_cols])) == 2: continue
 				else: data += '\t'.join([line[i] for i in data_cols])+'\n'
-			
-	with open(outdir+'/'+file, 'w') as datafile:
-		datafile.write(data.strip('\n'))
+	
+	if data != "":
+		print("Writing subsetted data to "+outdir+'/'+file+'\n')		
+		with open(outdir+'/'+file, 'w') as datafile:
+			datafile.write(data.strip('\n'))
+	else:
+		print('Sample IDs to subset are not present in file. Skipping..')	
 
 def subset_by_generic_assay(study_dir, file, sample_ids_list, outdir, data_cols):
 	data = ""
-	
 	header_cols = extract_header(study_dir, file).strip('\n').split('\t')
 	for value in sample_ids_list:
 		if value in header_cols:
 			ind = header_cols.index(value)
 			data_cols.append(ind)
-			
+	
+	print('Processing file '+file+'...')		
 	with open(study_dir+'/'+file,'r') as data_file:
 		for line in data_file:
 			if line.startswith('#'):
@@ -79,8 +92,12 @@ def subset_by_generic_assay(study_dir, file, sample_ids_list, outdir, data_cols)
 				line = line.strip('\n').split('\t')
 				data += '\t'.join([line[i] for i in data_cols])+'\n'
 
-	with open(outdir+'/'+file, 'w') as datafile:
-		datafile.write(data.strip('\n'))
+	if data != "":
+		print("Writing subsetted data to "+outdir+'/'+file+'\n')
+		with open(outdir+'/'+file, 'w') as datafile:
+			datafile.write(data.strip('\n'))
+	else:
+		print('Sample IDs to subset are not present in file. Skipping..')
 
 def identify_file_type(study_dir, sample_ids_list, patient_ids_list, output_dir):
 	data_files = [file for file in os.listdir(study_dir) if file.startswith('data')]
@@ -98,6 +115,9 @@ def identify_file_type(study_dir, sample_ids_list, patient_ids_list, output_dir)
 			subset_by_ID(study_dir, file, patient_ids_list, output_dir, index_column)
 		elif 'sample_id' in header:
 			index_column = header.index('sample_id')
+			subset_by_ID(study_dir, file, sample_ids_list, output_dir, index_column)
+		elif 'sampleid' in header:
+			index_column = header.index('sampleid')
 			subset_by_ID(study_dir, file, sample_ids_list, output_dir, index_column)
 		elif 'tumor_sample_barcode' in header:
 			index_column = header.index('tumor_sample_barcode')
@@ -134,7 +154,7 @@ def main():
 	sample_ids = args.sample_list
 	patient_ids = args.patient_list
 	study_dir = args.source_path
-	output_dir = args.destination_path
+	output_dir = args.destination_path.rstrip('/')
 	
 	sample_ids_list = create_ids_list(sample_ids)
 	patient_ids_list = create_ids_list(patient_ids)
