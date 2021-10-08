@@ -1,0 +1,86 @@
+The input file(s) to process are:
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/meta_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_clinical.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/meta_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/meta_mutations_extended.txt
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_CNA.txt
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_mutations_extended.txt
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/prad/mskcc/foundation/data_fusions.txt
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma-sa/therp/mskcc/foundation'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma-sa/therp/filtered/mskcc/foundation'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/filtered/mskcc/foundation'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/merged/mskcc/foundation'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/merged/filtered/mskcc/foundation'
+The input file(s) to process are:
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/meta_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/data_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/data_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/data_clinical.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/data_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/meta_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/meta_mutations_extended.txt
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/data_mutations_extended.txt
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/mskcc/foundation/data_fusions.txt
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/gbm/mellinghoff'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymphoma/younes'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/mixed/lymph/mskcc/foundation/160830'
+ERROR: Invalid path or file '/Users/suny1/mercurial/cbio-portal-data/foundation/lymph/landscape/fmi'
+The input file(s) to process are:
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/meta_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/AMC-RSP-13-159_MSKCC_20160610_040000.xml
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/TRF031683.xml
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_clinical.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/AMC-RSP-13-159_MSKCC_20160627_120000.xml
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/AMC-RSP-13-159 MSKCC.xml
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/meta_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/AMC-RSP-13-159_MSKCC_20160621_170106.xml
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/AMC-RSP-13-159_MSKCC_20161020_154413.xml
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/meta_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/13-082.xml
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_CNA.txt
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_mutations_extended.txt
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/dlbc/13-082/mskcc/foundation/data_fusions.txt
+The input file(s) to process are:
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/meta_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_clinical_supp_colorectal_mskimpact.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/coadread_mskcc_foundation_meta_cna_hg19_seg.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_clinical_supp_mskimpact.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_clinical_supp_foundation.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/meta_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/meta_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_clinical_supp_detailed.txt
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_mutations_extended.txt
+
+
+The following are the changes that will be made to the data file(s):
+
+
+<-------------------------------------/Users/suny1/mercurial/cbio-portal-data/foundation/coadread/mskcc/foundation/data_fusions.txt--------------------------------->
+
+ZC3H7B	2033		---hugo symbol updated to---		EP300	2033
+ATP8A2	26524		---hugo symbol updated to---		LATS2	26524
+EXTL3	5241		---hugo symbol updated to---		PGR	5241
+MIR365	4763		---hugo symbol updated to---		NF1	4763
+
+

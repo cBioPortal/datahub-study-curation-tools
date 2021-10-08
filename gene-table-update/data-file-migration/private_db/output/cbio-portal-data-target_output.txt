@@ -1,0 +1,1121 @@
+The input file(s) to process are:
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/meta_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_CNA.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/bcm_wxs_verification.maf
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_clinical.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/unmapped_samples.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/meta_fusions.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/meta_mutations_extended.txt
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/cgi_wgs_somatic.maf
+/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_mutations_unfiltered.txt
+
+Fetching the reference gene and gene-alias info..
+
+No updates to file: /Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_fusions.txt
+
+
+The following are the changes that will be made to the data file(s):
+
+
+<-------------------------------------/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_CNA.txt--------------------------------->
+
+LOC100506388	100506388		---hugo symbol updated to---		RPH3AL-AS1	100506388
+LOC100506844	100506844		---hugo symbol updated to---		GIHCG	100506844
+LOC100131655	100131655		---hugo symbol updated to---		ZNF236-DT	100131655
+TRNH	4564		---hugo symbol updated to---		MT-TH	4564
+TRNI	4565		---hugo symbol updated to---		MT-TI	4565
+TRNK	4566		---hugo symbol updated to---		MT-TK	4566
+TRNM	4569		---hugo symbol updated to---		MT-TM	4569
+TRNN	4570		---hugo symbol updated to---		MT-TN	4570
+TRNC	4511		---hugo symbol updated to---		MT-TC	4511
+TRND	4555		---hugo symbol updated to---		MT-TD	4555
+TRNE	4556		---hugo symbol updated to---		MT-TE	4556
+TRNF	4558		---hugo symbol updated to---		MT-TF	4558
+TRNG	4563		---hugo symbol updated to---		MT-TG	4563
+TRNY	4579		---hugo symbol updated to---		MT-TY	4579
+TRNP	4571		---hugo symbol updated to---		MT-TP	4571
+TRNQ	4572		---hugo symbol updated to---		MT-TQ	4572
+TRNR	4573		---hugo symbol updated to---		MT-TR	4573
+TRNT	4576		---hugo symbol updated to---		MT-TT	4576
+TRNV	4577		---hugo symbol updated to---		MT-TV	4577
+TRNW	4578		---hugo symbol updated to---		MT-TW	4578
+HP07349	100652853		---hugo symbol updated to---		LINC01023	100652853
+105376261		---entrez id replaced to---		158135
+LOC100288842	100288842		---hugo symbol updated to---		B3GALT9	100288842
+11217		---entrez id replaced to---		445815
+AKAP2	445815		---hugo symbol updated to---		PALM2AKAP2	445815
+B3GNT1	10678		---hugo symbol updated to---		B3GNT2	10678
+SGK494	124923		---hugo symbol updated to---		RSKR	124923
+114299		---entrez id replaced to---		445815
+PALM2	445815		---hugo symbol updated to---		PALM2AKAP2	445815
+LOC100288911	100288911		---hugo symbol updated to---		CRIM1-DT	100288911
+TMEM155	132332		---hugo symbol updated to---		SMIM43	132332
+LOC100131347	100131347		---hugo symbol updated to---		RDM1P5	100131347
+LOC100505570	100505570		---hugo symbol updated to---		LINC02708	100505570
+QARS	5859		---hugo symbol updated to---		QARS1	5859
+MLL4	8085		---hugo symbol updated to---		KMT2D	8085
+LOC100128239	100128239		---hugo symbol updated to---		LINC02731	100128239
+LOC100130417	100130417		---hugo symbol updated to---		LINC02593	100130417
+LOC729159	729159		---hugo symbol updated to---		NPAP1L	729159
+LOC284578	284578		---hugo symbol updated to---		MFSD4A-AS1	284578
+LOC148413	148413		---hugo symbol updated to---		MRPL20-AS1	148413
+LOC100506544	100506544		---hugo symbol updated to---		L3MBTL2-AS1	100506544
+100049076		---entrez id replaced to---		118126072
+LOC100270804	100270804		---hugo symbol updated to---		LINC00653	100270804
+ODZ3	10178		---hugo symbol updated to---		TENM1	10178
+LOC100506985	100506985		---hugo symbol updated to---		NCMAP-DT	100506985
+PSIMCT-1	100101490		---hugo symbol updated to---		MCTS2P	100101490
+DKFZp686D0853	401613		---hugo symbol updated to---		SERTM2	401613
+DKFZp779M0652	374387		---hugo symbol updated to---		LINC02716	374387
+LOC100506082	100506082		---hugo symbol updated to---		LINC02749	100506082
+LOC100506083	100506083		---hugo symbol updated to---		DDX19A-DT	100506083
+C2orf47	51614		---hugo symbol updated to---		ERGIC3	51614
+LOC100132111	100132111		---hugo symbol updated to---		C2CD4D-AS1	100132111
+LOC645166	645166		---hugo symbol updated to---		LSP1P5	645166
+100996634		---entrez id replaced to---		221262
+100507387		---entrez id replaced to---		202134
+LOC100507387	202134		---hugo symbol updated to---		FAM153B	202134
+FAM21A	253725		---hugo symbol updated to---		WASHC2C	253725
+XAGE1B	653220		---hugo symbol updated to---		XAGE1A	653220
+LOC399715	399715		---hugo symbol updated to---		LINC02649	399715
+LOC100505817	100505817		---hugo symbol updated to---		LINC02582	100505817
+LOC100507670	100507670		---hugo symbol updated to---		ZNF687-AS1	100507670
+LOC642852	642852		---hugo symbol updated to---		LINC00205	642852
+LOC400743	400743		---hugo symbol updated to---		LINC02783	400743
+RNU1-7	26865		---hugo symbol updated to---		RNU1-27P	26865
+PRAMEF24	391002		---hugo symbol updated to---		PRAMEF8	391002
+C17orf61-PLSCR3	100529211		---hugo symbol updated to---		TMEM256-PLSCR3	100529211
+HSPE1-PHOCN	100529241		---hugo symbol updated to---		HSPE1-MOB4	100529241
+RNU86	116936		---hugo symbol updated to---		SNORD139	116936
+TRNA	4553		---hugo symbol updated to---		MT-TA	4553
+LOC339529	339529		---hugo symbol updated to---		LINC02774	339529
+LOC100506022	100506022		---hugo symbol updated to---		LINC02606	100506022
+FAM48B1	170067		---hugo symbol updated to---		SUPT20HL2	170067
+GNN	253724		---hugo symbol updated to---		TTC41P	253724
+AOC4	90586		---hugo symbol updated to---		AOC4P	90586
+PAR1	2149		---hugo symbol updated to---		F2R	2149
+LOC100507521	100507521		---hugo symbol updated to---		LINC02733	100507521
+USP17	377630		---hugo symbol updated to---		USP17L2	377630
+LOC400927	400927		---hugo symbol updated to---		TPTEP2	400927
+TRAPPC2P1	6399		---hugo symbol updated to---		TRAPPC2	6399
+SGK110	100130827		---hugo symbol updated to---		SBK3	100130827
+LOC100506797	100506797		---hugo symbol updated to---		THORLNC	100506797
+LOC440461	440461		---hugo symbol updated to---		ARHGAP27P2	440461
+CN5H6.4	150384		---hugo symbol updated to---		GTSE1-DT	150384
+HDGFRP2	84717		---hugo symbol updated to---		HDGFL2	84717
+HEATR8-TTC4	100527960		---hugo symbol updated to---		MROH7-TTC4	100527960
+LOC100506127	100506127		---hugo symbol updated to---		GVQW3	100506127
+LOC221122	221122		---hugo symbol updated to---		LINC02685	221122
+LOC100288392	100288392		---hugo symbol updated to---		OR7E111FP	100288392
+LOC100507487	100507487		---hugo symbol updated to---		LINC02615	100507487
+C6orf126	84300		---hugo symbol updated to---		UQCC2	84300
+LOC100129940	100129940		---hugo symbol updated to---		HMGA2-AS1	100129940
+LOC401296	401296		---hugo symbol updated to---		LNCRI	401296
+LOC388692	388692		---hugo symbol updated to---		LINC02591	388692
+LOC283922	283922		---hugo symbol updated to---		PDPR2P	283922
+LOC647859	647859		---hugo symbol updated to---		OCLNP1	647859
+LOC440934	440934		---hugo symbol updated to---		CT75	440934
+TUBB4	10381		---hugo symbol updated to---		TUBB3	10381
+LOC151174	151174		---hugo symbol updated to---		LINC02610	151174
+EEF1E1-MUTED	100526837		---hugo symbol updated to---		EEF1E1-BLOC1S5	100526837
+LOC284632	284632		---hugo symbol updated to---		LINC02800	284632
+LOC100507283	100507283		---hugo symbol updated to---		MSANTD2-AS1	100507283
+DKFZp686K1684	440034		---hugo symbol updated to---		PAX6-AS1	440034
+RBAK-LOC389458	100533952		---hugo symbol updated to---		RBAK-RBAKDN	100533952
+LOC100130705	100130705		---hugo symbol updated to---		ATP6V1FNB	100130705
+FLJ23867	200058		---hugo symbol updated to---		QSOX1	200058
+RNU1-8	26866		---hugo symbol updated to---		RNU1-28P	26866
+RNU1-6	26864		---hugo symbol updated to---		RNVU1-7	26864
+DKFZP434H168	26077		---hugo symbol updated to---		GNAO1-AS1	26077
+8923201		---entrez id replaced to---		4539
+388289		---entrez id replaced to---		463
+92973		---entrez id replaced to---		51754
+100128242		---entrez id replaced to---		57476
+LOC100128242	57476		---hugo symbol updated to---		GRAMD1B	57476
+LOC646743	646743		---hugo symbol updated to---		PRSS40B	646743
+NAG20	51271		---hugo symbol updated to---		UBAP1	51271
+FOXD4L2	286380		---hugo symbol updated to---		FOXD4L3	286380
+8923211		---entrez id replaced to---		4509
+8923188		---entrez id replaced to---		4508
+RASA4P	401331		---hugo symbol updated to---		RASA4CP	401331
+100505381		---entrez id replaced to---		221938
+LOC100507205	100507205		---hugo symbol updated to---		LINC02740	100507205
+LOC729305	729305		---hugo symbol updated to---		LINC02714	729305
+LOC100130950	100130950		---hugo symbol updated to---		ZNF594-DT	100130950
+8923209		---entrez id replaced to---		4535
+8923206		---entrez id replaced to---		4537
+8923212		---entrez id replaced to---		4536
+8923210		---entrez id replaced to---		4540
+8923197		---entrez id replaced to---		4538
+8923198		---entrez id replaced to---		4541
+B7H6	374383		---hugo symbol updated to---		NCR3LG1	374383
+LOC100288866	100288866		---hugo symbol updated to---		NGFR-AS1	100288866
+DGAT2L7	646409		---hugo symbol updated to---		DGAT2L7P	646409
+LOC100507599	100507599		---hugo symbol updated to---		TFIP11-DT	100507599
+SPDYE2L	100310812		---hugo symbol updated to---		SPDYE2B	100310812
+8923202		---entrez id replaced to---		4513
+COX2	4513		---hugo symbol updated to---		MT-CO2	4513
+8923187		---entrez id replaced to---		4514
+8923218		---entrez id replaced to---		4512
+COX1	4512		---hugo symbol updated to---		MT-CO1	4512
+C8ORFK29	340393		---hugo symbol updated to---		TMEM249	340393
+LOC100130172	100130172		---hugo symbol updated to---		FAM13B-AS1	100130172
+LOC100288846	100288846		---hugo symbol updated to---		MIA2-AS1	100288846
+LOC401320	401320		---hugo symbol updated to---		GARS1-DT	401320
+CCRL1	1524		---hugo symbol updated to---		CX3CR1	1524
+LOC100506922	100506922		---hugo symbol updated to---		MAP3K2-DT	100506922
+LOC728026	728026		---hugo symbol updated to---		PTMAP12	728026
+LOC100147773	100147773		---hugo symbol updated to---		TMCO1-AS1	100147773
+LOC100499484	100499484		---hugo symbol updated to---		SUGT1P4-STRA6LP	100499484
+RNU1-5	26863		---hugo symbol updated to---		RNVU1-18	26863
+DKFZP434L187	26082		---hugo symbol updated to---		LINC02249	26082
+PKI55	150967		---hugo symbol updated to---		LINC01963	150967
+LOC728730	728730		---hugo symbol updated to---		MAP4K3-DT	728730
+25787		---entrez id replaced to---		26220
+MUM1	84939		---hugo symbol updated to---		PWWP3A	84939
+DKFZP434K028	26070		---hugo symbol updated to---		MYRF-AS1	26070
+LOC400794	400794		---hugo symbol updated to---		LRRC52-AS1	400794
+338809		---entrez id replaced to---		440107
+SEC1	653677		---hugo symbol updated to---		SEC1P	653677
+26222		---entrez id replaced to---		26220
+C17orf106-CDK3	100529145		---hugo symbol updated to---		TEN1-CDK3	100529145
+LOC644794	644794		---hugo symbol updated to---		LINC02604	644794
+LOC100288778	100288778		---hugo symbol updated to---		WASH8P	100288778
+LOC654342	654342		---hugo symbol updated to---		LSP1P4	654342
+FKSG83	387316		---hugo symbol updated to---		VN1R10P	387316
+BK250D10.8	339674		---hugo symbol updated to---		LINC00634	339674
+SF3B14	51639		---hugo symbol updated to---		SF3B6	51639
+LOC440040	440040		---hugo symbol updated to---		GRM5P1	440040
+LOC642366	642366		---hugo symbol updated to---		ISL1-DT	642366
+284083		---entrez id replaced to---		5414
+LOC441454	441454		---hugo symbol updated to---		PTMAP11	441454
+LOC440173	440173		---hugo symbol updated to---		LINC02893	440173
+8923205		---entrez id replaced to---		4519
+LOC440028	440028		---hugo symbol updated to---		LINC02709	440028
+645840		---entrez id replaced to---		114112
+LOC646730	646730		---hugo symbol updated to---		LINC02618	646730
+LOC494141	494141		---hugo symbol updated to---		SLC25A51P4	494141
+LOC100507468	100507468		---hugo symbol updated to---		CT66	100507468
+LOC100506248	100506248		---hugo symbol updated to---		PTMAP9	100506248
+STRA13	8553		---hugo symbol updated to---		BHLHE40	8553
+
+<-------------------------------------/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_mutations_extended.txt--------------------------------->
+
+CTC-457E21.3	440518		---hugo symbol updated to---		GOLGA2P9	440518
+117153		---entrez id replaced to---		4253
+RP11-503N18.3	402160		---hugo symbol updated to---		CFAP99	402160
+
+<-------------------------------------/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/bcm_wxs_verification.maf--------------------------------->
+
+C7orf55-LUC7L2	51631		---hugo symbol updated to---		LUC7L2	51631
+C7orf55-LUC7L2	51631		---hugo symbol updated to---		LUC7L2	51631
+114299		---entrez id replaced to---		445815
+PALM2	445815		---hugo symbol updated to---		PALM2AKAP2	445815
+C7orf55-LUC7L2	51631		---hugo symbol updated to---		LUC7L2	51631
+C7orf55-LUC7L2	51631		---hugo symbol updated to---		LUC7L2	51631
+C7orf55-LUC7L2	51631		---hugo symbol updated to---		LUC7L2	51631
+NR1D1	7067		---hugo symbol updated to---		THRA	7067
+RP1-257A7.4	221692		---hugo symbol updated to---		PHACTR1	221692
+NR1D1	7067		---hugo symbol updated to---		THRA	7067
+NR1D1	7067		---hugo symbol updated to---		THRA	7067
+MROH7-TTC4	374977		---hugo symbol updated to---		MROH7	374977
+MROH7-TTC4	374977		---hugo symbol updated to---		MROH7	374977
+MROH7-TTC4	374977		---hugo symbol updated to---		MROH7	374977
+PCDHGA3	56101		---hugo symbol updated to---		PCDHGB5	56101
+
+<-------------------------------------/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/cgi_wgs_somatic.maf--------------------------------->
+
+100652885		---entrez id replaced to---		105369219
+100874328		---entrez id replaced to---		105374251
+CTD-3064M3.7	389690		---hugo symbol updated to---		MROH5	389690
+RP11-702L6.4	401082		---hugo symbol updated to---		LINC01205	401082
+100652885		---entrez id replaced to---		105369219
+RP5-1182A14.5	84809		---hugo symbol updated to---		CROCCP2	84809
+MROH7-TTC4	374977		---hugo symbol updated to---		MROH7	374977
+338809		---entrez id replaced to---		440107
+117153		---entrez id replaced to---		4253
+642326		---entrez id replaced to---		102724928
+642326		---entrez id replaced to---		102724928
+MROH7-TTC4	374977		---hugo symbol updated to---		MROH7	374977
+338809		---entrez id replaced to---		440107
+642326		---entrez id replaced to---		102724928
+642326		---entrez id replaced to---		102724928
+642326		---entrez id replaced to---		102724928
+54083		---entrez id replaced to---		81543
+XIST	9383		---hugo symbol updated to---		TSIX	9383
+RP11-503N18.3	402160		---hugo symbol updated to---		CFAP99	402160
+AC003002.6	7565		---hugo symbol updated to---		ZNF17	7565
+100874368		---entrez id replaced to---		107984540
+104355151		---entrez id replaced to---		105370731
+100652885		---entrez id replaced to---		105369219
+100652885		---entrez id replaced to---		105369219
+RP5-1182A14.5	84809		---hugo symbol updated to---		CROCCP2	84809
+100874049		---entrez id replaced to---		729041
+UGT1A6	54658		---hugo symbol updated to---		UGT1A1	54658
+SNORD5	389690		---hugo symbol updated to---		MROH5	389690
+CTB-113P19.1	101927096		---hugo symbol updated to---		CLMAT3	101927096
+100874368		---entrez id replaced to---		107984540
+104355151		---entrez id replaced to---		105370731
+100652885		---entrez id replaced to---		105369219
+CTC-457E21.3	440518		---hugo symbol updated to---		GOLGA2P9	440518
+100874368		---entrez id replaced to---		107984540
+104355151		---entrez id replaced to---		105370731
+100652885		---entrez id replaced to---		105369219
+MROH7-TTC4	374977		---hugo symbol updated to---		MROH7	374977
+338809		---entrez id replaced to---		440107
+642326		---entrez id replaced to---		102724928
+642326		---entrez id replaced to---		102724928
+
+<-------------------------------------/Users/suny1/mercurial/cbio-portal-data/target/mdls_nbl_target_2017/data_mutations_unfiltered.txt--------------------------------->
+
+RP11-389K14.3	101927873		---hugo symbol updated to---		LINC01508	101927873
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-2A4.3	100507274		---hugo symbol updated to---		LINC01210	100507274
+RP11-480C22.1	101929497		---hugo symbol updated to---		LINC02712	101929497
+RP11-389K14.3	101927873		---hugo symbol updated to---		LINC01508	101927873
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AC090044.1	101927215		---hugo symbol updated to---		LINC01266	101927215
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-97O12.2	101929743		---hugo symbol updated to---		LINC01586	101929743
+RP11-379F4.4	100287290		---hugo symbol updated to---		LOC100287290	100287290
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-163N6.2	100505532		---hugo symbol updated to---		LINC01301	100505532
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-745C15.2	100996654		---hugo symbol updated to---		SEC61G-DT	100996654
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+AC007880.1	101927438		---hugo symbol updated to---		LINC01800	101927438
+GS1-204I12.1	101929093		---hugo symbol updated to---		LINC01350	101929093
+RP11-88I21.2	101927123		---hugo symbol updated to---		LINC02016	101927123
+RP11-736K20.6	100506368		---hugo symbol updated to---		FZD4-DT	100506368
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-59J16.1	101927149		---hugo symbol updated to---		LINC01471	101927149
+104355151		---entrez id replaced to---		105370731
+RP11-267C16.1	100287225		---hugo symbol updated to---		LINC01630	100287225
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+619343		---entrez id replaced to---		9228
+RP11-83C7.2	101928776		---hugo symbol updated to---		LINC01258	101928776
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+100652885		---entrez id replaced to---		105369219
+RP11-883G14.2	101927334		---hugo symbol updated to---		LINC02127	101927334
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-251P6.1	101928476		---hugo symbol updated to---		LINC01676	101928476
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP5-1182A14.5	84809		---hugo symbol updated to---		CROCCP2	84809
+AC005042.4	100129029		---hugo symbol updated to---		PKP4-AS1	100129029
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP5-1069C8.2	101929486		---hugo symbol updated to---		LINC01722	101929486
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+CTC-436P18.1	101928630		---hugo symbol updated to---		SMIM15-AS1	101928630
+RP11-572C15.5	101929694		---hugo symbol updated to---		LINC02042	101929694
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-534N16.1	101927718		---hugo symbol updated to---		DSG1-AS1	101927718
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-523L20.2	101927132		---hugo symbol updated to---		LINC02133	101927132
+RP4-694A7.4	101927220		---hugo symbol updated to---		DEPDC1-AS1	101927220
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-168E17.1	101929019		---hugo symbol updated to---		LINC02270	101929019
+RP11-567L7.6	101927728		---hugo symbol updated to---		LINC01476	101927728
+RP11-163N6.2	100505532		---hugo symbol updated to---		LINC01301	100505532
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-563J2.2	399715		---hugo symbol updated to---		LINC02649	399715
+RP11-197P3.4	101927380		---hugo symbol updated to---		CARNMT1-AS1	101927380
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP5-1120P11.1	101929705		---hugo symbol updated to---		SCIRT	101929705
+RP11-76N22.2	101927891		---hugo symbol updated to---		PKN2-AS1	101927891
+RP1-93I3.1	101927352		---hugo symbol updated to---		PLS3-AS1	101927352
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-356I2.4	100130476		---hugo symbol updated to---		WAKMAR2	100130476
+RP11-861A13.4	101929623		---hugo symbol updated to---		LINC01215	101929623
+RP11-308N19.4	100996590		---hugo symbol updated to---		LINC01505	100996590
+RP11-594N15.2	101927003		---hugo symbol updated to---		PKIA-AS1	101927003
+RP3-473B4.3	340581		---hugo symbol updated to---		LINC02243	340581
+RP11-508P1.2	101928340		---hugo symbol updated to---		LINC01489	101928340
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-527H14.2	400644		---hugo symbol updated to---		LINC01443	400644
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-152L7.2	101929631		---hugo symbol updated to---		LINC01653	101929631
+RP11-59J16.1	101927149		---hugo symbol updated to---		LINC01471	101927149
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-166A12.1	101927379		---hugo symbol updated to---		LINC02201	101927379
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC097500.2	101927217		---hugo symbol updated to---		LINC01473	101927217
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+AC007392.3	100507073		---hugo symbol updated to---		LINC01798	100507073
+RP11-32F11.2	101929247		---hugo symbol updated to---		LINC01231	101929247
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-314D7.2	101928137		---hugo symbol updated to---		LINC02444	101928137
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+619343		---entrez id replaced to---		9228
+RP11-506B6.6	101927640		---hugo symbol updated to---		LAMA4-AS1	101927640
+AC095067.1	101929086		---hugo symbol updated to---		LINC01447	101929086
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC104655.2	101927492		---hugo symbol updated to---		MRPS9-AS1	101927492
+AC004053.1	101929468		---hugo symbol updated to---		CXXC4-AS1	101929468
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+642326		---entrez id replaced to---		102724928
+RP11-83C7.2	101928776		---hugo symbol updated to---		LINC01258	101928776
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+AC007131.1	101927285		---hugo symbol updated to---		LINC01793	101927285
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP13-653N12.1	100996679		---hugo symbol updated to---		LINC02369	100996679
+RP11-575F12.1	101927592		---hugo symbol updated to---		LINC02405	101927592
+RP11-630D6.5	101928809		---hugo symbol updated to---		SDAD1-AS1	101928809
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-756H20.1	101927460		---hugo symbol updated to---		LINC02240	101927460
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-113E21.1	101929684		---hugo symbol updated to---		LINC01520	101929684
+RP5-1070A16.1	729987		---hugo symbol updated to---		LINC01776	729987
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-56I23.1	101927549		---hugo symbol updated to---		LINC02627	101927549
+RP11-41O4.2	101060542		---hugo symbol updated to---		LINC01910	101060542
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+RP11-286E11.1	101929595		---hugo symbol updated to---		CYP2U1-AS1	101929595
+338809		---entrez id replaced to---		440107
+RP11-356I2.4	100130476		---hugo symbol updated to---		WAKMAR2	100130476
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-527H14.2	400644		---hugo symbol updated to---		LINC01443	400644
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+AC007551.3	101928545		---hugo symbol updated to---		SEPTIN7-DT	101928545
+AC007131.1	101927285		---hugo symbol updated to---		LINC01793	101927285
+AC002454.1	101927497		---hugo symbol updated to---		CDK6-AS1	101927497
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-553E24.2	101929701		---hugo symbol updated to---		LINC01584	101929701
+RP11-630D6.5	101928809		---hugo symbol updated to---		SDAD1-AS1	101928809
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-418J17.1	101929147		---hugo symbol updated to---		WARS2-AS1	101929147
+AC018799.1	101927406		---hugo symbol updated to---		LINC01821	101927406
+619343		---entrez id replaced to---		9228
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP11-64I17.1	101928536		---hugo symbol updated to---		LINC01493	101928536
+RP5-1120P11.1	101929705		---hugo symbol updated to---		SCIRT	101929705
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+AC079586.1	151121		---hugo symbol updated to---		LINC01854	151121
+RP11-340B18.1	101928151		---hugo symbol updated to---		LINC01179	101928151
+AP000479.1	101927120		---hugo symbol updated to---		LINC02735	101927120
+RP11-434C1.1	338817		---hugo symbol updated to---		LINC01252	338817
+RP11-418J17.1	101929147		---hugo symbol updated to---		WARS2-AS1	101929147
+RP11-76N22.2	101927891		---hugo symbol updated to---		PKN2-AS1	101927891
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP5-828K20.2	101929663		---hugo symbol updated to---		LINC01427	101929663
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-314D7.2	101928137		---hugo symbol updated to---		LINC02444	101928137
+RP11-159D12.10	101927666		---hugo symbol updated to---		DYNLL2-DT	101927666
+RP11-946L20.4	101927487		---hugo symbol updated to---		LINC01609	101927487
+RP11-324L3.1	101927396		---hugo symbol updated to---		LINC01514	101927396
+AC027269.2	101928795		---hugo symbol updated to---		LINC01448	101928795
+RP11-576I22.2	101928650		---hugo symbol updated to---		GORAB-AS1	101928650
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-13A1.1	728084		---hugo symbol updated to---		LINC02458	728084
+RP11-555F9.2	340515		---hugo symbol updated to---		LINC01501	340515
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-506B6.6	101927640		---hugo symbol updated to---		LAMA4-AS1	101927640
+AC011343.1	101927766		---hugo symbol updated to---		LINC01847	101927766
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP5-898J17.1	101928241		---hugo symbol updated to---		LINC01787	101928241
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-142G7.2	100133123		---hugo symbol updated to---		LINC01203	100133123
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-33G16.1	101929582		---hugo symbol updated to---		LINC01241	101929582
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP4-655J12.4	101929023		---hugo symbol updated to---		LINC01762	101929023
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+RP11-736K20.6	100506368		---hugo symbol updated to---		FZD4-DT	100506368
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP11-191N8.2	101929771		---hugo symbol updated to---		LINC01655	101929771
+RP11-946L20.4	101927487		---hugo symbol updated to---		LINC01609	101927487
+RP11-695J4.2	101928290		---hugo symbol updated to---		PLBD1-AS1	101928290
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-64I17.1	101928536		---hugo symbol updated to---		LINC01493	101928536
+AC006196.1	101927431		---hugo symbol updated to---		LINC01790	101927431
+RP11-386B13.3	101928877		---hugo symbol updated to---		LINC02436	101928877
+RP1-167G20.1	101929505		---hugo symbol updated to---		LINC02150	101929505
+RP11-24I21.1	101927849		---hugo symbol updated to---		LINC02355	101927849
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-799P8.1	101928559		---hugo symbol updated to---		LINC01467	101928559
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-454C18.2	101928142		---hugo symbol updated to---		AADACL2-AS1	101928142
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP4-694A7.4	101927220		---hugo symbol updated to---		DEPDC1-AS1	101927220
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-83C7.2	101928776		---hugo symbol updated to---		LINC01258	101928776
+RP11-198M11.2	101928442		---hugo symbol updated to---		LINC01491	101928442
+RP11-314D7.2	101928137		---hugo symbol updated to---		LINC02444	101928137
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-527H14.2	400644		---hugo symbol updated to---		LINC01443	400644
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+RP11-712C7.1	101927433		---hugo symbol updated to---		LINC01255	101927433
+100874368		---entrez id replaced to---		107984540
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+RP11-416O18.1	100996490		---hugo symbol updated to---		LINC01206	100996490
+RP11-756H20.1	101927460		---hugo symbol updated to---		LINC02240	101927460
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-686G23.2	101928944		---hugo symbol updated to---		LINC02720	101928944
+RP11-563J2.2	399715		---hugo symbol updated to---		LINC02649	399715
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-32F11.2	101929247		---hugo symbol updated to---		LINC01231	101929247
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+80761		---entrez id replaced to---		105375355
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP3-446N13.1	101927464		---hugo symbol updated to---		LINC02359	101927464
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-799P8.1	101928559		---hugo symbol updated to---		LINC01467	101928559
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-415C15.2	101929199		---hugo symbol updated to---		LINC02261	101929199
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-142G7.2	100133123		---hugo symbol updated to---		LINC01203	100133123
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+RP11-1018N14.1	101927274		---hugo symbol updated to---		LINC02071	101927274
+RP11-125P18.1	100270679		---hugo symbol updated to---		LINC01432	100270679
+RP11-454C18.2	101928142		---hugo symbol updated to---		AADACL2-AS1	101928142
+RP11-215E13.1	101927239		---hugo symbol updated to---		LINC01989	101927239
+RP11-482M8.1	101928737		---hugo symbol updated to---		ZCCHC14-DT	101928737
+RP11-626I20.3	101929084		---hugo symbol updated to---		LINC02401	101929084
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-7O14.1	101927364		---hugo symbol updated to---		LINC01571	101927364
+RP11-31F15.2	100996251		---hugo symbol updated to---		LRIG2-DT	100996251
+RP11-215E13.1	101927239		---hugo symbol updated to---		LINC01989	101927239
+RP11-59J16.1	101927149		---hugo symbol updated to---		LINC01471	101927149
+RP11-730N24.1	340107		---hugo symbol updated to---		LINC02239	340107
+AC005042.4	100129029		---hugo symbol updated to---		PKP4-AS1	100129029
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+AC007392.3	100507073		---hugo symbol updated to---		LINC01798	100507073
+RP11-480C22.1	101929497		---hugo symbol updated to---		LINC02712	101929497
+100287922		---entrez id replaced to---		101926917
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+AC007880.1	101927438		---hugo symbol updated to---		LINC01800	101927438
+AC095067.1	101929086		---hugo symbol updated to---		LINC01447	101929086
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-64I17.1	101928536		---hugo symbol updated to---		LINC01493	101928536
+RP11-7O14.1	101927364		---hugo symbol updated to---		LINC01571	101927364
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-59J16.1	101927149		---hugo symbol updated to---		LINC01471	101927149
+RP11-111I12.1	101929406		---hugo symbol updated to---		LINC01648	101929406
+RP5-1182A14.5	84809		---hugo symbol updated to---		CROCCP2	84809
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-454C18.2	101928142		---hugo symbol updated to---		AADACL2-AS1	101928142
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-809M12.1	101928781		---hugo symbol updated to---		TMEM26-AS1	101928781
+RP11-329B9.1	101928992		---hugo symbol updated to---		LINC02069	101928992
+RP11-76N22.2	101927891		---hugo symbol updated to---		PKN2-AS1	101927891
+100652885		---entrez id replaced to---		105369219
+RP3-400N23.6	101929760		---hugo symbol updated to---		PIK3IP1-DT	101929760
+RP11-24I21.1	101927849		---hugo symbol updated to---		LINC02355	101927849
+619343		---entrez id replaced to---		9228
+AC079586.1	151121		---hugo symbol updated to---		LINC01854	151121
+RP1-93I3.1	101927352		---hugo symbol updated to---		PLS3-AS1	101927352
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-454C18.2	101928142		---hugo symbol updated to---		AADACL2-AS1	101928142
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-555F9.2	340515		---hugo symbol updated to---		LINC01501	340515
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP4-694A7.4	101927220		---hugo symbol updated to---		DEPDC1-AS1	101927220
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP11-567L7.6	101927728		---hugo symbol updated to---		LINC01476	101927728
+RP11-286E11.1	101929595		---hugo symbol updated to---		CYP2U1-AS1	101929595
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+80761		---entrez id replaced to---		105375355
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP5-1010E17.2	101927796		---hugo symbol updated to---		LINC01441	101927796
+RP1-93I3.1	101927352		---hugo symbol updated to---		PLS3-AS1	101927352
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-736K20.6	100506368		---hugo symbol updated to---		FZD4-DT	100506368
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+RP5-1070A16.1	729987		---hugo symbol updated to---		LINC01776	729987
+AL109763.2	101927797		---hugo symbol updated to---		MIR548XHG	101927797
+RP11-594N15.2	101927003		---hugo symbol updated to---		PKIA-AS1	101927003
+AC005022.1	101928773		---hugo symbol updated to---		LINC01449	101928773
+RP11-418J17.1	101929147		---hugo symbol updated to---		WARS2-AS1	101929147
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-142G7.2	100133123		---hugo symbol updated to---		LINC01203	100133123
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+RP11-509J21.1	101929302		---hugo symbol updated to---		RFX3-AS1	101929302
+AC079586.1	151121		---hugo symbol updated to---		LINC01854	151121
+54083		---entrez id replaced to---		81543
+RP1-93I3.1	101927352		---hugo symbol updated to---		PLS3-AS1	101927352
+RP11-730N24.1	340107		---hugo symbol updated to---		LINC02239	340107
+RP11-563J2.2	399715		---hugo symbol updated to---		LINC02649	399715
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AP000475.2	101927821		---hugo symbol updated to---		LINC01425	101927821
+RP11-379F4.4	100287290		---hugo symbol updated to---		LOC100287290	100287290
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+619343		---entrez id replaced to---		9228
+RP11-159D12.10	101927666		---hugo symbol updated to---		DYNLL2-DT	101927666
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC004053.1	101929468		---hugo symbol updated to---		CXXC4-AS1	101929468
+AC004053.1	101929468		---hugo symbol updated to---		CXXC4-AS1	101929468
+RP11-161H23.9	101927267		---hugo symbol updated to---		TROAP-AS1	101927267
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-92G12.3	101929224		---hugo symbol updated to---		DDX59-AS1	101929224
+619343		---entrez id replaced to---		9228
+RP11-166A12.1	101927379		---hugo symbol updated to---		LINC02201	101927379
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-87N24.2	101929428		---hugo symbol updated to---		PTPRD-AS2	101929428
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+AC005022.1	101928773		---hugo symbol updated to---		LINC01449	101928773
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+CTC-436P18.1	101928630		---hugo symbol updated to---		SMIM15-AS1	101928630
+RP11-13A1.1	728084		---hugo symbol updated to---		LINC02458	728084
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP4-694A7.4	101927220		---hugo symbol updated to---		DEPDC1-AS1	101927220
+RP5-898J17.1	101928241		---hugo symbol updated to---		LINC01787	101928241
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+AC090044.1	101927215		---hugo symbol updated to---		LINC01266	101927215
+RP11-482M8.1	101928737		---hugo symbol updated to---		ZCCHC14-DT	101928737
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-83C7.2	101928776		---hugo symbol updated to---		LINC01258	101928776
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-314D7.2	101928137		---hugo symbol updated to---		LINC02444	101928137
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+RP11-386B13.3	101928877		---hugo symbol updated to---		LINC02436	101928877
+642326		---entrez id replaced to---		102724928
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-64I17.1	101928536		---hugo symbol updated to---		LINC01493	101928536
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-13A1.1	728084		---hugo symbol updated to---		LINC02458	728084
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AL109763.2	101927797		---hugo symbol updated to---		MIR548XHG	101927797
+RP11-480C22.1	101929497		---hugo symbol updated to---		LINC02712	101929497
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-523L20.2	101927132		---hugo symbol updated to---		LINC02133	101927132
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC027269.2	101928795		---hugo symbol updated to---		LINC01448	101928795
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-198M11.2	101928442		---hugo symbol updated to---		LINC01491	101928442
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+RP11-809M12.1	101928781		---hugo symbol updated to---		TMEM26-AS1	101928781
+RP11-267C16.1	100287225		---hugo symbol updated to---		LINC01630	100287225
+RP11-93I21.3	101927087		---hugo symbol updated to---		LINC02516	101927087
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-563J2.2	399715		---hugo symbol updated to---		LINC02649	399715
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+RP11-454C18.2	101928142		---hugo symbol updated to---		AADACL2-AS1	101928142
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+117153		---entrez id replaced to---		4253
+100287922		---entrez id replaced to---		101926917
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+AC095067.1	101929086		---hugo symbol updated to---		LINC01447	101929086
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-64I17.1	101928536		---hugo symbol updated to---		LINC01493	101928536
+RP11-318I4.1	101927109		---hugo symbol updated to---		LINC02379	101927109
+80761		---entrez id replaced to---		105375355
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-508P1.2	101928340		---hugo symbol updated to---		LINC01489	101928340
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+104355151		---entrez id replaced to---		105370731
+RP11-415C15.2	101929199		---hugo symbol updated to---		LINC02261	101929199
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-277P12.20	101928100		---hugo symbol updated to---		KLRK1-AS1	101928100
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-389K14.3	101927873		---hugo symbol updated to---		LINC01508	101927873
+RP5-887A10.1	101927412		---hugo symbol updated to---		LINC01781	101927412
+642326		---entrez id replaced to---		102724928
+AC007403.2	101060019		---hugo symbol updated to---		LINC01799	101060019
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP11-7F17.5	283575		---hugo symbol updated to---		LINC02288	283575
+SNORD5	389690		---hugo symbol updated to---		MROH5	389690
+RP11-280O1.2	400794		---hugo symbol updated to---		LRRC52-AS1	400794
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-513G11.3	101929337		---hugo symbol updated to---		LINC02037	101929337
+CTC-457E21.3	440518		---hugo symbol updated to---		GOLGA2P9	440518
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AC018799.1	101927406		---hugo symbol updated to---		LINC01821	101927406
+RP11-415C15.2	101929199		---hugo symbol updated to---		LINC02261	101929199
+AC007403.2	101060019		---hugo symbol updated to---		LINC01799	101060019
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-434C1.1	338817		---hugo symbol updated to---		LINC01252	338817
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-113E21.1	101929684		---hugo symbol updated to---		LINC01520	101929684
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-523L20.2	101927132		---hugo symbol updated to---		LINC02133	101927132
+642326		---entrez id replaced to---		102724928
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-308N19.4	100996590		---hugo symbol updated to---		LINC01505	100996590
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+RP11-483E7.1	101928022		---hugo symbol updated to---		LINC01214	101928022
+GS1-204I12.1	101929093		---hugo symbol updated to---		LINC01350	101929093
+RP11-41O4.2	101060542		---hugo symbol updated to---		LINC01910	101060542
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-413P11.1	101928270		---hugo symbol updated to---		LINC01708	101928270
+RP11-329B9.1	101928992		---hugo symbol updated to---		LINC02069	101928992
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-809M12.1	101928781		---hugo symbol updated to---		TMEM26-AS1	101928781
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP3-399L15.3	101927768		---hugo symbol updated to---		HDAC2-AS2	101927768
+RP11-142G7.2	100133123		---hugo symbol updated to---		LINC01203	100133123
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+100652885		---entrez id replaced to---		105369219
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-159D12.10	101927666		---hugo symbol updated to---		DYNLL2-DT	101927666
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-523L20.2	101927132		---hugo symbol updated to---		LINC02133	101927132
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP1-93I3.1	101927352		---hugo symbol updated to---		PLS3-AS1	101927352
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+100874368		---entrez id replaced to---		107984540
+619343		---entrez id replaced to---		9228
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+AC012075.2	100507201		---hugo symbol updated to---		LINC01815	100507201
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+338809		---entrez id replaced to---		440107
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+AC007880.1	101927438		---hugo symbol updated to---		LINC01800	101927438
+RP11-946L20.4	101927487		---hugo symbol updated to---		LINC01609	101927487
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-88I21.2	101927123		---hugo symbol updated to---		LINC02016	101927123
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-234B24.2	101929549		---hugo symbol updated to---		GAU1	101929549
+RP11-534N16.1	101927718		---hugo symbol updated to---		DSG1-AS1	101927718
+619343		---entrez id replaced to---		9228
+RP11-730N24.1	340107		---hugo symbol updated to---		LINC02239	340107
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-576E20.1	101929123		---hugo symbol updated to---		LINC02493	101929123
+AC090044.1	101927215		---hugo symbol updated to---		LINC01266	101927215
+RP11-198M11.2	101928442		---hugo symbol updated to---		LINC01491	101928442
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP1-93I3.1	101927352		---hugo symbol updated to---		PLS3-AS1	101927352
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+RP11-24I21.1	101927849		---hugo symbol updated to---		LINC02355	101927849
+AC007403.2	101060019		---hugo symbol updated to---		LINC01799	101060019
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP3-399L15.3	101927768		---hugo symbol updated to---		HDAC2-AS2	101927768
+RP11-152L7.2	101929631		---hugo symbol updated to---		LINC01653	101929631
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+RP11-319E12.1	101928851		---hugo symbol updated to---		LINC02380	101928851
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AC007879.2	101927865		---hugo symbol updated to---		MYOSLID-AS1	101927865
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-104D21.3	101926971		---hugo symbol updated to---		LINC01284	101926971
+RP11-340B18.1	101928151		---hugo symbol updated to---		LINC01179	101928151
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP4-655J12.4	101929023		---hugo symbol updated to---		LINC01762	101929023
+RP3-399L15.3	101927768		---hugo symbol updated to---		HDAC2-AS2	101927768
+RP11-434C1.1	338817		---hugo symbol updated to---		LINC01252	338817
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-198M11.2	101928442		---hugo symbol updated to---		LINC01491	101928442
+AC004053.1	101929468		---hugo symbol updated to---		CXXC4-AS1	101929468
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP5-1120P11.1	101929705		---hugo symbol updated to---		SCIRT	101929705
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+642326		---entrez id replaced to---		102724928
+RP11-300J18.1	101928791		---hugo symbol updated to---		LINC01147	101928791
+RP11-76N22.2	101927891		---hugo symbol updated to---		PKN2-AS1	101927891
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP3-437I16.1	101928460		---hugo symbol updated to---		LINC01756	101928460
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-143A12.3	101929284		---hugo symbol updated to---		LINC02199	101929284
+RP11-946L20.4	101927487		---hugo symbol updated to---		LINC01609	101927487
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+619343		---entrez id replaced to---		9228
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-1072C15.2	101927017		---hugo symbol updated to---		LINC01180	101927017
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+104355151		---entrez id replaced to---		105370731
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-363D24.1	101928720		---hugo symbol updated to---		LINC01509	101928720
+AC017060.1	101927630		---hugo symbol updated to---		LINC02889	101927630
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP11-575F12.1	101927592		---hugo symbol updated to---		LINC02405	101927592
+RP11-76N22.2	101927891		---hugo symbol updated to---		PKN2-AS1	101927891
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+AC007403.2	101060019		---hugo symbol updated to---		LINC01799	101060019
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+RP4-694A7.4	101927220		---hugo symbol updated to---		DEPDC1-AS1	101927220
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-346I3.4	100505676		---hugo symbol updated to---		RRS1-AS1	100505676
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+80761		---entrez id replaced to---		105375355
+RP11-161H23.9	101927267		---hugo symbol updated to---		TROAP-AS1	101927267
+AC007392.3	100507073		---hugo symbol updated to---		LINC01798	100507073
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP4-760C5.5	101926955		---hugo symbol updated to---		LINC01733	101926955
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+HLA-AS1	100873924		---hugo symbol updated to---		HLX-AS1	100873924
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+HLA-AS1	100873924		---hugo symbol updated to---		HLX-AS1	100873924
+RP11-142G7.2	100133123		---hugo symbol updated to---		LINC01203	100133123
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-576I22.2	101928650		---hugo symbol updated to---		GORAB-AS1	101928650
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-418J17.1	101929147		---hugo symbol updated to---		WARS2-AS1	101929147
+CTD-3064M3.7	389690		---hugo symbol updated to---		MROH5	389690
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-329B9.1	101928992		---hugo symbol updated to---		LINC02069	101928992
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP11-2A4.3	100507274		---hugo symbol updated to---		LINC01210	100507274
+RP11-700N1.1	100996694		---hugo symbol updated to---		LINC02502	100996694
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-945C19.1	645355		---hugo symbol updated to---		MIR3976HG	645355
+RP5-977B1.7	101926987		---hugo symbol updated to---		DLGAP4-AS1	101926987
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-415C15.2	101929199		---hugo symbol updated to---		LINC02261	101929199
+RP11-1018N14.1	101927274		---hugo symbol updated to---		LINC02071	101927274
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+RP11-567L7.6	101927728		---hugo symbol updated to---		LINC01476	101927728
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-87N24.2	101929428		---hugo symbol updated to---		PTPRD-AS2	101929428
+RP11-161H23.9	101927267		---hugo symbol updated to---		TROAP-AS1	101927267
+AC018799.1	101927406		---hugo symbol updated to---		LINC01821	101927406
+100652885		---entrez id replaced to---		105369219
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+RP11-451G4.2	100507537		---hugo symbol updated to---		STRIT1	100507537
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-575F12.1	101927592		---hugo symbol updated to---		LINC02405	101927592
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+AC068831.10	101926911		---hugo symbol updated to---		VPS33B-DT	101926911
+RP11-565A3.2	100506272		---hugo symbol updated to---		LINC02492	100506272
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-567L7.6	101927728		---hugo symbol updated to---		LINC01476	101927728
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-97O12.2	101929743		---hugo symbol updated to---		LINC01586	101929743
+AC007880.1	101927438		---hugo symbol updated to---		LINC01800	101927438
+RP11-300J18.1	101928791		---hugo symbol updated to---		LINC01147	101928791
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+AC007551.3	101928545		---hugo symbol updated to---		SEPTIN7-DT	101928545
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-730N24.1	340107		---hugo symbol updated to---		LINC02239	340107
+RP5-1120P11.1	101929705		---hugo symbol updated to---		SCIRT	101929705
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-438N16.1	100506465		---hugo symbol updated to---		LINC01234	100506465
+RP5-1069C8.2	101929486		---hugo symbol updated to---		LINC01722	101929486
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-527H14.2	400644		---hugo symbol updated to---		LINC01443	400644
+RP11-509J21.1	101929302		---hugo symbol updated to---		RFX3-AS1	101929302
+RP1-167G20.1	101929505		---hugo symbol updated to---		LINC02150	101929505
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-534N16.1	101927718		---hugo symbol updated to---		DSG1-AS1	101927718
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+AC006196.1	101927431		---hugo symbol updated to---		LINC01790	101927431
+AP000472.2	101927843		---hugo symbol updated to---		LINC01687	101927843
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+RP11-286E11.1	101929595		---hugo symbol updated to---		CYP2U1-AS1	101929595
+AC007131.1	101927285		---hugo symbol updated to---		LINC01793	101927285
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-523L20.2	101927132		---hugo symbol updated to---		LINC02133	101927132
+RP11-1018N14.1	101927274		---hugo symbol updated to---		LINC02071	101927274
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-506B6.6	101927640		---hugo symbol updated to---		LAMA4-AS1	101927640
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+RP11-695J4.2	101928290		---hugo symbol updated to---		PLBD1-AS1	101928290
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-328K4.1	101929448		---hugo symbol updated to---		LINC02428	101929448
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-576I22.2	101928650		---hugo symbol updated to---		GORAB-AS1	101928650
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+AC005592.2	101926941		---hugo symbol updated to---		SPRY4-AS1	101926941
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-946L20.4	101927487		---hugo symbol updated to---		LINC01609	101927487
+RP11-76N22.2	101927891		---hugo symbol updated to---		PKN2-AS1	101927891
+117153		---entrez id replaced to---		4253
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+619343		---entrez id replaced to---		9228
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-318M2.2	100499183		---hugo symbol updated to---		BAALC-AS1	100499183
+RP3-323P13.2	100507308		---hugo symbol updated to---		TARID	100507308
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-630D6.5	101928809		---hugo symbol updated to---		SDAD1-AS1	101928809
+AC006115.3	101929059		---hugo symbol updated to---		ZIM2-AS1	101929059
+100652885		---entrez id replaced to---		105369219
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP11-454C18.2	101928142		---hugo symbol updated to---		AADACL2-AS1	101928142
+AL109763.2	101927797		---hugo symbol updated to---		MIR548XHG	101927797
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+CTB-113P19.1	101927096		---hugo symbol updated to---		CLMAT3	101927096
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-730N24.1	340107		---hugo symbol updated to---		LINC02239	340107
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+RP11-430C1.1	101927580		---hugo symbol updated to---		LINC02141	101927580
+642326		---entrez id replaced to---		102724928
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+642326		---entrez id replaced to---		102724928
+RP11-527H14.2	400644		---hugo symbol updated to---		LINC01443	400644
+RP11-341A22.2	101928496		---hugo symbol updated to---		LINC01492	101928496
+RP11-416O18.1	100996490		---hugo symbol updated to---		LINC01206	100996490
+RP11-82L2.1	101928550		---hugo symbol updated to---		SMC2-DT	101928550
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+100652885		---entrez id replaced to---		105369219
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-386B13.3	101928877		---hugo symbol updated to---		LINC02436	101928877
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-84O12.4	100128787		---hugo symbol updated to---		LINC01349	100128787
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-234B24.2	101929549		---hugo symbol updated to---		GAU1	101929549
+RP1-60O19.1	100422737		---hugo symbol updated to---		LINC02532	100422737
+80761		---entrez id replaced to---		105375355
+RP11-626P14.1	101927062		---hugo symbol updated to---		LINC02294	101927062
+RP11-118B18.1	101928104		---hugo symbol updated to---		LINC01482	101928104
+RP11-88I21.2	101927123		---hugo symbol updated to---		LINC02016	101927123
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-702L6.4	401082		---hugo symbol updated to---		LINC01205	401082
+RP11-563J2.2	399715		---hugo symbol updated to---		LINC02649	399715
+RP11-286B14.1	100996635		---hugo symbol updated to---		LINC02607	100996635
+RP11-567L7.6	101927728		---hugo symbol updated to---		LINC01476	101927728
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+100874328		---entrez id replaced to---		105374251
+619343		---entrez id replaced to---		9228
+RP5-988G17.1	101929312		---hugo symbol updated to---		LINC01706	101929312
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-63P12.6	100507540		---hugo symbol updated to---		LINC01504	100507540
+RP11-389K14.3	101927873		---hugo symbol updated to---		LINC01508	101927873
+AC090044.1	101927215		---hugo symbol updated to---		LINC01266	101927215
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-279F6.1	145837		---hugo symbol updated to---		DRAIC	145837
+RP11-379F4.4	100287290		---hugo symbol updated to---		LOC100287290	100287290
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+RP11-245M24.1	101927528		---hugo symbol updated to---		LINC01204	101927528
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+GS1-122H1.2	400799		---hugo symbol updated to---		LINC01344	400799
+RP11-1079K10.5	101927207		---hugo symbol updated to---		LINC02075	101927207
+RP11-416O18.1	100996490		---hugo symbol updated to---		LINC01206	100996490
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+619343		---entrez id replaced to---		9228
+RP11-695J4.2	101928290		---hugo symbol updated to---		PLBD1-AS1	101928290
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+AC011343.1	101927766		---hugo symbol updated to---		LINC01847	101927766
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+80761		---entrez id replaced to---		105375355
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP11-113E21.1	101929684		---hugo symbol updated to---		LINC01520	101929684
+RP11-143A12.3	101929284		---hugo symbol updated to---		LINC02199	101929284
+RP11-454P21.1	646241		---hugo symbol updated to---		LINC02223	646241
+RP3-399L15.3	101927768		---hugo symbol updated to---		HDAC2-AS2	101927768
+RP11-503N18.3	402160		---hugo symbol updated to---		CFAP99	402160
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+338809		---entrez id replaced to---		440107
+RP11-463J7.2	440704		---hugo symbol updated to---		LINC01720	440704
+RP11-523L20.2	101927132		---hugo symbol updated to---		LINC02133	101927132
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+RP11-329B9.1	101928992		---hugo symbol updated to---		LINC02069	101928992
+100874368		---entrez id replaced to---		107984540
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+CTB-12O2.1	101927115		---hugo symbol updated to---		LINC01933	101927115
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+AP000695.4	23562		---hugo symbol updated to---		CLDN14	23562
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+AC096559.1	100506457		---hugo symbol updated to---		MIR3681HG	100506457
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-509J21.1	101929302		---hugo symbol updated to---		RFX3-AS1	101929302
+AC090044.1	101927215		---hugo symbol updated to---		LINC01266	101927215
+AC019118.2	101927554		---hugo symbol updated to---		LINC01250	101927554
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP11-567L7.6	101927728		---hugo symbol updated to---		LINC01476	101927728
+RP11-415C15.2	101929199		---hugo symbol updated to---		LINC02261	101929199
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+RP11-65M17.3	101928823		---hugo symbol updated to---		LINC02763	101928823
+80761		---entrez id replaced to---		105375355
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-24I21.1	101927849		---hugo symbol updated to---		LINC02355	101927849
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+AC009120.4	101928035		---hugo symbol updated to---		PSMD7-DT	101928035
+AC007392.3	100507073		---hugo symbol updated to---		LINC01798	100507073
+RP11-372E1.6	101927832		---hugo symbol updated to---		PAQR9-AS1	101927832
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP4-723E3.1	101927700		---hugo symbol updated to---		LINC01524	101927700
+AC090044.1	101927215		---hugo symbol updated to---		LINC01266	101927215
+RP5-898J17.1	101928241		---hugo symbol updated to---		LINC01787	101928241
+RP11-81N13.1	101927111		---hugo symbol updated to---		SUCLG2-AS1	101927111
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-40F8.2	100873065		---hugo symbol updated to---		PTCHD1-AS	100873065
+RP1-272J12.1	101926957		---hugo symbol updated to---		LINC02885	101926957
+80761		---entrez id replaced to---		105375355
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-626P14.1	101927062		---hugo symbol updated to---		LINC02294	101927062
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-143A12.3	101929284		---hugo symbol updated to---		LINC02199	101929284
+RP11-341G5.1	101929071		---hugo symbol updated to---		LINC01182	101929071
+RP11-861A13.4	101929623		---hugo symbol updated to---		LINC01215	101929623
+100874049		---entrez id replaced to---		729041
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+AC003051.1	101928122		---hugo symbol updated to---		LINC01483	101928122
+RP11-15K3.1	101926942		---hugo symbol updated to---		LINC02653	101926942
+RP11-406O16.1	101928280		---hugo symbol updated to---		LINC02549	101928280
+AC104820.2	101927156		---hugo symbol updated to---		LINC01934	101927156
+RP11-111I12.1	101929406		---hugo symbol updated to---		LINC01648	101929406
+AC091969.1	101927134		---hugo symbol updated to---		LINC01470	101927134
+RP11-179A16.1	101928989		---hugo symbol updated to---		MIR4300HG	101928989
+
+
