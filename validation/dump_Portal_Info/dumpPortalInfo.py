@@ -11,7 +11,7 @@ def main():
     outfile_dir = args.outfile_dir
 
     API_LIST = ['cancer-types','genes','gene-panels','genesets']
-    server_url = "http://cbioportal.org"
+    server_url = "https://cbioportal.org"
 
     for api_name in API_LIST:
         if outfile_dir:
@@ -33,7 +33,9 @@ def main():
             gene_panels = []
             for data_item in response.json():
                 gene_panel_id = data_item['genePanelId']
-                gene_panel_url = service_url.strip("?pageSize=9999999") + '/' + gene_panel_id + "?pageSize=9999999"
+                print(gene_panel_id)
+                gene_panel_url = service_url.strip("?pageSize=9999999") + '/' + gene_panel_id
+                print(gene_panel_url)
                 response = requests.get(gene_panel_url).json()
                 panel = json.dumps(response)
                 gene_panels.append(json.loads(panel))
