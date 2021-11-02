@@ -1,7 +1,8 @@
 # Introduction
-Contains tools used by cBioPortal data curators when preparing data for upload into the datahub repos.
+Data curation scripts for [cBioPortal](cbioportal.org). 
+Curated data sets can be found in [Datahub](https://github.com/cBioPortal/datahub).
 
-# directory layout
+# Directory layout
 ```
 .
 ├── archive                         # legacy tools 
