@@ -11,3 +11,7 @@ Add following lines to `~/.bash_profile` and `~/.profile`, then restart any cons
 export $DATAHUB_HOME=[absolut-path-to-datahub-repo]
 export $DATAHUB_TOOL_HOME=[absolut-path-to-datahub-tool-repo]
 ```
+
+### Notes
+
+For studies with `CVR TMB` (subsetted from IMPACT) remove `CVR TMB`
