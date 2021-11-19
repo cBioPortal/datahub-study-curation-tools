@@ -8,6 +8,6 @@ Integrate all steps needed before releasing a study
 Set global environment variables
 Add following lines to `~/.bash_profile` and `~/.profile`, then restart any console sessions.
 ```
-export $DATAHUB_HOME=[absolut-path-to-datahub-repo]]`
-export $DATAHUB_TOOL_HOME=[absolut-path-to-datahub-tool-repo]]`
+export $DATAHUB_HOME=[absolut-path-to-datahub-repo]]
+export $DATAHUB_TOOL_HOME=[absolut-path-to-datahub-tool-repo]]
 ```
