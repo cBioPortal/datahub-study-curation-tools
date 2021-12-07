@@ -61,13 +61,13 @@ SEQ_CASE_LIST_FILE_NAME = "cases_sequenced.txt"
 SEQ_CASE_LIST_FIELD_NAME = "case_list_ids:"
 
 # names - MAF file
-MAF_FILE_NAME = "data_mutations_extended.txt"
+MAF_FILE_NAME = "data_mutations.txt"
 MAF_VC_COL_ID = "Variant_Classification"
 MAF_ID_COL_ID = "Tumor_Sample_Barcode"
 MAF_SOMATIC_COL_ID = "Mutation_Status"
 
 # names  - matrix file
-MATRIX_FILE_NAME = "data_gene_matrix.txt"
+MATRIX_FILE_NAME = "data_gene_panel_matrix.txt"
 MATRIX_SAMPLE_ID_COL = "SAMPLE_ID"
 MATRIX_MUT_COL = "mutations"
 
