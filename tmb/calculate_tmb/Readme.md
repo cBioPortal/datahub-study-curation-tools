@@ -20,6 +20,7 @@ Step 2: Determine the size `L` of genome coding area of DNA in megabase(Mb)
 - For WES/WGS: L = 30
 - For targeted sequenced: refer to the `CDS` field in related gene panel files (need to be divided by 1M) 
 ![Screen Shot 2020-10-05 at 6 55 06 PM](https://user-images.githubusercontent.com/5973438/95140207-4ca13e80-073c-11eb-8350-01f6a9ccba79.png)
+** `CDS` field is calculated by [this script](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/tmb/calculate_number_of_profiled_coding_base_pairs)
 
 Step 3: Calculate TMB for each sequenced sample
 ```
