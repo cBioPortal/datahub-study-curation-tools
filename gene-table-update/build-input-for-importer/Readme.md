@@ -1,5 +1,3 @@
-<span style="color:red">**ALWAYS update** the supp files first before running the scripts.</span> Instructions [HERE](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/Readme.md#supp-files)
-
 ## Introduction
 Scripts to build an input file, to be used by importer to build/update seedDB gene tables.  
 
