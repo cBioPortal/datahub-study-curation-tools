@@ -37,6 +37,10 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
                         (Optional)Name of the output file
 ```
 
+#### Step 3 - diff HGNC and add updated symbols to migration script
+Run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff-monthly).
+And then add the symbols updated to the input list for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)
+
 ## Output
 - Gene data file: the output file would be deposited under the same directory and named as `gene-import-input-_date_.txt` if not specified otherwise
 - Log file: a log file would be generated under the same directory and named `gene-import-input-_date_.log` 
@@ -88,15 +92,14 @@ Genes to supplement to HGNC download as main genes.
 Genes to supplemen to HGNC download as alias genes.
 
 #### Supplemental Entrez ID `entrez-id-supp.txt`
-This file lists all the genes (`HUGO_GENE_SYMBOL`) in HGNC download file, that does not have an entrez_ID associated originally
+This file lists the genes that does not have an entrez_ID associated originally in HGNC.
 For each symbol, it is either:
-- assigned an entrez ID
-- marched as `R` - meaning this entry will be exclude from the new/updated gene tables
-in the 2nd column `STATUS`
-** gene entries with empty chromosome value will not be imported to the DB. 
+- assigned an entrez ID manually
+- marked as `R` - meaning this entry will be exclude from our next gene table release
 
 #### Supplemental Location `location-supp.txt`
 Manually curated. `cytoband` and/or `chromosome` info extracted from archived NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
+** gene entries with empty chromosome value will not be imported to the DB. 
 
 ### Steps for updating supp files
 #### Step 1 - Generate a list to include ALL genes
@@ -125,14 +128,15 @@ This would cause ERRORs and script to exit.
 ```
 Error: Duplicate entrez ID detected ...
 ``` 
-To resolve ERRORs, remove this entry from `main-supp.txt`, or make it as an alias.
+To resolve ERRORs, remove this entry from `main-supp.txt`, or make the symbol as an alias to this entrez_ID.
+If the hugo symbol got updated in the newly released HGNC, add the older symbol <> newer symbol combo to the data-file-migration input list [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)
 
 #### Case #2
 With HGNC update, some entrez IDs may become unavailable, and cause WARNINGs.
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
-To clear WARNINGs, remove this entry from `alias-supp.txt`.
+To clear WARNINGs, remove this entry from the corresponding supplemental file as the log indicates.
 
 #### Case #3
 When running the script with the updated HGNC download, some new entries would come up and without an entrez ID assigned.  
@@ -148,11 +152,3 @@ With HGNC update, some entries may get new location information in HGNC, and cau
 WARNING: ... entry already have location info. (Redundancy and possible conflicts)
 ```
 To clear WARNINGs, remove this entry from `location-supp.txt`
-
-#### Case #5
-With HGNC update, some entrez ID may become unavailable, and cause WARNINGs.
-```
-WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
-```
-To clear WARNINGs, remove this entry from `location-supp.txt`
-
