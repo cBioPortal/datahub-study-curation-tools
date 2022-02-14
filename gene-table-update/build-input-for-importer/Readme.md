@@ -39,7 +39,8 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
 
 #### Step 3 - diff HGNC and add updated symbols to migration script
 Run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff-monthly).
-And then add the symbols updated to the input list for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)
+-- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists, or if the entrez ID get updated
+-- for exisitng genes updated, add the updates to the input list for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)
 
 ## Output
 - Gene data file: the output file would be deposited under the same directory and named as `gene-import-input-_date_.txt` if not specified otherwise
@@ -100,25 +101,6 @@ For each symbol, it is either:
 #### Supplemental Location `location-supp.txt`
 Manually curated. `cytoband` and/or `chromosome` info extracted from archived NCBI and/or portal DB, to supplement HGNC download and supplemental gene lists. 
 ** gene entries with empty chromosome value will not be imported to the DB. 
-
-### Steps for updating supp files
-#### Step 1 - Generate a list to include ALL genes
-- used by at least one profile in any public study
-- include field `hugo_symbol`, `entrez_id`
-- exclude `miRNA`, `phosphoprotein` genes
-
-#### Step 2 - Compare list with HGNC
-- compare lastest HGNC download with current list
-- combine `hugo_symbol` & `entrez_id` as combo key
-- manually curate for each results
--- hugo_symbol match, entrez_id match
--- hugo_symbol match, entrez_id unmatch
--- hugo_symbol unmatch, entrez_id match
--- hugo_symbol unmatch, entrez_id unmatch
-
-#### Step 3 - Adjust supplemental lists
--- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists
--- for exisitng genes updated, add gene to list under `data-file-migration`  
 
 ## Troubleshooting
 
