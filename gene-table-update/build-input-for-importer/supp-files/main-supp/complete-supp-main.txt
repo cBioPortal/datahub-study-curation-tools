@@ -1,4 +1,13 @@
 entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
+102724594	U2AF1L5	21	21p12	protein-coding	
+102724652	CRYAA2	21	21p12	protein-coding	
+102724023	GATD3B	21	21p12	protein-coding	
+102723475	KCNE1B	21	21p11.2	protein-coding	
+102724560	CBSL	21	21p12	protein-coding	
+102724428	SIK1B	21	21p12	protein-coding	
+102723451	FAM243B	21	21p11.2	protein-coding	
+107983987	SMIM34B	21	21p11.2	protein-coding	
+102723553	SMIM11B	21	21p11.2	protein-coding	
 100132071	LOC100132071	-	-	protein-coding	
 100130857	LOC100130857	-	-	protein-coding	
 100130175	LOC100130175	-	-	protein-coding	
