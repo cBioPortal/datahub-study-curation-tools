@@ -46,8 +46,8 @@ def check_path(source_path):
 	if os.path.exists(source_path):
 		if os.path.isdir(source_path):
 			for data_file in os.listdir(source_path):
-				if not data_file.startswith('.') and os.path.isfile(os.path.join(source_path,data_file)) and not data_file.endswith('.seg') and not data_file in exluded_files_list: files_list.append(os.path.join(source_path,data_file))
-		elif os.path.isfile(source_path) and not source_path.endswith('.seg') and not os.path.basename(source_path) in exluded_files_list:
+				if not data_file.startswith('.') and not data_file.endswith('.gz') and os.path.isfile(os.path.join(source_path,data_file)) and not data_file.endswith('.seg') and not data_file in exluded_files_list: files_list.append(os.path.join(source_path,data_file))
+		elif os.path.isfile(source_path) and not data_file.endswith('.gz') and not source_path.endswith('.seg') and not os.path.basename(source_path) in exluded_files_list:
 			files_list.append(source_path)
 		return files_list
 	else:
@@ -118,7 +118,7 @@ def update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dic
 							updated_data += '\t'.join(data)+'\n'
 						else:
 							log += hugo+'\t'+entrez+'\t\t---ambiguous hugo symbol not updated in file---\t\t'+', '.join(alias_table_entrez_dict[entrez])+'\t'+entrez+'\n'
-							updated_data += line
+							updated_data += '\t'.join(data)+'\n'
 							
 					#If entrez id is in both main and alias tables and the hugo symbol is not in either main or alias tables, update the hugo symbol to main symbol.
 					elif entrez in main_table_entrez_dict and entrez in alias_table_entrez_dict:
@@ -128,26 +128,22 @@ def update_hugo_symbols(entrez_index, gene_index, data_file, outdated_entrez_dic
 							log += hugo+'\t'+entrez+'\t\t---hugo symbol updated to---\t\t'+main_table_entrez_dict[entrez]+'\t'+entrez+'\n'
 							updated_data += '\t'.join(data)+'\n'
 						else:
-							updated_data += line
+							updated_data += '\t'.join(data)+'\n'
 
 					#If entrez in main or alias and the hugo in main or alias: DO nothing
 					else:
-						updated_data += line
+						updated_data += '\t'.join(data)+'\n'
 						
 				#If entrez id is invalid and if hugo symbol is NA, update the hugo symbol to empty cell.
 				# If not the record gets mapped to wrong gene on import. NA is alias of gene 7504.
 				else:
-					if hugo == "NA":
-						data[gene_index] = ""
-						log += hugo+'\t'+entrez+'\t\t---hugo symbol updated to empty---\t\t'+""+'\t'+entrez+'\n'
-						updated_data += '\t'.join(data)+'\n'
-					elif hugo in outdated_hugo_dict:
+					if hugo in outdated_hugo_dict:
 						data[gene_index] = outdated_hugo_dict[hugo]
 						if fusion_file == 1: data[fusion_index] = data[fusion_index].replace(hugo, outdated_hugo_dict[hugo])
 						log += hugo+'\t'+entrez+'\t\t---hugo symbol updated to---\t\t'+outdated_hugo_dict[hugo]+'\t'+entrez+'\n'
 						updated_data += '\t'.join(data)+'\n'
 					else:
-						updated_data += line
+						updated_data += '\t'.join(data)+'\n'
 		
 		return updated_data,log
 		
@@ -206,7 +202,7 @@ def main(parsed_args):
 	for data_file in files_list: print(data_file)
 
 	#---Create the gene, gene-alias, outdated entrez dictionaries--->
-	main_table_entrez_dict,alias_table_entrez_dict,outdated_entrez_dict,outdated_hugo_dict = fetch_gene_info()
+	#main_table_entrez_dict,alias_table_entrez_dict,outdated_entrez_dict,outdated_hugo_dict = fetch_gene_info()
 	
 	data_log = ""
 	for data_file in files_list:
