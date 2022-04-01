@@ -4,7 +4,7 @@ This tool is intended to convert the data in the fusion file format to the struc
 
 The source fusion file must be in cBioPortal's standard [fusion file format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#fusion-data) with at least a minimum of `Hugo_Symbol`, `Entrez_Gene_Id`, `Tumor_Sample_Barcode` and `Fusion` fields.
 
-The tool outputs the fusion data in the cBioPortals [SV file format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#structural-variant-data).
+The tool outputs the fusion data in the cBioPortals [SV file format](https://docs.google.com/document/d/1kfih0P9gNrFoY_FfWl-x3cGOL98u7gh3T6I5ZU_6q14/edit#heading=h.txccmnmf37f6).
 
 #### Running the tool
 
