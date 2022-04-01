@@ -1,6 +1,6 @@
 ### Usage
 
-This tool is intended to convert the Fusion files to the Structural Variant data format.
+This tool is intended to convert the data in the fusion file format to the structural variant format.
 
 The source fusion file must be in cBioPortal's standard [fusion file format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#fusion-data) with at least a minimum of `Hugo_Symbol`, `Entrez_Gene_Id`, `Tumor_Sample_Barcode` and `Fusion` fields.
 
