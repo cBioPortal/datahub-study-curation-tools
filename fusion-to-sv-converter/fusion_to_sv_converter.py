@@ -5,7 +5,7 @@
 # structural variant format.
 #
 # To get usage:
-#   python fusion-to-sv-converter.py -h
+#   python fusion_to_sv_converter.py -h
 # ------------------------------------------------------------------------------
 
 import sys
