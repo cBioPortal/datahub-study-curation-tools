@@ -16,7 +16,7 @@ python3 fusion_to_sv_converter.py [-h] --fusion_file <path/to/data_fusions.txt> 
 
 #### Command Line
 ```
-python fusion_to_sv_converter.py --help
+python3 fusion_to_sv_converter.py --help
 ```
 
 ```
