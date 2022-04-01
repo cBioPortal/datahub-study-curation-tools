@@ -1,3 +1,13 @@
+#! /usr/bin/env python
+
+# ------------------------------------------------------------------------------
+# Script which converts the file in cBioPortal fusion data format to the 
+# structural variant format.
+#
+# To get usage:
+#   python fusion-to-sv-converter.py -h
+# ------------------------------------------------------------------------------
+
 import sys
 import os
 import argparse
