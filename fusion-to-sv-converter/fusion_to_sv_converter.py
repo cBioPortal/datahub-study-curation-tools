@@ -86,7 +86,7 @@ def main(parsed_args):
 	#Check the input file format - the file should have at least the following fields - Tumor_Sample_Barcode, Fusion, Hugo_Symbol, Entrez_Gene_Id
 	file_format_check(data.fieldnames, parsed_args.fusion_file)
 	
-	#Update fieldnames by fusion source type. Connection_type is stored in frame field for cmo-argos. 
+	#Update fieldnames to map to SV format.
 	data.fieldnames = ['Event_Info' if item == 'Fusion' else item for item in data.fieldnames]
 	data.fieldnames = ['Site2_Effect_On_Frame' if item == 'Frame' else item for item in data.fieldnames]
 
