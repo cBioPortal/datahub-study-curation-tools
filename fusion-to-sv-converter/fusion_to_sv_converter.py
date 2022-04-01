@@ -39,13 +39,10 @@ def map_fusion_to_sv(fusion_dict):
 			
 		#Sort by the index values
 		fusion_dict[id].sort(key= lambda x: (x['index'] is not None, x['index']), reverse=False)
-		print(fusion_dict[id])
-		print('\n')
 		
 		#Group by index values. (Picks the last occurence if duplicated)
 		dict1 = {}
 		for key, value in groupby(fusion_dict[id], key = itemgetter('index')):
-			print(key, dict(j for i in value for j in i.items()))
 			if key != None:
 				new_dict = dict(j for i in value for j in i.items())
 				if len(dict1) == 0:
