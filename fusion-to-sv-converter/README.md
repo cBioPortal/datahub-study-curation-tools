@@ -30,5 +30,5 @@ optional arguments:
                         Path to save the structural variant file
 ```
 
-####NOTE:
+#### NOTE:
 - In case of duplicate entries (records that differ by values other than in the `Hugo_Symbol`, `Entrez_Gene_Id`, `Tumor_Sample_Barcode` and `Fusion` fields), the script picks the last occuring value.
