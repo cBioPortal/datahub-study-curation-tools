@@ -7,7 +7,7 @@ import optparse
 ERROR_FILE = sys.stderr
 OUTPUT_FILE = sys.stdout
 
-CLINICAL_ATTRIBUTE_METADATA_FILENAME = '/Users/suny1/scripts/curation/header/clinical_attributes_metadata.txt'
+CLINICAL_ATTRIBUTE_METADATA_FILENAME = 'clinical_attributes_metadata.txt'
 CLINICAL_ATTRIBUTE_METADATA = {}
 PATIENT_CLINICAL_ATTRIBUTES = {}
 
