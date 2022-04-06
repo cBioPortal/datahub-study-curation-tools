@@ -7,7 +7,7 @@ This tool is intended to subset and merge the studies. The files in the source d
 The script takes in either a list of sample IDs to subset on or a list of sample IDs to exclude from the source directories. The script can be run as,
 
 ```
-python2.7 merge.py --subset [/path/to/subset] --output-directory [/path/to/output] --study-id [study id] --cancer-type [cancer type] --merge-clinical [true/false] --exclude-supplemental-data [true/false] --excluded-samples [/path/to/exclude_list] <path/to/study path/to/study ...>'
+python2.7 subset_and_merge_wrapper.py --subset [/path/to/subset] --output-directory [/path/to/output] --study-id [study id] --cancer-type [cancer type] --merge-clinical [true/false] --exclude-supplemental-data [true/false] --excluded-samples [/path/to/exclude_list] <path/to/study path/to/study ...>'
 ```
 
 **Options**
