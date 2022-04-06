@@ -21,6 +21,12 @@ python2.7 subset_and_merge_wrapper.py --subset [/path/to/subset] --output-direct
 -x | --exclude-supplemental-data : Exclude supplemental data (true or false).
 ```
 
+**Example:**
+```
+python2.7 subset_and_merge_wrapper.py -s subset_samples.txt -d output/directory -i brca_msk_2022 -t brca -m true -x false dmp-2022/msk_solid_heme private/brca_msk_2019
+```
+
+
 **Note**
 - Passing one source directory subsets the data and passing multiple directories subsets and merges the data.  
 
