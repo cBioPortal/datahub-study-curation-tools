@@ -77,3 +77,9 @@ python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://c
 ```
 # How to update (to the latest version/in sync with cbioportal repo)
 Copy files listed above here from `https://github.com/cBioPortal/cbioportal/tree/master/core/src/main/scripts/importer`
+
+# Run validation with Docker Image
+If already having a docker container/image running, validation could be run inside the image. Details on how to set up docker please see [HERE](https://github.com/cBioPortal/cbioportal/blob/0aed7476dfc0b07e19184059cf819b3d62682c7b/docs/docker/README.md)
+```
+docker run --rm -v /path/to/datahub/public:/datahub cbioportal/cbioportal:3.6.16 validateStudies.py -d /datahub -l vsc_cuk_2018 -u http://cbioportal.org -html /datahub/vsc_cuk_2018/html_report
+```
