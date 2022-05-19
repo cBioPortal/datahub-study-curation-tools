@@ -22,8 +22,10 @@ Under `Complete dataset download links` section, click `Complete HGNC approved d
 
 #### Step 2 - compare latest version of HGNC with current version used
 Run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff).   
--- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists, or if the entrez ID get updated   
--- for exisitng genes updated, add the updates to the input list for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)   
+-- for gene removed
+manual curation is needed to decide if this gene should be include in the supplemental lists, or if the entrez ID get updated   
+-- for genes updated
+add the updates to the input lists for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)   
 
 #### Step 3 - Build input `gene_info.txt` for importer
 
