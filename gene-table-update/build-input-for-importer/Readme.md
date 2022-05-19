@@ -20,13 +20,23 @@ Under `Complete dataset download links` section, click `Complete HGNC approved d
 
 ```Note: please remove the double quotes from the file```
 
-#### Step 2 - compare latest version of HGNC with current version used
+#### Step 2 - Compare latest version of HGNC with current version used
+** This step required manual curation.**
 Run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff).   
--- for gene removed
-manual curation is needed to decide if this gene should be include in the supplemental lists, or if the entrez ID get updated   
--- for genes updated
-add the updates to the input lists for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)   
-
+The output would include 3 parts of changes genes between inquired versions: removed, added and updated (Output example [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/hgnc-diff/examples/output/diff_mar_2021_vs_jan_2022.txt))
+##### for genes removed
+###### For protein-coding genes
+  - First check if this is actually an update from an existing gene (search the entrez ID of this gene in NCBI); 
+  - If yes, add entries for this update in data migration input list ([entrez ID](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt) and [Hugo Symbol](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt)); 
+  - If not, add this entry to supp lists in the building script ([Main](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/supp-files/main-supp/complete-supp-main.txt) and [Alias](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/build-input-for-importer/supp-files/alias-supp.txt))    *TODO: update this step for hg38 diverge*
+###### For other type genes
+  - no action needed
+##### for genes updated
+add the updates to the input lists for the data-file-migration script's input lists
+[entrez ID](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt) and/or [Hugo Symbol](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt)
+##### for genes added
+  - no action needed - just nice addition!
+ 
 #### Step 3 - Build input `gene_info.txt` for importer
 
 ##### Example
@@ -41,8 +51,6 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
   -o OUTPUT_FILE_NAME, --output-file-name OUTPUT_FILE_NAME
                         (Optional)Name of the output file
 ```
-
-
 
 ## Output
 - Gene data file: the output file would be deposited under the same directory and named as `gene-import-input-_date_.txt` if not specified otherwise
