@@ -20,7 +20,12 @@ Under `Complete dataset download links` section, click `Complete HGNC approved d
 
 ```Note: please remove the double quotes from the file```
 
-#### Step 2 - Run the script
+#### Step 2 - compare latest version of HGNC with current version used
+Run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff).   
+-- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists, or if the entrez ID get updated   
+-- for exisitng genes updated, add the updates to the input list for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)   
+
+#### Step 3 - Build input `gene_info.txt` for importer
 
 ##### Example
 ```
@@ -35,10 +40,7 @@ python build-gene-table-input.py -i hgnc_complete_set.txt
                         (Optional)Name of the output file
 ```
 
-#### Step 3 - compare current gene table with latest HGNC download
-Run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff).   
--- for existing genes removed with update, manual curation is needed to decide if this gene should be include in the supplemental lists, or if the entrez ID get updated   
--- for exisitng genes updated, add the updates to the input list for the data-file-migration script [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)   
+
 
 ## Output
 - Gene data file: the output file would be deposited under the same directory and named as `gene-import-input-_date_.txt` if not specified otherwise
