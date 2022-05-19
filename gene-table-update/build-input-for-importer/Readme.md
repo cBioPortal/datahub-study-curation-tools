@@ -23,7 +23,8 @@ Under `Complete dataset download links` section, click `Complete HGNC approved d
 #### Step 2 - Compare latest version of HGNC with current version used
 ***This step required manual curation.***
 
-First, run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff).   
+First, reduce the newly downloaded HGNC file to only `hgnc_id`, `symbol	` and `locus_type` columns.
+Then run the `diff` script [here](https://github.com/cBioPortal/datahub-study-curation-tools/tree/master/gene-table-update/hgnc-diff).   
 The output would include 3 parts of changes genes between inquired versions: removed, added and updated (Output example [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/hgnc-diff/examples/output/diff_mar_2021_vs_jan_2022.txt))
 ##### for genes removed
 ###### For protein-coding genes
