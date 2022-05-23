@@ -127,11 +127,11 @@ To resolve ERRORs, remove this entry from `main-supp.txt`, or make the symbol as
 If the hugo symbol got updated in the newly released HGNC, add the older symbol <> newer symbol combo to the data-file-migration input list [here](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)
 
 #### Case #2
-With HGNC update, some entrez IDs may become unavailable, and cause WARNINGs.
+With HGNC update, some entrez IDs in `alias-supp.txt` may become unavailable, and cause WARNINGs.
 ```
 WARNING: ... entry is skipped - entrez ID does not exist in main table. (Redundancy)
 ```
-To clear WARNINGs, remove this entry from the corresponding supplemental file as the log indicates.
+To clear WARNINGs, remove this entry from the corresponding supplemental file `alias-supp.txt` as the log indicates.
 
 #### Case #3
 When running the script with the updated HGNC download, some new entries would come up and without an entrez ID assigned.  
