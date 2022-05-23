@@ -36,7 +36,7 @@ The output would include 3 parts of changes genes between inquired versions: rem
   - no action needed
 ##### for genes updated
 add the updates to the input lists for the data-file-migration script's input lists
-[entrez ID](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt) and/or [Hugo Symbol](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt)
+[entrez ID](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_entrez_ids.txt) and/or [Hugo Symbol](https://github.com/cBioPortal/datahub-study-curation-tools/blob/master/gene-table-update/data-file-migration/outdated_hugo_symbols.txt)
 ##### for genes added
   - no action needed - just nice addition!
  
