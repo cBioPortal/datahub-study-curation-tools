@@ -19,7 +19,7 @@ python3 -m pip install pyymal
 python3 -m pip install jinja2
 ```
 ### set PYTHONPATH
-set variant `PYTHONPATH` in system environment , with the path to your local cbioportal repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
+set variant `PYTHONPATH` in system environment , with the path to your [local cbioportal](https://github.com/cBioPortal/cbioportal) repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
 ##### Method 1: 
 Run below command line every time before running the script (in the same window where the scripts run, and modify the path to your local setting) 
 ```
