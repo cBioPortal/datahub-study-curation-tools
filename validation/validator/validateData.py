@@ -87,6 +87,12 @@ prior_validated_geneset_ids = None
 # Global variable to compare stable IDs from meta file with gene panel matrix file
 study_meta_dictionary = {}
 
+# Global variable for the regex that checks hexadecimal colors
+COLOR_REGEX = re.compile("^#[a-fA-F0-9]{6}$")
+
+# global character limit on sample stable ids
+MAX_SAMPLE_STABLE_ID_LENGTH = 63
+
 # ----------------------------------------------------------------------------
 
 VALIDATOR_IDS = {
@@ -305,8 +311,8 @@ class PortalInstance(object):
 
         #Set defaults for genome version and species
         self.__species = 'human'
-        self.__ncbi_build = '37'
-        self.__genome_build = 'hg19'
+        self.__ncbi_build = 'GRCh37'
+        self.__genome_name = 'hg19'
 
         # determine version, and the reason why it might be unknown
         if portal_info_dict is None:
@@ -325,23 +331,26 @@ class PortalInstance(object):
 
     @species.setter
     def species(self, species):
-       self.__species= species
+       self.__species = species
 
     @property
-    def genome_build(self):
-        return self.__genome_build
+    def reference_genome(self):
+        return self.__genome_name
 
-    @genome_build.setter
-    def genome_build(self, genome_build):
-       self.__genome_build= genome_build
+    @reference_genome.setter
+    def reference_genome(self, genome_name):
+       self.__genome_name = genome_name
 
     @property
     def ncbi_build(self):
        return self.__ncbi_build
 
     @ncbi_build.setter
-    def ncbi_build(self, ncbi_build):
-       self.__ncbi_build = ncbi_build
+    def ncbi_build(self, ncbi_build):    
+        prefix = 'GRCm' if self.__species == 'mouse' else 'GRCh'
+        if str(ncbi_build) in ('37', '38'):
+            ncbi_build = prefix + str(ncbi_build)
+        self.__ncbi_build = ncbi_build
 
 class Validator(object):
 
@@ -417,12 +426,6 @@ class Validator(object):
 
         self.logger.debug('Starting validation of file')
 
-        # Validate whether it's a normal file (skip for now)
-        if self.filename.endswith("_normals.txt") or 'mrna_seq_v2_rsem_normal_samples' in self.filename:
-            self.logger.info('Ignoring *_normals.txt files (TMP) '
-                        'Continuing with validation...')
-            return
-
         # Validate whether the file can be opened
         try:
             opened_file = open(self.filename, 'r', newline=None)
@@ -482,7 +485,9 @@ class Validator(object):
             try:
                 dialect = csv.Sniffer().sniff(sample_content, delimiters='\t')
             except csv.Error:
-                self.logger.error('Not a valid tab separated file. Check if all lines have the same number of columns and if all separators are tabs.')
+                self.logger.warning('Could not detect a tab separator. Confirm that the file should be single-column'
+                                    ' and else if all lines have the same number of columns, and if all separators are '
+                                    'tabs.')
                 return
             # sniffer assumes " if no quote character exists
             if dialect.quotechar == '"' and not (
@@ -728,7 +733,7 @@ class Validator(object):
                        'cause': sample_id})
             return False
         return True
-    
+
     def checkPatientId(self, patient_id, column_number):
         """Check whether a patient id is defined, logging an error if not.
 
@@ -932,7 +937,7 @@ class Validator(object):
         return num_errors
 
     @staticmethod
-    def load_chromosome_lengths(genome_build, logger):
+    def load_chromosome_lengths(reference_genome, logger):
 
         """Get the length of each chromosome and return a dict.
 
@@ -952,9 +957,10 @@ class Validator(object):
                      chrom_size_file)
 
         try:
-            chrom_size_dict = chrom_sizes[genome_build]
+            chrom_size_dict = chrom_sizes[reference_genome]
         except KeyError:
-            raise KeyError('Could not load chromosome sizes for genome build %s.' % genome_build)
+            raise KeyError('Could not load chromosome sizes for genome build %s. Expecting one of '
+                           '["hg19", "hg38", "mm10"]' % reference_genome)
 
         return chrom_size_dict
 
@@ -1107,7 +1113,7 @@ class FeaturewiseFileValidator(Validator):
         # check either sample Id or patient Id
         # override this to check Id
         return 0
-    
+
     def checkIdInSamples(self):
         # check sample Id
         num_errors = 0
@@ -1289,7 +1295,7 @@ class CustomDriverAnnotationValidator(Validator):
         has_custom_driver_cols = len(list(set(self.cols) & set(self.CUSTOM_DRIVER_CHECK_FUNCTION_MAP.keys()))) > 0
         if not has_custom_driver_cols:
             return
-        
+
         driver_value, driver_annotation, driver_tiers_value, driver_tiers_annotation = self.parsePdAnnotations(data)
         if driver_tiers_annotation is not None and driver_tiers_value is None:
             self.logger.error(
@@ -1986,20 +1992,20 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
 
 
     def checkNCBIbuild(self, value):
+        """
+        Checks whether the value found in MAF NCBI_Build column matches the genome specified in portal.properties at 
+        field ncbi.build. Expecting GRCh37, GRCh38, GRCm38 or without the GRCx prefix
+        """    
+    
         if value != '':
-            # based on MutationDataUtils.getNcbiBuild
-            if self.portal.species == "human":
-                if value not in [str(self.portal.ncbi_build), self.portal.genome_build, 'GRCh'+str(self.portal.ncbi_build)]:
-                    self.logger.error('The specified reference genome does not correspond with the reference genome found in the MAF.',
-                                      extra={'line_number': self.line_number,
-                                             'cause':value})
-                    return False
-            elif self.portal.species == "mouse":
-                if value not in [str(self.portal.ncbi_build), self.portal.genome_build, 'GRCm'+str(self.portal.ncbi_build)]:
-                    self.logger.error('The specified reference genome does not correspond with the reference genome found in the MAF.',
-                                      extra={'line_number': self.line_number,
-                                             'cause':value})
-                    return False
+            prefix = 'GRCm' if self.portal.species == 'mouse' else 'GRCh'
+            if str(value) in ('37', '38'):
+                value = prefix + str(value)
+            if value != str(self.portal.ncbi_build):
+                self.extra = 'The reference genome in column NCBI_Build does not correspond with the ' \
+                             'reference genome specified for this study (%s)' % (self.portal.ncbi_build)
+                self.extra_exists = True
+                return False
         return True
 
     def checkMatchedNormSampleBarcode(self, value):
@@ -2664,6 +2670,14 @@ class SampleClinicalValidator(ClinicalValidator):
                                'column_number': col_index + 1,
                                'cause': value})
                     continue
+                if len(value.strip()) > MAX_SAMPLE_STABLE_ID_LENGTH:
+                    self.logger.error(
+                        'SAMPLE_ID too long (%s character maximum)' % (MAX_SAMPLE_STABLE_ID_LENGTH),
+                        extra={'line_number': self.line_number,
+                               'column_number': col_index + 1,
+                               'cause': value})
+                    continue
+                
                 if value in self.sample_id_lines:
                     if value.startswith('TCGA-'):
                         self.logger.warning(
@@ -3460,6 +3474,20 @@ class TimelineValidator(Validator):
                         extra={'line_number': self.line_number,
                                'column_number': col_index + 1,
                                'cause': value})
+            elif col_name == 'STYLE_COLOR':
+                 if not COLOR_REGEX.match(value.strip()):
+                    self.logger.error(
+                        'Invalid STYLE_COLOR',
+                        extra={'line_number': self.line_number,
+                               'column_number': col_index + 1,
+                               'cause': value})
+            elif col_name == 'STYLE_SHAPE':
+                if not value.strip().lower() in ['circle', 'square', 'triangle', 'diamond', 'star', 'camera']:
+                    self.logger.error(
+                        'Invalid STYLE_SHAPE',
+                        extra={'line_number': self.line_number,
+                               'column_number': col_index + 1,
+                               'cause': value})
 
 class CancerTypeValidator(Validator):
 
@@ -3903,13 +3931,6 @@ class PatientResourceValidator(ResourceValidator):
                                'cause': RESOURCE_DEFINITION_DICTIONARY[value]})
                 resource_id = value
             if col_name == 'PATIENT_ID':
-                if value not in RESOURCE_PATIENTS_WITH_SAMPLES:
-                    self.logger.warning(
-                        'Resource data defined for a patient with '
-                        'no samples',
-                        extra={'line_number': self.line_number,
-                                'column_number': col_index + 1,
-                                'cause': value})
                 if value not in self.patient_id_lines:
                     self.patient_id_lines[value] = self.line_number
                 patient_id = value
@@ -3923,16 +3944,6 @@ class PatientResourceValidator(ResourceValidator):
                         'duplicated_line_number': self.defined_resources[(resource_id, patient_id, resource_url)]})
         else:
             self.defined_resources[(resource_id, patient_id, resource_url)] = self.line_number
-
-    def onComplete(self):
-        """Perform final validations based on the data parsed."""
-        for patient_id in RESOURCE_PATIENTS_WITH_SAMPLES:
-            if patient_id not in self.patient_id_lines:
-                self.logger.warning(
-                    'Missing resource data for a patient associated with '
-                    'samples',
-                    extra={'cause': patient_id})
-        super(PatientResourceValidator, self).onComplete()
 
 class StudyResourceValidator(ResourceValidator):
 
@@ -4451,7 +4462,7 @@ class GenericAssayWiseFileValidator(FeaturewiseFileValidator):
                                      'column_number': 1,
                                      'cause': nonsample_col_vals[0]})
         return value
-    
+
     def checkId(self):
         """Check if patient/sample IDs are imported"""
         num_errors = 0
@@ -4472,7 +4483,7 @@ class GenericAssayWiseFileValidator(FeaturewiseFileValidator):
                         id,
                         column_number=self.num_nonsample_cols + index + 1):
                     num_errors += 1
-            else:           
+            else:
                 # check sample id for non patient level data
                 if not self.checkSampleId(
                         id,
@@ -4548,12 +4559,42 @@ class GenericAssayCategoricalValidator(GenericAssayWiseFileValidator):
 
     """ Validator for files containing generic assay categorical values.
     """
+
+    # Global validation for specific generic assay types
+    GENERIC_ASSAY_CATEGORICAL_VALUES_MAP_BY_TYPE = {
+        'ARMLEVEL_CNA': ['Gain', 'Loss', 'Unchanged'],
+    }
+
+    ALLOWED_VALUES = None
+
     def __init__(self, *args, **kwargs):
         """Initialize the instance attributes of the data file validator."""
         super(GenericAssayCategoricalValidator, self).__init__(*args, **kwargs)
+        # Define ALLOWED_VALUES based on generic_assay_type
+        if 'generic_assay_type' in self.meta_dict:
+            generic_assay_type = self.meta_dict['generic_assay_type'].strip().upper()
+            if generic_assay_type in self.GENERIC_ASSAY_CATEGORICAL_VALUES_MAP_BY_TYPE:
+                self.ALLOWED_VALUES = self.GENERIC_ASSAY_CATEGORICAL_VALUES_MAP_BY_TYPE[generic_assay_type]
 
-    # Categorical data do not need further validation
     def checkValue(self, value, col_index):
+        """ Check value if ALLOWED_VALUES defined, or Categorical data do not need further validation """
+        if self.ALLOWED_VALUES:
+            stripped_value = value.strip()
+            # do not check null values
+            # 'NA' is an allowed value. No further validations apply.
+            if stripped_value in self.NULL_VALUES:
+                return
+            # value is not defined (empty cell)
+            if len(stripped_value) == 0:
+                # empty cell is allowed
+                return
+            if stripped_value not in self.ALLOWED_VALUES:
+                self.logger.error(
+                    'Invalid generic assay categorical value: possible values are [%s]',
+                    ', '.join(self.ALLOWED_VALUES),
+                    extra={'line_number': self.line_number,
+                           'column_number': col_index + 1,
+                           'cause': value})
         return
 
 class GenericAssayBinaryValidator(GenericAssayWiseFileValidator):
@@ -4636,9 +4677,9 @@ def process_metadata_files(directory, portal_instance, logger, relaxed_mode, str
 
     # implemented ref genomes
     reference_genome_map = {
-        'hg19':('human','37','hg19'),
-        'hg38':('human','38','hg38'),
-        'mm10':('mouse','38','mm10')
+        'hg19': ('human', 'GRCh37', 'hg19'),
+        'hg38': ('human', 'GRCh38', 'hg38'),
+        'mm10': ('mouse', 'GRCm38', 'mm10')
     }
 
     DISALLOWED_CHARACTERS = r'[^A-Za-z0-9_-]'
@@ -4706,17 +4747,20 @@ def process_metadata_files(directory, portal_instance, logger, relaxed_mode, str
                         meta_dictionary['add_global_case_list'].lower() == 'true'):
                     case_list_suffix_fns['all'] = filename
 
+            # if reference_genome is specified in the meta file, override the defaults in portal properties
             if 'reference_genome' in meta_dictionary:
                 if meta_dictionary['reference_genome'] not in reference_genome_map:
                     logger.error('Unknown reference genome defined. Should be one of %s' %
                                  list(reference_genome_map.keys()),
                                  extra={
-                                     'filename_':filename,
-                                     'cause':meta_dictionary['reference_genome'].strip()
+                                     'filename_': filename,
+                                     'cause': meta_dictionary['reference_genome'].strip()
                                  })
                 else:
-                    portal_instance.species, portal_instance.ncbi_build, portal_instance.genome_build = \
-                        reference_genome_map[meta_dictionary['reference_genome']]
+                    genome_info = reference_genome_map[meta_dictionary['reference_genome']]
+                    logger.info('Setting reference genome to %s (%s, %s)' % genome_info,
+                                extra={'filename_': filename})
+                    portal_instance.species, portal_instance.ncbi_build, portal_instance.reference_genome = genome_info
             else:
                 logger.info('No reference genome specified -- using default (hg19)',
                             extra={'filename_': filename})
@@ -5078,6 +5122,11 @@ def request_from_portal_api(server_url, api_name, logger):
         service_url = server_url + '/api/' + api_name
     elif api_name in ['genesets_version']:
         service_url = server_url + '/api/genesets/version'
+        
+    # NOTE: There is no 'genesaliases' API enpoint and iterative querying by symbol is not viable.
+    # Thus for now, aliases can be imported only in offline mode 
+    elif api_name == 'genesaliases':
+        return []
 
     logger.debug("Requesting %s from portal at '%s'",
                 api_name, server_url)
@@ -5225,7 +5274,12 @@ def load_portal_info(path, logger, offline=False):
             ('genesets_version',
                 lambda json_data: str(json_data).strip(' \'[]')),
             ('gene-panels',
-                lambda json_data: extract_panels(json_data, 'genePanelId'))):
+                lambda json_data: extract_panels(json_data, 'genePanelId')),
+            ('genesaliases',
+                lambda json_data: transform_symbol_entrez_map(json_data, 
+                                                              id_field='alias', 
+                                                              values_field='entrezGeneId'))
+    ):
         if offline:
             parsed_json = read_portal_json_file(path, api_name, logger)
         else:
@@ -5240,7 +5294,7 @@ def load_portal_info(path, logger, offline=False):
                           cancer_type_dict=portal_dict['cancer-types'],
                           hugo_entrez_map=portal_dict['genes'],
                           # TODO - create a /genealiases equivalent in the new api
-                          alias_entrez_map={},
+                          alias_entrez_map=portal_dict['genesaliases'],
                           gene_set_list=portal_dict['genesets'],
                           gene_panel_list=portal_dict['gene-panels'],
                           geneset_version = portal_dict['genesets_version'],
