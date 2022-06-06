@@ -55,7 +55,7 @@ if __name__ == "__main__" and (__package__ is None or __package__ == ''):
     # scripts/ folder, above it, so that the importer package folder is in
     # scope and *not* directly in sys.path; see PEP 395
     sys.path[0] = str(Path(sys.path[0]).resolve().parent)
-    __package__ = 'importer'
+    __package__ = 'validator'
     # explicitly import the package, which is needed on CPython 3.4 because it
     # doesn't include https://github.com/python/cpython/pull/2639
     importlib.import_module(__package__)
