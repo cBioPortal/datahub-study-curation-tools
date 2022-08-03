@@ -1,6 +1,6 @@
 ### Usage
 
-This tool converts data in the old fusion file format to the structural variant format. The fusion file format is deprecated as of cBioPortal v5.0.0.
+This tool migrates [fusion data](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#fusion-data) from cBioPortal version 4 and below to the [new structural variant data](https://docs.cbioportal.org/file-formats/#structural-variant-data) format used in cBioPortal version 5.
 
 The source fusion file must be in cBioPortal's old [fusion file format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#fusion-data) with at least a minimum of `Hugo_Symbol`, `Entrez_Gene_Id`, `Tumor_Sample_Barcode` and `Fusion` fields.
 
