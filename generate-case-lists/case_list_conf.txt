@@ -34,3 +34,4 @@ cases_microbiome.txt	data_microbiome.txt	<CANCER_STUDY>_microbiome	other	<CANCER
 cases_fpkm_capture.txt	data_mRNA_seq_fpkm_capture.txt|data_mrna_seq_fpkm_capture.txt	<CANCER_STUDY>_capture	all_cases_with_mrna_rnaseq_data	<CANCER_STUDY>	Capture Assay Samples	All Capture Assay Samples
 cases_fpkm_polya.txt	data_mRNA_seq_fpkm_polya.txt|data_mrna_seq_fpkm_polya.txt	<CANCER_STUDY>_polya	all_cases_with_mrna_array_data	<CANCER_STUDY>	PolyA Assay Samples	All PolyA Assay Samples
 cases_phosphoprotein_quantification.txt	data_phosphoprotein_quantification.txt	<CANCER_STUDY>_phosphoprotein_quantification	other	<CANCER_STUDY>	Samples with phosphoprotein quantification data (mass spectrometry by CPTAC)	Tumor samples with phosphoprotein quantification data (<NUM_CASES> samples)
+cases_sv.txt	data_sv.txt	<CANCER_STUDY>_sv	all_cases_with_sv_data	<CANCER_STUDY>	Samples with SV data	All samples with SV data (<NUM_CASES> samples)
