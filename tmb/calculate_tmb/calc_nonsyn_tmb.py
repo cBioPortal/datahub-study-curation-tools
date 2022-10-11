@@ -108,6 +108,10 @@ def extractCDS(_inputStudyFolder, _panelFolderPath, _sampleMap):
 				elif _line.startswith(PANEL_CDS_FIELD_NAME):
 					_cdsMap[_panelID] = float(int(_line.split(':')[1].strip()) / 1000000)
 
+	# Whole genome and whole exome ids are introduced as panels into the matrix file.
+	# Add these to the cdsMap.
+	_cdsMap.update({'WXS':30, 'WGS':30, 'WXS/WGS':30})
+	
 	# using gene matrix to map CDS to each sample 
 	with open(_inputStudyFolder + "/" + MATRIX_FILE_NAME ,'r') as _matrixFile:
 		_posSampleId = -1
@@ -274,7 +278,7 @@ def main():
 	sys.stdout.write(os.path.basename(_inputStudyFolder) + "\t")
 
 	if os.path.isdir(_inputStudyFolder) and os.path.isdir(_genePanelFolder):
-		# Find matrix file -> targeted sequenced studies
+		# Find matrix file -> identify CDS for targeted panels 
 		if os.path.isfile(_inputStudyFolder + "/" + MATRIX_FILE_NAME):
 			sys.stdout.write("Targeted\t")
 			_sampleTmbMap = calcTMB(extractCDS(_inputStudyFolder, _genePanelFolder, cntVariants(_inputStudyFolder)))
