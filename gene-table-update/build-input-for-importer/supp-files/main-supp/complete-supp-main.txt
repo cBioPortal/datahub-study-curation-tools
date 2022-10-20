@@ -209,7 +209,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 392490	FLJ44635	X	Xq13.1	protein-coding	ENSG00000204131
 100131150	LOC100131150	-	-	protein-coding	
 100130372	LOC100130372	-	-	protein-coding	
-100130370	LOC100130370	17	17q25.3	protein-coding	ENSG00000262223
 100130278	LOC100130278	-	-	protein-coding	
 100130276	LOC100130276	-	-	protein-coding	
 340085	LOC340085	-	-	protein-coding	
@@ -398,7 +397,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 221814	LOC221814	-	-	protein-coding	
 284669	LOC284669	-	-	protein-coding	
 100996747	LOC100996747	17	-	protein-coding	
-441155	LOC441155	6	6q12	protein-coding	
 102723532	LOC102723532	15	-	protein-coding	ENSG00000274792
 101929141	LOC101929141	17	17p11.2	protein-coding	ENSG00000250111
 2133	EXT3	19	19p	unknown	

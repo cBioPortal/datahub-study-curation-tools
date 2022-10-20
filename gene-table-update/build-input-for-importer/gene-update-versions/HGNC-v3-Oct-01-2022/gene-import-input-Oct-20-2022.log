@@ -2,6 +2,8 @@ INFO:root:Checking resource: Entrez ID mapping >>>>>>>>>>>>>>>
 INFO:root:Cleaning up Entrez IDs >>>>>>>>>>>>>>>
 INFO:root:Deleted entry: AKAP2
 INFO:root:Deleted entry: BACH1-IT1
+INFO:root:Added entrez ID 127138860 to: C11orf98P3
+INFO:root:Added entrez ID 127138859 to: CCDC86-AS1
 INFO:root:Added entrez ID 1550 to: CYP2A7P2
 INFO:root:Merge CYP2A7P2 into CYP2A7P1 as prev symbols.
 INFO:root:Deleted entry: DDX11L6
@@ -16,9 +18,8 @@ INFO:root:Deleted entry: ERVH-10
 INFO:root:Deleted entry: FRA3B
 INFO:root:Deleted entry: GTF2IP16
 INFO:root:Deleted entry: GTF2IP21
-INFO:root:Deleted entry: KMT2CP2
-INFO:root:Deleted entry: KMT2CP3
-INFO:root:Deleted entry: LINC02989
+INFO:root:Added entrez ID 127138867 to: LINC03051
+INFO:root:Added entrez ID 127138865 to: LINC03052
 INFO:root:Deleted entry: MT-7SDNA
 INFO:root:Deleted entry: MT-ATT
 INFO:root:Deleted entry: MT-CSB1
@@ -43,7 +44,7 @@ INFO:root:Merge MTND4P38 into MTND4LP23 as prev symbols.
 INFO:root:Deleted entry: MTND6P36
 INFO:root:Deleted entry: PALM2
 INFO:root:Deleted entry: SLC7A2-IT1
-INFO:root:Deleted entry: SORBS2-AS1
+INFO:root:Added entrez ID 127138866 to: SMIM46
 INFO:root:Deleted entry: TRA-AGC13-3
 INFO:root:Deleted entry: TRE-TTC8-2
 INFO:root:Added entrez ID 101060002 to: TRMT10BP1
