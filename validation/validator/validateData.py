@@ -1701,7 +1701,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
             tumor_seq_allele2 = data[self.cols.index('Tumor_Seq_Allele2')].strip()
         if set(necessary_columns_check10).issubset(self.cols):
             # Set positions to False if position are empty, so checks will not be performed
-            if data[self.cols.index('Start_Position')] == "" or data[self.cols.index('End_Position')] == "":
+            if data[self.cols.index('Start_Position')].strip() == '' or data[self.cols.index('Start_Position')] == 'NA' or data[self.cols.index('End_Position')].strip() == '' or data[self.cols.index('End_Position')] == 'NA':
                 positions = False
             else:
                 positions = True
@@ -2208,7 +2208,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
 
     def checkStartPosition(self, value):
         """Check that the Start_Position value is an integer."""
-        if value == 'NA':
+        if value.strip() == '' or value == 'NA':
             self.logger.warning(
                 'The start position of this variant is not '
                     'defined. The chromosome plot in the patient view '
@@ -2228,7 +2228,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
 
     def checkEndPosition(self, value):
         """Check that the End_Position value is an integer."""
-        if value == 'NA':
+        if value.strip() == '' or value == 'NA':
             self.logger.warning(
                 'The end position of this variant is not '
                     'defined. The chromosome plot in the patient view '
@@ -3091,7 +3091,11 @@ class StructuralVariantValidator(Validator):
         else:
             self.logger.warning('No column NCBI_Build, assuming GRCh37 is the assembly',
                               extra={'line_number': self.line_number})
-
+                              
+        # Check whether sample ID is in clinical sample IDs
+        sample_id = checkPresenceValue('Sample_Id', self, data)
+        self.checkSampleId(sample_id, column_number = self.cols.index('Sample_Id') + 1)
+        
         # Parse Hugo Symbol and Entrez Gene Id and check them for Site 1
         site1_hugo_symbol = checkPresenceValue('Site1_Hugo_Symbol', self, data)
         site1_entrez_gene_id = checkPresenceValue('Site1_Entrez_Gene_Id', self, data)
@@ -3105,8 +3109,7 @@ class StructuralVariantValidator(Validator):
         # Check whether at least one of the Site1 or Site2 is valid.
         if site1_gene is None and site2_gene is None:
             self.logger.error(
-                'No Entrez gene id or gene symbol provided for site 1 and site 2. '
-                'This record will not be loaded',
+                'No Entrez gene id or gene symbol provided for site 1 and site 2',
                 extra={'line_number': self.line_number})
         elif site1_gene is None and site2_gene is not None:
             self.logger.warning(
