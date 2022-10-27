@@ -1,4 +1,10 @@
+The gene table was last updated on Feb 25, 2022 based on the Jan 1, 2022 HGNC release.
+
+This page displays the gene changes between the latest version of HGNC (Oct 1, 2022) and the version of HGNC that was used to build our current Gene Tables (Jan 1, 2022 release)
+
 # Combo Update
+
+Gene IDs (both Hugo symbol & Entrez IDs) that are no longer current and have replacement Gene IDs.
 
 ```
 NABP1-OT1 105747689 -> NABP1 64859
@@ -16,6 +22,8 @@ DNM1P51 109729113 -> CSPG4P5 114817
 
 # Entrez ID Update
 
+Entrez Gene IDs that got replacement IDs. Hugo Symbols remain the same.
+
 ```
 LCE7A 123464507 -> 122526777
 TMEM217B 123464516 -> 121725057
@@ -27,6 +35,8 @@ KRTAP12-5P 112552144 -> 112268487
 ```
 
 # Hugo Symbol Update
+
+Hugo Symbols that got replacement IDs. Entrez Gene IDs remain the same.
 
 ```
 406 ARNTL -> BMAL1
@@ -108,11 +118,15 @@ KRTAP12-5P 112552144 -> 112268487
 
 # Genes Removed
 
+Genes that got dropped in the latest version of HGNC.
+
 ```
 LINC00266-2P 100287785 pseudogene HGNC:38529
 ```
 
 # Added 229 Genes (17 protein coding)
+
+Genes that were newly added in the latest version of HGNC.
 
 ```
 TMEM276 84773 protein-coding HGNC:56235
