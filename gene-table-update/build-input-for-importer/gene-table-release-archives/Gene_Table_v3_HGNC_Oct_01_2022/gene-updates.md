@@ -1,6 +1,6 @@
-The gene table was last updated on Feb 25, 2022 based on the Jan 1, 2022 HGNC release.
+The latest version of cBioPortal's Gene Table is built upon the HGNC Oct 1, 2022 release. The gene table was previously updated on Feb 25, 2022 base on the Jan 1, 2022 HGNC release. 
 
-This page displays the gene changes between the latest version of HGNC (Oct 1, 2022) and the version of HGNC that was used to build our current Gene Tables (Jan 1, 2022 release)
+This page displays the gene changes between the latest version of HGNC (Oct 1, 2022) and the version of HGNC (Jan 1, 2022 release) that was used to build our Gene Tables previously.
 
 # Combo Update
 
@@ -22,7 +22,7 @@ DNM1P51 109729113 -> CSPG4P5 114817
 
 # Entrez ID Update
 
-Entrez Gene IDs that got replacement IDs. Hugo Symbols remain the same.
+Entrez Gene IDs that got replacement IDs. Hugo symbols remain the same.
 
 ```
 LCE7A 123464507 -> 122526777
@@ -36,7 +36,7 @@ KRTAP12-5P 112552144 -> 112268487
 
 # Hugo Symbol Update
 
-Hugo Symbols that got replacement IDs. Entrez Gene IDs remain the same.
+Previously approved Hugo symbol for a gene that now has a different approved symbol. Entrez Gene IDs remain the same.
 
 ```
 406 ARNTL -> BMAL1
@@ -118,7 +118,7 @@ Hugo Symbols that got replacement IDs. Entrez Gene IDs remain the same.
 
 # Genes Removed
 
-Genes that got dropped in the latest version of HGNC.
+Previously approved HGNC gene that has since been shown not to exist.
 
 ```
 LINC00266-2P 100287785 pseudogene HGNC:38529
