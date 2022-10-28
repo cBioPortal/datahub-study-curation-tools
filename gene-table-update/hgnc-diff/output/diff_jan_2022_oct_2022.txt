@@ -1,0 +1,355 @@
+
+>>>> Added 229 Genes (17 protein coding)
+HGNC:56255	ACE2-DT	RNA, long non-coding
+HGNC:56152	ADAM7-AS1	RNA, long non-coding
+HGNC:56153	ADAM7-AS2	RNA, long non-coding
+HGNC:56273	ADIPINT	RNA, long non-coding
+HGNC:56293	ANKRD33BP1	pseudogene
+HGNC:56294	ANKRD33BP2	pseudogene
+HGNC:56295	ANKRD33BP3	pseudogene
+HGNC:56296	ANKRD33BP4	pseudogene
+HGNC:56297	ANKRD33BP5	pseudogene
+HGNC:56298	ANKRD33BP6	pseudogene
+HGNC:56299	ANKRD33BP7	pseudogene
+HGNC:56300	ANKRD33BP8	pseudogene
+HGNC:56301	ANKRD33BP9	pseudogene
+HGNC:56302	ANKRD33BP10	pseudogene
+HGNC:56188	ARHGAP11A-DT	RNA, long non-coding
+HGNC:56310	ARHGAP11A-SCG5	readthrough
+HGNC:56267	BCAN-AS2	RNA, long non-coding
+HGNC:56147	BHLHE22-AS1	RNA, long non-coding
+HGNC:56305	C8orf90	gene with protein product
+HGNC:56317	C9orf85P1	pseudogene
+HGNC:56318	C9orf85P2	pseudogene
+HGNC:56319	C11orf98P2	pseudogene
+HGNC:56320	C11orf98P3	pseudogene
+HGNC:56325	C12orf29P1	pseudogene
+HGNC:56326	C12orf29P2	pseudogene
+HGNC:56327	C12orf29P3	pseudogene
+HGNC:56185	C12orf42-AS1	RNA, long non-coding
+HGNC:56323	C12orf71BP	pseudogene
+HGNC:56165	CACNA1B-AS1	RNA, long non-coding
+HGNC:56177	CADM1-AS1	RNA, long non-coding
+HGNC:56266	CAPSL-DT	RNA, long non-coding
+HGNC:55459	CBSLR	RNA, long non-coding
+HGNC:56107	CCDC54-AS1	RNA, long non-coding
+HGNC:56314	CCDC86-AS1	RNA, long non-coding
+HGNC:56303	CCDC188BP	pseudogene
+HGNC:56175	CD44-DT	RNA, long non-coding
+HGNC:56287	CD82-AS1	RNA, long non-coding
+HGNC:55196	CD200LP	pseudogene
+HGNC:56264	CDCA3P1	pseudogene
+HGNC:56243	CDH13-AS2	RNA, long non-coding
+HGNC:53436	CHD9NB	gene with protein product
+HGNC:56191	CLYBL-AS3	RNA, long non-coding
+HGNC:56190	COMMD5P1	pseudogene
+HGNC:56117	CPLANE1-AS1	RNA, long non-coding
+HGNC:55992	CPMER	RNA, long non-coding
+HGNC:56138	CPVL-AS2	RNA, long non-coding
+HGNC:56184	CRADD-AS1	RNA, long non-coding
+HGNC:53820	CT47C1	gene with protein product
+HGNC:38668	DDX12B	pseudogene
+HGNC:56176	DENND2B-AS1	RNA, long non-coding
+HGNC:56097	DHX9-AS1	RNA, long non-coding
+HGNC:53720	DPH5-DT	RNA, long non-coding
+HGNC:56221	DYNAPP1	pseudogene
+HGNC:56222	DYNAPP2	pseudogene
+HGNC:56223	DYNAPP3	pseudogene
+HGNC:56218	EBF3-AS1	RNA, long non-coding
+HGNC:56201	EEF1A1P44	pseudogene
+HGNC:56202	EEF1A1P45	pseudogene
+HGNC:56203	EEF1A1P46	pseudogene
+HGNC:56204	EEF1A1P47	pseudogene
+HGNC:56205	EEF1A1P48	pseudogene
+HGNC:56206	EEF1A1P49	pseudogene
+HGNC:56207	EEF1A1P50	pseudogene
+HGNC:56232	EFCAB3P1	pseudogene
+HGNC:56096	ENOX2-AS1	RNA, long non-coding
+HGNC:56333	EYA2-AS1	RNA, long non-coding
+HGNC:56225	FAM83A-AS2	RNA, long non-coding
+HGNC:48726	FAM86B2-DT	RNA, long non-coding
+HGNC:31457	FAM88B	RNA, long non-coding
+HGNC:56159	FAM88C	RNA, long non-coding
+HGNC:56160	FAM88D	RNA, long non-coding
+HGNC:56161	FAM88E	RNA, long non-coding
+HGNC:56162	FAM88F	RNA, long non-coding
+HGNC:56141	FAM131B-AS2	RNA, long non-coding
+HGNC:56213	FAM131C2P	pseudogene
+HGNC:56252	FAM157D	RNA, long non-coding
+HGNC:56226	FAM169A-AS1	RNA, long non-coding
+HGNC:56121	FARS2-AS1	RNA, long non-coding
+HGNC:56253	FAUP4	pseudogene
+HGNC:56284	FOXP1-DT	RNA, long non-coding
+HGNC:56306	GOLGA6L26	gene with protein product
+HGNC:56102	GPC1-AS1	RNA, long non-coding
+HGNC:56187	GPR84-AS1	RNA, long non-coding
+HGNC:56195	GTF2A1-AS1	RNA, long non-coding
+HGNC:56200	H2BN1	gene with protein product
+HGNC:56103	HDLBP-AS1	RNA, long non-coding
+HGNC:56166	HPS1-AS1	RNA, long non-coding
+HGNC:56281	HSD17B2-AS1	RNA, long non-coding
+HGNC:56127	ITPR3-AS1	RNA, long non-coding
+HGNC:56237	IUR1	RNA, long non-coding
+HGNC:56170	JMJD1C-AS2	RNA, long non-coding
+HGNC:56157	KAT6A-AS1	RNA, long non-coding
+HGNC:56179	KMT2CP1	pseudogene
+HGNC:56180	KMT2CP2	pseudogene
+HGNC:56181	KMT2CP3	pseudogene
+HGNC:56182	KMT2CP4	pseudogene
+HGNC:56183	KMT2CP5	pseudogene
+HGNC:56163	LHX2-AS1	RNA, long non-coding
+HGNC:50689	LINC01404	RNA, long non-coding
+HGNC:51676	LINC01610	RNA, long non-coding
+HGNC:56098	LINC02988	RNA, long non-coding
+HGNC:56100	LINC02989	RNA, long non-coding
+HGNC:56101	LINC02990	RNA, long non-coding
+HGNC:33810	LINC02991	RNA, long non-coding
+HGNC:49287	LINC02992	RNA, long non-coding
+HGNC:56105	LINC02993	RNA, long non-coding
+HGNC:56109	LINC02994	RNA, long non-coding
+HGNC:27744	LINC02995	RNA, long non-coding
+HGNC:56112	LINC02996	RNA, long non-coding
+HGNC:56113	LINC02997	RNA, long non-coding
+HGNC:56114	LINC02998	RNA, long non-coding
+HGNC:56115	LINC02999	RNA, long non-coding
+HGNC:56116	LINC03000	RNA, long non-coding
+HGNC:56118	LINC03001	RNA, long non-coding
+HGNC:56123	LINC03002	RNA, long non-coding
+HGNC:56126	LINC03003	RNA, long non-coding
+HGNC:56128	LINC03004	RNA, long non-coding
+HGNC:56130	LINC03005	RNA, long non-coding
+HGNC:56131	LINC03006	RNA, long non-coding
+HGNC:56132	LINC03007	RNA, long non-coding
+HGNC:56133	LINC03008	RNA, long non-coding
+HGNC:56134	LINC03009	RNA, long non-coding
+HGNC:56135	LINC03010	RNA, long non-coding
+HGNC:56136	LINC03011	RNA, long non-coding
+HGNC:56139	LINC03012	RNA, long non-coding
+HGNC:56140	LINC03013	RNA, long non-coding
+HGNC:56142	LINC03014	RNA, long non-coding
+HGNC:56143	LINC03015	RNA, long non-coding
+HGNC:56145	LINC03016	RNA, long non-coding
+HGNC:56146	LINC03017	RNA, long non-coding
+HGNC:27837	LINC03018	RNA, long non-coding
+HGNC:27982	LINC03019	RNA, long non-coding
+HGNC:56148	LINC03020	RNA, long non-coding
+HGNC:56149	LINC03021	RNA, long non-coding
+HGNC:56151	LINC03022	RNA, long non-coding
+HGNC:56154	LINC03023	RNA, long non-coding
+HGNC:56155	LINC03024	RNA, long non-coding
+HGNC:56158	LINC03025	RNA, long non-coding
+HGNC:56164	LINC03026	RNA, long non-coding
+HGNC:48681	LINC03027	RNA, long non-coding
+HGNC:56168	LINC03028	RNA, long non-coding
+HGNC:56169	LINC03029	RNA, long non-coding
+HGNC:56171	LINC03030	RNA, long non-coding
+HGNC:56174	LINC03031	RNA, long non-coding
+HGNC:56192	LINC03032	RNA, long non-coding
+HGNC:44292	LINC03033	RNA, long non-coding
+HGNC:54360	LINC03034	RNA, long non-coding
+HGNC:56211	LINC03035	RNA, long non-coding
+HGNC:56220	LINC03036	RNA, long non-coding
+HGNC:56227	LINC03037	RNA, long non-coding
+HGNC:56244	LINC03038	RNA, long non-coding
+HGNC:56250	LINC03044	RNA, long non-coding
+HGNC:56262	LINC03046	RNA, long non-coding
+HGNC:56265	LINC03047	RNA, long non-coding
+HGNC:56272	LINC03048	RNA, long non-coding
+HGNC:56282	LINC03049	RNA, long non-coding
+HGNC:56283	LINC03050	RNA, long non-coding
+HGNC:56330	LINC03051	RNA, long non-coding
+HGNC:56335	LINC03052	RNA, long non-coding
+HGNC:56172	LIPT2-AS1	RNA, long non-coding
+HGNC:52752	LNCBRM	RNA, long non-coding
+HGNC:56254	LNCHR1	unknown
+HGNC:54521	LNCPOIR	RNA, long non-coding
+HGNC:54397	LY6S	gene with protein product
+HGNC:56247	MAGEA3-DT	RNA, long non-coding
+HGNC:56125	MAP3K5-AS2	RNA, long non-coding
+HGNC:56110	MAP9-AS1	RNA, long non-coding
+HGNC:56238	MARCHF6-DT	RNA, long non-coding
+HGNC:56194	MIDEAS-AS1	RNA, long non-coding
+HGNC:56144	MIR3147HG	RNA, long non-coding
+HGNC:56193	MIR3171HG	RNA, long non-coding
+HGNC:56248	MSANTD7	gene with protein product
+HGNC:53386	MSRB3-AS1	RNA, long non-coding
+HGNC:55561	NHIP	RNA, long non-coding
+HGNC:40947	NHSL1-AS1	RNA, long non-coding
+HGNC:56271	NIPAL2-AS1	RNA, long non-coding
+HGNC:56212	NXTAR	RNA, long non-coding
+HGNC:50896	OR2W1-AS1	RNA, long non-coding
+HGNC:56199	OR4M2-OT1	RNA, long non-coding
+HGNC:56189	PAIP1P2	pseudogene
+HGNC:56111	PCDHB1-AS1	RNA, long non-coding
+HGNC:56108	PCGF3-AS1	RNA, long non-coding
+HGNC:56334	PDE7B-AS1	RNA, long non-coding
+HGNC:56263	PELO-AS1	RNA, long non-coding
+HGNC:40958	PNISR-AS1	RNA, long non-coding
+HGNC:56246	POLGARF	gene with protein product
+HGNC:56150	PPP1R3B-DT	RNA, long non-coding
+HGNC:40168	PRADX	RNA, long non-coding
+HGNC:56186	PRDM4-AS1	RNA, long non-coding
+HGNC:40467	PRKAG2-AS2	RNA, long non-coding
+HGNC:56289	PRODHLP	pseudogene
+HGNC:56242	PRR11-AS1	RNA, long non-coding
+HGNC:56316	PRR23E2P	pseudogene
+HGNC:56104	PSMD14-DT	RNA, long non-coding
+HGNC:56210	PTPRS-AS1	RNA, long non-coding
+HGNC:52874	PYDC2-AS1	RNA, long non-coding
+HGNC:27381	RNASE11-AS1	RNA, long non-coding
+HGNC:56120	SERPINB9-AS1	RNA, long non-coding
+HGNC:55460	SLC28A3-AS1	RNA, long non-coding
+HGNC:56178	SLC38A4-AS1	RNA, long non-coding
+HGNC:54417	SMANTIS	RNA, long non-coding
+HGNC:56307	SMIM46	gene with protein product
+HGNC:53452	SMIM47	gene with protein product
+HGNC:41039	SORBS2-AS1	RNA, long non-coding
+HGNC:55808	SPADH	gene with protein product
+HGNC:56328	SPRING1P3	pseudogene
+HGNC:56137	STEAP1B-AS1	RNA, long non-coding
+HGNC:56228	SYNM-AS2	RNA, long non-coding
+HGNC:56173	SYT9-AS1	RNA, long non-coding
+HGNC:56167	SYT15-AS1	RNA, long non-coding
+HGNC:51487	SYT15B	gene with protein product
+HGNC:56315	SZRD1P1	pseudogene
+HGNC:56119	TDRD6-AS1	RNA, long non-coding
+HGNC:53893	TMA7B	gene with protein product
+HGNC:56321	TMEM258P1	pseudogene
+HGNC:56322	TMEM258P2	pseudogene
+HGNC:56235	TMEM276	gene with protein product
+HGNC:55173	TMSB15C	gene with protein product
+HGNC:56197	TRD-AS1	RNA, long non-coding
+HGNC:56224	TRPS1-AS1	RNA, long non-coding
+HGNC:56196	TTC7B-AS1	RNA, long non-coding
+HGNC:53753	WAKMAR1	RNA, long non-coding
+HGNC:56216	WEE1P1	pseudogene
+HGNC:56217	WEE1P2	pseudogene
+HGNC:51823	WEE2P1	pseudogene
+HGNC:56156	XKR4-AS1	RNA, long non-coding
+HGNC:56304	ZC3H11C	gene with protein product
+HGNC:56021	ZNF473CR	RNA, long non-coding
+HGNC:38707	ZNF892	gene with protein product
+
+>>>> Updated 109 Genes (57 protein coding)
+CRYM-AS1 >>>>> ABCA15P
+BTBD11 >>>>> ABTB3
+ALG1L >>>>> ALG1L1P
+LINC02969 >>>>> APPAT
+ATE1-AS1 >>>>> ATE1OSP
+FAM214A >>>>> ATOSA
+FAM214B >>>>> ATOSB
+FAM214BP1 >>>>> ATOSBP1
+ABHD11-AS1 >>>>> BICDL3P
+KIAA1109 >>>>> BLTP1
+KIAA0100 >>>>> BLTP2
+UHRF1BP1 >>>>> BLTP3A
+UHRF1BP1L >>>>> BLTP3B
+ARNTL >>>>> BMAL1
+ARNTL2 >>>>> BMAL2
+ARNTL2-AS1 >>>>> BMAL2-AS1
+BTNL10 >>>>> BTNL10P
+LRRC58-DT >>>>> BTNL12P
+C3orf86 >>>>> C3orf86P
+C22orf46 >>>>> C22orf46P
+CARD17 >>>>> CARD17P
+CASTOR3 >>>>> CASTOR3P
+CCDC144B >>>>> CCDC144BP
+LINC02962 >>>>> CCDST
+C11orf1 >>>>> CFAP68
+C5orf49 >>>>> CFAP90
+C17orf64 >>>>> CHCT1
+LMLN2 >>>>> CIROP
+CLECL1 >>>>> CLECL1P
+C11orf49 >>>>> CSTPP1
+FAM102A >>>>> EEIG1
+FAM102B >>>>> EEIG2
+FAM189A2 >>>>> ENTREP1
+FAM189A1 >>>>> ENTREP2
+FAM189B >>>>> ENTREP3
+FAM25E >>>>> FAM25EP
+C9orf129 >>>>> FAM120A2P
+FAM169B >>>>> FAM169BP
+LRRC29 >>>>> FBXL9P
+C11orf94 >>>>> FREY1
+FAM71BP1 >>>>> GARIN3P1
+GBA >>>>> GBA1
+GGT2 >>>>> GGT2P
+GK3P >>>>> GK3
+GNG5P2 >>>>> GNG5B
+GOLGA6L3 >>>>> GOLGA6L3P
+GOLGA6L24P >>>>> GOLGA6L24
+GOLGA6L25P >>>>> GOLGA6L25
+C10orf99 >>>>> GPR15LG
+BHLHB9 >>>>> GPRASP3
+H2AW >>>>> H2AC25
+H2BU1 >>>>> H2BC26
+H2BU2P >>>>> H2BC27P
+H4-16 >>>>> H4C16
+C16orf72 >>>>> HAPSTR1
+LINC01146 >>>>> HISLA
+FAM126A >>>>> HYCC1
+FAM126B >>>>> HYCC2
+IGBP1P2 >>>>> IGBP1C
+C1orf147 >>>>> IKBKE-AS1
+C7orf26 >>>>> INTS15
+C5orf38 >>>>> IRX2-DT
+LINC00653 >>>>> LCDR
+C6orf223 >>>>> LINC03040
+C9orf92 >>>>> LINC03041
+C8orf86 >>>>> LINC03042
+C7orf77 >>>>> LINC03043
+LINC02618 >>>>> LRRC78P
+TMEM251 >>>>> LYSET
+TMEM251P1 >>>>> LYSETP1
+KIAA0895L >>>>> MATCAP1
+KIAA0895 >>>>> MATCAP2
+MFSD14C >>>>> MFSD14CP
+MAFG-DT >>>>> MILIP
+MYLPF >>>>> MYL11
+LINC02163 >>>>> NIHCOLE
+LINC01693 >>>>> NTRAS
+LINC00211 >>>>> PIRAT1
+ZNRD1ASP >>>>> POLR1HASP
+C11orf53 >>>>> POU2AF2
+COLCA2 >>>>> POU2AF3
+C3orf56 >>>>> PRR23E
+ZADH2 >>>>> PTGR3
+LINC02085 >>>>> RDUR
+DDX58 >>>>> RIGI
+RPSAP58 >>>>> RPSA2
+LINC00643 >>>>> SERTAD4BP
+SKIV2L >>>>> SKIC2
+TTC37 >>>>> SKIC3
+WDR61 >>>>> SKIC8
+SLC26A10 >>>>> SLC26A10P
+C7orf61 >>>>> SPACDR
+SULT1C2P1 >>>>> SULT1C5P
+LINC00565 >>>>> SWINGN
+C19orf71 >>>>> TEKTIP1
+LINC01529 >>>>> TEX14BP
+C6orf201 >>>>> TEX56P
+LINC01869 >>>>> TMEM277P
+UBE2Q2L >>>>> UBE2Q2P16
+C16orf91 >>>>> UQCC4
+XKRY2 >>>>> XKRYP7
+ZDHHC8P1 >>>>> ZDHHC8BP
+CYHR1 >>>>> ZFTRAF1
+CBWD1 >>>>> ZNG1A
+CBWD2 >>>>> ZNG1B
+CBWD3 >>>>> ZNG1C
+CBWD4P >>>>> ZNG1DP
+CBWD5 >>>>> ZNG1E
+CBWD6 >>>>> ZNG1F
+
+>>>> Removed 11 Genes (2 protein coding)
+HGNC:29192	KIAA1107	gene with protein product
+HGNC:53815	KRTAP12-6P	pseudogene
+HGNC:16202	LINC00266-1	RNA, long non-coding
+HGNC:38529	LINC00266-2P	pseudogene
+HGNC:21112	LINC00266-3	RNA, long non-coding
+HGNC:38800	LINC00266-4P	pseudogene
+HGNC:49845	LINC01251	RNA, long non-coding
+HGNC:53861	LINC02590	RNA, long non-coding
+HGNC:55015	NABP1-OT1	RNA, long non-coding
+HGNC:36277	RPL36AP42	pseudogene
+HGNC:11803	TIAF1	gene with protein product
