@@ -1,1 +1,1 @@
-python gene_symbol_correction.py path/to/mapping_file path/to/file
+python gene_symbol_correction.py --mapping path/to/mapping_file --hugo path/to/file
