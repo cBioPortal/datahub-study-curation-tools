@@ -41,19 +41,29 @@ if __name__ == "__main__":
 			else:
 				replace_line = None
 				# looping through the required column names
-				for gene_name in ["Site1_Hugo_Symbol", "Site2_Hugo_Symbol", "Hugo_Symbol"]:
+				for gene_name in ["Site1_Hugo_Symbol", "Site2_Hugo_Symbol", "Hugo_Symbol", "Composite.Element.REF"]: # Add more column names of the hugo symbols that you want to convert
+					# check whether the column name exists
 					gene = header_dict.get(gene_name)
 					if gene is None:
 						continue
-
+				
 					values = line.split("\t")
 					values[gene] = values[gene].strip('\t')
 					
-					# if the gene name exists in the column replace it with the mappings 
-					if values[gene].upper() in gene_dict:
-						replace_line = line.replace(values[gene],gene_dict[values[gene].upper()],1)
-						replaced_list[values[gene]] = gene_dict[values[gene].upper()]
-						data += replace_line
+					if gene_name == "Composite.Element.REF":
+						values[gene] =  values[gene].split("|")
+						for gne in values[gene]:
+							if gne.upper() in gene_dict:
+								replace_line = line.replace(gne,gene_dict[gne.upper()],1)
+								replaced_list[gne] = gene_dict[gne.upper()]
+								data += replace_line
+					else:
+						# if the gene name exists in the column replace it with the mappings 
+						if values[gene].upper() in gene_dict:
+							replace_line = line.replace(values[gene],gene_dict[values[gene].upper()],1)
+							replaced_list[values[gene]] = gene_dict[values[gene].upper()]
+							data += replace_line
+
 				if not replace_line:
 					data += line
 				else:
