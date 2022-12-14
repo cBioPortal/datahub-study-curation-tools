@@ -16,7 +16,7 @@ from itertools import groupby
 from operator import itemgetter
 
 def write_data(final_mapped_data, header, outfile):
-	updated_header = ['Sample_ID', 'Site1_Hugo_Symbol', 'Site1_Entrez_Gene_Id', 'Site2_Hugo_Symbol', 'Site2_Entrez_Gene_Id', 'SV_Status']
+	updated_header = ['Sample_Id', 'Site1_Hugo_Symbol', 'Site1_Entrez_Gene_Id', 'Site2_Hugo_Symbol', 'Site2_Entrez_Gene_Id', 'SV_Status']
 	additional_columns = [x for x in header if x not in updated_header and x not in ['index', 'Hugo_Symbol', 'Entrez_Gene_Id', 'Tumor_Sample_Barcode']]
 	updated_header.extend(additional_columns)
 
@@ -49,7 +49,7 @@ def map_fusion_to_sv(fusion_dict):
 					for k, v in new_dict.items():
 						if k == 'Hugo_Symbol': dict1['Site1_Hugo_Symbol'] = v
 						elif k == 'Entrez_Gene_Id': dict1['Site1_Entrez_Gene_Id'] = v
-						elif k == 'Tumor_Sample_Barcode': dict1['Sample_ID'] = v
+						elif k == 'Tumor_Sample_Barcode': dict1['Sample_Id'] = v
 						else: dict1[k] = v
 						dict1['SV_Status'] = 'SOMATIC'
 				else:
@@ -63,7 +63,7 @@ def map_fusion_to_sv(fusion_dict):
 					for k1, v1 in v.items():
 						if k1 == 'Hugo_Symbol': dict2['Site1_Hugo_Symbol'] = v1
 						elif k1 == 'Entrez_Gene_Id': dict2['Site1_Entrez_Gene_Id'] = v1
-						elif k1 == 'Tumor_Sample_Barcode': dict2['Sample_ID'] = v1
+						elif k1 == 'Tumor_Sample_Barcode': dict2['Sample_Id'] = v1
 						else: dict2[k1] = v1
 						dict2['SV_Status'] = 'SOMATIC'
 						dict2['Site2_Hugo_Symbol'] = ""
