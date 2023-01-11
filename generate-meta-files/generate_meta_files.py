@@ -1,17 +1,27 @@
 import argparse
 import glob
 import pandas as pd
+import sys
 
-parser = argparse.ArgumentParser(
+metadata = ['type_of_cancer: gbm\n'
+'name: The name of the cancer study,e.g., "Breast Cancer (Jones Lab 2013)"\n'
+'description:  Description of the study.\n'
+'pmid: eg.,33577785\n'
+'citation: A relevant citation, e.g., "TCGA, Nature 2012".\n']
+
+
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(
                     prog = 'metafile generator',
                     description = 'Generate metafiles for datafiles')
 
-parser.add_argument('-d', '--directory', help="the folder that has all the study data files")
-parser.add_argument('-s', '--study_id', help="name of the cancer_study_identifier")
-parser.add_argument('-m', '--meta_datatype_file', help="datatypes.txt file path")
+	parser.add_argument('-d', '--directory', help="the folder that has all the study data files")
+	parser.add_argument('-s', '--study_id', help="name of the cancer_study_identifier")
+	parser.add_argument('-f', '--meta_datatype_file', help="datatypes.txt file path")
 
-args = parser.parse_args()
-
+# parse arguments
+args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
+	
 # read 2 types of file formats
 types = (f'{args.directory}/data_*.txt', f'{args.directory}/data_*.seg') # the tuple of file types
 files_grabbed = []
@@ -57,3 +67,8 @@ for values in datatype_df["datatype"]:
 		with open(file_path, "w") as ff:
 			ff.writelines(f"cancer_study_identifier: {args.study_id}\n")
 			ff.writelines(emp)
+		
+		file_path = f"{args.directory}/meta_study.txt"
+		with open(file_path, 'w') as meta_study:
+			meta_study.writelines(f"cancer_study_identifier: {args.study_id}\n")
+			for val in metadata: meta_study.write(val)
