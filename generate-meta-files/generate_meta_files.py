@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
 	parser.add_argument('-d', '--directory', help="the folder that has all the study data files")
 	parser.add_argument('-s', '--study_id', help="name of the cancer_study_identifier")
-	parser.add_argument('-f', '--meta_datatype_file', help="datatypes.txt file path")
+	parser.add_argument('-m', '--meta_datatype_file', help="datatypes.txt file path")
 
 # parse arguments
 args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
