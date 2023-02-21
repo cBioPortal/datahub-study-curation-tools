@@ -26,13 +26,15 @@ def main():
     pmap = load_map(args.patient_map, args.patient_from, args.patient_to)
 
     rewrite_study(args.source_path, args.dest_path, patient_map=pmap, sample_map=smap, strict=not args.drop_unknown)
+    print("done")
 
 
 def load_map(map_fname, from_f, to_f):
     with open(map_fname) as f:
         map_list = list(csv.DictReader(f))
 
-    return {map_dict[from_f]: map_dict[to_f] for map_dict in map_list}
+    # TODO strict check that values are unique
+    return {map_dict[from_f]: map_dict[to_f] for map_dict in map_list if map_dict[to_f]}
 
 
 def rewrite_study(study_dir, output_dir, patient_map, sample_map, strict=True):
@@ -40,14 +42,24 @@ def rewrite_study(study_dir, output_dir, patient_map, sample_map, strict=True):
     for fname in [fname for fname in os.listdir(study_dir) if "data" in fname]:
         header = extract_header(study_dir + "/" + fname)
 
-        by_column = lambda field, map: map_by_ID(study_dir, fname, header.index(field), map, output_dir, strict=strict)
+        by_column = lambda field, map: map_by_ID(
+            study_dir, fname, header.index(field), map, output_dir, field, strict=strict
+        )
 
         if "patient_id" in header and "sample_id" not in header:
             by_column("patient_id", patient_map)
 
-        elif "patient_id" in header and "sample_id" in header and "timeline" in fname:
-            # map_two(study_dir, fname, header.index("patient_id"), patient_map, header.index("sample_id"), sample_map, output_dir)
-            pass  ## TBD
+        elif "patient_id" in header and "sample_id" in header:
+            multi_map(
+                study_dir,
+                fname,
+                {
+                    header.index("patient_id"): patient_map,
+                    header.index("sample_id"): sample_map,
+                },
+                output_dir,
+                strict=strict,
+            )
 
         elif "sample_id" in header:
             by_column("sample_id", sample_map)
@@ -58,7 +70,16 @@ def rewrite_study(study_dir, output_dir, patient_map, sample_map, strict=True):
         elif "tumor_sample_barcode" in header:
             # if "matched_norm_sample_barcode" in header:
             #     # TBD - map two columns.
-            #     map_two(study_dir, fname, header.index("tumor_sample_barcode"), sample_map, header.index("matched_norm_sample_barcode"), sample_map, output_dir)
+            #     multi_map(
+            #         study_dir,
+            #         fname,
+            #         {
+            #             header.index("patient_id"): patient_map,
+            #             header.index("sample_id"): sample_map,
+            #         },
+            #         output_dir,
+            #         strict=strict
+            #     )
 
             by_column("tumor_sample_barcode", sample_map)
 
@@ -92,17 +113,27 @@ def rewrite_study(study_dir, output_dir, patient_map, sample_map, strict=True):
         map_case_list(study_dir + "/case_lists", cl_fname, sample_map, output_dir + "/case_lists", strict=strict)
 
 
-def extract_header(filename):
+def extract_header(filename, lower=True, split=True):
     with open(filename, "r") as infile:
         for line in infile:
             if line.startswith("#"):
                 continue
             else:
-                return line.lower().rstrip("\n").split("\t")
+                if lower:
+                    line = line.lower()
+                line = line.rstrip("\n")
+                if split:
+                    line = line.split("\t")
+                return line
             break
 
 
-def map_by_ID(study_dir, fname, index_column, id_map, output_dir, strict=True):
+class StrictModeNoMappingFound(Exception):
+    pass
+
+
+# Obsolete to the favor of "multi_map"
+def map_by_ID(study_dir, fname, col_idx, id_map, output_dir, fieldname="", strict=True):
 
     header_data = ""
     data = ""
@@ -111,7 +142,7 @@ def map_by_ID(study_dir, fname, index_column, id_map, output_dir, strict=True):
     fullheader = False
 
     with open(study_dir + "/" + fname, "r") as data_file:
-        for lnum, line in enumerate(data_file):
+        for lnum, line in enumerate(data_file, 1):
 
             if line.startswith("#"):  # processing preamble
                 header_data += line
@@ -119,19 +150,19 @@ def map_by_ID(study_dir, fname, index_column, id_map, output_dir, strict=True):
                 if fullheader:  # now processing data lines
                     values = line.rstrip("\n").split("\t")
 
-                    current_id = values[index_column]
+                    current_id = values[col_idx]
                     try:
                         new_id = id_map[current_id]
                     except KeyError:
+                        msg = "No mapping found for {}{!r} used in {}:{}".format(
+                            fieldname + ":" if fieldname else "", current_id, fname, lnum
+                        )
                         if strict:
-                            raise Exception("No mapping found for {} used in {}:{}".format(current_id, fname, lnum))
+                            raise StrictModeNoMappingFound(msg)
                         else:
-                            continue
+                            print(msg)
 
-                    if strict and not new_id:
-                        raise Exception("Empty mapping found for {} used in {}:{}".format(current_id, fname, lnum))
-
-                    values[index_column] = new_id
+                    values[col_idx] = new_id
                     data += "\t".join(values) + "\n"
 
                 else:  # first line after preamble is the header
@@ -144,61 +175,165 @@ def map_by_ID(study_dir, fname, index_column, id_map, output_dir, strict=True):
             outfile.write(header_data)
             outfile.write(data)
     else:
+        print("Empty remapped file " + fname + " - skipping..")
+
+
+def _multi_map_one_line(line, column_index_to_map_dict, strict):
+    values = line.rstrip("\n").split("\t")
+
+    for idx, map in column_index_to_map_dict.items():
+
+        current_id = values[idx]
+        try:
+            new_id = map[current_id]
+        except KeyError:
+            msg = "No mapping found for {}".format(current_id)
+            if strict:
+                raise StrictModeNoMappingFound(msg)
+            else:
+                print(msg)
+                return ""  # because we don't want half-mapped entries
+
+        values[idx] = new_id
+
+    return "\t".join(values) + "\n"
+
+
+def multi_map(study_dir, fname, column_index_to_map_dict, output_dir, strict=True):
+
+    header_data = ""
+    data = ""
+    print("Processing file " + fname + " ")
+
+    fullheader = False
+
+    with open(study_dir + "/" + fname, "r") as data_file:
+        for lnum, line in enumerate(data_file, 1):
+
+            if line.startswith("#"):  # processing "preamble"
+                header_data += line
+
+            elif not fullheader:  # first line after "preamble" is the header
+                header_data += line
+                fullheader = True
+
+            else:  # now processing data lines
+                try:
+                    data += _multi_map_one_line(line, column_index_to_map_dict, strict=strict)
+                except StrictModeNoMappingFound as e:
+                    msg = "{} from {}:{}".format(e, fname, lnum)
+                    if strict:
+                        raise StrictModeNoMappingFound(msg)
+                    else:
+                        print(msg)
+                        continue
+
+    if data != "":
+        print("Writing remapped data to " + output_dir + "/" + fname)
+        with open(output_dir + "/" + fname, "w") as outfile:
+            outfile.write(header_data)
+            outfile.write(data)
+    else:
         print("Empty remmaped file " + fname + " - skipping..")
 
 
-# def map_matrix_type(study_dir, file, sample_ids_list, outdir, data_cols):
-# def map_matrix_type(study_dir, fname, sample_map, output_dir, data_cols):
-#     data = ""
-#     data_cols_len = len(data_cols)
-#     header_cols = extract_header(study_dir, file)
-#     for value in header_cols:
-#         if value in sample_map:
-#             ind = header_cols.index(value)
-#             data_cols.append(ind)
-#     if len(data_cols) == data_cols_len:
-#         return None
+def map_matrix_type(study_dir, fname, sample_map, output_dir, index_cols):
+    print("Processing matrix file " + fname + "...")
 
-#     print("Processing file " + file + "...")
-#     with open(study_dir + "/" + file, "r") as data_file:
-#         for line in data_file:
-#             if line.startswith("#"):
-#                 data += line
-#             elif line.startswith(header_cols[0]):
-#                 data += "\t".join([header_cols[i] for i in data_cols]) + "\n"
-#             else:
-#                 line = line.strip("\n").split("\t")
-#                 if "" in set([line[i] for i in data_cols]) and len(set([line[i] for i in data_cols])) == 2:
-#                     continue
-#                 else:
-#                     data += "\t".join([line[i] for i in data_cols]) + "\n"
+    data_cols = []
+    header_cols = extract_header(study_dir + "/" + fname, lower=False)
+    header = "\t".join(header_cols)
 
-#     if data != "":
-#         print("Writing subsetted data to " + outdir + "/" + file + "\n")
-#         with open(outdir + "/" + file, "w") as datafile:
-#             datafile.write(data.strip("\n"))
-#     else:
-#         print("Sample IDs to subset are not present in file. Skipping..")
+    for ind, value in enumerate(header_cols):
+        if value in sample_map:
+            data_cols.append(ind)
+
+    if not data_cols:  # TODO check strict?
+        print("No data cols detected?")
+        return None
+
+    data = ""
+    with open(study_dir + "/" + fname, "r") as data_file:
+
+        for lnum, line in enumerate(data_file, 1):
+
+            if line.startswith("#"):
+                data += line
+
+            elif line.startswith(header):  # .startswith because of possible trailing '\n' mismatch
+
+                mapped_header_line = [header_cols[i] for i in index_cols]
+
+                # TODO strict?
+                # Actual mapping now:
+                mapped_header_line += [sample_map[header_cols[i]] for i in data_cols]
+
+                data += "\t".join(mapped_header_line) + "\n"
+
+            else:
+
+                line = line.strip("\n").split("\t")
+
+                filtered_data_line = [line[i] for i in index_cols + data_cols]
+
+                ## TODO FIXME What was this for?
+                # if "" in filtered_data_line and len(filtered_data_line) == 2:
+                #     continue
+
+                data += "\t".join(filtered_data_line) + "\n"
+
+    if data != "":
+        print("Writing remapped data to " + output_dir + "/" + fname + "\n")
+        with open(output_dir + "/" + fname, "w") as datafile:
+            datafile.write(data.strip("\n"))
+    else:
+        print("Sample IDs to subset are not present in {}. Skipping..".format(fname))
+
+
+def _remap_list_of_ids(ids, id_map, init_offset=0, strict=True):
+    res = []
+    offset = init_offset
+    for current_id in ids:
+        try:
+            res.append(id_map[current_id])
+        except KeyError:
+            msg = "No mapping found for {!r} columns {}-{}".format(current_id, offset, offset + len(current_id))
+            if strict:
+                raise StrictModeNoMappingFound(msg)
+            else:
+                print(msg)
+                continue
+
+        offset += len(current_id) + 1  # 1 is for the delimiter
+    return res
+
+
+def _unique_keep_order(list):
+    res = []
+    s = set()
+    for i in list:
+        if i not in s:
+            s.add(i)
+            res.append(i)
+    return res
 
 
 def map_case_list(dir, fname, id_map, output_dir, strict=True):
     data = ""
     with open(dir + "/" + fname) as f:
-        for lnum, line in enumerate(f):
-            if not line.startswith("case_list_ids: "):
-                data += line
+        for lnum, line in enumerate(f, 1):
+            if line.startswith("case_list_ids: "):
+
+                orig_ids = line.split(" ", 1)[1].rstrip("\n").rstrip("\t").split("\t")
+
+                try:
+                    new_ids = _remap_list_of_ids(orig_ids, id_map, init_offset=len("case_list_ids: "), strict=strict)
+                except StrictModeNoMappingFound as e:
+                    raise StrictModeNoMappingFound("{} from {}:{}".format(e, fname, lnum))
+
+                data += "case_list_ids: " + "\t".join(_unique_keep_order(new_ids)) + "\n"
             else:
-                orig_ids = line.split(" ", 1)[1].split("\t")
-                new_ids = []
-                for current_id in orig_ids:
-                    try:
-                        new_ids.append(id_map[current_id])
-                    except KeyError:
-                        if strict:
-                            raise Exception("No mapping found for {} used in {}:{}".format(current_id, fname, lnum))
-                        else:
-                            continue
-                data += "case_list_ids: " + "\t".join(new_ids) + "\n"
+                data += line
 
     if data != "":
         print("Writing remapped data to " + output_dir + "/" + fname)
