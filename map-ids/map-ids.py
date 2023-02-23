@@ -42,46 +42,30 @@ def rewrite_study(study_dir, output_dir, patient_map, sample_map, strict=True):
     for fname in [fname for fname in os.listdir(study_dir) if "data" in fname]:
         header = extract_header(study_dir + "/" + fname)
 
-        by_column = lambda field, map: map_by_ID(
-            study_dir, fname, header.index(field), map, output_dir, field, strict=strict
+        by_column = lambda **maps_kv: multi_map(
+            study_dir, fname, {header.index(field): map for field, map in maps_kv.items()}, output_dir, strict=strict
         )
 
         if "patient_id" in header and "sample_id" not in header:
-            by_column("patient_id", patient_map)
+            by_column(patient_id=patient_map)
 
         elif "patient_id" in header and "sample_id" in header:
-            multi_map(
-                study_dir,
-                fname,
-                {
-                    header.index("patient_id"): patient_map,
-                    header.index("sample_id"): sample_map,
-                },
-                output_dir,
-                strict=strict,
-            )
+            by_column(patient_id=patient_map, sample_id=sample_map)
 
         elif "sample_id" in header:
-            by_column("sample_id", sample_map)
+            by_column(sample_id=sample_map)
 
         elif "sampleid" in header:
-            by_column("sampleid", sample_map)
+            by_column(sampleid=sample_map)
 
         elif "tumor_sample_barcode" in header:
             # if "matched_norm_sample_barcode" in header:
             #     # TBD - map two columns.
-            #     multi_map(
-            #         study_dir,
-            #         fname,
-            #         {
-            #             header.index("patient_id"): patient_map,
-            #             header.index("sample_id"): sample_map,
-            #         },
-            #         output_dir,
-            #         strict=strict
-            #     )
+            #     tumor_sample_barcode - with set strictness
+            #     and
+            #     matched_norm_sample_barcode - with no strictness?
 
-            by_column("tumor_sample_barcode", sample_map)
+            by_column(tumor_sample_barcode=sample_map)
 
         elif "id" in header and "chrom" in header:
             raise Exception("Not implemented for id/chrom file type {}".format(fname))
@@ -130,52 +114,6 @@ def extract_header(filename, lower=True, split=True):
 
 class StrictModeNoMappingFound(Exception):
     pass
-
-
-# Obsolete to the favor of "multi_map"
-def map_by_ID(study_dir, fname, col_idx, id_map, output_dir, fieldname="", strict=True):
-
-    header_data = ""
-    data = ""
-    print("Processing file " + fname + " ")
-
-    fullheader = False
-
-    with open(study_dir + "/" + fname, "r") as data_file:
-        for lnum, line in enumerate(data_file, 1):
-
-            if line.startswith("#"):  # processing preamble
-                header_data += line
-            else:
-                if fullheader:  # now processing data lines
-                    values = line.rstrip("\n").split("\t")
-
-                    current_id = values[col_idx]
-                    try:
-                        new_id = id_map[current_id]
-                    except KeyError:
-                        msg = "No mapping found for {}{!r} used in {}:{}".format(
-                            fieldname + ":" if fieldname else "", current_id, fname, lnum
-                        )
-                        if strict:
-                            raise StrictModeNoMappingFound(msg)
-                        else:
-                            print(msg)
-
-                    values[col_idx] = new_id
-                    data += "\t".join(values) + "\n"
-
-                else:  # first line after preamble is the header
-                    header_data += line
-                    fullheader = True
-
-    if data != "":
-        print("Writing remapped data to " + output_dir + "/" + fname)
-        with open(output_dir + "/" + fname, "w") as outfile:
-            outfile.write(header_data)
-            outfile.write(data)
-    else:
-        print("Empty remapped file " + fname + " - skipping..")
 
 
 def _multi_map_one_line(line, column_index_to_map_dict, strict):
