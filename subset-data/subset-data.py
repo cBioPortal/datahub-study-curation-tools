@@ -135,6 +135,40 @@ def identify_file_type(study_dir, sample_ids_list, patient_ids_list, output_dir)
 			index_cols = find_sample_position(file, header)
 			subset_by_generic_assay(study_dir, file, sample_ids_list, output_dir, index_cols)
 
+
+	print("Processing case lists from " + study_dir + "/case_lists ...")
+	try:
+		os.mkdir(output_dir + "/case_lists")
+	except FileExistsError:
+		pass
+
+	for cl_fname in os.listdir(study_dir + "/case_lists"):
+		subset_case_list(study_dir + "/case_lists", cl_fname, sample_ids_list, output_dir + "/case_lists")
+
+
+def subset_case_list(dir, file, sample_ids_list, output_dir):
+	data = ""
+	sample_ids_set = set(sample_ids_list)
+	print('Processing file '+file+'...')
+	with open(dir + "/" + file) as f:
+		for lnum, line in enumerate(f, 1):
+			if not line.startswith("case_list_ids: "):
+				data += line
+			else:
+				orig_ids = line.rstrip("\n").split(" ", 1)[1].rstrip("\t").split("\t")
+
+				new_ids = [id for id in orig_ids if id in sample_ids_set]
+				data += "case_list_ids: " + "\t".join(new_ids) + "\n"
+
+	if data != "":
+		print("Writing subset data to " + output_dir + "/" + file)
+		with open(output_dir + "/" + file, "w") as outfile:
+			outfile.write(data)
+	else:
+		print("Empty subset file " + file + " - skipping..")
+
+
+
 def create_ids_list(filename):
 	ids_list = set()
 	with open(filename, 'r') as ids:
