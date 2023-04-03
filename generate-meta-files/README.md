@@ -14,5 +14,5 @@ generate_meta_files.py [-h] -m META_DATATYPE_FILE -d STUDY_DIR -s STUDY_ID
 ```
 ### Example
 ```
-python3 path/to/generate_meta_files.py -m path/to/datatypes.txt -d public/brca_tcga -s brca_tcga
+python3 path/to/generate_meta_files.py -m path/to/datatypes.txt -d private/brca_tcga -s brca_tcga
 ```
