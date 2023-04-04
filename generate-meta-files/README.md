@@ -1,5 +1,6 @@
 #Usage
-Generate meta files for existing study.
+This tool is designed to create metadata files using the metadata types file.
+The metadata types file contains values such as DATATYPE, STABLE_ID, DATA_FILENAME, META_GENETIC_ALTERATION_TYPE, META_PROFILE_NAME etc and the script looks for the datatype values present in the datatypes sheet and generates meta files accordingly.
 
 ### Command Line
 ```
@@ -14,5 +15,5 @@ generate_meta_files.py [-h] -m META_DATATYPE_FILE -d STUDY_DIR -s STUDY_ID
 ```
 ### Example
 ```
-python3 path/to/generate_meta_files.py -m path/to/datatypes.txt -d private/brca_tcga -s brca_tcga
+python3 path/to/generate_meta_files.py -m path/to/datatypes.txt -d public/brca_tcga -s brca_tcga
 ```
