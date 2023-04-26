@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+
+# Copyright (c) 2023 Memorial Sloan Kettering Cancer Center
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+import click
+import pandas as pd
+import os
+import logging
+
+# set logger
+logfilename = 'subset.log'
+formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+file_handler = logging.FileHandler(logfilename)
+file_handler.setFormatter(formatter)
+logger = logging.getLogger('subset')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(file_handler)
+
+# Globals
+meta_datatypes_file = 'config_files/meta_datatypes.txt'
+datatype_df = pd.read_csv(meta_datatypes_file, sep="\t")
+
+metadata = ['type_of_cancer: gbm\n'
+'name: The name of the cancer study,e.g., "Breast Cancer (Jones Lab 2013)"\n'
+'description:  Description of the study.\n'
+'pmid: eg.,33577785\n'
+'citation: A relevant citation, e.g., "TCGA, Nature 2012".\n']
+
+cols = ["DATA_FILENAME", "META_GENERIC_ASSAY_TYPE", "META_GENERIC_ENTITY_meta_PROPERTIES",
+       'META_STABLE_ID', 'META_GENETIC_ALTERATION_TYPE', 'META_DATATYPE',
+	   'META_SHOW_PROFILE_IN_ANALYSIS_TAB', 'META_PROFILE_NAME',
+	   'META_PROFILE_DESCRIPTION', 'META_REFERENCE_GENOME_ID']
+
+@click.command()
+@click.option('-d', '--directory', help="the folder that has all the study data files", required = True)
+@click.option('-s', '--study_id', help="name of the cancer_study_identifier", required = True)
+
+def main(directory, study_id):
+	files_list = [f for f in os.listdir(directory) if f.startswith('data') or f.endswith('.seg')]
+	
+	for file in files_list:
+		if file in datatype_df['DATA_FILENAME'].values:
+			meta_filename = datatype_df.loc[datatype_df['DATA_FILENAME'] == file, 'META_FILENAME'].iloc[0]
+			meta_filepath = directory+'/'+meta_filename
+			emp = "" # appending to empty string
+			cc = datatype_df.loc[datatype_df['DATA_FILENAME'] == file] # checking the row and getting all the row values of each column
+			for col in cols:
+				xx = list(cc[col])[-1]
+				if str(xx) != "nan": # check if NAN values are present
+					ss = col.replace("META_", '').lower() # then Replacing Meta_ to ''
+					append_string = f"{ss}: {xx}\n"
+					emp += append_string  # appending to the empty string
+				else: 
+					pass
+
+			if not os.path.exists(meta_filepath):
+				logger.info("Generating the missing meta file: "+ meta_filename)
+				with open(meta_filepath, 'w') as ff:
+					ff.writelines(f"cancer_study_identifier: {study_id}\n")
+					ff.writelines(emp)
+		
+	file_path = f"{directory}/meta_study.txt"
+	if not os.path.exists(file_path):
+		logger.info("Generating the missing meta file: meta_study.txt")
+		with open(file_path, 'w') as meta_study:
+			meta_study.writelines(f"cancer_study_identifier: {study_id}\n")
+			for val in metadata: meta_study.write(val)	
+
+if __name__ == '__main__':
+	main()
