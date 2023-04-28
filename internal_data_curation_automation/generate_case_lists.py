@@ -233,8 +233,10 @@ def main(case_list_config_file, case_list_dir, study_dir, study_id, overwrite, v
         sys.exit(2)
 
     if not os.path.isdir(case_list_dir):
-        logger.error("case list file directory '%s' does not exist or is not a directory" % (case_list_dir))
-        sys.exit(2)
+        logger.info("case list file directory '%s' does not exist or is not a directory" % (case_list_dir))
+        logger.info("creating a new case list file directory..")
+        os.mkdir(case_list_dir)
+        logger.info("'%s' directory created!" % (case_list_dir))
 
     if not os.path.isdir(study_dir):
         logger.error("study directory '%s' does not exist or is not a directory" % (study_dir))

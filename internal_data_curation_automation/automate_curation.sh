@@ -112,7 +112,7 @@ python3 generate_case_lists.py --case-list-config-file 'config_files/case_list_c
 
 # Add Cancer Type and Cancer Type Detailed if Oncotree Code column exists
 echo -e "\nAdding Cancer Type and Cancer Type Detailed columns to Clinical.."
-python2.7 oncotree_code_converter.py --clinical-file  ${out_directory}'/data_clinical_sample.txt' --oncotree-url 'http://oncotree.mskcc.org/' --oncotree-version 'oncotree_candidate_release'
+python3 generate_ct_ctd.py --clinical-file  ${out_directory}'/data_clinical_sample.txt' --oncotree-url 'http://oncotree.mskcc.org/' --oncotree-version 'oncotree_candidate_release'
 
 # TODO:
 # Generate TMB Scores - requires a repository of gene panels (for internal we don't have these) with the number of profiled coding base pairs calculated.

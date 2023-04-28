@@ -409,7 +409,7 @@ def add_clincial_meta(merged_clinical_comments, clinical_data_dictionary, new_he
 
     ordered_comments = [(merged_clinical_comments[k]) for k in new_header]
     for line in list(zip(*ordered_comments)):
-        comments_header += '\t'.join(line)+'\n'
+        comments_header += '#'+('\t'.join(line)).replace('#','')+'\n'
     return(comments_header)
 
 def write_clinical(rows, output_filename, new_header):
