@@ -116,3 +116,8 @@ python3 generate_ct_ctd.py --clinical-file  ${out_directory}'/data_clinical_samp
 
 # TODO:
 # Generate TMB Scores - requires a repository of gene panels (for internal we don't have these) with the number of profiled coding base pairs calculated.
+
+# Final checks - check for any extra meta, case lists files were copied over and remove
+echo -e "\nValidating the data generated.."
+python3 end_validation.py --input-directory  ${out_directory}
+
