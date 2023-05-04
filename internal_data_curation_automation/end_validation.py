@@ -34,60 +34,60 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(file_handler)
 
 def remove_additional_meta_files(input_directory):
-	files_list = os.listdir(input_directory)
-	for file in files_list:
-		if file.startswith('meta_'):
-			with open(os.path.join(input_directory,file), 'r') as metafile:
-				for line in metafile:
-					if line.startswith('data_filename'):
-						line = line.replace(' ','').strip('\n').split(':',1)
-						if line[1] and line[1] not in files_list:
-							logger.info("removing file '" + os.path.join(input_directory,file) +"' as there is no associated data file detected")
-							os.remove(os.path.join(input_directory,file))
+    files_list = os.listdir(input_directory)
+    for file in files_list:
+        if file.startswith('meta_'):
+            with open(os.path.join(input_directory,file), 'r') as metafile:
+                for line in metafile:
+                    if line.startswith('data_filename'):
+                        line = line.replace(' ','').strip('\n').split(':',1)
+                        if line[1] and line[1] not in files_list:
+                            logger.info("removing file '" + os.path.join(input_directory,file) +"' as there is no associated data file detected")
+                            os.remove(os.path.join(input_directory,file))
 
 def remove_additional_case_lists(input_directory):
-	files_list = os.listdir(input_directory)
-	for file in files_list:
-		if 'case_lists' in file:
-			caselist_files = os.listdir(os.path.join(input_directory,'case_lists'))
-			for cl in caselist_files:
-				with open(os.path.join(input_directory,'case_lists',cl), 'r') as cl_data:
-					for line in cl_data:
-						if line.startswith('case_list_ids'):
-							line = line.strip('\n').split(':')
-							if line[1]:
-								line[1] = line[1].replace(' ','')
-								if line[1] == '':
-									logger.info("removing file '"+ os.path.join(input_directory,'case_lists',cl) + "' as there is no associated data detected")
-									os.remove(os.path.join(input_directory,'case_lists',cl))
+    files_list = os.listdir(input_directory)
+    for file in files_list:
+        if 'case_lists' in file:
+            caselist_files = os.listdir(os.path.join(input_directory,'case_lists'))
+            for cl in caselist_files:
+                with open(os.path.join(input_directory,'case_lists',cl), 'r') as cl_data:
+                    for line in cl_data:
+                        if line.startswith('case_list_ids'):
+                            line = line.strip('\n').split(':')
+                            if line[1]:
+                                line[1] = line[1].replace(' ','')
+                                if line[1] == '':
+                                    logger.info("removing file '"+ os.path.join(input_directory,'case_lists',cl) + "' as there is no associated data detected")
+                                    os.remove(os.path.join(input_directory,'case_lists',cl))
 
 def cna_stable_id_check(input_directory):
-	files_list = os.listdir(input_directory)
-	if 'data_gene_panel_matrix.txt' in files_list and 'meta_cna.txt' in files_list:
-		cna_stable_id = str()
-		with open(os.path.join(input_directory,'meta_cna.txt'), 'r') as cna_file:
-			for line in cna_file:
-				if line.startswith('stable_id'):
-					cna_stable_id = line.replace(' ','').strip('\n').split(':',1)[1]
+    files_list = os.listdir(input_directory)
+    if 'data_gene_panel_matrix.txt' in files_list and 'meta_cna.txt' in files_list:
+        cna_stable_id = str()
+        with open(os.path.join(input_directory,'meta_cna.txt'), 'r') as cna_file:
+            for line in cna_file:
+                if line.startswith('stable_id'):
+                    cna_stable_id = line.replace(' ','').strip('\n').split(':',1)[1]
 
-		new_matrix_header = ''
-		data = ""
-		update_file = False
-		with open(os.path.join(input_directory,'data_gene_panel_matrix.txt'), 'r') as matrix_file:
-			matrix_header = matrix_file.readline()
-			if cna_stable_id not in matrix_header:
-				if 'cna' in matrix_header or 'gistic' in matrix_header:
-					update_file = True
-					if cna_stable_id == 'cna': other_stable_id = 'gistic'
-					elif cna_stable_id == 'gistic': other_stable_id = 'cna'
-			new_matrix_header = matrix_header.replace(other_stable_id, cna_stable_id)
-			for line in matrix_file:
-				data += line
-		if update_file:
-			os.remove(os.path.join(input_directory,'data_gene_panel_matrix.txt'))
-			with open(os.path.join(input_directory,'data_gene_panel_matrix.txt'), 'w') as meta:
-				meta.write(new_matrix_header)
-				meta.write(data)
+        new_matrix_header = ''
+        data = ""
+        update_file = False
+        with open(os.path.join(input_directory,'data_gene_panel_matrix.txt'), 'r') as matrix_file:
+            matrix_header = matrix_file.readline()
+            if cna_stable_id not in matrix_header:
+                if 'cna' in matrix_header or 'gistic' in matrix_header:
+                    update_file = True
+                    if cna_stable_id == 'cna': other_stable_id = 'gistic'
+                    elif cna_stable_id == 'gistic': other_stable_id = 'cna'
+            new_matrix_header = matrix_header.replace(other_stable_id, cna_stable_id)
+            for line in matrix_file:
+                data += line
+        if update_file:
+            os.remove(os.path.join(input_directory,'data_gene_panel_matrix.txt'))
+            with open(os.path.join(input_directory,'data_gene_panel_matrix.txt'), 'w') as meta:
+                meta.write(new_matrix_header)
+                meta.write(data)
 
 
 
@@ -95,15 +95,15 @@ def cna_stable_id_check(input_directory):
 @click.option('-i', '--input-directory', required = True, help = 'input study directory to validating')
 
 def main(input_directory):
-	# Remove meta files with missing data files - happens when the subset samples are not in data files, and meta files are copied over.
-	remove_additional_meta_files(input_directory)
+    # Remove meta files with missing data files - happens when the subset samples are not in data files, and meta files are copied over.
+    remove_additional_meta_files(input_directory)
 
-	# Remove any extra case lists - case lists are copied over from parent directory but may not contain any samples from the subset list
-	remove_additional_case_lists(input_directory)
+    # Remove any extra case lists - case lists are copied over from parent directory but may not contain any samples from the subset list
+    remove_additional_case_lists(input_directory)
 
-	# Check if the copy number stable id in meta and matrix file are the same else update it to the meta stable id
-	# Sometimes the matrix file can contain 'gistic' and meta file 'cna'. this fails import.
-	cna_stable_id_check(input_directory)
+    # Check if the copy number stable id in meta and matrix file are the same else update it to the meta stable id
+    # Sometimes the matrix file can contain 'gistic' and meta file 'cna'. this fails import.
+    cna_stable_id_check(input_directory)
 
 if __name__ == '__main__':
-	main()
+    main()
