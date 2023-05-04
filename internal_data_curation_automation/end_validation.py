@@ -70,7 +70,7 @@ def cna_stable_id_check(input_directory):
                 if line.startswith('stable_id'):
                     cna_stable_id = line.replace(' ','').strip('\n').split(':',1)[1]
 
-        new_matrix_header = ''
+        new_matrix_header = ""
         data = ""
         update_file = False
         with open(os.path.join(input_directory,'data_gene_panel_matrix.txt'), 'r') as matrix_file:
