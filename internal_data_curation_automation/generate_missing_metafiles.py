@@ -46,60 +46,60 @@ metadata = ['type_of_cancer: gbm\n'
 
 cols = ["DATA_FILENAME", "META_GENERIC_ASSAY_TYPE", "META_GENERIC_ENTITY_meta_PROPERTIES",
        'META_STABLE_ID', 'META_GENETIC_ALTERATION_TYPE', 'META_DATATYPE',
-	   'META_SHOW_PROFILE_IN_ANALYSIS_TAB', 'META_PROFILE_NAME',
-	   'META_PROFILE_DESCRIPTION', 'META_REFERENCE_GENOME_ID']
+       'META_SHOW_PROFILE_IN_ANALYSIS_TAB', 'META_PROFILE_NAME',
+       'META_PROFILE_DESCRIPTION', 'META_REFERENCE_GENOME_ID']
 
 @click.command()
 @click.option('-d', '--directory', help="the folder that has all the study data files", required = True)
 @click.option('-s', '--study_id', help="name of the cancer_study_identifier", required = True)
 
 def main(directory, study_id):
-	files_list = [f for f in os.listdir(directory) if f.startswith('data') or f.endswith('.seg')]
-	
-	for file in files_list:
-		if file in datatype_df['DATA_FILENAME'].values:
-			meta_filename = datatype_df.loc[datatype_df['DATA_FILENAME'] == file, 'META_FILENAME'].iloc[0]
-			meta_filepath = directory+'/'+meta_filename
-			emp = ""
-			cc = datatype_df.loc[datatype_df['DATA_FILENAME'] == file]
-			for col in cols:
-				xx = list(cc[col])[-1]
-				if str(xx) != "nan": # check if NAN values are present
-					ss = col.replace("META_", '').lower() # then Replacing Meta_ to ''
-					append_string = f"{ss}: {xx}\n"
-					emp += append_string  # appending to the empty string
-				else: 
-					pass
+    files_list = [f for f in os.listdir(directory) if f.startswith('data') or f.endswith('.seg')]
 
-			if not os.path.exists(meta_filepath):
-				logger.info("Generating the missing meta file: "+ meta_filename)
-				with open(meta_filepath, 'w') as ff:
-					ff.writelines(f"cancer_study_identifier: {study_id}\n")
-					ff.writelines(emp)
-			else:
-				meta_dict = {x.split(':', 1)[0].strip(): x.split(':', 1)[1].strip() for x in emp.split('\n') if x != ''}
-				file_dict = {}
-				new_dict = dict()
-				with open(meta_filepath, 'r') as ff:
-					for line in ff:
-						line = line.strip('\n').split(':',1)
-						file_dict[line[0].strip()] = line[1].strip()
-					new_dict = {k: v for k, v in meta_dict.items() if k not in file_dict}
-					if 'cancer_study_identifier' not in file_dict: new_dict['cancer_study_identifier'] = study_id
-				if len(new_dict) > 0:
-					file_dict.update(new_dict)
-					logger.info("Adding the missing metadata fields to "+ meta_filename)
-					with open(meta_filepath, 'w') as ff:
-						for k, v in file_dict.items():
-							line = k+': '+v+'\n'
-							ff.writelines(line)
+    for file in files_list:
+        if file in datatype_df['DATA_FILENAME'].values:
+            meta_filename = datatype_df.loc[datatype_df['DATA_FILENAME'] == file, 'META_FILENAME'].iloc[0]
+            meta_filepath = directory+'/'+meta_filename
+            emp = ""
+            cc = datatype_df.loc[datatype_df['DATA_FILENAME'] == file]
+            for col in cols:
+                xx = list(cc[col])[-1]
+                if str(xx) != "nan": # check if NAN values are present
+                    ss = col.replace("META_", '').lower() # then Replacing Meta_ to ''
+                    append_string = f"{ss}: {xx}\n"
+                    emp += append_string  # appending to the empty string
+                else:
+                    pass
 
-	file_path = f"{directory}/meta_study.txt"
-	if not os.path.exists(file_path):
-		logger.info("Generating the missing meta file: meta_study.txt")
-		with open(file_path, 'w') as meta_study:
-			meta_study.writelines(f"cancer_study_identifier: {study_id}\n")
-			for val in metadata: meta_study.write(val)	
+            if not os.path.exists(meta_filepath):
+                logger.info("Generating the missing meta file: "+ meta_filename)
+                with open(meta_filepath, 'w') as ff:
+                    ff.writelines(f"cancer_study_identifier: {study_id}\n")
+                    ff.writelines(emp)
+            else:
+                meta_dict = {x.split(':', 1)[0].strip(): x.split(':', 1)[1].strip() for x in emp.split('\n') if x != ''}
+                file_dict = {}
+                new_dict = dict()
+                with open(meta_filepath, 'r') as ff:
+                    for line in ff:
+                        line = line.strip('\n').split(':',1)
+                        file_dict[line[0].strip()] = line[1].strip()
+                    new_dict = {k: v for k, v in meta_dict.items() if k not in file_dict}
+                    if 'cancer_study_identifier' not in file_dict: new_dict['cancer_study_identifier'] = study_id
+                if len(new_dict) > 0:
+                    file_dict.update(new_dict)
+                    logger.info("Adding the missing metadata fields to "+ meta_filename)
+                    with open(meta_filepath, 'w') as ff:
+                        for k, v in file_dict.items():
+                            line = k+': '+v+'\n'
+                            ff.writelines(line)
+
+    file_path = f"{directory}/meta_study.txt"
+    if not os.path.exists(file_path):
+        logger.info("Generating the missing meta file: meta_study.txt")
+        with open(file_path, 'w') as meta_study:
+            meta_study.writelines(f"cancer_study_identifier: {study_id}\n")
+            for val in metadata: meta_study.write(val)
 
 if __name__ == '__main__':
-	main()
+    main()
