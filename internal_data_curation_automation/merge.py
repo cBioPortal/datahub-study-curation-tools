@@ -22,6 +22,7 @@
 
 import sys
 import os
+import csv
 import logging
 import click
 import split_data_clinical_attributes
@@ -500,9 +501,6 @@ def merge_files(outfile_name, infiles, reference_set, keep_match, output_directo
             return
         if clinical: write_clinical(rows, output_filename, new_header)
         else: write_normal(rows, output_filename, new_header)
-
-    #print('Validating merge for: ' + output_filename)
-    #validate_merge(file_type, data_filenames, output_filename, reference_set, keep_match, merge_style, replicated_id_row_count)
 
 def copy_files(file_type, files, output_directory, study_id):
     """
