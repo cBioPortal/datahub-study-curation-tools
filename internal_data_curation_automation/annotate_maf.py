@@ -27,6 +27,8 @@ import click
 import logging
 
 HGVSP_SHORT_COLUMN = 'HGVSp_Short'
+ANNOTATED_MAF_FILE_EXT = '.annotated'
+UNANNOTATED_MAF_FILE_EXT = '.unannotated'
 MAX_ANNOTATION_ATTEMPTS = 10
 
 # set logger

@@ -96,3 +96,4 @@ structural_variant	data_SV.txt, data_sv.txt	meta_SV.txt, meta_sv.txt
 time_line_data	data_timeline.txt	meta_timeline.txt
 time_line_data_other	data_timeline_*.txt	meta_timeline_*.txt
 case_lists	cases_*	cases_*
+meta_study	meta_study.txt	meta_study.txt

@@ -38,11 +38,9 @@ logger.addHandler(file_handler)
 meta_datatypes_file = 'config_files/meta_datatypes.txt'
 datatype_df = pd.read_csv(meta_datatypes_file, sep="\t")
 
-metadata = ['type_of_cancer: gbm\n'
-'name: The name of the cancer study,e.g., "Breast Cancer (Jones Lab 2013)"\n'
-'description:  Description of the study.\n'
-'pmid: eg.,33577785\n'
-'citation: A relevant citation, e.g., "TCGA, Nature 2012".\n']
+metadata = ['type_of_cancer: mixed\n'
+'name: Mixed Cancers (MSK, 2023)\n'
+'description:  Targeted Sequencing of tumors and their matched normals via MSK-IMPACT\n']
 
 cols = ["DATA_FILENAME", "META_GENERIC_ASSAY_TYPE", "META_GENERIC_ENTITY_meta_PROPERTIES",
        'META_STABLE_ID', 'META_GENETIC_ALTERATION_TYPE', 'META_DATATYPE',
@@ -83,7 +81,11 @@ def main(directory, study_id):
                 with open(meta_filepath, 'r') as ff:
                     for line in ff:
                         line = line.strip('\n').split(':',1)
-                        file_dict[line[0].strip()] = line[1].strip()
+                        if meta_filename == 'meta_cna.txt' and line[0].strip() == 'stable_id' and line[1].strip() not in ['cna','gistic']: new_dict[line[0].strip()] = line[1].strip().split('_')[-1]
+                        elif meta_filename == 'meta_mutations.txt' and line[0].strip() == 'stable_id' and line[1].strip() not in ['mutations']: new_dict[line[0].strip()] = line[1].strip().split('_')[-1]
+                        elif meta_filename == 'meta_sv.txt' and line[0].strip() == 'stable_id' and line[1].strip() not in ['structural_variants']: new_dict[line[0].strip()] = 'structural_variants'
+                        elif line[1].strip() == '': continue
+                        else: file_dict[line[0].strip()] = line[1].strip()
                     new_dict = {k: v for k, v in meta_dict.items() if k not in file_dict}
                     if 'cancer_study_identifier' not in file_dict: new_dict['cancer_study_identifier'] = study_id
                 if len(new_dict) > 0:

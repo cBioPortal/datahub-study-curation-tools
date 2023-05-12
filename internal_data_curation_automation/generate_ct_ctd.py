@@ -21,7 +21,6 @@
 # SOFTWARE.
 
 from clinicalfile_utils import *
-import fileinput
 import json
 import os
 import sys
@@ -30,9 +29,6 @@ import click
 import urllib.request
 
 # globals
-DEFAULT_ONCOTREE_BASE_URL = 'http://oncotree.mskcc.org/'
-DEFAULT_ONCOTREE_VERSION = 'oncotree_latest_stable'
-DEFAULT_FORCE_CANCER_TYPE_FROM_ONCOTREE = False
 CANCER_TYPE = 'CANCER_TYPE'
 CANCER_TYPE_DETAILED = 'CANCER_TYPE_DETAILED'
 ONCOTREE_CODE = 'ONCOTREE_CODE'
@@ -101,6 +97,12 @@ def existing_data_is_not_available(data):
 
 def process_clinical_file(oncotree_mappings, clinical_filename, force_cancer_type_from_oncotree):
     """ Insert cancer type/cancer type detailed in the clinical file """
+
+    # check if ONCOTREE_CODE column is provided
+    if 'ONCOTREE_CODE' not in get_header(clinical_filename):
+        logger.error('Skipping addition of CANCER_TYPE and CANCER_TYPE_DETAILED to data clinical. No ONCOTREE_CODE column found..')
+        return()
+
     first = True
     metadata_headers_processed = False
     header = []
@@ -114,17 +116,13 @@ def process_clinical_file(oncotree_mappings, clinical_filename, force_cancer_typ
         if CANCER_TYPE_DETAILED not in get_header(clinical_filename):
             add_metadata_for_attribute(CANCER_TYPE_DETAILED, metadata_lines)
 
-    # Python docs: "if the keyword argument inplace=1 is passed to fileinput.input()
-    # or to the FileInput constructor, the file is moved to a backup
-    # file and standard output is directed to the input file"
-    f = fileinput.input(clinical_filename, inplace = 1)
-    try:
+    clinical_data = ""
+    with open(clinical_filename, 'r') as f:
         for line in f:
             line = line.rstrip('\n')
             if line.startswith('#'):
                 if file_has_metadata_headers and not metadata_headers_processed:
                     metadata_headers_processed = True
-                    write_metadata_headers(metadata_lines, clinical_filename)
                 continue
             if first:
                 first = False
@@ -133,7 +131,6 @@ def process_clinical_file(oncotree_mappings, clinical_filename, force_cancer_typ
                     header.append(CANCER_TYPE)
                 if CANCER_TYPE_DETAILED not in header:
                     header.append(CANCER_TYPE_DETAILED)
-                print('\t'.join(header))
                 continue
             data = line.split('\t')
             oncotree_code = data[header.index(ONCOTREE_CODE)]
@@ -154,9 +151,18 @@ def process_clinical_file(oncotree_mappings, clinical_filename, force_cancer_typ
                     data[header.index(CANCER_TYPE_DETAILED)] = oncotree_code_info[CANCER_TYPE_DETAILED]
             except IndexError:
                 data.append(oncotree_code_info[CANCER_TYPE_DETAILED])
-            print(format_output_line(data))
-    finally:
-        f.close()
+            if format_output_line(data) != '':
+                clinical_data += format_output_line(data)+'\n'
+                continue
+
+    if clinical_data.strip() != "":
+        os.remove(clinical_filename)
+        with open(clinical_filename, 'w') as file:
+            write_metadata_headers(metadata_lines, file)
+            file.write('\t'.join(header)+'\n')
+            file.write(clinical_data)
+    else:
+        logger.error("No Cancer_Type and Cancer_Type_Detailed generated for the file.. ")
 
 def report_failures_to_match_oncotree_code():
     if len(samples_that_have_undefined_oncotree_codes) > 0:
@@ -203,13 +209,13 @@ def exit_with_error_if_file_is_not_accessible(filename):
 
 @click.command()
 @click.option('-c', '--clinical-file', required = True, help = 'Path to the clinical file')
-@click.option('-o', '--oncotree-url', required = False, help = 'The url of the oncotree web application (default is http://oncotree.mskcc.org/)')
+@click.option('-o', '--oncotree-url', required = False, help = 'The url of the oncotree web application (default is https://oncotree.info/)')
 @click.option('-v', '--oncotree-version', required = False, help = 'The oncotree version to use (default is oncotree_latest_stable)')
 @click.option('-f', '--force', required = False, help = 'When given, all CANCER_TYPE/CANCER_TYPE_DETAILED values in the input file are overwritten based on oncotree code. When not given, only empty or NA values are overwritten.')
 
 def main(clinical_file, oncotree_url, oncotree_version, force):
     if not oncotree_url:
-        oncotree_url = 'http://oncotree.mskcc.org/'
+        oncotree_url = 'https://oncotree.info/'
     if not oncotree_version:
         oncotree_version = 'oncotree_latest_stable'
     exit_with_error_if_file_is_not_accessible(clinical_file)

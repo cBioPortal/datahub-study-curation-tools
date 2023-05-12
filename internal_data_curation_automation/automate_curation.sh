@@ -121,3 +121,4 @@ python3 generate_ct_ctd.py --clinical-file  ${out_directory}'/data_clinical_samp
 echo -e "\nValidating the data generated.."
 python3 end_validation.py --input-directory  ${out_directory}
 
+echo -e "\nThe dataset is written to the folder: ${out_directory}\n"

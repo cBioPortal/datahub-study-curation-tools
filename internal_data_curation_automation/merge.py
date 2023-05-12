@@ -22,7 +22,6 @@
 
 import sys
 import os
-import csv
 import logging
 import click
 import split_data_clinical_attributes
@@ -208,45 +207,30 @@ def generate_patient_sample_mapping(merge_map, sublist, excluded_samples_list):
 
     return reference_set,keep_match
 
-def find_sample_position(file, header):
-    HEADER_KEYWORDS = ['composite.element.ref','hugo_symbol','entrez_gene_id','entity_stable_id','name','description','url','confidence_statement']
-    index_cols = []
-    for keyword in header:
-        if keyword in HEADER_KEYWORDS:
-            index_cols.append(header.index(keyword))
-    return(index_cols)
-
 def identify_file_type(file):
     header = get_header(file)
     header = [x.lower() for x in header]
     if 'sample_id' in header and 'patient_id' in header and 'timeline' in file:
-        index_column = header.index('patient_id')
         merge_style = 'normal'
     elif 'patient_id' in header and 'sample_id' not in header:
-        index_column = header.index('patient_id')
         merge_style = 'normal'
     elif 'sample_id' in header:
-        index_column = header.index('sample_id')
         merge_style = 'normal'
     elif 'sampleid' in header:
-        index_column = header.index('sampleid')
         merge_style = 'normal'
     elif 'tumor_sample_barcode' in header:
-        index_column = header.index('tumor_sample_barcode')
         merge_style = 'normal'
     elif 'id' in header and 'chrom' in header:
-        index_column = header.index('id')
         merge_style = 'normal'
     elif ('hugo_symbol' in header or 'entrez_gene_id' in header) and 'tumor_sample_barcode' not in header:
-        index_column = find_sample_position(file, header)
         merge_style = 'profile'
     elif 'composite.element.ref' in header:
-        index_column = find_sample_position(file, header)
         merge_style = 'profile'
     elif 'entity_stable_id' in header:
-        index_column = find_sample_position(file, header)
         merge_style = 'profile'
-    return index_column, merge_style
+    else:
+        merge_style = None
+    return merge_style
 
 def get_comments(filename, header):
     """ Gets the comments from the file. """
@@ -433,7 +417,9 @@ def merge_files(outfile_name, infiles, reference_set, keep_match, output_directo
         out to a file.
     """
 
-    index_col, merge_style = identify_file_type(infiles[0])
+    merge_style = identify_file_type(infiles[0])
+    if not merge_style:
+        return()
     new_header = process_header(infiles, reference_set, keep_match, merge_style)
     is_clinical_or_timeline_file = is_clinical_or_timeline(infiles[0])
     output_filename = os.path.join(output_directory,outfile_name)
@@ -578,7 +564,6 @@ def merge_studies(merge_map, reference_set, keep_match, output_directory, study_
         Goes through all the potential file types and calls correct function for those types.
         Normal merge, profile merge, and straight copy are the possibilities
     """
-
     for file_type, files in merge_map.items():
         if file_type.startswith('data') and len(files) > 0:
             if len(files) > 1:
@@ -634,9 +619,7 @@ def generate_study_id(dir_list):
 @click.option('-i', '--input-directory', required = True, help = 'input directories to subset from')
 
 def main(subset_samples, excluded_samples, input_directory):
-    with open(logfilename, 'a') as log_file:
-        log_file.write('\n\n\n====================== Subsetting data from : {} ==============================\n'.format(input_directory))
-
+    logger.info('Subsetting data from : {}'.format(input_directory))
     if subset_samples is not None:
         if not os.path.exists(subset_samples):
             logger.error('ID list cannot be found: ' + subset_samples)
@@ -660,6 +643,7 @@ def main(subset_samples, excluded_samples, input_directory):
     study_id = generate_study_id(input_directory)
     output_directory = os.path.join(os.getcwd(),study_id)
     print('The subset data is written to:', output_directory)
+    logger.info('The subset data is written to:' + output_directory)
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 

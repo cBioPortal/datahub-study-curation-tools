@@ -80,7 +80,7 @@ def cna_stable_id_check(input_directory):
                     update_file = True
                     if cna_stable_id == 'cna': other_stable_id = 'gistic'
                     elif cna_stable_id == 'gistic': other_stable_id = 'cna'
-            new_matrix_header = matrix_header.replace(other_stable_id, cna_stable_id)
+                    new_matrix_header = matrix_header.replace(other_stable_id, cna_stable_id)
             for line in matrix_file:
                 data += line
         if update_file:
@@ -88,8 +88,6 @@ def cna_stable_id_check(input_directory):
             with open(os.path.join(input_directory,'data_gene_panel_matrix.txt'), 'w') as meta:
                 meta.write(new_matrix_header)
                 meta.write(data)
-
-
 
 @click.command()
 @click.option('-i', '--input-directory', required = True, help = 'input study directory to validating')

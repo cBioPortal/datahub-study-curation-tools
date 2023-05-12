@@ -157,6 +157,8 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
                     # split will split on any whitespace, tabs or any number of consecutive spaces
                     return line[len(MUTATION_CASE_LIST_META_HEADER)+2:].strip().split()
                 continue # this is a comment line, skip it
+            elif len(line.strip()) == 0:
+                continue
             values = line.split('\t')
 
             # is this the header line?
