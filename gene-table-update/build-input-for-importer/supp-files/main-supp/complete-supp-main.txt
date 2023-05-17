@@ -26,7 +26,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 100131821	LOC100131821	-	-	protein-coding	
 100287290	LOC100287290	3	3q25.32	protein-coding	
 100287294	LOC100287294	-	-	protein-coding	
-100996842	LOC100996842	17	17p13.1	protein-coding	ENSG00000233223
 266918	D21S2090E	-	-	protein-coding	
 100132495	LOC100132495	-	-	protein-coding	
 100996629	LINC00849	-	-	ncRNA	
@@ -150,7 +149,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 100129397	LOC100129397	-	-	protein-coding	
 100129393	LOC100129393	-	-	protein-coding	
 102724770	LOC102724770	22	-	protein-coding	ENSG00000278817
-100652777	LOC100652777	16	16p13.11	protein-coding	
 100130442	LOC100130442	-	-	protein-coding	
 100129399	LOC100129399	-	-	protein-coding	
 100129098	LOC100129098	8	8q11.23	protein-coding	
@@ -223,7 +221,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 101928841	LOC101928841	13	13q34	protein-coding	
 100288336	LOC100288336	-	-	protein-coding	
 100130573	LOC100130573	-	-	protein-coding	
-389895	LOC389895	X	Xq27.1	protein-coding	ENSG00000230707
 100134391	LOC100134391	17	17q25.1	protein-coding	ENSG00000263574
 100506562	LOC100506562	-	-	protein-coding	
 100128107	LOC100128107	-	-	protein-coding	
@@ -314,7 +311,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 100129363	LOC100129363	-	-	protein-coding	
 285178	LOC285178	-	-	protein-coding	
 100129280	LOC100129280	-	-	protein-coding	
-100130345	LOC100130345	3	3p14.2	protein-coding	
 219688	LOC219688	-	-	protein-coding	
 414312	C9ORF118	-	-	protein-coding	
 285957	LOC285957	-	-	protein-coding	
