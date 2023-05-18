@@ -206,7 +206,7 @@ def calcTMB(_sampleMap):
 ######
 def addTMB(_inputStudyFolder, _sampleTmbMap):
 
-	# extract list of sequenced smaple IDs
+	# extract list of sequenced sample IDs
 	_seqSampleIds = [] 
 	if os.path.isfile(_inputStudyFolder + "/case_lists/" + SEQ_CASE_LIST_FILE_NAME):
 		_caseListPath = _inputStudyFolder + "/case_lists/" + SEQ_CASE_LIST_FILE_NAME
@@ -253,7 +253,7 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 			# values
 			else: 
 				_sampleID = _line.split("\t")[_posSampleID]
-				if _sampleTmbMap.has_key(_sampleID):
+				if _sampleID in _sampleTmbMap:
 					_newline = _line.rstrip("\n") + "\t" + str(_sampleTmbMap[_sampleID]["tmb"])
 				else:
 					if _sampleID in _seqSampleIds:
