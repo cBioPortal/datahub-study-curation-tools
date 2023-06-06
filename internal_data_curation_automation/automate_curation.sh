@@ -82,25 +82,30 @@ IFS=':' read -ra arr <<< "$outpath"
 path="${arr[1]#"${arr[1]%%[![:space:]]*}"}"
 out_directory=$(basename "$path")
 
-# Annotate MAF
-MAF_FILE="$out_directory/data_mutations.txt"
-ANNOTATED_MAF="$out_directory/data_mutations_ann.txt"
-if  [ -f $MAF_FILE ]; then
-    # Remove GERMLINE variants from the MAF
-    echo -e "\nRemoving GERMLINE variants.."
-    grep -v 'GERMLINE' $MAF_FILE > $MAF_FILE.tmp
-    mv $MAF_FILE.tmp $MAF_FILE
+declare -a files
+while IFS= read -r file; do
+  files+=("$file")
+done < <(find "$out_directory" -type f -iname "data_mutations*")
 
-    # Annotate MAF
-    echo -e "\nAnnotating MAF: $MAF_FILE"
-    python3 annotate_maf.py --input-maf ${MAF_FILE} --output-maf ${ANNOTATED_MAF} --annotator-jar ${GENOME_NEXUS_ANNOTATOR_JAR} --isoform ${GENOME_NEXUS_ANNOTATOR_ISOFORM} --post-size ${GENOME_NEXUS_ANNOTATOR_POST_SIZE}
-    if [ -f $ANNOTATED_MAF ]; then
-        mv $ANNOTATED_MAF $MAF_FILE
-        echo "Annotation complete!"
-    fi
-else
-    echo -e "\n$MAF_FILE does not exist. Skipping annotation.."
-fi
+for MAF_FILE in "${files[@]}"; do
+    ANNOTATED_MAF=$MAF_FILE."_ann"
+    if  [ -f $MAF_FILE ]; then
+    	# Remove GERMLINE variants from the MAF
+    	echo -e "\nRemoving GERMLINE variants.."
+    	grep -v 'GERMLINE' $MAF_FILE > $MAF_FILE.tmp
+    	mv $MAF_FILE.tmp $MAF_FILE
+
+    	# Annotate MAF
+    	echo -e "\nAnnotating MAF: $MAF_FILE"
+    	python3 annotate_maf.py --input-maf ${MAF_FILE} --output-maf ${ANNOTATED_MAF} --annotator-jar ${GENOME_NEXUS_ANNOTATOR_JAR} --isoform ${GENOME_NEXUS_ANNOTATOR_ISOFORM} --post-size ${GENOME_NEXUS_ANNOTATOR_POST_SIZE}
+    	if [ -f $ANNOTATED_MAF ]; then
+        	mv $ANNOTATED_MAF $MAF_FILE
+        	echo "Annotation complete!"
+    	fi
+	else
+    	echo -e "\n$MAF_FILE does not exist. Skipping annotation.."
+	fi
+done
 
 # Generate missing meta files
 echo -e "\nGenerating missing meta files.."
