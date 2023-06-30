@@ -16,4 +16,4 @@ python path/to/generate_case_lists.py -c path/to/case_list_conf.txt -d case_list
 
 ### Notes
 `case_list_conf.txt` and `clinicalfile_utils.py` are needed under the sample path. 
-`case_list_conf.txt` should be synced with the corresponding google config sheet.
+`case_list_conf.txt` should be synced with the corresponding google config sheet
