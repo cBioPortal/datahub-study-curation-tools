@@ -100,18 +100,13 @@ def subset_by_generic_assay(study_dir, file, filter_fn, outdir, data_cols):
 	else:
 		print('Sample IDs to subset are not present in file. Skipping..')
 
-def identify_file_type(study_dir, output_dir, patient_filter_data, sample_filter_data, id_type):
+def identify_file_type(study_dir, sample_fliter, patient_fliter, output_dir):
 	data_files = [file for file in os.listdir(study_dir) if file.startswith('data')]
 	for file in os.listdir(study_dir):
 		if 'data' in file and file not in data_files: data_files.append(file)
 	
-	patient_filter_fn = sample_filter_fn = ''
-	if id_type == 'list':
-		patient_filter_fn = lambda x: x in patient_filter_data
-		sample_filter_fn = lambda x: x in sample_filter_data
-	elif id_type == 'regex':
-		patient_filter_fn = lambda x: patient_filter_data.search(x) is not None
-		sample_filter_fn = lambda x: sample_filter_data.search(x) is not None
+	sample_filter_fn = (lambda x: x in sample_fliter) if type(sample_fliter) is list else (lambda x: sample_fliter.search(x) is not None)
+	patient_filter_fn = (lambda x: x in patient_fliter) if type(patient_fliter) is list else (lambda x: patient_fliter.search(x) is not None)
 
 	for file in data_files:
 		header = extract_header(study_dir, file).lower().rstrip('\n').split('\t')
@@ -195,23 +190,21 @@ def main():
 	parser.add_argument('-dest', '--destination-path', required = True, help = 'Path to the destination directory to save the output to',type = str)
 	args = parser.parse_args()
 
-	sample_ids = args.sample_list
-	patient_ids = args.patient_list
-	sample_regex = args.sample_regex
-	patient_regex = args.patient_regex
 	study_dir = args.source_path
 	output_dir = args.destination_path.rstrip('/')
-
-	if (None in [sample_ids, patient_ids] and None in [sample_regex, patient_regex]) or ([sample_ids, patient_ids, sample_regex, patient_regex].count(None) <= 1):
-		print('Please make sure to include either lists or regex, but not both at once!')
+	
+	# Use list if available, otherwise use regex if available, if neither is available, set subset to None
+	sample_subset = create_ids_list(args.sample_list) if (args.sample_list is not None) else (re.compile(args.sample_regex) if (args.sample_regex is not None) else None)
+	if sample_subset is None:
+		print('Neither sample-list nor sample-regex where provided! Exiting....')
 		exit()
 	
-	if sample_ids is not None and patient_ids is not None: #Should technically never need both comparisons, but just in case
-		#Read the input directory, identify the file types to subset on
-		identify_file_type(study_dir, output_dir, create_ids_list(patient_ids), create_ids_list(sample_ids), 'list')
-	elif sample_regex is not None and patient_regex is not None:
-		#Read the input directory, identify the file types to subset on
-		identify_file_type(study_dir, output_dir, re.compile(patient_regex), re.compile(sample_regex), 'regex')	
+	patient_subset = create_ids_list(args.patient_list) if (args.patient_list is not None) else (re.compile(args.patient_regex) if (args.patient_regex is not None) else None)
+	if patient_subset is None:
+		print('Neither patient-list nor patient-regex where provided! Exiting....')
+		exit()
+	
+	identify_file_type(study_dir, sample_subset, patient_subset, output_dir)
 	
 if __name__ == '__main__':
 	main()
