@@ -192,16 +192,16 @@ def main():
 	study_dir = args.source_path
 	output_dir = args.destination_path.rstrip('/')
 	
-	# Use list if available, otherwise use regex if available, if neither is available, set subset to None
-	sample_subset = create_ids_list(args.sample_list) if (args.sample_list is not None) else (re.compile(args.sample_regex) if (args.sample_regex is not None) else None)
-	if sample_subset is None:
+	if args.sample_list is None and args.sample_regex is None:
 		print('Neither sample-list nor sample-regex where provided! Exiting....')
 		exit()
+	# Use list if available, otherwise use regex
+	sample_subset = create_ids_list(args.sample_list) if (args.sample_list is not None) else re.compile(args.sample_regex)
 	
-	patient_subset = create_ids_list(args.patient_list) if (args.patient_list is not None) else (re.compile(args.patient_regex) if (args.patient_regex is not None) else None)
-	if patient_subset is None:
+	if args.patient_list is None and args.patient_list is None:
 		print('Neither patient-list nor patient-regex where provided! Exiting....')
 		exit()
+	patient_subset = create_ids_list(args.patient_list) if (args.patient_list is not None) else re.compile(args.patient_regex)
 	
 	identify_file_type(study_dir, sample_subset, patient_subset, output_dir)
 	
