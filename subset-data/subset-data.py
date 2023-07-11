@@ -44,7 +44,6 @@ def subset_by_ID(study_dir, file, filter_fn, output_dir, index_column):
 	else:
 		print('Sample IDs to subset are not present in file. Skipping..')
 
-
 def subset_by_matrix_type(study_dir, file, filter_fn, outdir, data_cols):
 	data = ""
 	data_cols_len = len(data_cols)
