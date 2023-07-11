@@ -16,7 +16,7 @@ from itertools import groupby
 from operator import itemgetter
 
 def write_data(final_mapped_data, header, outfile):
-	updated_header = ['Sample_ID', 'Site1_Hugo_Symbol', 'Site1_Entrez_Gene_Id', 'Site2_Hugo_Symbol', 'Site2_Entrez_Gene_Id', 'SV_Status']
+	updated_header = ['Sample_Id', 'Site1_Hugo_Symbol', 'Site1_Entrez_Gene_Id', 'Site2_Hugo_Symbol', 'Site2_Entrez_Gene_Id', 'SV_Status']
 	additional_columns = [x for x in header if x not in updated_header and x not in ['index', 'Hugo_Symbol', 'Entrez_Gene_Id', 'Tumor_Sample_Barcode']]
 	updated_header.extend(additional_columns)
 
