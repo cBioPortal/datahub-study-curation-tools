@@ -16,11 +16,11 @@ python3 fusion_to_sv_converter_genie.py [-h] --fusion_file <path/to/data_fusions
 
 #### Command Line
 ```
-python3 fusion_to_sv_converter.py --help
+python3 fusion_to_sv_converter_genie.py --help
 ```
 
 ```
-usage: fusion_to_sv_converter.py [-h] -f FUSION_FILE -s SV_FILE [-repo [SOURCE_REPO]]
+usage: fusion_to_sv_converter_genie.py [-h] -f FUSION_FILE -s SV_FILE
 
 optional arguments:
   -h, --help            show this help message and exit
