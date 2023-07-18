@@ -1,4 +1,4 @@
-The latest version of cBioPortal's Gene Table is built upon the HGNC Apr 1, 2023 release. The gene table was previously updated on Jan 10, 2023 based on the Oct 1, 2022 HGNC release. 
+The latest version of cBioPortal's Gene Table is built upon the HGNC Apr 1, 2023 release. The gene table was previously updated based on the Oct 1, 2022 HGNC release. 
 
 This page displays the gene changes between the latest version of HGNC (Apr 1, 2023) and the version of HGNC (Oct 1, 2022 release) that was used to build our Gene Tables previously.
 
