@@ -25,6 +25,7 @@ import os
 import logging
 import click
 import split_data_clinical_attributes
+import shutil
 
 DATA_FILENAME_MAPPING_FILE = "config_files/data_file_mappings.txt"
 CLINICAL_META_DATA = "config_files/clinical_attributes_metadata.txt"
@@ -639,13 +640,16 @@ def main(subset_samples, excluded_samples, input_directory):
                 split_data_clinical_attributes.main(os.path.join(study,'data_clinical.txt'), logger)
                 TEMP_FILES.extend([os.path.join(study,'data_clinical_patient.txt'), os.path.join(study,'data_clinical_sample.txt')])
 
-    # create output directory, identify study ID from input directories list
+	# create output directory, identify study ID from input directories list
     study_id = generate_study_id(input_directory)
     output_directory = os.path.join(os.getcwd(),study_id)
-    print('The subset data is written to:', output_directory)
-    logger.info('The subset data is written to:' + output_directory)
+    print('The subset data will be written to:', output_directory)
+    logger.info('The subset data will be written to:' + output_directory)
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
+    else:
+    	shutil.rmtree(output_directory)
+    	os.makedirs(output_directory)
 
     # generate file maping
     merge_map = generate_file_mapping(DATA_FILENAME_MAPPING_FILE, input_directory)

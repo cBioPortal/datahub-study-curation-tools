@@ -80,10 +80,8 @@ def format_output_line(fields):
         return ''
     output_line = ''
     for field in fields:
-        if len(output_line) != 0:
-            output_line = output_line + '\t'
-        output_line = output_line + field
-    return output_line
+        output_line = output_line + '\t'
+    return output_line[:-1]
 
 def existing_data_is_not_available(data):
     if not data:

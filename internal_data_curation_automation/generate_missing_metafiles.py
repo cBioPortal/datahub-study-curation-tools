@@ -64,6 +64,7 @@ def main(directory, study_id):
                 xx = list(cc[col])[-1]
                 if str(xx) != "nan": # check if NAN values are present
                     ss = col.replace("META_", '').lower() # then Replacing Meta_ to ''
+                    if file.endswith('.seg') and ss == 'profile_description': ss = 'description'
                     append_string = f"{ss}: {xx}\n"
                     emp += append_string  # appending to the empty string
                 else:
