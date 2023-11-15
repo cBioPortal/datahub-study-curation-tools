@@ -20,7 +20,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 10896	OCLM	-	-	protein-coding	
 102724965	LOC102724965	2	2p21	protein-coding	
 100129275	LOC100129275	-	-	protein-coding	
-100996442	LOC100996442	1	1p36.33	protein-coding	ENSG00000238009
 101060596	LOC101060596	-	-	protein-coding	
 100128402	LOC100128402	-	-	protein-coding	
 100131821	LOC100131821	-	-	protein-coding	
@@ -88,7 +87,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 284898	LOC284898	22	22q12.1	protein-coding	
 100128184	LOC100128184	-	-	protein-coding	
 100996750	LOC100996750	17	-	protein-coding	
-100506422	LOC100506422	9	9p21.2	protein-coding	ENSG00000276759
 100132365	LOC100132365	-	-	protein-coding	
 100130560	LOC100130560	-	-	protein-coding	
 100132363	LOC100132363	-	-	protein-coding	
@@ -175,7 +173,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 102724250	LOC102724250	1	-	protein-coding	ENSG00000271254
 101930075	LOC101930075	-	-	protein-coding	
 102724665	LOC102724665	-	-	protein-coding	
-100505841	LOC100505841	5	5q23.2	protein-coding	
 7211	TRMEP1	6	6p22.1	pseudogene	
 100131310	LOC100131310	-	-	protein-coding	
 100130865	LOC100130865	-	-	protein-coding	
@@ -263,7 +260,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 100129406	LOC100129406	-	-	protein-coding	
 100129408	LOC100129408	-	-	protein-coding	
 101243544	ERCC6-PGBD3	-	-	protein-coding	
-100507527	THEG5	19	19q12	protein-coding	ENSG00000267465
 100131878	LOC100131878	-	-	protein-coding	
 100129311	LOC100129311	-	-	protein-coding	
 389831	LOC389831	14	-	protein-coding	ENSG00000276256
@@ -346,7 +342,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 728485	LOC728485	19	19q13.12	protein-coding	ENSG00000267260
 644058	LOC644058	-	-	protein-coding	
 100128001	LOC100128001	-	-	protein-coding	
-102724951	LOC102724951	21	21p11.2	protein-coding	ENSG00000276077
 3262	HPVC1	-	-	ncRNA	
 729353	LOC729353	-	-	protein-coding	
 692236	SNORD116@	15	15q11.2	other	
