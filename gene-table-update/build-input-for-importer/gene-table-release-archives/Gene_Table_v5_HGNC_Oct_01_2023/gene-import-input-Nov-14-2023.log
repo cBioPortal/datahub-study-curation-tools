@@ -1,0 +1,77 @@
+INFO:root:Checking resource: Entrez ID mapping >>>>>>>>>>>>>>>
+INFO:root:Cleaning up Entrez IDs >>>>>>>>>>>>>>>
+INFO:root:Deleted entry: AKAP2
+INFO:root:Deleted entry: BACH1-IT1
+INFO:root:Deleted entry: CHILL1
+INFO:root:Added entrez ID 1550 to: CYP2A7P2
+INFO:root:Merge CYP2A7P2 into CYP2A7P1 as prev symbols.
+INFO:root:Deleted entry: DDX11L6
+INFO:root:Deleted entry: DDX11L7
+INFO:root:Deleted entry: DDX11L13
+INFO:root:Deleted entry: DDX11L15
+INFO:root:Deleted entry: DNAJB5P1
+INFO:root:Deleted entry: EBVM1
+INFO:root:Deleted entry: ERVH-8
+INFO:root:Deleted entry: ERVH-9
+INFO:root:Deleted entry: ERVH-10
+INFO:root:Deleted entry: FRA3B
+INFO:root:Deleted entry: GTF2IP16
+INFO:root:Deleted entry: GTF2IP21
+INFO:root:Added entrez ID 132322117 to: LNCPTCTS
+INFO:root:Deleted entry: MT-7SDNA
+INFO:root:Deleted entry: MT-ATT
+INFO:root:Deleted entry: MT-CSB1
+INFO:root:Deleted entry: MT-CSB2
+INFO:root:Deleted entry: MT-CSB3
+INFO:root:Deleted entry: MT-HPR
+INFO:root:Deleted entry: MT-HSP1
+INFO:root:Deleted entry: MT-HSP2
+INFO:root:Deleted entry: MT-LIPCAR
+INFO:root:Deleted entry: MT-LSP
+INFO:root:Deleted entry: MT-OHR
+INFO:root:Deleted entry: MT-OLR
+INFO:root:Deleted entry: MT-RNR3
+INFO:root:Deleted entry: MT-TAS
+INFO:root:Deleted entry: MT-TER
+INFO:root:Deleted entry: MT-TFH
+INFO:root:Deleted entry: MT-TFL
+INFO:root:Deleted entry: MT-TFX
+INFO:root:Deleted entry: MT-TFY
+INFO:root:Added entrez ID 107133487 to: MTND4P38
+INFO:root:Merge MTND4P38 into MTND4LP23 as prev symbols.
+INFO:root:Deleted entry: MTND6P36
+INFO:root:Deleted entry: PALM2
+INFO:root:Deleted entry: SLC7A2-IT1
+INFO:root:Deleted entry: TRA-AGC13-3
+INFO:root:Deleted entry: TRE-TTC8-2
+INFO:root:Added entrez ID 101060002 to: TRMT10BP1
+INFO:root:Deleted entry: TRN-GTT15-2
+INFO:root:Deleted entry: TRN-GTT19-2
+INFO:root:Deleted entry: TRQ-CTG8-3
+INFO:root:Deleted entry: TRR-CCT6-1
+INFO:root:Finished cleaning up entrez IDs ....
+
+INFO:root:Removing miRNA entries >>>>>>>>>>>>>>>
+INFO:root:Finished removing miRNA entries .... 
+
+INFO:root:Checking resource: Gene Types mapping >>>>>>>>>>>>>>>
+INFO:root:Merging Gene Types >>>>>>>>>>>>>>>
+INFO:root:Finished merging gene types ....
+
+INFO:root:Merging Alias (from Previous Symbols) >>>>>>>>>>>>>>>
+INFO:root:Merging Alias (from Alias Symbols) >>>>>>>>>>>>>>>
+INFO:root:Finished Merging Alias .....
+
+INFO:root:Checking resource: Locations mapping >>>>>>>>>>>>>>>
+INFO:root:Translating HGNC location >>>>>>>>>>>>>
+INFO:root:Finished translating HGNC location >>>>>>>>>>>>>
+
+INFO:root:Adding main supplement genes >>>>>>>>>>>>>
+INFO:root:Finished adding main supplement genes >>>>>>>>>>>>>
+
+INFO:root:Adding alias supplement genes >>>>>>>>>>>>>
+INFO:root:Finished adding alias supplement genes >>>>>>>>>>>>>
+
+INFO:root:Adding supplemental location info >>>>>>>>>>>>>
+INFO:root:Finished adding alias supplement genes >>>>>>>>>>>>>
+
