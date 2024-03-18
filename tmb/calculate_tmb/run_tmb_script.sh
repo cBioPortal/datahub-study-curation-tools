@@ -1,2 +1,0 @@
-python calc_nonsyn_tmb.py -p /Users/suny1/github/datahub/reference_data/gene_panels/ -i /Users/suny1/github/datahub/public/$1
-mv /Users/suny1/github/datahub/public/$1/tmb_output_data_clinical_sample.txt /Users/suny1/github/datahub/public/$1/data_clinical_sample.txt
