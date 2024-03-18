@@ -1,8 +1,8 @@
 ### Description
 Giving a gene panel file, for example:
 ```
-stable_id: IMPACT410
-description: Targeted (410 cancer genes) sequencing of various tumor types via MSK-IMPACT on Illumina HiSeq sequencers.
+stable_id: IMPACT
+description: Targeted sequencing of various tumor types via MSK-IMPACT on Illumina HiSeq sequencers.
 gene_list:	ABL1	ACVR1
 ```
 Calculate `number_of_profiled_coding_base_pairs` by:
@@ -17,8 +17,8 @@ number of profiled coding base pairs found: 4917
 ```
 In output file:
 ```
-stable_id: IMPACT410
-description: Targeted (410 cancer genes) sequencing of various tumor types via MSK-IMPACT on Illumina HiSeq sequencers.
+stable_id: IMPACT
+description: Targeted sequencing of various tumor types via MSK-IMPACT on Illumina HiSeq sequencers.
 gene_list:	ABL1	ACVR1
 number_of_profiled_coding_base_pairs: 4917
 ```
