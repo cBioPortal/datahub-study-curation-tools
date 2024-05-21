@@ -102,7 +102,7 @@ def remove_study_id(jvm_args, study_id):
     run_java(*args)
 
 
-def import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, meta_file_dictionary = None):
+def import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity = None, meta_file_dictionary = None):
     args = jvm_args.split(' ')
 
     # In case the meta file is already parsed in a previous function, it is not
@@ -238,6 +238,7 @@ def process_directory(jvm_args, study_directory, update_generic_assay_entity = N
     gsva_score_filepair = None
     gsva_pvalue_filepair = None
     structural_variant_filepair = None
+    cna_long_filepair = None
 
     # Determine meta filenames in study directory
     meta_filenames = (
@@ -327,6 +328,9 @@ def process_directory(jvm_args, study_directory, update_generic_assay_entity = N
         elif meta_file_type == MetaFileTypes.STRUCTURAL_VARIANT:
             structural_variant_filepair = (
                 (meta_filename, os.path.join(study_directory, meta_dictionary['data_filename'])))
+        elif meta_file_type == MetaFileTypes.CNA_DISCRETE_LONG:
+            cna_long_filepair = (
+                (meta_filename, os.path.join(study_directory, meta_dictionary['data_filename'])))
         # Add all other types of data
         else:
             regular_filepairs.append(
@@ -372,6 +376,12 @@ def process_directory(jvm_args, study_directory, update_generic_assay_entity = N
         meta_filename, data_filename = structural_variant_filepair
         import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
+    # Import cna data
+    if cna_long_filepair is not None:
+        meta_filename, data_filename = cna_long_filepair
+        import_study_data(jvm_args=jvm_args, meta_filename=meta_filename, data_filename=data_filename,
+                          meta_file_dictionary=study_meta_dictionary[meta_filename])
+
     # Import expression z-score (after expression)
     for meta_filename, data_filename in zscore_filepairs:
         import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
@@ -409,8 +419,7 @@ def usage():
                            '--command [%s] --study_directory <path to directory> '
                            '--meta_filename <path to metafile>'
                            '--data_filename <path to datafile>'
-                           '--study_ids <cancer study ids for remove-study command, comma separated>'
-                           '--properties-filename <path to properties file> ' % (COMMANDS)), file=OUTPUT_FILE)
+                           '--study_ids <cancer study ids for remove-study command, comma separated>' % (COMMANDS)), file=OUTPUT_FILE)
 
 def check_args(command):
     if command not in COMMANDS:
@@ -435,6 +444,9 @@ def check_dir(study_directory):
 def add_parser_args(parser):
     parser.add_argument('-s', '--study_directory', type=str, required=False,
                         help='Path to Study Directory')
+    parser.add_argument('-jvo', '--java_opts', type=str, default=os.environ.get('JAVA_OPTS'),
+                        help='Path to specify JAVA_OPTS for the importer. \
+                        (default: gets the JAVA_OPTS from the environment)')
     parser.add_argument('-jar', '--jar_path', type=str, required=False,
                         help='Path to scripts JAR file')
     parser.add_argument('-meta', '--meta_filename', type=str, required=False,
@@ -489,10 +501,11 @@ def locate_jar():
     """
     # get the directory name of the currently running script,
     # resolving any symlinks
-    script_dir = Path(__file__).resolve().parent
-    # go up from cbioportal/core/src/main/scripts/importer/ to cbioportal/
-    src_root = script_dir.parent.parent.parent.parent.parent
-    jars = list((src_root / 'scripts' / 'target').glob('scripts-*.jar'))
+    this_file = Path(__file__).resolve()
+    importer_dir = this_file.parent
+    scripts_dir = importer_dir.parent
+    root_dir = scripts_dir.parent
+    jars = list((root_dir).glob('core-*.jar'))
     if len(jars) != 1:
         raise FileNotFoundError(
             'Expected to find 1 scripts-*.jar, but found ' + str(len(jars)))
@@ -511,18 +524,29 @@ def main(args):
     module_logger.addHandler(error_handler)
     LOGGER = module_logger
 
-    # jar_path is optional. If not set, try to find it relative to this script
-    if args.jar_path is None:
+    # move jar_path to java_opts if it exists
+    if args.jar_path:
+        args.java_opts = f"-cp {args.jar_path} {args.java_opts}"
+
+    # java_opts is optional. If class (jar) path is not set (-cp), try to find the jar path relative to this script
+    locate_jar_path = True
+    if args.java_opts is not None and '-cp' in args.java_opts:
+        locate_jar_path = False
+    if locate_jar_path:
         try:
-            args.jar_path = locate_jar()
+            jar_path = locate_jar()
         except FileNotFoundError as e:
             print(e)
             sys.exit(2)
-        print('Data loading step using', args.jar_path)
+        print('Data loading step using', jar_path)
         print()
+        if args.java_opts is None:
+            args.java_opts = f"-cp {jar_path}"
+        else:
+            args.java_opts = f"-cp {jar_path} {args.java_opts}"
 
     # process the options
-    jvm_args = "-Dspring.profiles.active=dbcp -cp " + args.jar_path
+    jvm_args = "-Dspring.profiles.active=dbcp " + args.java_opts
     study_directory = args.study_directory
 
     # check if DB version and application version are in sync

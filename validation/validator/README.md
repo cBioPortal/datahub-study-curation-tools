@@ -1,32 +1,21 @@
 # Introduction
 
-This is a standalone version of cBioPortal data validator (which also runs automatically by [circle CI](https://github.com/cBioPortal/datahub/tree/master/.circleci) in our [Datahub](https://github.com/cBioPortal/datahub) on each submitted pull request and all public studies weekly [(example)](https://app.circleci.com/pipelines/github/cBioPortal/datahub/1449/workflows/111e5187-9565-490b-97a4-356ccb477bc8/jobs/6489/artifacts).
-  
-Validator validates single or multiple studies formatted in [cBioPortal format](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats), and outputs reports in both plain txt and HTML format.
+This is a standalone version of cBioPortal data validator. It validates one or multiple studies formatted according to the [cBioPortal data formats](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats), and outputs reports in both plain text and HTML formats.
 
-# Installation
+# Requirements
 
 ### Python3
-Make sure `python3.x` is installed. Official information at https://www.python.org/downloads/
+Make sure `python3.x` is installed. Official information can be found at [python.org](https://www.python.org/downloads/)
 
 ### yaml
 ```
-python3 -m pip install pyymal
+python3 -m pip install pyyaml
 ```
 
 ### jinja2
 ```
 python3 -m pip install jinja2
 ```
-### set PYTHONPATH
-set variant `PYTHONPATH` in system environment , with the path to your local [cbioportal](https://github.com/cBioPortal/cbioportal) repo's `scripts` folder (`cbioportal/core/src/main/scripts`).   
-##### Method 1: 
-Run below command line every time before running the script (in the same window where the scripts run, and modify the path to your local setting) 
-```
-export PYTHONPATH=path/to/cbioportal/github/repo/core/src/main/scripts
-```
-##### Method 2: 
-Modify [system login script](https://www.marquette.edu/high-performance-computing/bashrc.php) `.bashrc` by including new `PYTHONPATH` variant
 
 # Usage
 
@@ -74,12 +63,4 @@ optional arguments:
 #### Example
 ```
 python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html path/to/html_report/
-```
-# How to update (to the latest version/in sync with cbioportal repo)
-Copy files listed above here from `https://github.com/cBioPortal/cbioportal/tree/master/core/src/main/scripts/importer`
-
-# Run validation with Docker
-If already having a docker container up and having a cBioPortal image running, validation (associated with the version of the cBioPortal image running) could be run independently with Docker as well. Details on how to set up cBioPortal in Docker container please see [HERE](https://github.com/cBioPortal/cbioportal/blob/0aed7476dfc0b07e19184059cf819b3d62682c7b/docs/docker/README.md)
-```
-docker run --rm -v /path/to/datahub/public:/datahub cbioportal/cbioportal:3.6.16 validateStudies.py -d /datahub -l vsc_cuk_2018 -u http://cbioportal.org -html /datahub/vsc_cuk_2018/html_report
 ```

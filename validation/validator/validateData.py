@@ -33,7 +33,7 @@ import sys
 import os
 import importlib
 import logging.handlers
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 import argparse
 import re
 import csv
@@ -48,14 +48,14 @@ import math
 from abc import ABCMeta, abstractmethod
 from urllib.parse import urlparse
 
-# configure relative imports if running as a script; see PEP 366
-# it might passed as empty string by certain tooling to mark a top level module
+# Configure relative imports if running as a script; see PEP 366
+# it might passed as empty string by certain tooling to mark a top level module.
 if __name__ == "__main__" and (__package__ is None or __package__ == ''):
     # replace the script's location in the Python search path by the main
     # scripts/ folder, above it, so that the importer package folder is in
     # scope and *not* directly in sys.path; see PEP 395
     sys.path[0] = str(Path(sys.path[0]).resolve().parent)
-    __package__ = 'importer'
+    __package__ = 'validator'
     # explicitly import the package, which is needed on CPython 3.4 because it
     # doesn't include https://github.com/python/cpython/pull/2639
     importlib.import_module(__package__)
@@ -92,10 +92,14 @@ COLOR_REGEX = re.compile("^#[a-fA-F0-9]{6}$")
 # global character limit on sample stable ids
 MAX_SAMPLE_STABLE_ID_LENGTH = 63
 
+# global variable that defines the invalid ID characters
+INVALID_ID_CHARACTERS = r"[^A-Za-z0-9._\(\)'-]"
+
 # ----------------------------------------------------------------------------
 
 VALIDATOR_IDS = {
     cbioportal_common.MetaFileTypes.CNA_DISCRETE: 'CNADiscreteValidator',
+    cbioportal_common.MetaFileTypes.CNA_DISCRETE_LONG: 'CNADiscreteLongValidator',
     cbioportal_common.MetaFileTypes.CNA_LOG2:'CNAContinuousValuesValidator',
     cbioportal_common.MetaFileTypes.CNA_CONTINUOUS:'CNAContinuousValuesValidator',
     cbioportal_common.MetaFileTypes.EXPRESSION:'ContinuousValuesValidator',
@@ -953,7 +957,7 @@ class Validator(object):
                                     'downloadChromosomeSizes.py.')
 
         logger.debug("Retrieving chromosome lengths from '%s'",
-                     chrom_size_file)
+                     os.path.basename(chrom_size_file))
 
         try:
             chrom_size_dict = chrom_sizes[reference_genome]
@@ -1392,6 +1396,153 @@ class CustomDriverAnnotationValidator(Validator):
                    'column_number': col_index + 1,
                    'cause': value})
 
+class CustomNamespacesValidator(Validator):
+    """ Logic to validate custom namespace data."""
+
+    def __init__(self, *args, **kwargs):
+        super(CustomNamespacesValidator, self).__init__(*args, **kwargs)
+
+    def checkHeader(self, cols):
+        num_errors = super(CustomNamespacesValidator, self).checkHeader(cols)
+
+        #Namespaces column are compulsory when custom namespaces are defined in meta file
+        namespaces = []
+        if 'namespaces' in self.meta_dict:
+            namespaces = self.meta_dict['namespaces'].split(',')
+        for namespace in namespaces:
+            defined_namespace = namespace.strip().lower()
+            defined_namespace_found = any([True for col in cols if col.lower().startswith(defined_namespace + '.')])
+            if not defined_namespace_found:
+                self.logger.error('%s namespace defined but the file does not have any matching columns' 
+                                  % (defined_namespace))
+                num_errors += 1
+        
+        return num_errors
+
+class CNADiscreteLongValidator(CustomDriverAnnotationValidator, CustomNamespacesValidator):
+    """ Logic to validate discrete long CNA data."""
+    REQUIRED_HEADERS = [
+        'Sample_Id',
+        'Value'
+    ]
+    OPTIONAL_HEADERS = [
+        'Hugo_Symbol',
+        'Entrez_Gene_Id',
+        'cbp_driver',
+        'cbp_driver_annotation',
+        'cbp_driver_tiers',
+        'cbp_driver_tiers_annotation'
+    ]
+    REQUIRE_COLUMN_ORDER = False
+    ALLOW_BLANKS = True
+
+    NULL_VALUES = ['NA']
+
+    ALLOWED_CNA_VALUES = ['-2', '-1.5', '-1', '0', '1', '2'] + NULL_VALUES
+
+    
+
+    def __init__(self, *args, **kwargs):
+        super(CNADiscreteLongValidator, self).__init__(*args, **kwargs)
+        self.cna_entries = {} #Dictionary of dictionaries with sampleid: {entrez: hugo}
+        self.cna_entry = namedtuple('CNAEntry', 'hugo line')
+
+    def checkHeader(self, cols):
+        num_errors = super(CNADiscreteLongValidator, self).checkHeader(cols)
+        if ('Hugo_Symbol' not in cols and
+                'Entrez_Gene_Id' not in cols):
+            self.logger.error('Hugo_Symbol or Entrez_Gene_Id column needs to be present in the file.',
+                              extra={'line_number': self.line_number})
+            num_errors += 1
+
+        return num_errors
+
+    def checkLine(self, data):
+        super(CNADiscreteLongValidator, self).checkLine(data)
+        sample_id_index = self.cols.index('Sample_Id')
+        self.checkSampleId(data[sample_id_index], column_number = sample_id_index + 1)
+
+        entrez_gene_id = None
+        hugo_symbol = None
+        if 'Entrez_Gene_Id' in self.cols:
+            if data[self.cols.index('Entrez_Gene_Id')] != '':
+                entrez_gene_id = data[self.cols.index('Entrez_Gene_Id')]
+        if 'Hugo_Symbol' in self.cols:
+            if data[self.cols.index('Hugo_Symbol')] != '':
+                hugo_symbol = data[self.cols.index('Hugo_Symbol')]
+        entrez_gene_id = self.checkGeneIdentification(hugo_symbol, entrez_gene_id)
+
+        #Check uniqueness gene - sampleId
+        sample_id = data[self.cols.index('Sample_Id')]
+        if entrez_gene_id is not None:
+            if sample_id in self.cna_entries.keys():
+                if entrez_gene_id in self.cna_entries[sample_id]:
+                    if hugo_symbol is not None and self.cna_entries[sample_id][entrez_gene_id].hugo is not None:
+                        if self.cna_entries[sample_id][entrez_gene_id].hugo == hugo_symbol:
+                            self.logger.error(
+                                'Duplicated gene found within the same sample.',
+                                extra = {'line_number': self.line_number,
+                                'cause': 'Sample Id: %s, Hugo Symbol: %s, Entrez Gene Id: %s '
+                                '(already defined on line %d)' % (
+                                    sample_id,
+                                    hugo_symbol,
+                                    entrez_gene_id,
+                                    self.cna_entries[sample_id][entrez_gene_id].line)})
+                        else:
+                            self.logger.error(
+                                'Two different Hugo Symbols that map to the same Entrez Gene Id '
+                                'found within the same sample.',
+                                extra = {'line_number': self.line_number,
+                                'cause': 'Sample Id: %s, Entrez Gene Id: %s, '
+                                'Hugo Symbol: %s (already defined on line %d, '
+                                'with Hugo Symbol: %s)' % (
+                                    sample_id,
+                                    entrez_gene_id,
+                                    hugo_symbol,
+                                    self.cna_entries[sample_id][entrez_gene_id].line,
+                                    self.cna_entries[sample_id][entrez_gene_id].hugo)})
+                    elif hugo_symbol is not None or self.cna_entries[sample_id][entrez_gene_id].hugo is not None:
+                            #self.logger.error("Error: %s %s %s %s" %(str(sample_id), str(entrez_gene_id), str(hugo_symbol), str(self.cna_entries[sample_id])))
+                            self.logger.error(
+                                        'A Hugo Symbol that maps to an already existing Entrez Gene '
+                                        'Id found within the same sample.',
+                                        extra = {'line_number': self.line_number,
+                                        'cause': 'Sample Id: %s, Hugo Symbol: %s, '
+                                        'Entrez Gene Id: %s '
+                                        '(already defined on line %d)' % (
+                                            sample_id,
+                                            hugo_symbol if hugo_symbol is not None else self.cna_entries[sample_id][entrez_gene_id].hugo,
+                                            entrez_gene_id,
+                                            self.cna_entries[sample_id][entrez_gene_id].line)})
+                    else:
+                        self.logger.error(
+                                'Duplicated Entrez Gene Id found within the same sample.',
+                                extra = {'line_number': self.line_number,
+                                'cause': 'Sample Id: %s, Entrez Gene Id: %s '
+                                '(already defined on line %d)' % (
+                                    sample_id,
+                                    entrez_gene_id,
+                                    self.cna_entries[sample_id][entrez_gene_id].line)})
+                else:
+                    self.cna_entries[sample_id][entrez_gene_id] = self.cna_entry(hugo=hugo_symbol, line=self.line_number)
+            else:
+                self.cna_entries[sample_id] = {entrez_gene_id: self.cna_entry(hugo=hugo_symbol, line=self.line_number)}
+
+        if 'Value' in self.cols:
+            cna_value = data[self.cols.index('Value')]
+            if cna_value.strip() not in self.ALLOWED_CNA_VALUES:
+                if self.logger.isEnabledFor(logging.ERROR):
+                    self.logger.error(
+                        'Invalid CNA value: possible values are [%s]',
+                        ', '.join(self.ALLOWED_CNA_VALUES),
+                        extra={'line_number': self.line_number,
+                            'column_number': self.cols.index('Value'),
+                            'cause': cna_value})
+
+    def onComplete(self):
+        #End validation of this data type by running the super function
+        super(CNADiscreteLongValidator, self).onComplete()
+
 class CNADiscretePDAAnnotationsValidator(CustomDriverAnnotationValidator):
     REQUIRED_HEADERS = [
         'SAMPLE_ID'
@@ -1436,7 +1587,8 @@ class CNADiscretePDAAnnotationsValidator(CustomDriverAnnotationValidator):
             if data[self.cols.index('Hugo_Symbol')] != '':
                 hugo_symbol = data[self.cols.index('Hugo_Symbol')]
         entrez_gene_id = self.checkGeneIdentification(hugo_symbol, entrez_gene_id)
-        self.entrez_gene_ids.add(entrez_gene_id)
+        if entrez_gene_id is not None:
+            self.entrez_gene_ids.add(entrez_gene_id)
 
     def onComplete(self):
         """Perform final validations based on the data parsed."""
@@ -1452,7 +1604,7 @@ class CNAContinuousValuesValidator(CNAValidator, ContinuousValuesValidator):
     """Logic to validate continuous CNA data."""
 
 
-class MutationsExtendedValidator(CustomDriverAnnotationValidator):
+class MutationsExtendedValidator(CustomDriverAnnotationValidator, CustomNamespacesValidator):
     """Sub-class mutations_extended validator."""
 
     # TODO - maybe this should comply to https://wiki.nci.nih.gov/display/TCGA/Mutation+Annotation+Format+%28MAF%29+Specification ?
@@ -1575,14 +1727,6 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
                                   'Missing %s' % (','.join(missing_ascn_columns)))
                 num_errors += 1
 
-        for namespace in namespaces:
-            defined_namespace = namespace.strip().lower()
-            if defined_namespace != 'ascn':
-                defined_namespace_found = any([True for col in cols if col.lower().startswith(defined_namespace + '.')])
-                if not defined_namespace_found:
-                    self.logger.error('%s namespace defined but MAF '
-                                      'does not have any matching columns' % (defined_namespace))
-                    num_errors += 1
         return num_errors
 
     def checkLine(self, data):
@@ -1787,7 +1931,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
 
             if variant_type == "SNP":
                 # Expect alleles to have length 2 when variant type is SNP
-                if not (len(ref_allele) == 1 and len(tumor_seq_allele1) == 1 and len(tumor_seq_allele1) == 1):
+                if not (len(ref_allele) == 1 and len(tumor_seq_allele1) == 1 and len(tumor_seq_allele2) == 1):
                     log_message = "Variant_Type indicates a SNP, but length of Reference_Allele, Tumor_Seq_Allele1 " \
                                   "and/or Tumor_Seq_Allele2 do not equal 1."
                     extra_dict = {'line_number': self.line_number,
@@ -1795,7 +1939,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
                     self.send_log_message(self.strict_maf_checks, log_message, extra_dict)
             if variant_type == "DNP":
                 # Expect alleles to have length 2 when variant type is DNP
-                if not (len(ref_allele) == 2 and len(tumor_seq_allele1) == 2 and len(tumor_seq_allele1) == 2):
+                if not (len(ref_allele) == 2 and len(tumor_seq_allele1) == 2 and len(tumor_seq_allele2) == 2):
                     log_message = "Variant_Type indicates a DNP, but length of Reference_Allele, Tumor_Seq_Allele1 " \
                                   "and/or Tumor_Seq_Allele2 do not equal 2."
                     extra_dict = {'line_number': self.line_number,
@@ -1803,7 +1947,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
                     self.send_log_message(self.strict_maf_checks, log_message, extra_dict)
             if variant_type == "TNP":
                 # Expect alleles to have length 3 when variant type is TNP
-                if not (len(ref_allele) == 3 and len(tumor_seq_allele1) == 3 and len(tumor_seq_allele1) == 3):
+                if not (len(ref_allele) == 3 and len(tumor_seq_allele1) == 3 and len(tumor_seq_allele2) == 3):
                     log_message = "Variant_Type indicates a TNP, but length of Reference_Allele, Tumor_Seq_Allele1 " \
                                   "and/or Tumor_Seq_Allele2 do not equal 3."
                     extra_dict = {'line_number': self.line_number,
@@ -1992,7 +2136,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator):
 
     def checkNCBIbuild(self, value):
         """
-        Checks whether the value found in MAF NCBI_Build column matches the genome specified in portal.properties at 
+        Checks whether the value found in MAF NCBI_Build column matches the genome specified in application.properties at 
         field ncbi.build. Expecting GRCh37, GRCh38, GRCm38 or without the GRCx prefix
         """    
     
@@ -2376,7 +2520,6 @@ class ClinicalValidator(Validator):
             'datatype': 'STRING'
         },
     }
-    INVALID_ID_CHARACTERS = r'[^A-Za-z0-9._-]'
     BANNED_ATTRIBUTES = ['MUTATION_COUNT', 'FRACTION_GENOME_ALTERED']
 
     def __init__(self, *args, **kwargs):
@@ -2459,12 +2602,12 @@ class ClinicalValidator(Validator):
                         invalid_values = True
                 elif self.METADATA_LINES[line_index] == 'priority':
                     try:
-                        if int(value) < 0:
+                        if int(value) < -1:
                             raise ValueError()
                     except ValueError:
                         self.logger.error(
                             'Priority definition should be an integer, and should be '
-                            'greater than or equal to zero',
+                            'greater than or equal to -1',
                             extra={'line_number': line_index + 1,
                                    'column_number': col_index + 1,
                                    'cause': value})
@@ -2613,7 +2756,7 @@ class ClinicalValidator(Validator):
                                'cause': value})
 
             if col_name == 'PATIENT_ID' or col_name == 'SAMPLE_ID':
-                if re.findall(self.INVALID_ID_CHARACTERS, value):
+                if re.findall(INVALID_ID_CHARACTERS, value):
                     self.logger.error(
                         'PATIENT_ID and SAMPLE_ID can only contain letters, '
                         'numbers, points, underscores and/or hyphens',
@@ -2800,7 +2943,6 @@ class PatientClinicalValidator(ClinicalValidator):
                     self.logger.error(
                             'Value in DFS_STATUS column is not 0:DiseaseFree, '
                             '1:Recurred/Progressed, 1:Recurred, 1:Progressed',
-                            'DiseaseFree, Recurred/Progressed, Recurred or Progressed',
                             extra={'line_number': self.line_number,
                                    'column_number': col_index + 1,
                                    'cause': value})
@@ -2963,7 +3105,7 @@ class SegValidator(Validator):
         # meanwhile adding up the number of (non-overlapping) bases covered on
         # that chromosome in that patient.
 
-class StructuralVariantValidator(Validator):
+class StructuralVariantValidator(CustomNamespacesValidator):
 
     """Basic validation for structural variant data. Validates:
 
@@ -3108,16 +3250,34 @@ class StructuralVariantValidator(Validator):
         
         # Check whether at least one of the Site1 or Site2 is valid.
         if site1_gene is None and site2_gene is None:
-            self.logger.error(
-                'No Entrez gene id or gene symbol provided for site 1 and site 2',
-                extra={'line_number': self.line_number})
+            # Check if the Site1 and Site2 Hugo Symbols or Entrez Gene Ids have been left empty or not
+            # If they are defined, but the gene is none, it means they are not included in the db so  
+            # we need to throw a warning rather than an error.
+            non_recognized_genes = []
+            if site1_hugo_symbol is not None:
+                non_recognized_genes += [site1_hugo_symbol]
+            elif site1_entrez_gene_id is not None:
+                non_recognized_genes += [site1_entrez_gene_id]
+            elif site2_hugo_symbol is not None:
+                non_recognized_genes += [site2_hugo_symbol]
+            elif site2_entrez_gene_id is not None:
+                non_recognized_genes += [site2_entrez_gene_id]
+            if len(non_recognized_genes) > 0:
+                self.logger.warning(
+                    'All Entrez Gene Ids and Gene Symbols provided for site 1 and site 2 are not known to the cBioPortal instance. ' \
+                        'This record will not be loaded.;',
+                    extra={'line_number': self.line_number, 'cause': ", ".join(non_recognized_genes) })
+            else: #Explicit empty Entrez Gene Ids and Gene Symbols in Site1 and Site2
+                self.logger.error(
+                    'No Entrez gene id or gene symbol provided for site 1 and site 2',
+                    extra={'line_number': self.line_number})
         elif site1_gene is None and site2_gene is not None:
-            self.logger.warning(
+            self.logger.info(
                 'No Entrez gene id or gene symbol provided for site 1. '
                 'Assuming either the intragenic, deletion, duplication, translocation or inversion variant',
                 extra={'line_number': self.line_number})
         elif site2_gene is None and site1_gene is not None:
-            self.logger.warning(
+            self.logger.info(
                 'No Entrez gene id or gene symbol provided for site 2. '
                 'Assuming either the intragenic, deletion, duplication, translocation or inversion variant',
                 extra={'line_number': self.line_number})
@@ -3600,8 +3760,6 @@ class ResourceValidator(Validator):
     NULL_VALUES = ["[not applicable]", "[not available]", "[pending]", "[discrepancy]", "[completed]", "[null]", "", "na"]
     ALLOW_BLANKS = True
 
-    INVALID_ID_CHARACTERS = r'[^A-Za-z0-9._-]'
-
     def __init__(self, *args, **kwargs):
         """Initialize the instance attributes of the data file validator."""
         super(ResourceValidator, self).__init__(*args, **kwargs)
@@ -3664,7 +3822,7 @@ class ResourceValidator(Validator):
                                'cause': value})
 
             if col_name == 'PATIENT_ID' or col_name == 'SAMPLE_ID':
-                if re.findall(self.INVALID_ID_CHARACTERS, value):
+                if re.findall(INVALID_ID_CHARACTERS, value):
                     self.logger.error(
                         'PATIENT_ID and SAMPLE_ID can only contain letters, '
                         'numbers, points, underscores and/or hyphens',
@@ -4156,15 +4314,13 @@ class MultipleDataFileValidator(FeaturewiseFileValidator, metaclass=ABCMeta):
 
         """Check the feature id column."""
 
-        ALLOWED_CHARACTERS = r'[^A-Za-z0-9_.-]'
-
         feature_id = nonsample_col_vals[0].strip()
 
         # Check if genetic entity is present
         if feature_id == '':
             # Validator already gives warning for this in checkLine method
             pass
-        elif re.search(ALLOWED_CHARACTERS, feature_id) is not None:
+        elif re.search(INVALID_ID_CHARACTERS, feature_id) is not None:
             self.logger.error('Feature id contains one or more illegal characters',
                                 extra={'line_number': self.line_number,
                                         'cause': 'id was`'+feature_id+'` and only alpha-numeric, _, . and - are allowed.'})
@@ -4298,12 +4454,15 @@ class GenericAssayWiseFileValidator(FeaturewiseFileValidator):
 
     def parseFeatureColumns(self, nonsample_col_vals):
         """Check the IDs in the first column."""
+
         value = nonsample_col_vals[0].strip()
-        if ' ' in value:
-            self.logger.error('Do not use space in the stable id',
+
+        # Check if genetic entity is present and contains invalid characters
+        if re.search(INVALID_ID_CHARACTERS, value) is not None:
+            self.logger.error('Feature id contains one or more illegal characters',
                               extra={'line_number': self.line_number,
-                                     'column_number': 1,
-                                     'cause': nonsample_col_vals[0]})
+                                     'cause': 'id was`' + value + '` and only alpha-numeric, _, . and - are allowed.'})
+
         return value
 
     def checkId(self):
@@ -4525,7 +4684,6 @@ def process_metadata_files(directory, portal_instance, logger, relaxed_mode, str
         'mm10': ('mouse', 'GRCm38', 'mm10')
     }
 
-    DISALLOWED_CHARACTERS = r'[^A-Za-z0-9_-]'
     for filename in filenames:
 
         meta_dictionary = cbioportal_common.parse_metadata_file(
@@ -4547,10 +4705,10 @@ def process_metadata_files(directory, portal_instance, logger, relaxed_mode, str
         if 'stable_id' in meta_dictionary:
             stable_id = meta_dictionary['stable_id'].strip()
 
-            # Check for non-supported characters in the stable_id
+            # Check for invalid characters in the stable_id
             # Note: this check is needed because when using a wildcard for STABLE_ID
             # in the allowed_file_types.txt the user can specify a custom stable_id in the meta file.
-            if stable_id == '' or re.search(DISALLOWED_CHARACTERS, stable_id) != None:
+            if stable_id == '' or re.search(INVALID_ID_CHARACTERS, stable_id) != None:
                 logger.error(
                     '`stable_id` is not valid (empty string or contains one or more illegal characters)',
                     extra={'filename_': filename,

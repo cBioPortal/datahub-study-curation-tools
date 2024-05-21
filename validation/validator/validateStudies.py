@@ -169,7 +169,7 @@ def interface(args=None):
                                    help='Skip tests requiring information '
                                         'from the cBioPortal installation')
     parser.add_argument('-P', '--portal_properties', type=str,
-                        help='portal.properties file path (default: assumed hg19)',
+                        help='application.properties file path (default: assumed hg19)',
                         required=False)
 
     parser.add_argument('-m', '--strict_maf_checks', required=False,

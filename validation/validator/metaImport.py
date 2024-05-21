@@ -74,11 +74,13 @@ def interface():
     portal_mode_group.add_argument('-n', '--no_portal_checks', default=False,
                                        action='store_true',
                                        help='Skip tests requiring information '
-                                            'from the cBioPortal installation')                                                               
+                                            'from the cBioPortal installation')
+    parser.add_argument('-jvo', '--java_opts', type=str, default=os.environ.get('JAVA_OPTS'),
+                        help='Path to specify JAVA_OPTS for the importer. \
+                        (default: gets the JAVA_OPTS from the environment)')
     parser.add_argument('-jar', '--jar_path', type=str, required=False,
-                        help=(
-                            'Path to scripts JAR file (default: locate it '
-                            'relative to the import script)'))
+                        help='Path to scripts JAR file (default: locate it '
+                             'relative to the import script)')
     parser.add_argument('-html', '--html_table', type=str,
                         help='path to html report')
     parser.add_argument('-v', '--verbose', action='store_true',
