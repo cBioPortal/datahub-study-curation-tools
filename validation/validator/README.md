@@ -62,5 +62,5 @@ optional arguments:
 
 #### Example
 ```
-python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u http://cbioportal.org -html path/to/html_report/
+python3 validateStudies.py -d path/to/datahub/public -l vsc_cuk_2018 -u https://www.cbioportal.org -html path/to/html_report/
 ```
