@@ -1,6 +1,6 @@
 ### Usage
 
-This script is tailored for converting GENIE consortium [fusion data](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#fusion-data)  into the [new structural variant data](https://docs.cbioportal.org/file-formats/#structural-variant-data) format needed by cBioPortal version 5. 
+This script is tailored for converting GENIE consortium [fusion data](https://docs.cbioportal.org/5.1-data-loading/data-loading/file-formats#fusion-data) from cBioPortal version 4 and below to the [new structural variant data](https://docs.cbioportal.org/file-formats/#structural-variant-data) format used in cBioPortal version 5. 
 The GENIE dataset features unique formatting and data conventions from various centers. The script identifies the genes at Site1 and Site2 based on their positions in the "Event_Info" column and adjusts field names to align with the SV format. 
 It also handles duplicate entries in the fusion data by considering both orientations of Site1 and Site2 genes, ensuring that all gene interactions are represented in the patient view.
 
