@@ -1,73 +1,61 @@
-import sys
+import pandas as pd
 import argparse
-import time
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-n','--input-new-hgnc', action = 'store', dest = 'new_file', required = True, help = '(Required)Name of the newer HGNC')
-parser.add_argument('-o','--input-old-hgnc', action = 'store', dest = 'old_file', required = True, help = '(Required)Name of the older HGNC')
+# Set up argument parser
+parser = argparse.ArgumentParser(description="Compare old and new HGNC gene tables.")
+parser.add_argument('--old_file', required=True, help='URL or path to the old HGNC file (e.g., hgnc_complete_set_2023-10-01.txt)')
+parser.add_argument('--new_file', required=True, help='URL or path to the new HGNC file (e.g., hgnc_complete_set_2024-08-23.txt)')
+parser.add_argument('--output_file', required=True, help='Path to the output file (e.g., gene_changes.txt)')
 args = parser.parse_args()
-_new_file = args.new_file
-_old_file = args.old_file
 
-old_genes = {}
-with open(_old_file, "r") as _old_input:
-	_headers = _old_input.readline().rstrip('\r').split('\t')
-	for _line in _old_input:
-		_items = _line.rstrip('\r').split('\t')
-		old_genes[_items[0]] = {
-			"symbol": _items[1],
-			"type": _items[2],
-			"include_in_new": "false"
-		}	
-	
-updated_cnt = 0
-updated_protein_coding_cnt = 0
-new_cnt = 0
-new_protein_coding_cnt = 0
-remove_cnt = 0
-removed_protein_coding_cnt = 0
-output_file = open("hgnc_diff" + time.strftime("%Y%m%d-%H%M%S") + ".txt", "w")
-output_update_line = ""
-output_new_line = ""
-output_del_line = ""
+# Load the old and new data into pandas dataframes
+old_df = pd.read_csv(args.old_file, sep='\t', low_memory=False)
+new_df = pd.read_csv(args.new_file, sep='\t', low_memory=False)
 
+# Select relevant columns: Hugo symbol, Entrez ID, and Locus Type
+old_df = old_df[['hgnc_id', 'symbol', 'entrez_id', 'locus_type']].copy()
+new_df = new_df[['hgnc_id', 'symbol', 'entrez_id', 'locus_type']].copy()
 
-with open(_new_file, "r") as _new_input:
-	_headers = _new_input.readline().rstrip('\r').split('\t')
-	for _line in _new_input:
-		_items = _line.rstrip('\r').split('\t')
-		if _items[0] in old_genes.keys():
-			if _items[1] == old_genes[_items[0]]["symbol"]:
-				old_genes[_items[0]]["include_in_new"] = "true"
-			else: 
-				old_genes[_items[0]]["include_in_new"] = "updated"
-				output_update_line = output_update_line + old_genes[_items[0]]["symbol"] + " >>>>> " + _items[1] + "\n"
-				updated_cnt = updated_cnt + 1
-				if _items[2].strip() == "gene with protein product":
-					updated_protein_coding_cnt = updated_protein_coding_cnt + 1
-		else:
-			output_new_line = output_new_line + _items[0] + "\t" + _items[1] + "\t" + _items[2]
-			new_cnt = new_cnt + 1
-			if _items[2].strip() == "gene with protein product":
-				new_protein_coding_cnt = new_protein_coding_cnt + 1
+# Merge old and new data on 'hgnc_id' to compare the Hugo symbols, Entrez IDs, and Locus Type
+merged_df = pd.merge(old_df, new_df, on='hgnc_id', how='outer', suffixes=('_old', '_new'))
 
-for _old_key in old_genes.keys():
-	if old_genes[_old_key]["include_in_new"] == "false":
-		output_del_line = output_del_line + _old_key + "\t" + old_genes[_old_key]["symbol"] + "\t" + old_genes[_old_key]["type"]
-		remove_cnt = remove_cnt + 1
-		if old_genes[_old_key]["type"].strip() == "gene with protein product":
-			removed_protein_coding_cnt = removed_protein_coding_cnt + 1
+# 1. Genes where both Hugo symbol & Entrez ID have been replaced
+both_replaced = merged_df[(merged_df['symbol_old'] != merged_df['symbol_new']) & 
+                          (merged_df['entrez_id_old'] != merged_df['entrez_id_new']) &
+                          (merged_df['symbol_old'].notna()) & (merged_df['entrez_id_old'].notna())]
+both_replaced_list = both_replaced[['symbol_old', 'symbol_new', 'entrez_id_old', 'entrez_id_new', 'locus_type_old', 'locus_type_new']]
 
-output_file.write("\n>>>> Added " + str(new_cnt) + " Genes" + " (" + str(new_protein_coding_cnt) + " protein coding)\n")
-output_file.write(output_new_line)
+# 2. Genes where only Entrez ID got updated
+entrez_updated = merged_df[(merged_df['entrez_id_old'] != merged_df['entrez_id_new']) & 
+                           (merged_df['symbol_old'] == merged_df['symbol_new']) &
+                           (merged_df['symbol_old'].notna())]
+entrez_updated_list = entrez_updated[['symbol_old', 'entrez_id_old', 'entrez_id_new', 'locus_type_old', 'locus_type_new']]
 
-output_file.write("\n>>>> Updated " + str(updated_cnt) + " Genes" + " (" + str(updated_protein_coding_cnt) + " protein coding)\n")
-output_file.write(output_update_line)
+# 3. Genes where only Hugo symbols got updated
+symbol_updated = merged_df[(merged_df['symbol_old'] != merged_df['symbol_new']) & 
+                           (merged_df['entrez_id_old'] == merged_df['entrez_id_new']) &
+                           (merged_df['entrez_id_old'].notna())]
+symbol_updated_list = symbol_updated[['symbol_old', 'symbol_new', 'entrez_id_old', 'locus_type_old', 'locus_type_new']]
 
-output_file.write("\n>>>> Removed " + str(remove_cnt) + " Genes" + " (" + str(removed_protein_coding_cnt) + " protein coding)\n")
-output_file.write(output_del_line)
+# 4. Genes that are not present in the new file but exist in the old file
+removed_genes = merged_df[merged_df['symbol_new'].isna() & merged_df['symbol_old'].notna()]
+removed_genes_list = removed_genes[['symbol_old', 'entrez_id_old', 'locus_type_old']]
 
-output_file.close()
+# 5. Genes that got added in the new file but do not exist in the old file
+added_genes = merged_df[merged_df['symbol_old'].isna() & merged_df['symbol_new'].notna()]
+added_genes_list = added_genes[['symbol_new', 'entrez_id_new', 'locus_type_new']]
 
+# Write the changes to the specified output file
+with open(args.output_file, 'w') as f:
+    f.write("1. Genes where both Hugo symbol & Entrez ID have been replaced:\n")
+    f.write(both_replaced_list.to_string(index=False))
+    f.write("\n\n2. Genes where only Entrez ID got updated:\n")
+    f.write(entrez_updated_list.to_string(index=False))
+    f.write("\n\n3. Genes where only Hugo symbols got updated:\n")
+    f.write(symbol_updated_list.to_string(index=False))
+    f.write("\n\n4. Genes that are not present in the new file but exist in the old file:\n")
+    f.write(removed_genes_list.to_string(index=False))
+    f.write("\n\n5. Genes that got added in the new file but do not exist in the old file:\n")
+    f.write(added_genes_list.to_string(index=False))
 
-
+print(f"Gene changes written to '{args.output_file}'.")
