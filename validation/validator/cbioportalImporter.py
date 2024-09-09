@@ -12,6 +12,7 @@ import argparse
 import logging
 import re
 from pathlib import Path
+from typing import Dict, Tuple
 
 # configure relative imports if running as a script; see PEP 366
 # it might passed as empty string by certain tooling to mark a top level module
@@ -35,10 +36,14 @@ from .cbioportal_common import IMPORT_CANCER_TYPE_CLASS
 from .cbioportal_common import IMPORT_STUDY_CLASS
 from .cbioportal_common import UPDATE_STUDY_STATUS_CLASS
 from .cbioportal_common import REMOVE_STUDY_CLASS
+from .cbioportal_common import REMOVE_SAMPLES_CLASS
+from .cbioportal_common import REMOVE_PATIENTS_CLASS
 from .cbioportal_common import IMPORT_CASE_LIST_CLASS
 from .cbioportal_common import ADD_CASE_LIST_CLASS
 from .cbioportal_common import VERSION_UTIL_CLASS
 from .cbioportal_common import run_java
+from .cbioportal_common import UPDATE_CASE_LIST_CLASS
+from .cbioportal_common import INCREMENTAL_UPLOAD_SUPPORTED_META_TYPES
 
 
 # ------------------------------------------------------------------------------
@@ -50,10 +55,12 @@ LOGGER = None
 IMPORT_CANCER_TYPE = "import-cancer-type"
 IMPORT_STUDY = "import-study"
 REMOVE_STUDY = "remove-study"
+REMOVE_SAMPLES = "remove-samples"
+REMOVE_PATIENTS = "remove-patients"
 IMPORT_STUDY_DATA = "import-study-data"
 IMPORT_CASE_LIST = "import-case-list"
 
-COMMANDS = [IMPORT_CANCER_TYPE, IMPORT_STUDY, REMOVE_STUDY, IMPORT_STUDY_DATA, IMPORT_CASE_LIST]
+COMMANDS = [IMPORT_CANCER_TYPE, IMPORT_STUDY, IMPORT_STUDY_DATA, IMPORT_CASE_LIST, REMOVE_STUDY, REMOVE_SAMPLES, REMOVE_PATIENTS]
 
 # ------------------------------------------------------------------------------
 # sub-routines
@@ -101,8 +108,35 @@ def remove_study_id(jvm_args, study_id):
     args.append("--noprogress") # don't report memory usage and % progress
     run_java(*args)
 
+def remove_samples(jvm_args, study_ids, sample_ids):
+    args = jvm_args.split(' ')
+    args.append(REMOVE_SAMPLES_CLASS)
+    args.append("--study_ids")
+    args.append(study_ids)
+    args.append("--sample_ids")
+    args.append(sample_ids)
+    run_java(*args)
 
-def import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity = None, meta_file_dictionary = None):
+def remove_patients(jvm_args, study_ids, patient_ids):
+    args = jvm_args.split(' ')
+    args.append(REMOVE_PATIENTS_CLASS)
+    args.append("--study_ids")
+    args.append(study_ids)
+    args.append("--patient_ids")
+    args.append(patient_ids)
+    run_java(*args)
+
+def update_case_lists(jvm_args, meta_filename, case_lists_file_or_dir = None):
+    args = jvm_args.split(' ')
+    args.append(UPDATE_CASE_LIST_CLASS)
+    args.append("--meta")
+    args.append(meta_filename)
+    if case_lists_file_or_dir:
+        args.append("--case-lists")
+        args.append(case_lists_file_or_dir)
+    run_java(*args)
+
+def import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity = None, meta_file_dictionary = None, incremental = False):
     args = jvm_args.split(' ')
 
     # In case the meta file is already parsed in a previous function, it is not
@@ -133,6 +167,10 @@ def import_study_data(jvm_args, meta_filename, data_filename, update_generic_ass
     importer = IMPORTER_CLASSNAME_BY_META_TYPE[meta_file_type]
 
     args.append(importer)
+    if incremental:
+        if meta_file_type not in INCREMENTAL_UPLOAD_SUPPORTED_META_TYPES:
+            raise NotImplementedError("This type does not support incremental upload: {}".format(meta_file_type))
+        args.append("--overwrite-existing")
     if IMPORTER_REQUIRES_METADATA[importer]:
         args.append("--meta")
         args.append(meta_filename)
@@ -197,7 +235,7 @@ def process_case_lists(jvm_args, case_list_dir):
         if not (case_list.startswith('.') or case_list.endswith('~')):
             import_case_list(jvm_args, os.path.join(case_list_dir, case_list))
 
-def process_command(jvm_args, command, meta_filename, data_filename, study_ids, update_generic_assay_entity = None):
+def process_command(jvm_args, command, meta_filename, data_filename, study_ids, patient_ids, sample_ids, update_generic_assay_entity = None):
     if command == IMPORT_CANCER_TYPE:
         import_cancer_type(jvm_args, data_filename)
     elif command == IMPORT_STUDY:
@@ -211,12 +249,25 @@ def process_command(jvm_args, command, meta_filename, data_filename, study_ids, 
                 remove_study_id(jvm_args, study_id)
         else:
             raise RuntimeError('Your command uses both -id and -meta. Please, use only one of the two parameters.')
+    elif command == REMOVE_SAMPLES:
+        remove_samples(jvm_args, study_ids, sample_ids)
+    elif command == REMOVE_PATIENTS:
+        remove_patients(jvm_args, study_ids, patient_ids)
     elif command == IMPORT_STUDY_DATA:
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity)
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity)
     elif command == IMPORT_CASE_LIST:
         import_case_list(jvm_args, meta_filename)
 
-def process_directory(jvm_args, study_directory, update_generic_assay_entity = None):
+def get_meta_filenames(data_directory):
+    meta_filenames = [
+        os.path.join(data_directory, meta_filename) for
+        meta_filename in os.listdir(data_directory) if
+        re.search(r'(\b|_)meta(\b|[_0-9])', meta_filename,
+                  flags=re.IGNORECASE) and
+        not (meta_filename.startswith('.') or meta_filename.endswith('~'))]
+    return meta_filenames
+
+def process_study_directory(jvm_args, study_directory, update_generic_assay_entity = None):
     """
     Import an entire study directory based on meta files found.
 
@@ -241,12 +292,7 @@ def process_directory(jvm_args, study_directory, update_generic_assay_entity = N
     cna_long_filepair = None
 
     # Determine meta filenames in study directory
-    meta_filenames = (
-        os.path.join(study_directory, meta_filename) for
-        meta_filename in os.listdir(study_directory) if
-        re.search(r'(\b|_)meta(\b|[_0-9])', meta_filename,
-                  flags=re.IGNORECASE) and
-        not (meta_filename.startswith('.') or meta_filename.endswith('~')))
+    meta_filenames = get_meta_filenames(study_directory)
 
     # Read all meta files (excluding case lists) to determine what to import
     for meta_filename in meta_filenames:
@@ -353,53 +399,53 @@ def process_directory(jvm_args, study_directory, update_generic_assay_entity = N
         raise RuntimeError('No sample attribute file found')
     else:
         meta_filename, data_filename = sample_attr_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Next, we need to import resource definitions for resource data
     if resource_definition_filepair is not None:
         meta_filename, data_filename = resource_definition_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Next, we need to import sample definitions for resource data
     if sample_resource_filepair is not None:
         meta_filename, data_filename = sample_resource_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Next, import everything else except gene panel, structural variant data, GSVA and
     # z-score expression. If in the future more types refer to each other, (like
     # in a tree structure) this could be programmed in a recursive fashion.
     for meta_filename, data_filename in regular_filepairs:
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Import structural variant data
     if structural_variant_filepair is not None:
         meta_filename, data_filename = structural_variant_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Import cna data
     if cna_long_filepair is not None:
         meta_filename, data_filename = cna_long_filepair
-        import_study_data(jvm_args=jvm_args, meta_filename=meta_filename, data_filename=data_filename,
-                          meta_file_dictionary=study_meta_dictionary[meta_filename])
+        import_data(jvm_args=jvm_args, meta_filename=meta_filename, data_filename=data_filename,
+                    meta_file_dictionary=study_meta_dictionary[meta_filename])
 
     # Import expression z-score (after expression)
     for meta_filename, data_filename in zscore_filepairs:
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Import GSVA genetic profiles (after expression and z-scores)
     if gsva_score_filepair is not None:
 
         # First import the GSVA score data
         meta_filename, data_filename = gsva_score_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
         # Second import the GSVA p-value data
         meta_filename, data_filename = gsva_pvalue_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     if gene_panel_matrix_filepair is not None:
         meta_filename, data_filename = gene_panel_matrix_filepair
-        import_study_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
+        import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, study_meta_dictionary[meta_filename])
 
     # Import the case lists
     case_list_dirname = os.path.join(study_directory, 'case_lists')
@@ -412,6 +458,72 @@ def process_directory(jvm_args, study_directory, update_generic_assay_entity = N
     # enable study
     update_study_status(jvm_args, study_id)
 
+def get_meta_filenames_by_type(data_directory) -> Dict[str, Tuple[str, Dict]]:
+    """
+    Read all meta files in the data directory and return meta information (filename, content) grouped by type.
+    """
+    meta_file_type_to_meta_files = {}
+
+    # Determine meta filenames in study directory
+    meta_filenames = get_meta_filenames(data_directory)
+
+    # Read all meta files (excluding case lists) to determine what to import
+    for meta_filename in meta_filenames:
+
+        # Parse meta file
+        meta_dictionary = cbioportal_common.parse_metadata_file(
+            meta_filename, logger=LOGGER)
+
+        # Retrieve meta file type
+        meta_file_type = meta_dictionary['meta_file_type']
+        if meta_file_type is None:
+            # invalid meta file, let's die
+            raise RuntimeError('Invalid meta file: ' + meta_filename)
+        if meta_file_type not in meta_file_type_to_meta_files:
+            meta_file_type_to_meta_files[meta_file_type] = []
+
+        meta_file_type_to_meta_files[meta_file_type].append((meta_filename, meta_dictionary))
+    return meta_file_type_to_meta_files
+
+def import_incremental_data(jvm_args, data_directory, update_generic_assay_entity, meta_file_type_to_meta_files):
+    """
+    Load all data types that are available and support incremental upload
+    """
+    for meta_file_type in INCREMENTAL_UPLOAD_SUPPORTED_META_TYPES:
+        if meta_file_type not in meta_file_type_to_meta_files:
+            continue
+        meta_pairs = meta_file_type_to_meta_files[meta_file_type]
+        for meta_pair in meta_pairs:
+            meta_filename, meta_dictionary = meta_pair
+            data_filename = os.path.join(data_directory, meta_dictionary['data_filename'])
+            import_data(jvm_args, meta_filename, data_filename, update_generic_assay_entity, meta_dictionary, incremental=True)
+
+def update_case_lists_from_folder(jvm_args, data_directory, meta_file_type_to_meta_files):
+    """
+    Updates case lists if clinical sample provided.
+    The command takes case_list/ folder as optional argument.
+    If folder exists case lists will be updated accordingly.
+    """
+    if MetaFileTypes.SAMPLE_ATTRIBUTES in meta_file_type_to_meta_files:
+        case_list_dirname = os.path.join(data_directory, 'case_lists')
+        sample_attributes_metas = meta_file_type_to_meta_files[MetaFileTypes.SAMPLE_ATTRIBUTES]
+        for meta_pair in sample_attributes_metas:
+            meta_filename, meta_dictionary = meta_pair
+            LOGGER.info('Updating case lists with sample ids', extra={'filename_': meta_filename})
+            update_case_lists(jvm_args, meta_filename, case_lists_file_or_dir=case_list_dirname if os.path.isdir(case_list_dirname) else None)
+
+def process_data_directory(jvm_args, data_directory, update_generic_assay_entity = None):
+    """
+    Incremental import of data directory based on meta files found.
+    """
+
+    meta_file_type_to_meta_files = get_meta_filenames_by_type(data_directory)
+
+    not_supported_meta_types = meta_file_type_to_meta_files.keys() - INCREMENTAL_UPLOAD_SUPPORTED_META_TYPES
+    if not_supported_meta_types:
+        raise NotImplementedError("These types do not support incremental upload: {}".format(", ".join(not_supported_meta_types)))
+    import_incremental_data(jvm_args, data_directory, update_generic_assay_entity, meta_file_type_to_meta_files)
+    update_case_lists_from_folder(jvm_args, data_directory, meta_file_type_to_meta_files)
 
 def usage():
     # TODO : replace this by usage string from interface()
@@ -419,7 +531,7 @@ def usage():
                            '--command [%s] --study_directory <path to directory> '
                            '--meta_filename <path to metafile>'
                            '--data_filename <path to datafile>'
-                           '--study_ids <cancer study ids for remove-study command, comma separated>' % (COMMANDS)), file=OUTPUT_FILE)
+                           '--study_ids <cancer study ids for remove-study or remove-samples command, comma separated>' % (COMMANDS)), file=OUTPUT_FILE)
 
 def check_args(command):
     if command not in COMMANDS:
@@ -435,46 +547,56 @@ def check_files(meta_filename, data_filename):
         print('data-file cannot be found:' + data_filename, file=ERROR_FILE)
         sys.exit(2)
 
-def check_dir(study_directory):
+def check_dir(data_directory):
     # check existence of directory
-    if not os.path.exists(study_directory) and study_directory != '':
-        print('Study cannot be found: ' + study_directory, file=ERROR_FILE)
+    if not os.path.exists(data_directory) and data_directory != '':
+        print('Directory cannot be found: ' + data_directory, file=ERROR_FILE)
         sys.exit(2)
 
 def add_parser_args(parser):
-    parser.add_argument('-s', '--study_directory', type=str, required=False,
-                        help='Path to Study Directory')
+    data_source_group = parser.add_mutually_exclusive_group()
+    data_source_group.add_argument('-s', '--study_directory', type=str, help='Path to Study Directory')
+    data_source_group.add_argument('-d', '--data_directory', type=str, help='Path to Data Directory')
     parser.add_argument('-jvo', '--java_opts', type=str, default=os.environ.get('JAVA_OPTS'),
                         help='Path to specify JAVA_OPTS for the importer. \
-                        (default: gets the JAVA_OPTS from the environment)')
+                            (default: gets the JAVA_OPTS from the environment)')
     parser.add_argument('-jar', '--jar_path', type=str, required=False,
-                        help='Path to scripts JAR file')
+                            help='Path to scripts JAR file')
     parser.add_argument('-meta', '--meta_filename', type=str, required=False,
                         help='Path to meta file')
     parser.add_argument('-data', '--data_filename', type=str, required=False,
                         help='Path to Data file')
 
-def interface():
+def interface(args=None):
     parent_parser = argparse.ArgumentParser(description='cBioPortal meta Importer')
     add_parser_args(parent_parser)
     parser = argparse.ArgumentParser()
+    allowed_commands_csv = ', '.join(COMMANDS)
     subparsers = parser.add_subparsers(title='subcommands', dest='subcommand',
-                          help='Command for import. Allowed commands: import-cancer-type, '
-                          'import-study, import-study-data, import-case-list or '
-                          'remove-study')
+                          help='Command for import. Allowed commands: ' + allowed_commands_csv)
     import_cancer_type = subparsers.add_parser('import-cancer-type', parents=[parent_parser], add_help=False)
     import_study = subparsers.add_parser('import-study', parents=[parent_parser], add_help=False)
     import_study_data = subparsers.add_parser('import-study-data', parents=[parent_parser], add_help=False)
     import_case_list = subparsers.add_parser('import-case-list', parents=[parent_parser], add_help=False)
     remove_study = subparsers.add_parser('remove-study', parents=[parent_parser], add_help=False)
-    
     remove_study.add_argument('-id', '--study_ids', type=str, required=False,
                         help='Cancer Study IDs for `remove-study` command, comma separated')
-    parser.add_argument('-c', '--command', type=str, required=False, 
+
+    remove_samples = subparsers.add_parser('remove-samples', parents=[], add_help=True)
+    remove_samples.add_argument('--study_ids', type=str, required=True,
+                        help='Cancer Study ID(s) that contains sample(s). Comma separated, if multiple.')
+    remove_samples.add_argument('--sample_ids', type=str, required=True,
+                        help='Sample ID(s). Comma separated, if multiple.')
+
+    remove_patients = subparsers.add_parser('remove-patients', parents=[], add_help=True)
+    remove_patients.add_argument('--study_ids', type=str, required=True,
+                        help='Cancer Study ID(s) that contains sample(s). Comma separated, if multiple.')
+    remove_patients.add_argument('--patient_ids', type=str, required=True,
+                        help='Patient ID(s). Comma separated, if multiple.')
+
+    parser.add_argument('-c', '--command', type=str, required=False,
                         help='This argument is outdated. Please use the listed subcommands, without the -c flag. '
-                        'Command for import. Allowed commands: import-cancer-type, '
-                        'import-study, import-study-data, import-case-list or '
-                        'remove-study')
+                        'Command for import. Allowed commands: ' + allowed_commands_csv)
     add_parser_args(parser)
     parser.add_argument('-id', '--study_ids', type=str, required=False,
                         help='Cancer Study IDs for `remove-study` command, comma separated')
@@ -484,7 +606,7 @@ def interface():
     # TODO - add same argument to metaimporter
     # TODO - harmonize on - and _
 
-    parser = parser.parse_args()
+    parser = parser.parse_args(args)
     if parser.command is not None and parser.subcommand is not None:
         print('Cannot call multiple commands')
         sys.exit(2)
@@ -547,18 +669,28 @@ def main(args):
 
     # process the options
     jvm_args = "-Dspring.profiles.active=dbcp " + args.java_opts
-    study_directory = args.study_directory
 
     # check if DB version and application version are in sync
     check_version(jvm_args)
 
-    if study_directory != None:
-        check_dir(study_directory)
-        process_directory(jvm_args, study_directory, args.update_generic_assay_entity)
+    if args.data_directory is not None:
+        check_dir(args.data_directory)
+        process_data_directory(jvm_args, args.data_directory, args.update_generic_assay_entity)
+    elif args.study_directory is not None:
+        check_dir(args.study_directory)
+        process_study_directory(jvm_args, args.study_directory, args.update_generic_assay_entity)
     else:
         check_args(args.command)
         check_files(args.meta_filename, args.data_filename)
-        process_command(jvm_args, args.command, args.meta_filename, args.data_filename, args.study_ids, args.update_generic_assay_entity)
+        process_command(
+            jvm_args,
+            args.command,
+            args.meta_filename,
+            args.data_filename,
+            args.study_ids,
+            args.patient_ids if hasattr(args, 'patient_ids') else None,
+            args.sample_ids if hasattr(args, 'sample_ids') else None,
+            args.update_generic_assay_entity)
 
 # ------------------------------------------------------------------------------
 # ready to roll

@@ -55,7 +55,7 @@ if __name__ == "__main__" and (__package__ is None or __package__ == ''):
     # scripts/ folder, above it, so that the importer package folder is in
     # scope and *not* directly in sys.path; see PEP 395
     sys.path[0] = str(Path(sys.path[0]).resolve().parent)
-    __package__ = 'validator'
+    __package__ = 'importer'
     # explicitly import the package, which is needed on CPython 3.4 because it
     # doesn't include https://github.com/python/cpython/pull/2639
     importlib.import_module(__package__)
@@ -70,7 +70,6 @@ from . import cbioportal_common
 DEFINED_SAMPLE_IDS = None
 DEFINED_SAMPLE_ATTRIBUTES = None
 PATIENTS_WITH_SAMPLES = None
-DEFINED_CANCER_TYPES = None
 mutation_sample_ids = None
 mutation_file_sample_ids = set()
 sample_ids_panel_dict = {}
@@ -727,7 +726,7 @@ class Validator(object):
 
         Return True if the sample id was valid, False otherwise.
         """
-        if sample_id not in DEFINED_SAMPLE_IDS:
+        if DEFINED_SAMPLE_IDS is not None and sample_id not in DEFINED_SAMPLE_IDS:
             self.logger.error(
                 'Sample ID not defined in clinical file',
                 extra={'line_number': self.line_number,
@@ -741,7 +740,7 @@ class Validator(object):
 
         Return True if the patient id was valid, False otherwise.
         """
-        if patient_id not in PATIENTS_WITH_SAMPLES:
+        if PATIENTS_WITH_SAMPLES is not None and patient_id not in PATIENTS_WITH_SAMPLES:
             self.logger.error(
                 'Patient ID not defined in clinical file',
                 extra={'line_number': self.line_number,
@@ -2727,7 +2726,7 @@ class ClinicalValidator(Validator):
                 pass
             elif data_type == 'NUMBER':
                 if not self.checkFloat(value):
-                    if (value[0] in ('>','<')) and value[1:].isdigit():
+                    if (value[0] in ('>','<')) and self.checkFloat(value[1:]):
                         pass
                     else:
                         self.logger.error(
@@ -2871,7 +2870,7 @@ class PatientClinicalValidator(ClinicalValidator):
                        'cause': 'SAMPLE_ID'})
         # refuse to define attributes also defined in the sample-level file
         for attribute_id in self.defined_attributes:
-            if attribute_id in DEFINED_SAMPLE_ATTRIBUTES:
+            if DEFINED_SAMPLE_ATTRIBUTES is not None and attribute_id in DEFINED_SAMPLE_ATTRIBUTES:
                 # log this as a file-aspecific error, using the base logger
                 self.logger.logger.error(
                     'Clinical attribute is defined both as sample-level and '
@@ -2912,7 +2911,7 @@ class PatientClinicalValidator(ClinicalValidator):
                                     self.patient_id_lines[value])})
                 else:
                     self.patient_id_lines[value] = self.line_number
-                    if value not in PATIENTS_WITH_SAMPLES:
+                    if PATIENTS_WITH_SAMPLES is not None and value not in PATIENTS_WITH_SAMPLES:
                         self.logger.warning(
                             'Clinical data defined for a patient with '
                             'no samples',
@@ -2979,12 +2978,13 @@ class PatientClinicalValidator(ClinicalValidator):
 
     def onComplete(self):
         """Perform final validations based on the data parsed."""
-        for patient_id in PATIENTS_WITH_SAMPLES:
-            if patient_id not in self.patient_id_lines:
-                self.logger.warning(
-                    'Missing clinical data for a patient associated with '
-                    'samples',
-                    extra={'cause': patient_id})
+        if PATIENTS_WITH_SAMPLES:
+            for patient_id in PATIENTS_WITH_SAMPLES:
+                if patient_id not in self.patient_id_lines:
+                    self.logger.warning(
+                        'Missing clinical data for a patient associated with '
+                        'samples',
+                        extra={'cause': patient_id})
         super(PatientClinicalValidator, self).onComplete()
 
 
@@ -3385,7 +3385,7 @@ class GenePanelMatrixValidator(Validator):
                 sample_ids_panel_dict[sample_id] = data[self.mutation_stable_id_index - 1]
                 # Sample ID has been removed from list, so subtract 1 position.
                 if data[self.mutation_stable_id_index - 1] != 'NA':
-                    if sample_id not in mutation_sample_ids:
+                    if mutation_sample_ids is not None and sample_id not in mutation_sample_ids:
                         self.logger.error('Sample ID has mutation gene panel, but is not in the sequenced case list',
                                           extra={'line_number': self.line_number,
                                                  'cause': sample_id})
@@ -4717,7 +4717,7 @@ def process_metadata_files(directory, portal_instance, logger, relaxed_mode, str
             if stable_id in stable_ids:
                 # stable id already used in other meta file, give error:
                 logger.error(
-                    'stable_id repeated. It should be unique across all files in a study',
+                    'stable_id repeated. It should be unique across all files in a directory',
                     extra={'filename_': filename,
                            'cause': stable_id})
             else:
@@ -4800,11 +4800,6 @@ def process_metadata_files(directory, portal_instance, logger, relaxed_mode, str
             validators_by_type[meta_file_type].append(validator)
         else:
             validators_by_type[meta_file_type].append(None)
-
-    if study_cancer_type is None:
-        logger.error(
-            'Cancer type needs to be defined for a study. Verify that you have a study file '
-            'and have defined the cancer type correctly.')
 
     # prepend the cancer study id to any case list suffixes
     defined_case_list_fns = {}
@@ -4930,7 +4925,7 @@ def processCaseListDirectory(caseListDir, cancerStudyId, logger,
 
         for value in seen_sample_ids:
             # Compare case list sample ids with clinical file
-            if value not in DEFINED_SAMPLE_IDS:
+            if DEFINED_SAMPLE_IDS is not None and value not in DEFINED_SAMPLE_IDS:
                 logger.error(
                     'Sample ID not defined in clinical file',
                     extra={'filename_': case,
@@ -5293,8 +5288,11 @@ def load_portal_info(path, logger, offline=False):
 # ------------------------------------------------------------------------------
 def interface(args=None):
     parser = argparse.ArgumentParser(description='cBioPortal study validator')
-    parser.add_argument('-s', '--study_directory',
-                        type=str, required=True, help='path to directory.')
+    data_source_group = parser.add_mutually_exclusive_group()
+    data_source_group.add_argument('-s', '--study_directory',
+                        type=str, help='path to study directory.')
+    data_source_group.add_argument('-d', '--data_directory',
+                        type=str, help='path to directory.')
     portal_mode_group = parser.add_mutually_exclusive_group()
     portal_mode_group.add_argument('-u', '--url_server',
                                    type=str,
@@ -5341,7 +5339,6 @@ def validate_study(study_dir, portal_instance, logger, relaxed_mode, strict_maf_
     attributes are not None.
     """
 
-    global DEFINED_CANCER_TYPES
     global DEFINED_SAMPLE_IDS
     global DEFINED_SAMPLE_ATTRIBUTES
     global PATIENTS_WITH_SAMPLES
@@ -5369,6 +5366,11 @@ def validate_study(study_dir, portal_instance, logger, relaxed_mode, strict_maf_
      stable_ids,
      tags_file_path) = process_metadata_files(study_dir, portal_instance, logger, relaxed_mode, strict_maf_checks)
 
+    if study_cancer_type is None:
+        logger.error(
+            'Cancer type needs to be defined for a study. Verify that you have a study file '
+            'and have defined the cancer type correctly.')
+
     # first parse and validate cancer type files
     studydefined_cancer_types = []
     if cbioportal_common.MetaFileTypes.CANCER_TYPE in validators_by_meta_type:
@@ -5385,7 +5387,6 @@ def validate_study(study_dir, portal_instance, logger, relaxed_mode, strict_maf_
             cancer_type_validators[0].validate()
             studydefined_cancer_types = (
                 cancer_type_validators[0].defined_cancer_types)
-    DEFINED_CANCER_TYPES = studydefined_cancer_types
 
     # next check the cancer type of the meta_study file
     if cbioportal_common.MetaFileTypes.STUDY not in validators_by_meta_type:
@@ -5393,7 +5394,7 @@ def validate_study(study_dir, portal_instance, logger, relaxed_mode, strict_maf_
         return
     if portal_instance.cancer_type_dict is not None and not (
                 study_cancer_type in portal_instance.cancer_type_dict or
-                study_cancer_type in DEFINED_CANCER_TYPES):
+                study_cancer_type in studydefined_cancer_types):
         logger.error(
             'Cancer type of study is neither known to the portal nor defined '
             'in a cancer_type file',
@@ -5544,7 +5545,19 @@ def validate_study(study_dir, portal_instance, logger, relaxed_mode, strict_maf_
 
     # additional validation between meta files, after all meta files are processed
     validate_data_relations(validators_by_meta_type, logger)
+    logger.info('Validation complete')
 
+
+def validate_data_dir(data_dir, portal_instance, logger, relaxed_mode, strict_maf_checks):
+    # walk over the meta files in the dir and get properties of the study
+    validators_by_meta_type, *_ = process_metadata_files(data_dir, portal_instance, logger, relaxed_mode, strict_maf_checks)
+    for meta_file_type, validators in validators_by_meta_type.items():
+        # if there was no validator for this meta file
+        if not validators:
+            continue
+        logger.info("Validating %s", meta_file_type)
+        for validator in validators:
+            validator.validate()
     logger.info('Validation complete')
 
 
@@ -5565,7 +5578,15 @@ def main_validate(args):
     logger.addHandler(exit_status_handler)
 
     # process the options
-    study_dir = args.study_directory
+    if args.study_directory:
+        data_dir = args.study_directory
+        partial_data = False
+    elif args.data_directory:
+        data_dir = args.data_directory
+        partial_data = True
+    else:
+        raise RuntimeError("Neither study_directory nor data_directory argument is specified.")
+
     server_url = args.url_server
 
     html_output_filename = args.html_table
@@ -5578,14 +5599,14 @@ def main_validate(args):
         output_loglevel = logging.DEBUG
 
     # check existence of directory
-    if not os.path.exists(study_dir):
-        print('directory cannot be found: ' + study_dir, file=sys.stderr)
+    if not os.path.exists(data_dir):
+        print('directory cannot be found: ' + data_dir, file=sys.stderr)
         return 2
 
     # set default message handler
     text_handler = logging.StreamHandler(sys.stdout)
     text_handler.setFormatter(
-        cbioportal_common.LogfileStyleFormatter(study_dir))
+        cbioportal_common.LogfileStyleFormatter(data_dir))
     collapsing_text_handler = cbioportal_common.CollapsingLogMessageHandler(
         capacity=5e5,
         flushLevel=logging.CRITICAL,
@@ -5601,7 +5622,7 @@ def main_validate(args):
         import jinja2  # pylint: disable=import-error
 
         html_handler = Jinja2HtmlHandler(
-            study_dir,
+            data_dir,
             html_output_filename,
             capacity=1e5)
         # TODO extend CollapsingLogMessageHandler to flush to multiple targets,
@@ -5615,7 +5636,7 @@ def main_validate(args):
 
     if args.error_file:
         errfile_handler = logging.FileHandler(args.error_file, 'w')
-        errfile_handler.setFormatter(ErrorFileFormatter(study_dir))
+        errfile_handler.setFormatter(ErrorFileFormatter(data_dir))
         # TODO extend CollapsingLogMessageHandler to flush to multiple targets,
         # and get rid of the duplicated buffering of messages here
         coll_errfile_handler = cbioportal_common.CollapsingLogMessageHandler(
@@ -5644,7 +5665,10 @@ def main_validate(args):
     # set portal version
     cbio_version = portal_instance.portal_version
 
-    validate_study(study_dir, portal_instance, logger, relaxed_mode, strict_maf_checks)
+    if partial_data:
+        validate_data_dir(data_dir, portal_instance, logger, relaxed_mode, strict_maf_checks)
+    else:
+        validate_study(data_dir, portal_instance, logger, relaxed_mode, strict_maf_checks)
 
     if html_handler is not None:
         # flush logger and generate HTML while overriding cbio_version after retrieving it from the API
@@ -5670,7 +5694,7 @@ if __name__ == '__main__':
     finally:
         logging.shutdown()
         del logging._handlerList[:]  # workaround for harmless exceptions on exit
-    print(('Validation of study {status}.'.format(
+    print(('Validation of data {status}.'.format(
         status={0: 'succeeded',
                 1: 'failed',
                 2: 'not performed as problems occurred',
