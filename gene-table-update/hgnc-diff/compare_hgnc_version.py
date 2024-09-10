@@ -53,9 +53,9 @@ with open(args.output_file, 'w') as f:
     f.write(entrez_updated_list.to_string(index=False))
     f.write("\n\n3. Genes where only Hugo symbols got updated:\n")
     f.write(symbol_updated_list.to_string(index=False))
-    f.write("\n\n4. Genes that are not present in the new file but exist in the old file:\n")
+    f.write("\n\n4. Genes that were Removed:\n")
     f.write(removed_genes_list.to_string(index=False))
-    f.write("\n\n5. Genes that got added in the new file but do not exist in the old file:\n")
+    f.write("\n\n5. Genes that got Added:\n")
     f.write(added_genes_list.to_string(index=False))
 
 print(f"Gene changes written to '{args.output_file}'.")
