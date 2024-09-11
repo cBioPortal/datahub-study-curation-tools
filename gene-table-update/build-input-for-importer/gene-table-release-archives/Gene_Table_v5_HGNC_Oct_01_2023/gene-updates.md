@@ -183,7 +183,7 @@ UPP2-IT1 100874283 RNA, long non-coding, HGNC:41467
 
 # Added 119 Genes (3 protein coding)
 
-Genes that were newly added in the latest version of HGNC.
+
 
 ```
 ACCSLP1	100422646	pseudogene	HGNC:56899
