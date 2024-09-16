@@ -1,16 +1,10 @@
 from airflow import DAG
+from airflow.models.param import Param
+from airflow.models import Variable
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from airflow.models import Variable
 from datetime import datetime
-import os
-import pandas as pd
-import subprocess
-
-# Custom Vars
-DATA_DIR="/opt/airflow/data"
-SYNAPSE_DOWNLOAD_PATH="/opt/airflow/data/synapse_download"
-SYNAPSE_AUTH_TOKEN='<Synapse_Token>'
-synID='syn5521835'
 
 default_args = {
 	'owner': 'airflow',
@@ -20,8 +14,10 @@ default_args = {
 	'email_on_retry': False,
 }
 
-
 def transform_data_update_gene_matrix(**kwargs):
+	import os
+	import pandas as pd
+
 	try:
 		ti = kwargs['ti']
 		study_path = ti.xcom_pull(task_ids='identify_release_create_study_dir')
@@ -69,6 +65,9 @@ def transform_data_update_gene_matrix(**kwargs):
 
 
 def transform_data_update_sv_file(**kwargs):
+	import os
+	import pandas as pd
+
 	try:
 		ti = kwargs['ti']
 		study_path = ti.xcom_pull(task_ids='identify_release_create_study_dir')
@@ -104,6 +103,9 @@ def transform_data_update_sv_file(**kwargs):
 
 
 def git_push(**kwargs):
+	import subprocess
+	import os
+
 	try:
 		ti = kwargs['ti']
 		study_path = ti.xcom_pull(task_ids='identify_release_create_study_dir')
@@ -137,16 +139,29 @@ with DAG(
 	'genie_import_dag',
 	description='Import GENIE data to cBioPortal from Synapse',
 	default_args=default_args,
-	schedule_interval=None
+	schedule_interval=None,
+	params={
+		"synapse_download_path": Param("/opt/airflow/data/synapse_download", type="string", title="Path to store synapse download"),
+		"syn_ID": Param("syn5521835", type="string", title="ID of the data folder that needs to be downloaded for import"),
+		"data_dir": Param("/opt/airflow/data", type="string", title="Where to write Genie data")
+	}
 ) as dag:
+
+	synapse_auth_token = Variable.get("synapse_auth_token")
 
 	"""
 	TASK1:
 	Download data from Synapse using the synID var.
-	Data gets written to SYNAPSE_DOWNLOAD_PATH
+	Data gets written to $SYNAPSE_DOWNLOAD_PATH
 	"""
 	pull_data_from_synapse = BashOperator(
 		task_id='pull_data_from_synapse',
+		env={
+			"SYNAPSE_DOWNLOAD_PATH": "{{ params.synapse_download_path }}",
+			"SYN_ID": "{{ params.syn_ID }}",
+			"SYNAPSE_AUTH_TOKEN": synapse_auth_token
+		},
+		append_env=True,
 		bash_command=f"""
 		set -e
 		set -o pipefail
@@ -156,14 +171,14 @@ with DAG(
 			exit 1
 		}}
 		
-		if [ -d {SYNAPSE_DOWNLOAD_PATH} ]; then
+		if [ -d $SYNAPSE_DOWNLOAD_PATH ]; then
 			echo 'Removing existing directory..'
-			rm -rf {SYNAPSE_DOWNLOAD_PATH} || handle_error "Failed to remove directory {SYNAPSE_DOWNLOAD_PATH}"
+			rm -rf $SYNAPSE_DOWNLOAD_PATH || handle_error "Failed to remove directory $SYNAPSE_DOWNLOAD_PATH"
 		fi
 		
 		echo 'Downloading data from Synapse..'
-		synapse -p {SYNAPSE_AUTH_TOKEN} get -r {synID} --downloadLocation {SYNAPSE_DOWNLOAD_PATH} --followLink || handle_error "Failed to download data from Synapse"
-		echo -e '\\nFiles are downloaded to: {SYNAPSE_DOWNLOAD_PATH}\\n'
+		synapse -p $SYNAPSE_AUTH_TOKEN get -r $SYN_ID --downloadLocation $SYNAPSE_DOWNLOAD_PATH --followLink || handle_error "Failed to download data from Synapse"
+		echo -e '\\nFiles are downloaded to: $SYNAPSE_DOWNLOAD_PATH\\n'
 		"""
 	)
 
@@ -175,6 +190,11 @@ with DAG(
 	"""
 	identify_release_create_study_dir = BashOperator(
 		task_id='identify_release_create_study_dir',
+		env={
+			"SYNAPSE_DOWNLOAD_PATH": "{{ params.synapse_download_path }}",
+			"DATA_DIR": "{{ params.data_dir }}"
+		},
+		append_env=True,
 		bash_command=f"""
 		set -e
 		set -o pipefail
@@ -184,24 +204,24 @@ with DAG(
 			exit 1
 		}}
 		
-		if [ ! -f "{SYNAPSE_DOWNLOAD_PATH}/meta_study.txt" ]; then
-			handle_error "Error: meta_study.txt not found in {SYNAPSE_DOWNLOAD_PATH}"
+		if [ ! -f "$SYNAPSE_DOWNLOAD_PATH/meta_study.txt" ]; then
+			handle_error "Error: meta_study.txt not found in $SYNAPSE_DOWNLOAD_PATH"
 		fi
 		
-		study_identifier=$(grep "cancer_study_identifier" {SYNAPSE_DOWNLOAD_PATH}/meta_study.txt | awk -F ": " '{{print $2}}')
+		study_identifier=$(grep "cancer_study_identifier" $SYNAPSE_DOWNLOAD_PATH/meta_study.txt | awk -F ": " '{{print $2}}')
 		if [ -z "$study_identifier" ]; then
 			handle_error "Error: Study identifier not found or empty in meta_study.txt"
 		fi
 		echo "Study Identifier: $study_identifier"
 		
-		GENIE_STUDY_PATH="{DATA_DIR}/$study_identifier"
+		GENIE_STUDY_PATH="$DATA_DIR/$study_identifier"
 		if [ -d "$GENIE_STUDY_PATH" ]; then
 			echo 'Removing existing directory..'
 			rm -rf "$GENIE_STUDY_PATH" || handle_error "Failed to remove directory $GENIE_STUDY_PATH"
 		fi
 		
 		echo -e "Moving files to $GENIE_STUDY_PATH...\n"
-		mv {SYNAPSE_DOWNLOAD_PATH} "$GENIE_STUDY_PATH" || handle_error "Failed to move files to $GENIE_STUDY_PATH"
+		mv $SYNAPSE_DOWNLOAD_PATH "$GENIE_STUDY_PATH" || handle_error "Failed to move files to $GENIE_STUDY_PATH"
 		echo "$GENIE_STUDY_PATH"
 		""",
 		do_xcom_push=True
