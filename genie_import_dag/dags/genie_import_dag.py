@@ -5,7 +5,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable
 from datetime import datetime
-from genie_import_dag.dags.executor_config_genie import k8s_executor_config_genie
+from dags.executor_config_genie import k8s_executor_config_genie
 
 default_args = {
 	'owner': 'airflow',
