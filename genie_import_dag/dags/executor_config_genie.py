@@ -1,6 +1,6 @@
 import kubernetes.client as k8s
 
-k8s_executor_config = {
+k8s_executor_config_genie = {
     "pod_override": k8s.V1Pod(
         spec=k8s.V1PodSpec(
             containers=[
