@@ -5,6 +5,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable
 from datetime import datetime
+from dags.executor_config import k8s_executor_config
 
 default_args = {
 	'owner': 'airflow',
@@ -12,6 +13,7 @@ default_args = {
 	'email_on_failure': False,
 	'start_date': datetime(2024, 9, 10),
 	'email_on_retry': False,
+	'executor_config': k8s_executor_config
 }
 
 def transform_data_update_gene_matrix(**kwargs):
