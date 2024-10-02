@@ -147,7 +147,7 @@ with DAG(
 	default_args=default_args,
 	schedule_interval=None,
 	params={
-		"repos_dir": Param("/opt/airflow/git_repos", type="string", title="Path to store synapse download"),
+		"repos_dir": Param("/opt/airflow/git_repos", type="string", title="Path to store genie repository"),
 		"synapse_download_path": Param("/opt/airflow/git_repos/synapse_download", type="string", title="Path to store synapse download"),
 		"syn_ID": Param("syn5521835", type="string", title="ID of the data folder that needs to be downloaded for import"),
 	},
@@ -179,7 +179,6 @@ with DAG(
 		append_env=True,
 		bash_command="scripts/pull_data_from_synapse.sh"
 	)
-
 
 	"""
 	From the meta_study.txt file, identify the Study ID
