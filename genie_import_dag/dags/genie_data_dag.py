@@ -177,7 +177,8 @@ with DAG(
 			"SYNAPSE_AUTH_TOKEN": synapse_auth_token
 		},
 		append_env=True,
-		bash_command="scripts/pull_data_from_synapse.sh"
+		bash_command="scripts/pull_data_from_synapse.sh",
+		trigger_rule="none_failed"
 	)
 
 	"""
