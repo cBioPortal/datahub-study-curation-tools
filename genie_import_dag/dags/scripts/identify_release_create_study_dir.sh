@@ -1,11 +1,6 @@
 set -e
 set -o pipefail
 
-handle_error() {{
-    echo "$1" >&2
-    exit 1
-}}
-
 test -n "$SYNAPSE_DOWNLOAD_PATH"
 test -n "$REPOS_DIR"
 
