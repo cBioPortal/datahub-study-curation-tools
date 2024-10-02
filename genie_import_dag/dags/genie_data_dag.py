@@ -132,7 +132,7 @@ def git_push(**kwargs):
 		subprocess.run(['git', 'add', '.'], check=True)
 		commit_message = 'Update genie data from Synapse'
 		subprocess.run(['git', 'commit', '-m', commit_message], check=True)
-		subprocess.run(['git', 'push', 'origin', 'main'], check=True)
+		#subprocess.run(['git', 'push', 'origin', 'main'], check=True)
 	
 		print("Data pushed to GitHub")
 
