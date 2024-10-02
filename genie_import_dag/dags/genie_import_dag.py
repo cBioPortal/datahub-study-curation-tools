@@ -1,5 +1,6 @@
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
+from airflow.providers.ssh.operators.ssh import SSHOperator
 from datetime import timedelta, datetime
 
 args = {
@@ -25,8 +26,15 @@ with DAG(
         task_id="start",
     )
 
+    test_ssh = SSHOperator(
+        task_id='test_ssh',
+        ssh_conn_id="genie_importer_ssh",
+        command="echo hello",
+        dag=dag
+    )
+
     end = DummyOperator(
         task_id="end",
     )
     
-    start >> end
+    start >> test_ssh >> end
