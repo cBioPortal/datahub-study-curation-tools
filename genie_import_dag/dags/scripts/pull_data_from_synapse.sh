@@ -1,11 +1,6 @@
 set -e
 set -o pipefail
 
-handle_error() {{
-    echo "$1" >&2
-    exit 1
-}}
-
 test -n "$SYNAPSE_DOWNLOAD_PATH"
 test -n "$SYN_ID"
 test -n "$SYNAPSE_AUTH_TOKEN"
