@@ -13,7 +13,7 @@ if [ ! -f "$SYNAPSE_DOWNLOAD_PATH/meta_study.txt" ]; then
     handle_error "Error: meta_study.txt not found in $SYNAPSE_DOWNLOAD_PATH"
 fi
 
-study_identifier=$(grep "cancer_study_identifier" $SYNAPSE_DOWNLOAD_PATH/meta_study.txt | awk -F ": " '{{print $2}}')
+study_identifier=$(grep "cancer_study_identifier" $SYNAPSE_DOWNLOAD_PATH/meta_study.txt | awk -F ": " '{print $2}')
 if [ -z "$study_identifier" ]; then
     handle_error "Error: Study identifier not found or empty in meta_study.txt"
 fi
