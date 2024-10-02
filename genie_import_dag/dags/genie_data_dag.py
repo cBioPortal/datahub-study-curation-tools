@@ -244,4 +244,4 @@ with DAG(
         trigger_dag_id="genie_import_dag",
     )
 
-pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix, transform_data_update_sv_file] >> git_push >> trigger_genie_import
+clone_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix, transform_data_update_sv_file] >> git_push >> trigger_genie_import
