@@ -4,6 +4,11 @@ set -o pipefail
 test -n "$SYNAPSE_DOWNLOAD_PATH"
 test -n "$REPOS_DIR"
 
+function handle_error {
+    echo "$1" >&2
+    exit 1
+}
+
 if [ ! -f "$SYNAPSE_DOWNLOAD_PATH/meta_study.txt" ]; then
     handle_error "Error: meta_study.txt not found in $SYNAPSE_DOWNLOAD_PATH"
 fi
