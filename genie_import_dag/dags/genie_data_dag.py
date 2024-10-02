@@ -123,7 +123,6 @@ def git_push(**kwargs):
 	try:
 		# Initializing a tmp git location for testing purposes
 		# TODO: Update in production to work on the genie git repo
-		subprocess.run(['git', 'config', 'url."https://<TOKEN>ttps://github.com/".insteadOf', 'https://github.com/'], check=True)
 		os.chdir(study_path)
 		if not os.path.isdir(os.path.join(study_path, '.git')):
 			subprocess.run(['git', 'init'], check=True)
@@ -172,7 +171,7 @@ with DAG(
 	pull_data_from_synapse = BashOperator(
 		task_id='pull_data_from_synapse',
 		env={
-			"SYNAPSE_DOWNLOAD_PATH": "{{ params.synapse_download }}",
+			"SYNAPSE_DOWNLOAD_PATH": "{{ params.synapse_download_path }}",
 			"SYN_ID": "{{ params.syn_ID }}",
 			"SYNAPSE_AUTH_TOKEN": synapse_auth_token
 		},
