@@ -26,7 +26,7 @@ with DAG(
     dagrun_timeout=timedelta(minutes=360),
     tags=["genie"],
     params={
-        "importer": Param("importer", type="string", title="which importer to use, will affect which db is imported into", description="Must be one of: ['genie']"),
+        "importer": Param("genie", type="string", title="which importer to use, will affect which db is imported into", description="Must be one of: ['genie']"),
     }
 ) as dag:
 
@@ -43,7 +43,7 @@ with DAG(
 
     @task
     def parse_args(importer: str):
-        if not importer.strip() not in ['genie']:
+        if importer.strip() not in ['genie']:
             raise TypeError('Required argument \'importer\' is incorrect or missing a value.')
 
     # [START GENIE import setup] --------------------------------
