@@ -55,7 +55,7 @@ with DAG(
     setup_import = SSHOperator(
         task_id="setup_import",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/setup_import.sh {{ params.importer }}",
+        command=f"{import_scripts_path}/setup_import.sh {{{{ params.importer }}}}",
         environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
     )
@@ -64,7 +64,7 @@ with DAG(
     import_genie = SSHOperator(
         task_id="import_genie",
         ssh_conn_id=conn_id,
-        commmand=f"{import_scripts_path}/import_genie.sh {{ params.importer }}",
+        commmand=f"{import_scripts_path}/import_genie.sh {{{{ params.importer }}}}",
         environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
     )
