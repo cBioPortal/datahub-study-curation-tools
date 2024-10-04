@@ -53,7 +53,7 @@ with DAG(
     Refreshes CDD/Oncotree caches=
     """
     setup_import = SSHOperator(
-        task_id="GENIE Import Setup",
+        task_id="setup_import",
         ssh_conn_id=conn_id,
         command=f"{import_scripts_path}/setup_import.sh {{ params.importer }}",
         environment=DEFAULT_ENVIRONMENT_VARS,
@@ -62,7 +62,7 @@ with DAG(
     # [END GENIE import setup] --------------------------------
 
     import_genie = SSHOperator(
-        task_id="GENIE Import",
+        task_id="import_genie",
         ssh_conn_id=conn_id,
         commmand=f"{import_scripts_path}/import_genie.sh {{ params.importer }}",
         environment=DEFAULT_ENVIRONMENT_VARS,
