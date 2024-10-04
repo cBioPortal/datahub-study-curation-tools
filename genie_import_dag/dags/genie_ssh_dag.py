@@ -14,9 +14,9 @@ args = {
 } 
 
 with DAG(
-    dag_id="genie_import_dag",
+    dag_id="genie_ssh_dag",
     default_args=args,
-    description="Copies cbioportal formatted data and pushes to s3://cdm-deliverable bucket",
+    description="Runs a genie import on the knowledgesystems-importer node",
     schedule_interval="@once",
     dagrun_timeout=timedelta(minutes=360),
     tags=["genie"]
