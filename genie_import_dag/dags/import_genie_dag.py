@@ -52,7 +52,7 @@ with DAG(
         if importer.strip() not in ['genie']:
             raise TypeError('Required argument \'importer\' is incorrect or missing a value.')
         for data_repo in data_repos.split(","):
-            if data_repo.strip() in ACCEPTED_DATA_REPOS:
+            if data_repo.strip() not in ACCEPTED_DATA_REPOS:
                 raise TypeError('Required argument \'data_repos\' is incorrect.')
             to_use.append(root_data_directory_path + "/" + data_repo.strip())
         data_repositories_to_use = ' '.join(to_use)
