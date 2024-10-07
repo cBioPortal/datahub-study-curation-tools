@@ -47,7 +47,7 @@ with DAG(
     )
 
     @task
-    def parse_args(importer: str, data_repos):
+    def parse_args(importer: str, data_repos: list):
         print(data_repos)
         data_repo_list = []
         if importer.strip() not in ['genie']:
