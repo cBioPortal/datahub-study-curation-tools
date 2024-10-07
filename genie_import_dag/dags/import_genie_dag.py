@@ -20,6 +20,8 @@ args = {
     "retry_delay": timedelta(minutes=5),
 }
 
+data_repositories_to_use = ""
+
 with DAG(
     dag_id="import_genie_dag",
     default_args=args,
@@ -35,8 +37,7 @@ with DAG(
     conn_id = "genie_importer_ssh"
     import_scripts_path = "/data/portal-cron/scripts"
     root_data_directory_path = "/data/portal-cron/cbio-portal-data"
-    data_repositories_to_use = ""
-
+    
     DEFAULT_ENVIRONMENT_VARS={
         "IMPORT_SCRIPTS_PATH": import_scripts_path
     }
