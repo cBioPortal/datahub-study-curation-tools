@@ -90,8 +90,8 @@ with DAG(
         task_id="cleanup_genie",
         ssh_conn_id=conn_id,
         trigger_rule=TriggerRule.ALL_DONE,
-        command=f"{import_scripts_path}/datasource-repo-cleanup.sh {data_repos}",
-        environment={"datarepos": {{ task_instance.xcom_pull(task_ids='parsed_args') }},
+        command=f"{import_scripts_path}/datasource-repo-cleanup.sh {datarepos}",
+        environment={"datarepos": {{ task_instance.xcom_pull(task_ids='parsed_args') }}},
         dag=dag,
     )
     # [END GENIE repo cleanup] --------------------------------
