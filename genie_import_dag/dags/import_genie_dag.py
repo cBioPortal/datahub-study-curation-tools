@@ -59,7 +59,8 @@ with DAG(
         data_repositories_to_use = ' '.join(to_use)
         return data_repositories_to_use
         
-
+    datarepos = "{{ task_instance.xcom_pull(task_ids='parse_args') }}"
+    
     # [START GENIE import setup] --------------------------------
     """
     Does a db check for specified importer/pipeline
@@ -70,7 +71,6 @@ with DAG(
         task_id="setup_import",
         ssh_conn_id=conn_id,
         command=f"{import_scripts_path}/setup_import.sh {{{{ params.importer }}}} {import_scripts_path}",
-        environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
     )
     # [END GENIE import setup] --------------------------------
@@ -80,7 +80,6 @@ with DAG(
         task_id="import_genie",
         ssh_conn_id=conn_id,
         command=f"{import_scripts_path}/import_genie.sh {{{{ params.importer }}}} {import_scripts_path}",
-        environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
     )
     # [END GENIE import] --------------------------------
@@ -90,8 +89,7 @@ with DAG(
         task_id="cleanup_genie",
         ssh_conn_id=conn_id,
         trigger_rule=TriggerRule.ALL_DONE,
-        command=f"{import_scripts_path}/datasource-repo-cleanup.sh $datarepos",
-        environment={"datarepos": {{ task_instance.xcom_pull(task_ids='parsed_args') }}},
+        command=f"{import_scripts_path}/datasource-repo-cleanup.sh {datarepos}",
         dag=dag,
     )
     # [END GENIE repo cleanup] --------------------------------
