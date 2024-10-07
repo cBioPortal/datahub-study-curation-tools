@@ -8,6 +8,7 @@ from airflow.providers.ssh.operators.ssh import SSHOperator
 from datetime import timedelta, datetime
 from airflow.models.param import Param
 from airflow.decorators import task
+from airflow.utils.trigger_rule import TriggerRule
 
 args = {
     "owner": "airflow",
@@ -85,7 +86,7 @@ with DAG(
     cleanup_genie = SSHOperator(
         task_id="cleanup_genie",
         ssh_conn_id=conn_id,
-        trigger="all_done",
+        trigger_rule=TriggerRule.ALL_DONE,
         command=f"{import_scripts_path}/datasource-repo-cleanup.sh {data_repositories_to_use}",
         environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
