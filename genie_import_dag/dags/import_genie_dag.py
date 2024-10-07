@@ -85,6 +85,7 @@ with DAG(
     cleanup_genie = SSHOperator(
         task_id="cleanup_genie",
         ssh_conn_id=conn_id,
+        trigger="all_done",
         command=f"{import_scripts_path}/datasource-repo-cleanup.sh {data_repositories_to_use}",
         environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
@@ -95,4 +96,4 @@ with DAG(
     )
 
     parsed_args = parse_args("{{ params.importer }}", "{{params.data_repos}}")
-    start >> parsed_args >> setup_import >> import_genie >> end
+    start >> parsed_args >> setup_import >> import_genie >> cleanup_genie >> end
