@@ -47,11 +47,13 @@ with DAG(
     )
 
     @task
-    def parse_args(importer: str, data_repos: list):
+    def parse_args(importer: str, data_repos):
+        print(data_repos)
         data_repo_list = []
         if importer.strip() not in ['genie']:
             raise TypeError('Required argument \'importer\' is incorrect or missing a value.')
         for data_repo in data_repos:
+            print("HUEHUEHUEHUEHUE")
             print(data_repo)
             if data_repo not in ACCEPTED_DATA_REPOS:
                 raise TypeError('Required argument \'data_repos\' is incorrect.')
@@ -98,5 +100,5 @@ with DAG(
         task_id="end",
     )
 
-    parsed_args = parse_args("{{ params.importer }}", "{{params.data_repos}}")
+    parsed_args = parse_args("{{ params.importer }}", "{{ params.data_repos }}")
     start >> parsed_args >> setup_import >> import_genie >> cleanup_genie >> end
