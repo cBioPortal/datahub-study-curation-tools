@@ -40,7 +40,8 @@ with DAG(
     DEFAULT_ENVIRONMENT_VARS={
         "IMPORT_SCRIPTS_PATH": import_scripts_path
     }
-    
+
+    ACCEPTED_DATA_REPOS = ["genie", "dmp"]
     start = DummyOperator(
         task_id="start",
     )
