@@ -55,23 +55,26 @@ with DAG(
     setup_import = SSHOperator(
         task_id="setup_import",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/setup_import.sh {{{{ params.importer }}}}",
+        command=f"{import_scripts_path}/setup_import.sh {{{{ params.importer }}}} {import_scripts_path}",
         environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
     )
     # [END GENIE import setup] --------------------------------
 
+    # [START GENIE import] --------------------------------
     import_genie = SSHOperator(
         task_id="import_genie",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/import_genie.sh {{{{ params.importer }}}}",
+        command=f"{import_scripts_path}/import_genie.sh {{{{ params.importer }}}} {import_scripts_path}",
         environment=DEFAULT_ENVIRONMENT_VARS,
         dag=dag,
     )
-
+    # [END GENIE import] --------------------------------
+    
     end = DummyOperator(
         task_id="end",
     )
+
 
     parsed_args = parse_args("{{ params.importer }}")
     start >> parsed_args >> setup_import >> import_genie >> end
