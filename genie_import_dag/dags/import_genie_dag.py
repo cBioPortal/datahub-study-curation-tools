@@ -55,7 +55,10 @@ with DAG(
         for data_repo in data_repos:
             print("HUEHUEHUEHUEHUE")
             print(data_repo)
-            if data_repo not in ACCEPTED_DATA_REPOS:
+            print("WEIWEIWEIWEI")
+            print(ACCEPTED_DATA_REPOS)
+            if data_repo in ACCEPTED_DATA_REPOS:
+                print(data_repo)
                 raise TypeError('Required argument \'data_repos\' is incorrect.')
             data_repo_list.append(root_data_directory_path + "/" + data_repo)
         data_repositories_to_use = ' '.join(data_repo_list)
