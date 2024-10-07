@@ -28,7 +28,7 @@ with DAG(
     tags=["genie"],
     params={
         "importer": Param("genie", type="string", title="Import Pipeline", description="Determines which importer to use. Must be one of: ['genie']"),
-        "data_repos": Param(["genie"], type="array", title="Data Repository", description="Determines which data repository to pull updates from/cleanup. Acceped values: ['genie', 'dmp']", items={"type": "string"})
+        "data_repos": Param(["genie"], type="string", title="Data Repositories", description="Comma separated list of data repositories to pull updates from/cleanup. Acceped values: ['genie', 'dmp']")
     }
 ) as dag:
 
@@ -49,10 +49,11 @@ with DAG(
     @task
     def parse_args(importer: str, data_repos: list):
         print(data_repos)
+        print(root_data_directory_path)
         data_repo_list = []
         if importer.strip() not in ['genie']:
             raise TypeError('Required argument \'importer\' is incorrect or missing a value.')
-        for data_repo in data_repos:
+        for data_repo.strip() in data_repos.split(","):
             print("HUEHUEHUEHUEHUE")
             print(data_repo)
             print("WEIWEIWEIWEI")
