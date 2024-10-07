@@ -28,7 +28,7 @@ with DAG(
     tags=["genie"],
     params={
         "importer": Param("genie", type="string", title="Import Pipeline", description="Determines which importer to use. Must be one of: ['genie']"),
-        "data_repos": Param(["genie"], type="string", title="Data Repositories", description="Comma separated list of data repositories to pull updates from/cleanup. Acceped values: ['genie', 'dmp']")
+        "data_repos": Param("genie,dmp", type="string", title="Data Repositories", description="Comma separated list of data repositories to pull updates from/cleanup. Acceped values: ['genie', 'dmp']")
     }
 ) as dag:
 
