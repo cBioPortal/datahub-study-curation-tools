@@ -47,7 +47,7 @@ with DAG(
     )
 
     @task
-    def parse_args(importer: str, data_repos: list):
+    def parse_args(importer: str, data_repos: str):
         print(data_repos)
         print(root_data_directory_path)
         data_repo_list = []
