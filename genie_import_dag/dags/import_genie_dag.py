@@ -48,21 +48,14 @@ with DAG(
 
     @task
     def parse_args(importer: str, data_repos: str):
-        print(data_repos)
-        print(root_data_directory_path)
-        data_repo_list = []
+        to_use = []
         if importer.strip() not in ['genie']:
             raise TypeError('Required argument \'importer\' is incorrect or missing a value.')
-        for data_repo.strip() in data_repos.split(","):
-            print("HUEHUEHUEHUEHUE")
-            print(data_repo)
-            print("WEIWEIWEIWEI")
-            print(ACCEPTED_DATA_REPOS)
-            if data_repo in ACCEPTED_DATA_REPOS:
-                print(data_repo)
+        for data_repo in data_repos.split(","):
+            if data_repo.strip() in ACCEPTED_DATA_REPOS:
                 raise TypeError('Required argument \'data_repos\' is incorrect.')
-            data_repo_list.append(root_data_directory_path + "/" + data_repo)
-        data_repositories_to_use = ' '.join(data_repo_list)
+            to_use.append(root_data_directory_path + "/" + data_repo.strip())
+        data_repositories_to_use = ' '.join(to_use)
         
 
     # [START GENIE import setup] --------------------------------
