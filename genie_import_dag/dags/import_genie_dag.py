@@ -60,6 +60,20 @@ with DAG(
         return data_repositories_to_use
         
     datarepos = "{{ task_instance.xcom_pull(task_ids='parse_args') }}"
+
+    # [START GENIE database clone] --------------------------------
+    """
+    Does a db check for specified importer/pipeline
+    Fetches latest commit from GENIE repository
+    Refreshes CDD/Oncotree caches=
+    """
+    setup_import = SSHOperator(
+        task_id="clone_db",
+        ssh_conn_id=conn_id,
+        command=f"{import_scripts_path}/clone_db.sh",
+        dag=dag,
+    )
+    # [END GENIE database clone] --------------------------------
     
     # [START GENIE import setup] --------------------------------
     """
@@ -98,4 +112,4 @@ with DAG(
     )
 
     parsed_args = parse_args("{{ params.importer }}", "{{ params.data_repos }}")
-    start >> parsed_args >> setup_import >> import_genie >> cleanup_genie >> end
+    start >> parsed_args >> clone_db >> setup_import >> import_genie >> cleanup_genie >> end
