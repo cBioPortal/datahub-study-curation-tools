@@ -67,8 +67,8 @@ with DAG(
     Fetches latest commit from GENIE repository
     Refreshes CDD/Oncotree caches=
     """
-    setup_import = SSHOperator(
-        task_id="clone_db",
+    clone_database = SSHOperator(
+        task_id="clone_database",
         ssh_conn_id=conn_id,
         command=f"{import_scripts_path}/clone_db_wrapper.sh",
         dag=dag,
@@ -112,4 +112,4 @@ with DAG(
     )
 
     parsed_args = parse_args("{{ params.importer }}", "{{ params.data_repos }}")
-    start >> parsed_args >> clone_db >> setup_import >> import_genie >> cleanup_genie >> end
+    start >> parsed_args >> clone_database >> setup_import >> import_genie >> cleanup_genie >> end
