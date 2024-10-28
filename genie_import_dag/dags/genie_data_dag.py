@@ -122,6 +122,7 @@ def git_push(**kwargs):
 
 	try:
 		# Push changes to Git
+		print(study_path)
 		os.chdir(study_path)
 		subprocess.run(['git', 'add', '.'], check=True)
 		commit_message = 'Update genie data from Synapse'
@@ -131,7 +132,7 @@ def git_push(**kwargs):
 		print("Data pushed to GitHub")
 
 	except subprocess.CalledProcessError as e:
-		raise RuntimeError(f"Git command failed: {str(e)}")
+		raise RuntimeError(f"Git command failed: {str(e)}, {str(e.output)}")
 	except Exception as e:
 		raise RuntimeError(f"Unexpected error occurred: {str(e)}")
 
