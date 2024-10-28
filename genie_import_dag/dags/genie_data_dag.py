@@ -121,13 +121,8 @@ def git_push(**kwargs):
 		raise ValueError(f"Error retrieving STUDY_PATH from XCom: {str(e)}")
 
 	try:
-		# Initializing a tmp git location for testing purposes
-		# TODO: Update in production to work on the genie git repo
-		os.chdir(study_path)
-		if not os.path.isdir(os.path.join(study_path, '.git')):
-			subprocess.run(['git', 'init'], check=True)
-	
 		# Push changes to Git
+		os.chdir(study_path)
 		subprocess.run(['git', 'add', '.'], check=True)
 		commit_message = 'Update genie data from Synapse'
 		subprocess.run(['git', 'commit', '-m', commit_message], check=True)

@@ -19,11 +19,8 @@ if [ -z "$study_identifier" ]; then
 fi
 echo "Study Identifier: $study_identifier"
 
-GENIE_STUDY_PATH="$REPOS_DIR/$study_identifier"
-if [ -d "$GENIE_STUDY_PATH" ]; then
-    echo 'Removing existing directory..'
-    rm -rf "$GENIE_STUDY_PATH" || handle_error "Failed to remove directory $GENIE_STUDY_PATH"
-fi
+REPO_NAME=genie
+GENIE_STUDY_PATH="$REPOS_DIR/$REPO_NAME/$study_identifier"
 
 echo -e "Moving files to $GENIE_STUDY_PATH...\n"
 mv $SYNAPSE_DOWNLOAD_PATH "$GENIE_STUDY_PATH" || handle_error "Failed to move files to $GENIE_STUDY_PATH"
