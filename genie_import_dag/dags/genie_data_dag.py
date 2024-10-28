@@ -123,7 +123,7 @@ def git_push(**kwargs):
 	try:
 		# Push changes to Git
 		print(study_path)
-		os.chdir(study_path)
+		os.chdir("/opt/airflow/git_repos/genie")
 		print(os.getcwd())
 		subprocess.run(['git', 'add', '.'], check=True)
 		commit_message = 'Update genie data from Synapse'
