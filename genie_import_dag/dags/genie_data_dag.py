@@ -124,7 +124,7 @@ def git_push(**kwargs):
 		# Push changes to Git
 		print(study_path)
 		os.chdir(study_path)
-		print(os.system("pwd"))
+		print(os.getcwd())
 		subprocess.run(['git', 'add', '.'], check=True)
 		commit_message = 'Update genie data from Synapse'
 		subprocess.run(['git', 'commit', '-m', commit_message], check=True)
