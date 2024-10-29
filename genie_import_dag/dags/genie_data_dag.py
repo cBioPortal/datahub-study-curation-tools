@@ -108,36 +108,6 @@ def transform_data_update_sv_file(**kwargs):
 		raise ValueError(f"Unexpected error occurred: {str(e)}")		
 
 
-def git_push(**kwargs):
-	import subprocess
-	import os
-
-	try:
-		ti = kwargs['ti']
-		study_path = ti.xcom_pull(task_ids='identify_release_create_study_dir')
-		if study_path is None:
-			raise ValueError("Error: No STUDY_PATH found in XCom.")
-	except Exception as e:
-		raise ValueError(f"Error retrieving STUDY_PATH from XCom: {str(e)}")
-
-	try:
-		# Push changes to Git
-		print(study_path)
-		os.chdir(study_path)
-		print(os.getcwd())
-		subprocess.run(['git', 'status'], check=True)
-		subprocess.run(['git', 'add', '.'], check=True)
-		commit_message = 'Update genie data from Synapse'
-		subprocess.run(['git', 'commit', '-m', commit_message], check=True)
-		#subprocess.run(['git', 'push', 'origin', 'main'], check=True)
-	
-		print("Data pushed to GitHub")
-
-	except subprocess.CalledProcessError as e:
-		raise RuntimeError(f"Git command failed: {str(e)}, {str(e.output)}")
-	except Exception as e:
-		raise RuntimeError(f"Unexpected error occurred: {str(e)}")
-
 with DAG(
 	'genie_data_dag',
 	description='Prepare GENIE data for import to cBioPortal from Synapse',
@@ -147,13 +117,16 @@ with DAG(
 		"repos_dir": Param("/opt/airflow/git_repos", type="string", title="Path to store genie repository"),
 		"synapse_download_path": Param("/opt/airflow/git_repos/synapse_download", type="string", title="Path to store synapse download"),
 		"syn_ID": Param("syn5521835", type="string", title="ID of the data folder that needs to be downloaded for import"),
-		"push_to_repo": Param("no", type="string")
+		"push_to_repo": Param(False, type="boolean")
 	},
 	tags=["genie"]
 ) as dag:
 
 	synapse_auth_token = Variable.get("synapse_auth_token")
 
+	"""
+	Clone the genie repo (if it doesn't already exist)
+	"""
 	clone_genie_repo = BashOperator(
 		task_id='clone_genie_repo',
 		env={
@@ -161,6 +134,18 @@ with DAG(
 		},
 		append_env=True,
 		bash_command="scripts/clone_genie_repo.sh"
+	)
+
+	"""
+	Fetch the genie repo
+	"""
+	fetch_genie_repo = BashOperator(
+		task_id='fetch_genie_repo',
+		env={
+			"REPOS_DIR": "{{ params.repos_dir }}",
+		},
+		append_env=True,
+		bash_command="scripts/fetch_genie_repo.sh"
 	)
 
 	"""
@@ -228,12 +213,6 @@ with DAG(
 	"""
 	Push the data to genie Git repo
 	"""
-	#git_push = PythonOperator(
-	#	task_id='git_push',
-	#	python_callable=git_push,
-	#	provide_context=True,
-	#)
-
 	git_push = BashOperator(
 		task_id='git_push',
 		env={
