@@ -123,7 +123,7 @@ def git_push(**kwargs):
 	try:
 		# Push changes to Git
 		print(study_path)
-		os.chdir("/opt/airflow/git_repos/genie")
+		os.chdir(study_path)
 		print(os.getcwd())
 		subprocess.run(['git', 'status'], check=True)
 		subprocess.run(['git', 'add', '.'], check=True)
@@ -147,6 +147,7 @@ with DAG(
 		"repos_dir": Param("/opt/airflow/git_repos", type="string", title="Path to store genie repository"),
 		"synapse_download_path": Param("/opt/airflow/git_repos/synapse_download", type="string", title="Path to store synapse download"),
 		"syn_ID": Param("syn5521835", type="string", title="ID of the data folder that needs to be downloaded for import"),
+		"push_to_repo": Param("no", type="string")
 	},
 	tags=["genie"]
 ) as dag:
@@ -192,7 +193,6 @@ with DAG(
 		bash_command="scripts/identify_release_create_study_dir.sh",
 		do_xcom_push=True
 	)
-	
 
 	"""
 	Remove files not required for import into cBioPortal
@@ -228,10 +228,20 @@ with DAG(
 	"""
 	Push the data to genie Git repo
 	"""
-	git_push = PythonOperator(
+	#git_push = PythonOperator(
+	#	task_id='git_push',
+	#	python_callable=git_push,
+	#	provide_context=True,
+	#)
+
+	git_push = BashOperator(
 		task_id='git_push',
-		python_callable=git_push,
-		provide_context=True,
+		env={
+			"REPOS_DIR": "{{ params.repos_dir }}",
+			"PUSH_TO_REPO": "{{ params.push_to_repo }}"
+		},
+		append_env=True,
+		bash_command="scripts/git_push.sh",
 	)
 
 	"""
