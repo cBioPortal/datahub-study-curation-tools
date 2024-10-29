@@ -21,3 +21,6 @@ fi
 # Git clone
 echo "Cloning LFS repo ${repo_url} to ${REPOS_DIR}/${repo_name}"
 git clone $repo_url -b $branch --progress
+
+git config --global user.email "cbioportal_importer@pipelines.cbioportal.mskcc.org"
+git config --global user.name "cbioportal import user"
