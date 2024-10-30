@@ -1,9 +1,8 @@
-from airflow import DAG
 from airflow.models.param import Param
 from airflow.models import Variable
 from airflow.operators.bash import BashOperator
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
-from airflow.decorators import task
+from airflow.decorators import task, dag
 from datetime import datetime
 import os, sys
 
@@ -19,7 +18,7 @@ default_args = {
 	'executor_config': k8s_executor_config_genie
 }
 
-with DAG(
+@dag(
 	'genie_data_dag',
 	description='Prepare GENIE data for import to cBioPortal from Synapse',
 	default_args=default_args,
@@ -32,12 +31,13 @@ with DAG(
 		"trigger_import": Param(False, type="boolean", title="Trigger Genie import DAG"),
 	},
 	tags=["genie"]
-) as dag:
+)
 
+def genie_data_dag():
 	synapse_auth_token = Variable.get("synapse_auth_token")
 
 	"""
-	Clone the genie repo (if it doesn't already exist)
+	Clone the genie repo (if it doesn't already exist).
 	"""
 	clone_genie_repo = BashOperator(
 		task_id='clone_genie_repo',
@@ -49,7 +49,7 @@ with DAG(
 	)
 
 	"""
-	Fetch the genie repo
+	Fetch the genie repo.
 	"""
 	fetch_genie_repo = BashOperator(
 		task_id='fetch_genie_repo',
@@ -78,8 +78,8 @@ with DAG(
 	)
 
 	"""
-	From the meta_study.txt file, identify the Study ID
-	Rename the downloaded directory accordingly
+	From the meta_study.txt file, identify the Study ID.
+	Copy the study files to the appropriate location in the Genie repository.
 	"""
 	identify_release_create_study_dir = BashOperator(
 		task_id='identify_release_create_study_dir',
@@ -93,7 +93,7 @@ with DAG(
 	)
 
 	"""
-	Remove files not required for import into cBioPortal
+	Remove files not required for import into cBioPortal.
 	"""
 	transform_data_cleanup_files = BashOperator(
 		task_id='transform_data_cleanup_files',
@@ -122,7 +122,8 @@ with DAG(
 		genie.transform_data_update_sv_file(**kwargs)
 
 	"""
-	Push the data to genie Git repo
+	Push the data to genie Git repo.
+	If `push_to_repo` is not set, this task will be skipped.
 	"""
 	git_push = BashOperator(
 		task_id='git_push',
@@ -135,17 +136,36 @@ with DAG(
 		trigger_rule="none_failed"
 	)
 
-	# Add branch / short circuit here
-	@task.short_circuit(trigger_rule="all_done")
+	"""
+	Cleans up the clone of the genie repo.
+	If `push_to_repo` is not set, this task will be skipped.
+	"""
+	clean_genie_repo = BashOperator(
+		task_id='clean_genie_repo',
+		env={
+			"REPOS_DIR": "{{ params.repos_dir }}",
+			"PUSH_TO_REPO": "{{ params.push_to_repo }}"
+		},
+		append_env=True,
+		bash_command="scripts/clean_genie_repo.sh",
+        trigger_rule="all_done"
+    )
+
+	"""
+	Determine if genie_import_dag should be triggered based on value of `trigger_import` param.
+	"""
+	@task.short_circuit(trigger_rule="none_failed")
 	def decide_to_trigger_genie_import(trigger_import):
 		return trigger_import == "True"
 	
 	"""
-	Trigger the Genie import
+	Trigger the Genie import DAG.
 	"""
 	trigger_genie_import = TriggerDagRunOperator(
         task_id="trigger_genie_import",
-        trigger_dag_id="genie_import_dag",
+        trigger_dag_id="import_genie_dag",
     )
 
-clone_genie_repo >> fetch_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix(), transform_data_update_sv_file()] >> git_push >> decide_to_trigger_genie_import("{{ params.trigger_import }}") >> trigger_genie_import
+	clone_genie_repo >> fetch_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix(), transform_data_update_sv_file()] >> git_push >> clean_genie_repo >> decide_to_trigger_genie_import("{{ params.trigger_import }}") >> trigger_genie_import
+
+dag = genie_data_dag()
