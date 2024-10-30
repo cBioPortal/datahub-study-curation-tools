@@ -116,7 +116,7 @@ with DAG(
 
 	@task
 	def transform_data_update_gene_matrix(**kwargs):
-		import scripts.genie_data_transformations as genie
+		import dags.scripts.genie_data_transformations as genie
 		genie.transform_data_update_gene_matrix(**kwargs)
 	
 	"""
@@ -131,7 +131,7 @@ with DAG(
 
 	@task
 	def transform_data_update_sv_file(**kwargs):
-		import scripts.genie_data_transformations as genie
+		import dags.scripts.genie_data_transformations as genie
 		genie.transform_data_update_sv_file(**kwargs)
 
 	"""
