@@ -2,8 +2,6 @@ from airflow import DAG
 from airflow.models.param import Param
 from airflow.models import Variable
 from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator
-from airflow.models import Variable
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.decorators import task
 from datetime import datetime
@@ -33,6 +31,7 @@ with DAG(
 		"push_to_repo": Param(False, type="boolean", title="Push data to remote Genie repository"),
 		"trigger_import": Param(False, type="boolean", title="Trigger Genie import DAG"),
 	},
+	render_template_as_native_obj=True,
 	tags=["genie"]
 ) as dag:
 
@@ -108,12 +107,6 @@ with DAG(
 	- Uses the sample list from the cases_sv.txt file
 	- Copies the mutation panel IDs as SV panel IDs
 	"""
-	#transform_data_update_gene_matrix = PythonOperator(
-	#	task_id='transform_data_update_gene_matrix',
-	#	python_callable=transform_data_update_gene_matrix,
-	#	provide_context=True
-	#)
-
 	@task
 	def transform_data_update_gene_matrix(**kwargs):
 		import dags.scripts.genie_data_transformations as genie
@@ -123,12 +116,6 @@ with DAG(
 	The data_sv.txt file downloaded from Synapse has missing or empty gene2 symbols in some cases for intragenic structural variants.
 	For these intragenic variants, gene1 and gene2 are the same. This task updates the gene2 symbol in the file to match gene1 for such cases.
 	"""
-	#transform_data_update_sv_file = PythonOperator(
-	#	task_id='transform_data_update_sv_file',
-	#	python_callable=transform_data_update_sv_file,
-	#	provide_context=True
-	#)
-
 	@task
 	def transform_data_update_sv_file(**kwargs):
 		import dags.scripts.genie_data_transformations as genie
@@ -148,6 +135,10 @@ with DAG(
 	)
 
 	# Add branch / short circuit here
+	@task.short_circuit()
+	def decide_to_trigger_genie_import(trigger_import):
+		return trigger_import
+	
 	"""
 	Trigger the Genie import
 	"""
@@ -156,4 +147,4 @@ with DAG(
         trigger_dag_id="genie_import_dag",
     )
 
-clone_genie_repo >> fetch_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix(), transform_data_update_sv_file()] >> git_push >> trigger_genie_import
+clone_genie_repo >> fetch_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix(), transform_data_update_sv_file()] >> git_push >> decide_to_trigger_genie_import("{{ params.repos_dir }}") >> trigger_genie_import

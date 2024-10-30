@@ -18,6 +18,8 @@ git config --global user.name "cbioportal import user"
 git add *
 # `git commit` will exit 1 if there is nothing to commit, ignore the error in that case
 git commit -m "Update genie data from Synapse" || true
+
+echo $PUSH_TO_REPO
 if [ "$PUSH_TO_REPO" = 'True' ]; then
     git push origin
 else
