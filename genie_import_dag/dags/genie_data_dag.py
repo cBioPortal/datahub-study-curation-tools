@@ -57,7 +57,8 @@ with DAG(
 			"REPOS_DIR": "{{ params.repos_dir }}",
 		},
 		append_env=True,
-		bash_command="scripts/fetch_genie_repo.sh"
+		bash_command="scripts/fetch_genie_repo.sh",
+		trigger_rule="none_failed"
 	)
 
 	"""
@@ -131,10 +132,11 @@ with DAG(
 		},
 		append_env=True,
 		bash_command="scripts/git_push.sh",
+		trigger_rule="none_failed"
 	)
 
 	# Add branch / short circuit here
-	@task.short_circuit()
+	@task.short_circuit(trigger_rule="all_done")
 	def decide_to_trigger_genie_import(trigger_import):
 		return trigger_import == "True"
 	
