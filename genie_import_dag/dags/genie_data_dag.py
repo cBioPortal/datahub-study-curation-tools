@@ -31,7 +31,6 @@ with DAG(
 		"push_to_repo": Param(False, type="boolean", title="Push data to remote Genie repository"),
 		"trigger_import": Param(False, type="boolean", title="Trigger Genie import DAG"),
 	},
-	render_template_as_native_obj=True,
 	tags=["genie"]
 ) as dag:
 
@@ -137,7 +136,7 @@ with DAG(
 	# Add branch / short circuit here
 	@task.short_circuit()
 	def decide_to_trigger_genie_import(trigger_import):
-		return trigger_import
+		return trigger_import == "True"
 	
 	"""
 	Trigger the Genie import
@@ -147,4 +146,4 @@ with DAG(
         trigger_dag_id="genie_import_dag",
     )
 
-clone_genie_repo >> fetch_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix(), transform_data_update_sv_file()] >> git_push >> decide_to_trigger_genie_import("{{ params.repos_dir }}") >> trigger_genie_import
+clone_genie_repo >> fetch_genie_repo >> pull_data_from_synapse >> identify_release_create_study_dir >> [transform_data_cleanup_files, transform_data_update_gene_matrix(), transform_data_update_sv_file()] >> git_push >> decide_to_trigger_genie_import("{{ params.trigger_import }}") >> trigger_genie_import
