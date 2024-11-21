@@ -158,14 +158,14 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | ACTR2P1       | 100421614       | pseudogene                |
 | ACTR2P2       | 284441          | pseudogene                |
 | ADAMTS7P5     | 100422416       | pseudogene                |
-| ADAMTS16-AS1  |                 | RNA, long non-coding      |
+| ADAMTS16-AS1  | 137805484       | RNA, long non-coding      |
 | ALDOC-AS1     | 132591089       | RNA, long non-coding      |
 | AMANZI        | 133395149       | RNA, long non-coding      |
 | FIGLAP1       | 133395145       | pseudogene                |
 | GABRA6-AS1    | 132532400       | RNA, long non-coding      |
-| GAD1-AS1      |                 | RNA, long non-coding      |
+| GAD1-AS1      | 137805480       | RNA, long non-coding      |
 | GCM1P1        | 100421414       | pseudogene                |
-| GLYATL1-AS1   |                 | RNA, long non-coding      |
+| GLYATL1-AS1   | 137805481       | RNA, long non-coding      |
 | GLYR1P1       | 100421569       | pseudogene                |
 | HLMR1         | 100507389       | RNA, long non-coding      |
 | HNRNPA3P17    | 132542980       | pseudogene                |
@@ -182,13 +182,13 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | LINC03125     | 100505664       | RNA, long non-coding      |
 | LINC03126     | 112267871       | RNA, long non-coding      |
 | LINC03129     | 84214           | RNA, long non-coding      |
-| LINC03130     |                 | RNA, long non-coding      |
+| LINC03130     | 137805482       | RNA, long non-coding      |
 | LINC03131     | 124902119       | RNA, long non-coding      |
 | LINC03133     | 101929528       | RNA, long non-coding      |
 | LINC03135     | 101929309       | RNA, long non-coding      |
 | LINC03136     | 124902781       | RNA, long non-coding      |
-| LINC03137     |                 | RNA, long non-coding      |
-| LINC03138     |                 | RNA, long non-coding      |
+| LINC03137     | 137805492       | RNA, long non-coding      |
+| LINC03138     | 137805490       | RNA, long non-coding      |
 | LINC03139     | 124902447       | RNA, long non-coding      |
 | LIRIL2R       | 105374869       | RNA, long non-coding      |
 | LNCARGI       | 133395150       | RNA, long non-coding      |
@@ -219,21 +219,21 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | NEFHP2        | 643172          | pseudogene                |
 | NIPAL1P1      | 100128078       | pseudogene                |
 | NPIPA6        | 131675794       | gene with protein product |
-| NQO1-AS1      |                 | RNA, long non-coding      |
+| NQO1-AS1      | 137933868       | RNA, long non-coding      |
 | NRGN-AS1      | 137233470       | RNA, long non-coding      |
 | NUDT5P1       | 107986592       | pseudogene                |
 | PAGE4P1       | 132542979       | pseudogene                |
 | PDGFDDN       | 105369464       | RNA, long non-coding      |
-| PEARL1        |                 | RNA, long non-coding      |
+| PEARL1        | 138349443       | RNA, long non-coding      |
 | PERPP3        | 100131159       | pseudogene                |
 | PFKFB3-AS1    | 124902371       | RNA, long non-coding      |
 | PHF10P2       | 100419673       | pseudogene                |
 | PIEZO1-AS1    | 339059          | RNA, long non-coding      |
 | PPP3CA-DT     | 90024           | RNA, long non-coding      |
-| PROK2-DT      |                 | RNA, long non-coding      |
+| PROK2-DT      | 137805491       | RNA, long non-coding      |
 | PRR11P1       | 100418956       | pseudogene                |
 | PRSS3P5       | 207148          | pseudogene                |
-| PTPN11BP      |                 | pseudogene                |
+| PTPN11BP      | 137805489       | pseudogene                |
 | PYGO2-AS1     | 101928120       | RNA, long non-coding      |
 | ATP5MFP7      | 133039963       | pseudogene                |
 | ATP5PFP2      | 100287966       | pseudogene                |
@@ -243,7 +243,7 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | ATP6V1FP2     | 101927180       | pseudogene                |
 | BBLNP1        | 133039961       | pseudogene                |
 | BBLNP2        | 646408          | pseudogene                |
-| RBBP8-AS1     |                 | RNA, long non-coding      |
+| RBBP8-AS1     | 137805483       | RNA, long non-coding      |
 | RNF4BP        | 100419583       | pseudogene                |
 | RNF228        | 122319436       | gene with protein product |
 | RPL17P52      | 133395146       | pseudogene                |
@@ -257,7 +257,7 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | RPS8P11       | 100419301       | pseudogene                |
 | RPS26P59      | 133039974       | pseudogene                |
 | RSRC1P1       | 100129202       | pseudogene                |
-| SCDAL         |                 | RNA, long non-coding      |
+| SCDAL         | 137805493       | RNA, long non-coding      |
 | SCREEM1       | 105372654       | RNA, long non-coding      |
 | SDHCP5        | 642502          | pseudogene                |
 | SKP1P4        | 133395148       | pseudogene                |
@@ -280,11 +280,11 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | STMN3P1       | 101232810       | pseudogene                |
 | SYNCRIPP1     | 149844          | pseudogene                |
 | SYNE3-AS1     | 101929107       | RNA, long non-coding      |
-| SYT1-AS1      |                 | RNA, long non-coding      |
+| SYT1-AS1      | 137805486       | RNA, long non-coding      |
 | TCEAL9P1      | 133039959       | pseudogene                |
 | TGFBR1P1      | 100421483       | pseudogene                |
 | TGFBRAP1-AS1  | 132503825       | RNA, long non-coding      |
-| TGILR         |                 | RNA, long non-coding      |
+| TGILR         | 138349442       | RNA, long non-coding      |
 | TIAL1P1       | 100422449       | pseudogene                |
 | TIALD         | 105370035       | RNA, long non-coding      |
 | TM7SF3-AS1    | 137233472       | RNA, long non-coding      |
@@ -316,9 +316,9 @@ This page displays the gene changes between the latest version of HGNC (Oct 1, 2
 | COX16P1       | 107985265       | pseudogene                |
 | CPAMD8P1      | 340268          | pseudogene                |
 | CPSF6P1       | 133395144       | pseudogene                |
-| CRK-AS1       |                 | RNA, long non-coding      |
-| CYP3A4-AS1    |                 | RNA, long non-coding      |
-| DCAF12-AS1    |                 | RNA, long non-coding      |
+| CRK-AS1       | 137805487       | RNA, long non-coding      |
+| CYP3A4-AS1    | 137805488       | RNA, long non-coding      |
+| DCAF12-AS1    | 137805485       | RNA, long non-coding      |
 | DENRP1        | 729557          | pseudogene                |
 | DENRP2        | 100652897       | pseudogene                |
 | DENRP3        | 100420064       | pseudogene                |

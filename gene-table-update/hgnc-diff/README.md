@@ -24,7 +24,7 @@ Example URLs:
 The tool can be run with the following command:
 
 ```
-python hgnc_combo.py --old_file <old_file_url> --new_file <new_file_url> --output_file <output_file_path>
+python hgnc_combo.py --old_file <old_file_path> --new_file <new_file_path> --output_file <output_file_path>
 
 ```
 

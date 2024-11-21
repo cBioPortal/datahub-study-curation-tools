@@ -3698,7 +3698,7 @@ entrez_id	symbol	chromosome	cytoband	type	synonyms	hgnc_id	ensembl_id
 115482724	H3P46	X	Xq24	pseudogene		HGNC:54474	ENSG00000278317
 115482706	H3P47	X	Xq25	pseudogene	p57	HGNC:54475	ENSG00000179101
 391769	H3Y1	5	5p15.1	protein-coding	H3.Y|H3.Y.1	HGNC:43735	ENSG00000269466
-340096	H3Y2	5	5p15.1	protein-coding	H3.X|H3.Y.2|H3.X	HGNC:43734	ENSG00000268799
+340096	H3Y2	5	5p15.1	protein-coding	H3.X|H3.Y.2	HGNC:43734	ENSG00000268799
 8359	H4C1	6	6p22.2	protein-coding	H4FA|HIST1H4A	HGNC:4781	ENSG00000278637
 8366	H4C2	6	6p22.2	protein-coding	H4FI|HIST1H4B|H4/I	HGNC:4789	ENSG00000278705
 8364	H4C3	6	6p22.2	protein-coding	H4FG|HIST1H4C|H4/g|dJ221C16.1	HGNC:4787	ENSG00000197061
@@ -42000,7 +42000,6 @@ entrez_id	symbol	chromosome	cytoband	type	synonyms	hgnc_id	ensembl_id
 286272	LOC286272	9	9q12	protein-coding			
 103344718	HOTS	11	11p15.5	protein-coding			
 402269	LOC402269	7	7q11.21	protein-coding			
-101927655	ZASP	7	7q22.1	protein-coding			
 100129697	LOC100129697	16	16q24.3	protein-coding			
 283270	LOC283270	11	11p13	protein-coding			
 284898	LOC284898	22	22q12.1	protein-coding			
