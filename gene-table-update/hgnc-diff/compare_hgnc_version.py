@@ -3,8 +3,8 @@ import argparse
 
 # Set up argument parser
 parser = argparse.ArgumentParser(description="Compare old and new HGNC gene tables.")
-parser.add_argument('--old_file', required=True, help='URL or path to the old HGNC file (e.g., hgnc_complete_set_2023-10-01.txt)')
-parser.add_argument('--new_file', required=True, help='URL or path to the new HGNC file (e.g., hgnc_complete_set_2024-10-01.txt)')
+parser.add_argument('--old_file', required=True, help='path to the old HGNC file (e.g., hgnc_complete_set_2023-10-01.txt)')
+parser.add_argument('--new_file', required=True, help='path to the new HGNC file (e.g., hgnc_complete_set_2024-10-01.txt)')
 parser.add_argument('--output_file', required=True, help='Path to the output file (e.g., gene_changes.txt)')
 args = parser.parse_args()
 

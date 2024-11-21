@@ -16,8 +16,8 @@ The script fetches data from the HGNC FTP server:
 - The new version of the HGNC gene table (e.g., `2024-08-23`).
 
 Example URLs:
-- Old file: `http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/hgnc_complete_set_2023-10-01.txt`
-- New file: `http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/hgnc_complete_set_2024-08-23.txt`
+- Old file: `/path/to/file/hgnc_complete_set_2023-10-01.txt`
+- New file: `/path/to/file/hgnc_complete_set_2024-08-23.txt`
 
 #### Running the tool
 
@@ -30,7 +30,7 @@ python hgnc_combo.py --old_file <old_file_url> --new_file <new_file_url> --outpu
 
 #### Command Line
 ```
-python hgnc_combo.py --old_file http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/hgnc_complete_set_2023-10-01.txt --new_file http://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/archive/monthly/tsv/hgnc_complete_set_2024-08-23.txt --output_file gene_changes_diff.txt
+python hgnc_combo.py --old_file /path/to/file/hgnc_complete_set_2023-10-01.txt --new_file /path/to/file/hgnc_complete_set_2024-08-23.txt --output_file gene_changes_diff.txt
 
 ```
 
