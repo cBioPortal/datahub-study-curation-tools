@@ -81,7 +81,6 @@ entrez_id	symbol	chromosome	cytoband	type	ensembl_gene_id
 286272	LOC286272	-	-	protein-coding	
 103344718	HOTS	-	-	protein-coding	
 402269	LOC402269	-	-	protein-coding	
-101927655	ZASP	7	7q22.1	protein-coding	
 100129697	LOC100129697	16	16q24.3	protein-coding	
 283270	LOC283270	-	-	protein-coding	
 284898	LOC284898	22	22q12.1	protein-coding	
