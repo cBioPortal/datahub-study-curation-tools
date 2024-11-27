@@ -1,6 +1,6 @@
 """
 import_genie_dag.py
-Pulls data from the s3://cdm-deliverable bucket to get the latest list of sample IDs and other metadata about the samples.
+Imports Genie study to MySQL and ClickHouse databases
 """
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
@@ -20,8 +20,6 @@ args = {
     "retry_delay": timedelta(minutes=5),
 }
 
-data_repositories_to_use = ""
-
 with DAG(
     dag_id="import_genie_dag",
     default_args=args,
@@ -36,13 +34,12 @@ with DAG(
 
     conn_id = "genie_importer_ssh"
     import_scripts_path = "/data/portal-cron/scripts"
-    root_data_directory_path = "/data/portal-cron/cbio-portal-data"
     
+    # TODO pass this to operators?
     DEFAULT_ENVIRONMENT_VARS={
         "IMPORT_SCRIPTS_PATH": import_scripts_path
     }
 
-    ACCEPTED_DATA_REPOS = ["genie", "dmp"]
     start = DummyOperator(
         task_id="start",
     )
@@ -52,10 +49,14 @@ with DAG(
         to_use = []
         if importer.strip() not in ['genie']:
             raise TypeError('Required argument \'importer\' is incorrect or missing a value.')
+        
+        ACCEPTED_DATA_REPOS = ["genie", "dmp"]
+        root_data_directory_path = "/data/portal-cron/cbio-portal-data"
         for data_repo in data_repos.split(","):
             if data_repo.strip() not in ACCEPTED_DATA_REPOS:
                 raise TypeError('Required argument \'data_repos\' is incorrect.')
             to_use.append(root_data_directory_path + "/" + data_repo.strip())
+        
         data_repositories_to_use = ' '.join(to_use)
         return data_repositories_to_use
         
@@ -63,9 +64,9 @@ with DAG(
 
     # [START GENIE database clone] --------------------------------
     """
-    Does a db check for specified importer/pipeline
-    Fetches latest commit from GENIE repository
-    Refreshes CDD/Oncotree caches=
+    Determines which database is "production" vs "not production"
+    Drops tables in the non-production database
+    Clones the production MySQL database into the non-production database
     """
     clone_database = SSHOperator(
         task_id="clone_database",
@@ -79,7 +80,7 @@ with DAG(
     """
     Does a db check for specified importer/pipeline
     Fetches latest commit from GENIE repository
-    Refreshes CDD/Oncotree caches=
+    Refreshes CDD/Oncotree caches
     """
     setup_import = SSHOperator(
         task_id="setup_import",
@@ -90,6 +91,10 @@ with DAG(
     # [END GENIE import setup] --------------------------------
 
     # [START GENIE import] --------------------------------
+    """
+    Imports cancer types
+    Imports genie-portal column in portal-configuration spreadsheet
+    """
     import_genie = SSHOperator(
         task_id="import_genie",
         ssh_conn_id=conn_id,
@@ -98,7 +103,24 @@ with DAG(
     )
     # [END GENIE import] --------------------------------
 
+    # [START Clickhouse import] --------------------------------
+    """
+    Drops ClickHouse tables
+    Copies MySQL tables to ClickHouse
+    Creates derived ClickHouse tables
+    """
+    import_clickhouse = SSHOperator(
+        task_id="import_clickhouse",
+        ssh_conn_id=conn_id,
+        command=f"{import_scripts_path}/import_clickhouse.sh {import_scripts_path}",
+        dag=dag,
+    )
+    # [END Clickhouse import] --------------------------------
+
     # [START GENIE repo cleanup] --------------------------------
+    """
+    Removes untracked files/LFS objects from Genie repo
+    """
     cleanup_genie = SSHOperator(
         task_id="cleanup_genie",
         ssh_conn_id=conn_id,
@@ -106,10 +128,11 @@ with DAG(
         command=f"{import_scripts_path}/datasource-repo-cleanup.sh {datarepos}",
         dag=dag,
     )
+
     # [END GENIE repo cleanup] --------------------------------
     end = DummyOperator(
         task_id="end",
     )
 
     parsed_args = parse_args("{{ params.importer }}", "{{ params.data_repos }}")
-    start >> parsed_args >> clone_database >> setup_import >> import_genie >> cleanup_genie >> end
+    start >> parsed_args >> clone_database >> setup_import >> import_genie >> import_clickhouse >> cleanup_genie >> end
