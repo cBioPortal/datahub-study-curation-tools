@@ -25,6 +25,8 @@ with DAG(
     default_args=args,
     description="Checks importer/database version, fetches latest data, and refreshes CDD/Oncotree caches",
     dagrun_timeout=timedelta(minutes=360),
+    max_active_runs=1,
+    start_date=datetime(2024, 12, 3),
     tags=["genie"],
     params={
         "importer": Param("genie", type="string", title="Import Pipeline", description="Determines which importer to use. Must be one of: ['genie']"),
@@ -35,11 +37,6 @@ with DAG(
     conn_id = "genie_importer_ssh"
     import_scripts_path = "/data/portal-cron/scripts"
     
-    # TODO pass this to operators?
-    DEFAULT_ENVIRONMENT_VARS={
-        "IMPORT_SCRIPTS_PATH": import_scripts_path
-    }
-
     start = DummyOperator(
         task_id="start",
     )
