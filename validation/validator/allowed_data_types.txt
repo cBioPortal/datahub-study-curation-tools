@@ -36,6 +36,7 @@ MRNA_EXPRESSION	CONTINUOUS	mrna_seq_tpm
 MRNA_EXPRESSION	Z-SCORE	mrna_seq_tpm_Zscores
 MRNA_EXPRESSION	Z-SCORE	mrna_seq_cpm_Zscores
 MRNA_EXPRESSION	Z-SCORE	rna_seq_mrna_capture_Zscores
+MRNA_EXPRESSION	CONTINUOUS	mrna_seq_fpkm
 MRNA_EXPRESSION	CONTINUOUS	mrna_seq_fpkm_capture
 MRNA_EXPRESSION	Z-SCORE	mrna_seq_fpkm_capture_Zscores
 MRNA_EXPRESSION	CONTINUOUS	mrna_seq_fpkm_polya
@@ -53,6 +54,7 @@ MRNA_EXPRESSION	Z-SCORE	mrna_seq_fpkm_capture_all_sample_Zscores
 MRNA_EXPRESSION	Z-SCORE	mrna_seq_fpkm_polya_all_sample_Zscores
 MRNA_EXPRESSION	Z-SCORE	mrna_seq_fpkm_Zscores
 MRNA_EXPRESSION	Z-SCORE	mrna_seq_fpkm_all_sample_Zscores
+MRNA_EXPRESSION	Z-SCORE	mrna_seq_read_counts_Zscores
 METHYLATION	CONTINUOUS	methylation_hm27
 METHYLATION	CONTINUOUS	methylation_hm450
 METHYLATION	CONTINUOUS	methylation_epic
