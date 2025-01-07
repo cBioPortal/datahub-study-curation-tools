@@ -68,7 +68,7 @@ with DAG(
     clone_database = SSHOperator(
         task_id="clone_database",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/clone_db_wrapper.sh ",
+        command=f"{import_scripts_path}/clone_db_wrapper.sh {import_scripts_path}",
         dag=dag,
     )
     # [END GENIE database clone] --------------------------------
