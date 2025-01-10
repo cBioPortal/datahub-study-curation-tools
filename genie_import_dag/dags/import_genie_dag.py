@@ -27,6 +27,7 @@ with DAG(
     dagrun_timeout=timedelta(minutes=360),
     max_active_runs=1,
     start_date=datetime(2024, 12, 3),
+    schedule_interval=None,
     tags=["genie"],
     params={
         "importer": Param("genie", type="string", title="Import Pipeline", description="Determines which importer to use. Must be one of: ['genie']"),
