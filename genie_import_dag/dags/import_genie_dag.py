@@ -1,19 +1,20 @@
 """
 import_genie_dag.py
-Imports Genie study to MySQL and ClickHouse databases
+Imports Genie study to MySQL and ClickHouse databases.
 """
-from airflow import DAG
-from airflow.operators.dummy import DummyOperator
-from airflow.providers.ssh.operators.ssh import SSHOperator
 from datetime import timedelta, datetime
-from airflow.models.param import Param
+from airflow import DAG
 from airflow.decorators import task
+from airflow.exceptions import AirflowException
+from airflow.models.param import Param
+from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.utils.trigger_rule import TriggerRule
+
 
 args = {
     "owner": "airflow",
     "depends_on_past": False,
-    "email": ["wanga5@mskcc.org"],
+    "email": ["chennac@mskcc.org"],
     "email_on_failure": True,
     "email_on_retry": False,
     "retries": 0,
@@ -31,17 +32,13 @@ with DAG(
     tags=["genie"],
     params={
         "importer": Param("genie", type="string", title="Import Pipeline", description="Determines which importer to use. Must be one of: ['genie']"),
-        "data_repos": Param("genie,dmp", type="string", title="Data Repositories", description="Comma separated list of data repositories to pull updates from/cleanup. Acceped values: ['genie', 'dmp']")
+        "data_repos": Param("genie,dmp", type="string", title="Data Repositories", description="Comma-separated list of data repositories to pull updates from/cleanup. Accepted values: ['genie', 'dmp']")
     }
 ) as dag:
 
     conn_id = "genie_importer_ssh"
     import_scripts_path = "/data/portal-cron/scripts"
     
-    start = DummyOperator(
-        task_id="start",
-    )
-
     @task
     def parse_args(importer: str, data_repos: str):
         to_use = []
@@ -60,10 +57,9 @@ with DAG(
         
     datarepos = "{{ task_instance.xcom_pull(task_ids='parse_args') }}"
 
-    # [START GENIE database clone] --------------------------------
     """
     Determines which database is "production" vs "not production"
-    Drops tables in the non-production database
+    Drops tables in the non-production MySQL database
     Clones the production MySQL database into the non-production database
     """
     clone_database = SSHOperator(
@@ -72,9 +68,7 @@ with DAG(
         command=f"{import_scripts_path}/clone_db_wrapper.sh {import_scripts_path}",
         dag=dag,
     )
-    # [END GENIE database clone] --------------------------------
     
-    # [START GENIE import setup] --------------------------------
     """
     Does a db check for specified importer/pipeline
     Fetches latest commit from GENIE repository
@@ -86,9 +80,7 @@ with DAG(
         command=f"{import_scripts_path}/setup_import.sh {{{{ params.importer }}}} {import_scripts_path}",
         dag=dag,
     )
-    # [END GENIE import setup] --------------------------------
 
-    # [START GENIE import] --------------------------------
     """
     Imports cancer types
     Imports genie-portal column in portal-configuration spreadsheet
@@ -99,9 +91,7 @@ with DAG(
         command=f"{import_scripts_path}/import_genie.sh {{{{ params.importer }}}} {import_scripts_path}",
         dag=dag,
     )
-    # [END GENIE import] --------------------------------
 
-    # [START Clickhouse import] --------------------------------
     """
     Drops ClickHouse tables
     Copies MySQL tables to ClickHouse
@@ -113,11 +103,20 @@ with DAG(
         command=f"{import_scripts_path}/import_clickhouse.sh {import_scripts_path}",
         dag=dag,
     )
-    # [END Clickhouse import] --------------------------------
 
-    # [START GENIE repo cleanup] --------------------------------
     """
-    Removes untracked files/LFS objects from Genie repo
+    If any upstream tasks failed, mark the import attempt as abandoned.
+    """
+    set_import_status = SSHOperator(
+        task_id="set_import_status",
+        ssh_conn_id=conn_id,
+        trigger_rule=TriggerRule.ONE_FAILED,
+        command=f"{import_scripts_path}/set_import_status.sh abandoned {import_scripts_path}",
+        dag=dag,
+    )
+
+    """
+    Removes untracked files/LFS objects from Genie repo.
     """
     cleanup_genie = SSHOperator(
         task_id="cleanup_genie",
@@ -127,10 +126,12 @@ with DAG(
         dag=dag,
     )
 
-    # [END GENIE repo cleanup] --------------------------------
-    end = DummyOperator(
-        task_id="end",
-    )
+    """
+    If any upstream tasks failed, this task will propagate the "Failed" status to the Dag Run.
+    """
+    @task(trigger_rule=TriggerRule.ONE_FAILED, retries=0)
+    def watcher():
+        raise AirflowException("Failing task because one or more upstream tasks failed.")
 
     parsed_args = parse_args("{{ params.importer }}", "{{ params.data_repos }}")
-    start >> parsed_args >> clone_database >> setup_import >> import_genie >> import_clickhouse >> cleanup_genie >> end
+    parsed_args >> clone_database >> setup_import >> import_genie >> import_clickhouse >> set_import_status >> cleanup_genie >> watcher()
