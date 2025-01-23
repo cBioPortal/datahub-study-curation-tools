@@ -65,7 +65,7 @@ with DAG(
     clone_database = SSHOperator(
         task_id="clone_database",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/clone_db_wrapper.sh {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-clone-db.sh {import_scripts_path}",
         dag=dag,
     )
     
@@ -77,7 +77,7 @@ with DAG(
     setup_import = SSHOperator(
         task_id="setup_import",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/setup_import.sh {{{{ params.importer }}}} {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-setup.sh {{{{ params.importer }}}} {import_scripts_path}",
         dag=dag,
     )
 
@@ -88,7 +88,7 @@ with DAG(
     import_genie = SSHOperator(
         task_id="import_genie",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/import_genie.sh {{{{ params.importer }}}} {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-import-sql.sh {{{{ params.importer }}}} {import_scripts_path}",
         dag=dag,
     )
 
@@ -100,7 +100,7 @@ with DAG(
     import_clickhouse = SSHOperator(
         task_id="import_clickhouse",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/import_clickhouse.sh {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-import-clickhouse.sh {import_scripts_path}",
         dag=dag,
     )
 
@@ -111,7 +111,7 @@ with DAG(
         task_id="set_import_status",
         ssh_conn_id=conn_id,
         trigger_rule=TriggerRule.ONE_FAILED,
-        command=f"{import_scripts_path}/set_import_status.sh abandoned {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-set-import-status.sh abandoned {import_scripts_path}",
         dag=dag,
     )
 
