@@ -38,7 +38,7 @@ with DAG(
 
     conn_id = "genie_importer_ssh"
     import_scripts_path = "/data/portal-cron/scripts"
-    db_properties_filepath="/data/portal-cron/pipelines-credentials/manage_genie_database_update_tools.properties"
+    db_properties_filepath="/data/portal-cron/pipelines-credentials/manage_genie_database_update_tools.properties.test"
     
     """
     Parses and validates DAG arguments
