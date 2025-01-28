@@ -21,6 +21,13 @@ args = {
     "retry_delay": timedelta(minutes=5),
 }
 
+"""
+If any upstream tasks failed, this task will propagate the "Failed" status to the Dag Run.
+"""
+@task(trigger_rule=TriggerRule.ONE_FAILED, retries=0)
+def watcher():
+    raise AirflowException("Failing task because one or more upstream tasks failed.")
+
 with DAG(
     dag_id="import_genie_dag",
     default_args=args,
@@ -130,12 +137,6 @@ with DAG(
         dag=dag,
     )
 
-    """
-    If any upstream tasks failed, this task will propagate the "Failed" status to the Dag Run.
-    """
-    @task(trigger_rule=TriggerRule.ONE_FAILED, retries=0)
-    def watcher():
-        raise AirflowException("Failing task because one or more upstream tasks failed.")
-
     parsed_args = parse_args("{{ params.importer }}", "{{ params.data_repos }}")
-    parsed_args >> clone_database >> setup_import >> import_genie >> import_clickhouse >> set_import_status >> cleanup_genie >> watcher()
+    parsed_args >> clone_database >> setup_import >> import_genie >> import_clickhouse >> set_import_status >> cleanup_genie
+    list(dag.tasks) >> watcher()
