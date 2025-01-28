@@ -1,6 +1,6 @@
 """
 import_genie_dag.py
-Imports Genie study to MySQL and ClickHouse databases.
+Imports Genie study to MySQL and ClickHouse databases using blue/green deployment strategy.
 """
 from datetime import timedelta, datetime
 from airflow import DAG
@@ -38,7 +38,11 @@ with DAG(
 
     conn_id = "genie_importer_ssh"
     import_scripts_path = "/data/portal-cron/scripts"
+    db_properties_filepath="/data/portal-cron/pipelines-credentials/manage_genie_database_update_tools.properties"
     
+    """
+    Parses and validates DAG arguments
+    """
     @task
     def parse_args(importer: str, data_repos: str):
         to_use = []
@@ -65,7 +69,7 @@ with DAG(
     clone_database = SSHOperator(
         task_id="clone_database",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/genie-airflow-clone-db.sh {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-clone-db.sh {import_scripts_path} {db_properties_filepath}",
         dag=dag,
     )
     
@@ -77,7 +81,7 @@ with DAG(
     setup_import = SSHOperator(
         task_id="setup_import",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/genie-airflow-setup.sh {{{{ params.importer }}}} {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-setup.sh {{{{ params.importer }}}} {import_scripts_path} {db_properties_filepath}",
         dag=dag,
     )
 
@@ -88,7 +92,7 @@ with DAG(
     import_genie = SSHOperator(
         task_id="import_genie",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/genie-airflow-import-sql.sh {{{{ params.importer }}}} {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-import-sql.sh {{{{ params.importer }}}} {import_scripts_path} {db_properties_filepath}",
         dag=dag,
     )
 
@@ -100,7 +104,7 @@ with DAG(
     import_clickhouse = SSHOperator(
         task_id="import_clickhouse",
         ssh_conn_id=conn_id,
-        command=f"{import_scripts_path}/genie-airflow-import-clickhouse.sh {import_scripts_path}",
+        command=f"{import_scripts_path}/genie-airflow-import-clickhouse.sh {import_scripts_path} {db_properties_filepath}",
         dag=dag,
     )
 
@@ -111,7 +115,7 @@ with DAG(
         task_id="set_import_status",
         ssh_conn_id=conn_id,
         trigger_rule=TriggerRule.ONE_FAILED,
-        command=f"{import_scripts_path}/genie-airflow-set-import-status.sh abandoned {import_scripts_path}",
+        command=f"{import_scripts_path}/set_update_process_state.sh {db_properties_filepath} abandoned",
         dag=dag,
     )
 
