@@ -28,7 +28,7 @@ python GN_annotation_wrapper.py -help
                         found in "/data/curation/annotation/annotator/annotati
                         onPipeline-1.0.0.jar" on dashi-dev
   -i ISOFORM, --isoform ISOFORM
-                        uniprot/mskcc annotation isoform.
+                        mskcc annotation isoform.
   -an ANNOTATED_MAF, --annotated_maf ANNOTATED_MAF
                         Annotated output maf file name
   -unan UNANNOTATED_MAF, --unannotated_maf UNANNOTATED_MAF
@@ -37,7 +37,7 @@ python GN_annotation_wrapper.py -help
 
 ### Example
 ```
-python GN_annotation_wrapper.py --input_maf data_mutations_extended.txt --annotator_jar_path /data/curation/annotation/annotator/annotationPipeline-1.0.0.jar --isoform uniprot --annotated_maf data_mutations_uniprot_annotated.txt --unannotated_maf data_mutations_uniprot_unannotated.txt
+python GN_annotation_wrapper.py --input_maf data_mutations_extended.txt --annotator_jar_path /data/curation/annotation/annotator/annotationPipeline-1.0.0.jar --isoform mskcc --annotated_maf data_mutations_uniprot_annotated.txt --unannotated_maf data_mutations_uniprot_unannotated.txt
 ```   
 
 ## Merge script usage
