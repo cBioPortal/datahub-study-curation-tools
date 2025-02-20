@@ -37,7 +37,7 @@ python GN_annotation_wrapper.py -help
 
 ### Example
 ```
-python GN_annotation_wrapper.py --input_maf data_mutations_extended.txt --annotator_jar_path /data/curation/annotation/annotator/annotationPipeline-1.0.0.jar --isoform mskcc --annotated_maf data_mutations_uniprot_annotated.txt --unannotated_maf data_mutations_uniprot_unannotated.txt
+python GN_annotation_wrapper.py --input_maf data_mutations_extended.txt --annotator_jar_path /data/curation/annotation/annotator/annotationPipeline-1.0.0.jar --isoform mskcc --annotated_maf data_mutations_annotated.txt --unannotated_maf data_mutations_unannotated.txt
 ```   
 
 ## Merge script usage
