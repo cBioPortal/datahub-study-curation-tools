@@ -92,7 +92,7 @@ COLOR_REGEX = re.compile("^#[a-fA-F0-9]{6}$")
 MAX_SAMPLE_STABLE_ID_LENGTH = 63
 
 # global variable that defines the invalid ID characters
-INVALID_ID_CHARACTERS = r"[^A-Za-z0-9._\(\)'-]"
+INVALID_ID_CHARACTERS = r"[^A-Za-z0-9._\(\)'+-]"
 
 # ----------------------------------------------------------------------------
 
