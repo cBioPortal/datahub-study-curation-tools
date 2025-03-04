@@ -13,7 +13,9 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 from typing import Dict, Optional
 import dsnparse
-import MySQLdb
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 # ------------------------------------------------------------------------------
 # globals
@@ -737,58 +739,95 @@ def get_meta_file_type(meta_dictionary, logger, filename):
 
 
 def validate_types_and_id(meta_dictionary, logger, filename):
-    """Validate a genetic_alteration_type, datatype (and stable_id in some cases) against the predefined
-    allowed combinations found in ./allowed_data_types.txt
+    """Validate a genetic_alteration_type, datatype (and stable_id in some cases) 
+    against predefined allowed combinations instead of reading from allowed_data_types.txt.
     """
     result = True
-    # this validation only applies to items that have genetic_alteration_type and datatype and stable_id
-    if 'genetic_alteration_type' in meta_dictionary and 'datatype' in meta_dictionary and 'stable_id' in meta_dictionary:
-        alt_type_datatype_and_stable_id = {}
-        script_dir = os.path.dirname(__file__)
-        allowed_data_types_file_name = os.path.join(script_dir, "allowed_data_types.txt")
-        data_line_nr = 0
-        # build up map alt_type_datatype_and_stable_id:
-        with open(allowed_data_types_file_name) as allowed_data_types_file:
-            for line in allowed_data_types_file:
-                if line.startswith("#"):
-                    continue
-                data_line_nr += 1
-                # skip header, so if line is not header then process as tab separated:
-                if (data_line_nr > 1):
-                    line_cols = next(csv.reader([line], delimiter='\t'))
-                    genetic_alteration_type = line_cols[0]
-                    data_type = line_cols[1]
-                    # add to map:
-                    if (genetic_alteration_type, data_type) not in alt_type_datatype_and_stable_id:
-                        alt_type_datatype_and_stable_id[(genetic_alteration_type, data_type)] = []
-                    alt_type_datatype_and_stable_id[(genetic_alteration_type, data_type)].append(line_cols[2])
-        # init:
-        stable_id = meta_dictionary['stable_id']
-        genetic_alteration_type = meta_dictionary['genetic_alteration_type']
-        data_type = meta_dictionary['datatype']
-        # validate the genetic_alteration_type/data_type combination:
-        if (genetic_alteration_type, data_type) not in alt_type_datatype_and_stable_id:
-            # unexpected as this is already validated in get_meta_file_type
-            raise RuntimeError('Unexpected error: genetic_alteration_type and data_type combination not found in allowed_data_types.txt.',
-                               genetic_alteration_type, data_type)
-        # Check whether a wild card ('*') is set in allowed_data_types.txt for the alteration type-data type combination.
-        # For these entries the stable_id is not validated, but assumed to be checked for uniqueness by the user.
-        elif alt_type_datatype_and_stable_id[(genetic_alteration_type, data_type)][0] == "*":
-            pass
-        # validate stable_id:
-        elif stable_id not in alt_type_datatype_and_stable_id[(genetic_alteration_type, data_type)]:
-            logger.error("Invalid stable id for genetic_alteration_type '%s', "
-                         "data_type '%s'; expected one of [%s]",
-                        genetic_alteration_type,
-                        data_type,
-                        ', '.join(alt_type_datatype_and_stable_id[(genetic_alteration_type, data_type)]),
-                        extra={'filename_': filename,
-                               'cause': stable_id}
-                        )
+
+    # Define allowed combinations as a dictionary
+    allowed_combinations = {
+        ("COPY_NUMBER_ALTERATION", "DISCRETE", "cna"),
+        ("COPY_NUMBER_ALTERATION", "DISCRETE_LONG", "cna"),
+        ("COPY_NUMBER_ALTERATION", "DISCRETE", "cna_rae"),
+        ("COPY_NUMBER_ALTERATION", "DISCRETE", "cna_consensus"),
+        ("COPY_NUMBER_ALTERATION", "DISCRETE", "gistic"),
+        ("COPY_NUMBER_ALTERATION", "DISCRETE_LONG", "gistic"),
+        ("COPY_NUMBER_ALTERATION", "CONTINUOUS", "linear_CNA"),
+        ("COPY_NUMBER_ALTERATION", "LOG2-VALUE", "log2CNA"),
+        ("MUTATION_EXTENDED", "MAF", "mutations"),
+        ("MUTATION_UNCALLED", "MAF", "mutations_uncalled"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mrna_U133"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_U133_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_U133_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_mrna_median_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_mrna_median_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_median_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "rna_seq_mrna"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "rna_seq_v2_mrna"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_v2_mrna_median_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_v2_mrna_median_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "rna_seq_v2_mrna_median_normals"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_v2_mrna_median_normals_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_v2_mrna_median_all_sample_ref_normal_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mirna"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mirna_median_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_merged_median_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mrna"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_median_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_median_all_sample_Zscores"),       
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_fpkm_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_fpkm_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_median_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "DISCRETE", "mrna_outliers"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mrna_seq_fpkm_capture"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_fpkm_capture_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_fpkm_capture_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "rna_seq_mrna_capture"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_mrna_capture_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "rna_seq_mrna_capture_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_fpkm_polya_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_fpkm_polya_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mrna_seq_fpkm_polya"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mrna_seq_cpm"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_cpm_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_cpm_Zscores"),
+        ("MRNA_EXPRESSION", "CONTINUOUS", "mrna_seq_tpm"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_tpm_all_sample_Zscores"),
+        ("MRNA_EXPRESSION", "Z-SCORE", "mrna_seq_tpm_Zscores"),
+        ("METHYLATION", "CONTINUOUS", "methylation_hm27"),
+        ("METHYLATION", "CONTINUOUS", "methylation_hm450"),
+        ("METHYLATION", "CONTINUOUS", "methylation_epic"),
+        ("PROTEIN_LEVEL", "LOG2-VALUE", "rppa"),
+        ("PROTEIN_LEVEL", "Z-SCORE", "rppa_Zscores"),
+        ("PROTEIN_LEVEL", "CONTINUOUS", "protein_quantification"),
+        ("PROTEIN_LEVEL", "Z-SCORE", "protein_quantification_zscores"),
+        ("PROTEIN_LEVEL", "LOG2-VALUE", "protein_quantification"),
+        ("GENESET_SCORE", "GSVA-SCORE", "gsva_scores"),
+        ("GENESET_SCORE", "P-VALUE", "gsva_pvalues"),
+        ("GENERIC_ASSAY", "LIMIT-VALUE", "*"),
+        ("GENERIC_ASSAY", "BINARY", "*"),
+        ("GENERIC_ASSAY", "CATEGORICAL", "*"),
+        ("STRUCTURAL_VARIANT", "SV", "structural_variants")
+    }
+
+    # Extract required fields
+    if "genetic_alteration_type" in meta_dictionary and "datatype" in meta_dictionary and "stable_id" in meta_dictionary:
+        genetic_alteration_type = meta_dictionary["genetic_alteration_type"]
+        data_type = meta_dictionary["datatype"]
+        stable_id = meta_dictionary["stable_id"]
+
+        # Validate the combination
+        if (genetic_alteration_type, data_type, stable_id) not in allowed_combinations and \
+           (genetic_alteration_type, data_type, "*") not in allowed_combinations:
+            logger.error(
+                "Invalid genetic_alteration_type, datatype, and stable_id combination: (%s, %s, %s). "
+                "Please check your meta files.",
+                genetic_alteration_type, data_type, stable_id,
+                extra={'filename_': filename}
+            )
             result = False
 
     return result
-
 
 def parse_metadata_file(filename,
                         logger,
