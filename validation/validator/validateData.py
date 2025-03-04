@@ -92,7 +92,7 @@ COLOR_REGEX = re.compile("^#[a-fA-F0-9]{6}$")
 MAX_SAMPLE_STABLE_ID_LENGTH = 63
 
 # global variable that defines the invalid ID characters
-INVALID_ID_CHARACTERS = r"[^A-Za-z0-9._\(\)'+-]"
+INVALID_ID_CHARACTERS = r"[^A-Za-z0-9._\(\)'+-:;]"
 
 # ----------------------------------------------------------------------------
 
@@ -1682,6 +1682,7 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator, CustomNamespac
     def __init__(self, *args, **kwargs):
         super(MutationsExtendedValidator, self).__init__(*args, **kwargs)
         self.extraCols = []
+        self.seen_mutations = set()  # Store seen mutations for duplicate detection
 
     def checkHeader(self, cols):
         """Validate header, requiring at least one gene id column."""
@@ -1745,6 +1746,9 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator, CustomNamespac
         self.checkAlleleMAFFormat(data)
         self.checkAlleleSpecialCases(data)
         self.checkValidationColumns(data)
+        
+        # Validate duplicate mutations
+        self.checkDuplicateMutation(data)
 
         for col_index, col_name in enumerate(self.cols):
             # validate the column if there's a function defined for it
@@ -1763,6 +1767,24 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator, CustomNamespac
                     raise RuntimeError(('Checking function %s set an error '
                                         'message but reported no error') %
                                        checking_function.__name__)
+    def checkDuplicateMutation(self, data):
+        """
+        Check for duplicate mutations in the MAF file based on key columns.
+        """
+        key_columns = [
+            "Entrez_Gene_Id", "Chromosome", "Start_Position", "End_Position",
+            "Variant_Classification", "Tumor_Seq_Allele2", "HGVSp_Short", "Tumor_Sample_Barcode"
+        ]
+
+        if all(col in self.cols for col in key_columns):
+            mutation_key = tuple(data[self.cols.index(col)].strip() for col in key_columns)
+
+            if mutation_key in self.seen_mutations:
+                log_message = f"Duplicate mutation found: {mutation_key}"
+                self.logger.error(log_message, extra={'line_number': self.line_number})
+            else:
+                self.seen_mutations.add(mutation_key)
+
 
         # validate Tumor_Sample_Barcode value to make sure it exists in clinical sample list:
         sample_id_column_index = self.cols.index('Tumor_Sample_Barcode')
@@ -1972,10 +1994,9 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator, CustomNamespac
         return True
 
     def checkAlleleSpecialCases(self, data):
-        """ Check other special cases which should or should not occur in Allele Based columns
-        Special cases are either from unofficial vcf2maf rules or discrepancies identified. """
+        """Check special cases for Allele Based columns, including NA and multiple '-' cases for indels."""
 
-        # First check if columns necessary exist in the data
+        # Ensure required columns are present
         necessary_columns = ['Reference_Allele', 'Tumor_Seq_Allele1', 'Tumor_Seq_Allele2', 'Variant_Type']
         if set(necessary_columns).issubset(self.cols):
             ref_allele = data[self.cols.index('Reference_Allele')].strip()
@@ -1983,24 +2004,22 @@ class MutationsExtendedValidator(CustomDriverAnnotationValidator, CustomNamespac
             tumor_seq_allele2 = data[self.cols.index('Tumor_Seq_Allele2')].strip()
             variant_type = data[self.cols.index('Variant_Type')].strip()
 
-            # Check if Allele Based columns are not all the same
-            if ref_allele == tumor_seq_allele1 and tumor_seq_allele1 == tumor_seq_allele2:
-                log_message = "All Values in columns Reference_Allele, Tumor_Seq_Allele1 " \
-                              "and Tumor_Seq_Allele2 are equal."
-                extra_dict = {'line_number': self.line_number,
-                              'cause': '(%s, %s, %s)' % (ref_allele, tumor_seq_allele1, tumor_seq_allele2)}
+            # Reject NA values for indels
+            if variant_type in ["INS", "DEL"] and (
+                ref_allele in ["NA", ""] or tumor_seq_allele1 in ["NA", ""] or tumor_seq_allele2 in ["NA", ""]
+            ):
+                log_message = "Indel (INS/DEL) mutation has NA or missing values in allele columns."
+                extra_dict = {'line_number': self.line_number, 'cause': f'({ref_allele}, {tumor_seq_allele1}, {tumor_seq_allele2})'}
                 self.send_log_message(self.strict_maf_checks, log_message, extra_dict)
 
-            # In case of deletion, check when Reference_Allele is the same length as both Tumor_Seq_Allele if at least
-            # one of the Tumor_Seq_Alleles is a deletion ('-') otherwise a SNP
-            if variant_type == "DEL" and len(ref_allele) == len(tumor_seq_allele1) \
-                    and len(ref_allele) == len(tumor_seq_allele2) and "-" not in tumor_seq_allele1 \
-                    and "-" not in tumor_seq_allele2:
-                log_message = "Variant_Type indicates a deletion, Allele based columns are the same length, " \
-                              "but Tumor_Seq_Allele columns do not contain -, indicating a SNP."
-                extra_dict = {'line_number': self.line_number,
-                              'cause': '(%s, %s, %s)' % (ref_allele, tumor_seq_allele1, tumor_seq_allele2)}
-                self.send_log_message(self.strict_maf_checks, log_message, extra_dict)
+            # Reject multiple '-' in allele columns for indels
+            if variant_type in ["INS", "DEL"]:
+                for allele in [ref_allele, tumor_seq_allele1, tumor_seq_allele2]:
+                    if allele.count('-') > 1:
+                        log_message = "Indel (INS/DEL) mutation contains multiple '-' in allele columns."
+                        extra_dict = {'line_number': self.line_number, 'cause': f'({ref_allele}, {tumor_seq_allele1}, {tumor_seq_allele2})'}
+                        self.send_log_message(self.strict_maf_checks, log_message, extra_dict)
+                        break  # Exit loop after first invalid case
 
         return True
 
