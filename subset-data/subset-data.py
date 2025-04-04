@@ -1,6 +1,7 @@
 import os
 import sys
 import argparse
+import re
 
 def extract_header(study_dir, filename):
 	with open(study_dir+'/'+filename, 'r') as infile:
@@ -17,7 +18,7 @@ def find_sample_position(file, header):
 			index_cols.append(header.index(keyword))
 	return(index_cols)
 
-def subset_by_ID(study_dir, file, ids_list, output_dir, index_column):
+def subset_by_ID(study_dir, file, filter_fn, output_dir, index_column):
 	header_cols = extract_header(study_dir, file).strip('\n').split('\t')
 	header_data = ""
 	data = ""
@@ -31,7 +32,7 @@ def subset_by_ID(study_dir, file, ids_list, output_dir, index_column):
 				header_data += line
 			else:
 				values = line.strip('\n').split('\t')
-				if values[index_column] in ids_list:
+				if filter_fn(values[index_column]):
 					data += line
 					
 	if data != "":
@@ -43,12 +44,12 @@ def subset_by_ID(study_dir, file, ids_list, output_dir, index_column):
 	else:
 		print('Sample IDs to subset are not present in file. Skipping..')
 
-def subset_by_matrix_type(study_dir, file, sample_ids_list, outdir, data_cols):
+def subset_by_matrix_type(study_dir, file, filter_fn, outdir, data_cols):
 	data = ""
 	data_cols_len = len(data_cols)
 	header_cols = extract_header(study_dir, file).strip('\n').split('\t')
 	for value in header_cols:
-		if value in sample_ids_list:
+		if filter_fn(value):
 			ind = header_cols.index(value)
 			data_cols.append(ind)
 	if len(data_cols) == data_cols_len:
@@ -73,12 +74,11 @@ def subset_by_matrix_type(study_dir, file, sample_ids_list, outdir, data_cols):
 	else:
 		print('Sample IDs to subset are not present in file. Skipping..')	
 
-def subset_by_generic_assay(study_dir, file, sample_ids_list, outdir, data_cols):
+def subset_by_generic_assay(study_dir, file, filter_fn, outdir, data_cols):
 	data = ""
 	header_cols = extract_header(study_dir, file).strip('\n').split('\t')
-	for value in sample_ids_list:
-		if value in header_cols:
-			ind = header_cols.index(value)
+	for ind, value in enumerate(header_cols):
+		if filter_fn(value):
 			data_cols.append(ind)
 	
 	print('Processing file '+file+'...')		
@@ -99,41 +99,44 @@ def subset_by_generic_assay(study_dir, file, sample_ids_list, outdir, data_cols)
 	else:
 		print('Sample IDs to subset are not present in file. Skipping..')
 
-def identify_file_type(study_dir, sample_ids_list, patient_ids_list, output_dir):
+def identify_file_type(study_dir, sample_fliter, patient_fliter, output_dir):
 	data_files = [file for file in os.listdir(study_dir) if file.startswith('data')]
 	for file in os.listdir(study_dir):
 		if 'data' in file and file not in data_files: data_files.append(file)
 	
+	sample_filter_fn = (lambda x: x in sample_fliter) if type(sample_fliter) is list else (lambda x: sample_fliter.search(x) is not None)
+	patient_filter_fn = (lambda x: x in patient_fliter) if type(patient_fliter) is list else (lambda x: patient_fliter.search(x) is not None)
+
 	for file in data_files:
 		header = extract_header(study_dir, file).lower().rstrip('\n').split('\t')
 		
 		if 'sample_id' in header and 'patient_id' in header and 'timeline' in file:
 			index_column = header.index('patient_id')
-			subset_by_ID(study_dir, file, patient_ids_list, output_dir, index_column)
+			subset_by_ID(study_dir, file, patient_filter_fn, output_dir, index_column)
 		elif 'patient_id' in header and 'sample_id' not in header:
 			index_column = header.index('patient_id')
-			subset_by_ID(study_dir, file, patient_ids_list, output_dir, index_column)
+			subset_by_ID(study_dir, file, sample_filter_fn, output_dir, index_column)
 		elif 'sample_id' in header:
 			index_column = header.index('sample_id')
-			subset_by_ID(study_dir, file, sample_ids_list, output_dir, index_column)
+			subset_by_ID(study_dir, file, sample_filter_fn, output_dir, index_column)
 		elif 'sampleid' in header:
 			index_column = header.index('sampleid')
-			subset_by_ID(study_dir, file, sample_ids_list, output_dir, index_column)
+			subset_by_ID(study_dir, file, sample_filter_fn, output_dir, index_column)
 		elif 'tumor_sample_barcode' in header:
 			index_column = header.index('tumor_sample_barcode')
-			subset_by_ID(study_dir, file, sample_ids_list, output_dir, index_column)
+			subset_by_ID(study_dir, file, sample_filter_fn, output_dir, index_column)
 		elif 'id' in header and 'chrom' in header:
 			index_column = header.index('id')
-			subset_by_ID(study_dir, file, sample_ids_list, output_dir, index_column)
+			subset_by_ID(study_dir, file, sample_filter_fn, output_dir, index_column)
 		elif ('hugo_symbol' in header or 'entrez_gene_id' in header) and 'tumor_sample_barcode' not in header:
 			index_cols = find_sample_position(file, header)
-			subset_by_matrix_type(study_dir, file, sample_ids_list, output_dir, index_cols)
+			subset_by_matrix_type(study_dir, file, sample_filter_fn, output_dir, index_cols)
 		elif 'composite.element.ref' in header:
 			index_cols = find_sample_position(file, header)
-			subset_by_matrix_type(study_dir, file, sample_ids_list, output_dir, index_cols)
+			subset_by_matrix_type(study_dir, file, sample_filter_fn, output_dir, index_cols)
 		elif 'entity_stable_id' in header:
 			index_cols = find_sample_position(file, header)
-			subset_by_generic_assay(study_dir, file, sample_ids_list, output_dir, index_cols)
+			subset_by_generic_assay(study_dir, file, sample_filter_fn, output_dir, index_cols)
 
 
 	print("Processing case lists from " + study_dir + "/case_lists ...")
@@ -143,12 +146,11 @@ def identify_file_type(study_dir, sample_ids_list, patient_ids_list, output_dir)
 		pass
 
 	for cl_fname in os.listdir(study_dir + "/case_lists"):
-		subset_case_list(study_dir + "/case_lists", cl_fname, sample_ids_list, output_dir + "/case_lists")
+		subset_case_list(study_dir + "/case_lists", cl_fname, sample_filter_fn, output_dir + "/case_lists")
 
 
-def subset_case_list(dir, file, sample_ids_list, output_dir):
+def subset_case_list(dir, file, filter_fn, output_dir):
 	data = ""
-	sample_ids_set = set(sample_ids_list)
 	print('Processing file '+file+'...')
 	with open(dir + "/" + file) as f:
 		for lnum, line in enumerate(f, 1):
@@ -157,7 +159,7 @@ def subset_case_list(dir, file, sample_ids_list, output_dir):
 			else:
 				orig_ids = line.rstrip("\n").split(" ", 1)[1].rstrip("\t").split("\t")
 
-				new_ids = [id for id in orig_ids if id in sample_ids_set]
+				new_ids = [id for id in orig_ids if filter_fn(id)]
 				data += "case_list_ids: " + "\t".join(new_ids) + "\n"
 
 	if data != "":
@@ -179,22 +181,29 @@ def create_ids_list(filename):
 
 def main():
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-s', '--sample-list', required = True, help = 'Path to the file with sample IDs', type = str)
-	parser.add_argument('-p', '--patient-list', required = True, help = 'Path to the file with patient IDs', type = str)
+	parser.add_argument('-s', '--sample-list', required = False, help = 'Path to the file with sample IDs', type = str)
+	parser.add_argument('-p', '--patient-list', required = False, help = 'Path to the file with patient IDs', type = str)
+	parser.add_argument('-sr', '--sample-regex', required = False, help = 'Regular expression to evaluate sample IDs', type = str)
+	parser.add_argument('-pr', '--patient-regex', required = False, help = 'Regular expression to evaluate IDs', type = str)
 	parser.add_argument('-path', '--source-path', required = True, help = 'Path to the source directory to subset the data from',type = str)
 	parser.add_argument('-dest', '--destination-path', required = True, help = 'Path to the destination directory to save the output to',type = str)
 	args = parser.parse_args()
 
-	sample_ids = args.sample_list
-	patient_ids = args.patient_list
 	study_dir = args.source_path
 	output_dir = args.destination_path.rstrip('/')
 	
-	sample_ids_list = create_ids_list(sample_ids)
-	patient_ids_list = create_ids_list(patient_ids)
+	if args.sample_list is None and args.sample_regex is None:
+		print('Neither sample-list nor sample-regex where provided! Exiting....')
+		exit()
+	# Use list if available, otherwise use regex
+	sample_subset = create_ids_list(args.sample_list) if (args.sample_list is not None) else re.compile(args.sample_regex)
 	
-	#Read the input directory, identify the file types to subset on
-	identify_file_type(study_dir, sample_ids_list, patient_ids_list, output_dir)
+	if args.patient_list is None and args.patient_list is None:
+		print('Neither patient-list nor patient-regex where provided! Exiting....')
+		exit()
+	patient_subset = create_ids_list(args.patient_list) if (args.patient_list is not None) else re.compile(args.patient_regex)
+	
+	identify_file_type(study_dir, sample_subset, patient_subset, output_dir)
 	
 if __name__ == '__main__':
 	main()
