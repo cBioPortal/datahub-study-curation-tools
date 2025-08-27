@@ -16,133 +16,164 @@ CLINICAL_SAMPLE_FILENAME = 'data_clinical_sample.txt'
 
 NULL_VALUES = ['NA', None]
 
-
 def process_datum(datum):
-    try:
-        dfixed = datum.strip()
-    except AttributeError:
-        dfixed = 'NA'
+	try:
+		dfixed = datum.strip()
+	except AttributeError:
+		dfixed='NA'
 
-    return 'NA' if dfixed in NULL_VALUES else dfixed
-
+	if dfixed in NULL_VALUES:
+		return 'NA'
+	else:
+		return dfixed
 
 def get_header(filename):
-    """ Returns the file header. """
-    with open(filename, encoding='utf-8') as f:
-        filedata = [x for x in f.read().split('\n') if not x.startswith('#')]
-    header = list(map(str.strip, filedata[0].split('\t')))
-    return header
+	""" Returns the file header. """
+	filedata = [x for x in open(filename).read().split('\n') if not x.startswith('#')]
+	header = map(str.strip, filedata[0].split('\t'))
+	return header
 
 
 def load_clinical_attribute_metadata():
-    """ Loads clinical attribute metadata. """
-    metadata_header = get_header(CLINICAL_ATTRIBUTE_METADATA_FILENAME)
+	""" Loads clinical attribute metadata. """
+	metadata_header = get_header(CLINICAL_ATTRIBUTE_METADATA_FILENAME)
+	
+	# read file and load clinical attribute metadata
+	metadata_file = open(CLINICAL_ATTRIBUTE_METADATA_FILENAME, 'rU')
+	metadata_reader = csv.DictReader(metadata_file, dialect='excel-tab')
+	for line in metadata_reader:
+		column = line['NORMALIZED_COLUMN_HEADER']
+		attribute_type = line['ATTRIBUTE_TYPE']
+		display_name = line['DISPLAY_NAME']
+		description = line['DESCRIPTIONS']
+		priority = line['PRIORITY']
+		datatype = line['DATATYPE']
 
-    with open(CLINICAL_ATTRIBUTE_METADATA_FILENAME, 'r', encoding='utf-8') as metadata_file:
-        metadata_reader = csv.DictReader(metadata_file, dialect='excel-tab')
-        for line in metadata_reader:
-            column = line['NORMALIZED_COLUMN_HEADER']
-            attribute_type = line['ATTRIBUTE_TYPE']
-            display_name = line['DISPLAY_NAME']
-            description = line['DESCRIPTIONS']
-            priority = line['PRIORITY']
-            datatype = line['DATATYPE']
+		if attribute_type == 'PATIENT':
+			PATIENT_CLINICAL_ATTRIBUTES[column] = True
+		else:
+			PATIENT_CLINICAL_ATTRIBUTES[column] = False
 
-            PATIENT_CLINICAL_ATTRIBUTES[column] = (attribute_type == 'PATIENT')
-
-            CLINICAL_ATTRIBUTE_METADATA[column] = {
-                'DISPLAY_NAME': display_name,
-                'DESCRIPTION': description,
-                'PRIORITY': priority,
-                'DATATYPE': datatype,
-                'ATTRIBUTE_TYPE': attribute_type
-            }
+		CLINICAL_ATTRIBUTE_METADATA[column] = {'DISPLAY_NAME':display_name, 'DESCRIPTION':description, 'PRIORITY':priority, 'DATATYPE':datatype, 'ATTRIBUTE_TYPE':attribute_type}
 
 
 def get_clinical_header(clinical_filename):
-    """ Returns the new file header by clinical file type. """
-    new_header = ['PATIENT_ID']
-    clinical_file_header = get_header(clinical_filename)
+	""" Returns the new file header by clinical file type. """
+	new_header = ['PATIENT_ID']
 
-    if 'SAMPLE_ID' in clinical_file_header:
-        new_header.append('SAMPLE_ID')
+	# get the file header and filter by attribute type
+	clinical_file_header = get_header(clinical_filename)
+	if 'SAMPLE_ID' in clinical_file_header:
+		new_header.append('SAMPLE_ID')
 
-    filtered_header = [hdr for hdr in clinical_file_header if hdr not in new_header]
-    new_header.extend(filtered_header)
+	filtered_header = [hdr for hdr in clinical_file_header if not hdr in new_header]
 
-    return new_header
+	new_header.extend(filtered_header)
+
+	return new_header
 
 
 def get_clinical_header_metadata(header, clinical_filename):
-    """Returns the clinical header metadata."""
+    """ 
+        Returns the clinical header metadata. 
+        The order of the clinical header metadata goes:
+            1. display name 
+            2. descriptions
+            3. datatype (STRING, NUMBER, BOOLEAN)
+            4. attribute type (PATIENT, SAMPLE)
+            5. priority
+    """
     display_names = []
     descriptions = []
     datatypes = []
     attribute_types = []
     priorities = []
-    is_mixed_attributes = (os.path.basename(clinical_filename) == 'data_clinical.txt')
+    
+    is_mixed_attributes = ('data_clinical.txt' == os.path.basename(clinical_filename))
     for column in header:
-        if column not in CLINICAL_ATTRIBUTE_METADATA:
+        if column not in CLINICAL_ATTRIBUTE_METADATA.keys():
             print(f'Clinical attribute not known: {column}', file=ERROR_FILE)
             print('Please add clinical attribute metadata before continuing. Exiting...', file=ERROR_FILE)
             sys.exit(2)
-        attr = CLINICAL_ATTRIBUTE_METADATA[column]
-        display_names.append(attr['DISPLAY_NAME'])
-        descriptions.append(attr['DESCRIPTION'])
-        datatypes.append(attr['DATATYPE'])
-        priorities.append(attr['PRIORITY'])
+        display_names.append(CLINICAL_ATTRIBUTE_METADATA[column]['DISPLAY_NAME'])
+        descriptions.append(CLINICAL_ATTRIBUTE_METADATA[column]['DESCRIPTION'])
+        datatypes.append(CLINICAL_ATTRIBUTE_METADATA[column]['DATATYPE'])
+        priorities.append(CLINICAL_ATTRIBUTE_METADATA[column]['PRIORITY'])
+            
+        # add attribute type only if clinical file contains mixed attributes
         if is_mixed_attributes:
-            attribute_types.append(attr['ATTRIBUTE_TYPE'])
-
+            attribute_types.append(CLINICAL_ATTRIBUTE_METADATA[column]['ATTRIBUTE_TYPE'])
+            
     display_names = '#' + '\t'.join(display_names)
     descriptions = '#' + '\t'.join(descriptions)
     datatypes = '#' + '\t'.join(datatypes)
     priorities = '#' + '\t'.join(priorities)
-    attribute_types = '#' + '\t'.join(attribute_types)
+    attribute_types = "#" + '\t'.join(attribute_types)
 
-    return [display_names, descriptions, datatypes, attribute_types, priorities] if is_mixed_attributes else \
-           [display_names, descriptions, datatypes, priorities]
+    if is_mixed_attributes:
+        metadata = [display_names, descriptions, datatypes, attribute_types, priorities]
+    else:
+        metadata = [display_names, descriptions, datatypes, priorities]
+    
+    return metadata	
+
 
 
 def write_clinical_metadata(clinical_header, clinical_filename):
-    """ Writes the clinical datafile with the metadata filtered by attribute type. """
-    clinical_metadata = get_clinical_header_metadata(clinical_header, clinical_filename)
+	""" Writes the clinical datafile with the metadata filtered by attribute type. """
 
-    with open(clinical_filename, 'r', encoding='utf-8') as clinical_file:
-        clinical_reader = csv.DictReader(clinical_file, dialect='excel-tab')
-        filtered_clinical_data = ['\t'.join(clinical_header)]
-        for line in clinical_reader:
-            line_data = [process_datum(line.get(x, 'NA')) for x in clinical_header]
-            filtered_clinical_data.append('\t'.join(line_data))
+	# get the clinical metadata
+	clinical_metadata = get_clinical_header_metadata(clinical_header, clinical_filename)
 
-    output_directory = os.path.dirname(clinical_filename)
-    output_filename = os.path.join(output_directory, clinical_filename)
+	# read the clinical data file and filter data by given header
+	clinical_file = open(clinical_filename, 'rU')
+	clinical_reader = csv.DictReader(clinical_file, dialect='excel-tab')
+	filtered_clinical_data = ['\t'.join(clinical_header)]
+	for line in clinical_reader:
+		line_data = map(lambda x: process_datum(line.get(x, 'NA')), clinical_header)
+		filtered_clinical_data.append('\t'.join(line_data))
+	clinical_file.close()
 
-    output_data = clinical_metadata + filtered_clinical_data
+	# resolve the output filename 
+	output_directory = os.path.dirname(clinical_filename)
+	output_filename = os.path.join(output_directory, clinical_filename + '.metadata')
 
-    with open(output_filename, 'w', encoding='utf-8') as output_file:
-        output_file.write('\n'.join(output_data))
+	# combine metadata and filtered clinical data for output
+	output_data = clinical_metadata[:]
+	output_data.extend(filtered_clinical_data)
 
-    print(f'Clinical file with metadata written to: {output_filename}')
+	# create output file and write output data
+	output_file = open(output_filename, 'w')
+	output_file.write('\n'.join(output_data))
+	output_file.close()
+
+	print(f'Clinical file with metadata written to:{output_filename}')
 
 
-def insert_clinical_metadata_main(directory : str):
-    """ Writes clinical data to separate clinical patient and clinical sample files. """
-    clinical_files = find_clinical_files(directory)
-    for clinical_filename in clinical_files:
-        clinical_header = get_clinical_header(clinical_filename)
-        write_clinical_metadata(clinical_header, clinical_filename)
+def insert_clinical_metadata_main(directory):
+	""" Writes clinical data to separate clinical patient and clinical sample files. """
+	clinical_files = find_clinical_files(directory)
+
+	for clinical_filename in clinical_files:
+		# get the patient and sample clinical file headers
+		clinical_header = get_clinical_header(clinical_filename)
+		write_clinical_metadata(clinical_header, clinical_filename)
 
 
 def find_clinical_files(directory):
-    return [os.path.join(directory, filename) for filename in os.listdir(directory)
-            if 'clinical' in filename and 'meta' not in filename]
+
+	clinical_files = []
+	for filename in os.listdir(directory):
+		if 'clinical' in filename and not 'meta' in filename: 
+			clinical_files.append(os.path.join(directory, filename))
+
+	return clinical_files
+
 
 
 def usage():
-    print('insert_clinical_metadata.py --directory cancer/study/path', file=OUTPUT_FILE)
-    sys.exit(2)
-
+	print >> OUTPUT_FILE, 'insert_clinical_metadata.py --directory cancer/study/path'
+	sys.exit(2)
 
 def main():
 	# get command line arguments
@@ -152,9 +183,10 @@ def main():
 	(options, args) = parser.parse_args()
 	directory = options.directory
 
-    if not os.path.exists(directory):
-        print(f'No such directory: {directory}', file=ERROR_FILE)
-        sys.exit(2)
+	# exit if clinical file does not exist
+	if not os.path.exists(directory):
+		print(f'No such directory: {directory}')
+		sys.exit(2)
 
 	# load clinical attribute metadata
 	load_clinical_attribute_metadata()
