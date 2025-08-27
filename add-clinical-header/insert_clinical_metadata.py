@@ -27,9 +27,10 @@ def process_datum(datum):
 	else:
 		return dfixed
 
+
 def get_header(filename):
     """ Returns the file header. """
-    with open(filename, encoding='utf-8') as f:
+    with open(filename) as f:
         filedata = [x for x in f.read().split('\n') if not x.startswith('#')]
     header = list(map(str.strip, filedata[0].split('\t')))
     return header
