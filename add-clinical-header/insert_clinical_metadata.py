@@ -185,7 +185,7 @@ def main():
 
 	# exit if clinical file does not exist
 	if not os.path.exists(directory):
-		print(f'No such directory: {directory}')
+		print(f'No such directory:{directory}')
 		sys.exit(2)
 
 	# load clinical attribute metadata
@@ -198,3 +198,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
+ 
