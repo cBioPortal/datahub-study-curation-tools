@@ -50,15 +50,8 @@ def get_oncotree_code_info(oncotree_code, oncotree_code_mappings):
     return oncotree_code_mappings[oncotree_code]
 
 def format_output_line(fields):
-    """ each field can contain unicode that needs to be utf-8 encoded """
-    if not fields or len(fields) == 0:
-        return ''
-    output_line = ''.encode('utf-8')
-    for field in fields:
-        if len(output_line) != 0:
-            output_line = output_line + '\t'.encode('utf-8')
-        output_line = output_line + field.encode('utf-8')
-    return output_line
+    """ formats the output line by separating each field with tabs"""
+    return '\t'.join(str(field) for field in fields)
 
 def existing_data_is_not_available(data):
     if not data:
