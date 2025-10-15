@@ -43,7 +43,7 @@ LOG_STR = ""
 # WGS/WES CDS
 WES_WGS_CDS = 30
 
-# egilible variants (for counting mutations)
+# eligible variants (for counting mutations)
 VC_NONSYNONYMOUS_LIST = [
 	"Frame_Shift_Del", 
 	"Frame_Shift_Ins", 
@@ -93,7 +93,7 @@ PANEL_THRESHOLD_MSG = "NA"
 ###### 
 # extract coding sequence length from gene panels and map to each sample
 ######
-def extractCDS(_inputStudyFolder, _panelFolderPath, _sampleMap):
+def extractCDS(_inputStudyFolder, _panelFolderPath, _sampleMap, _seqSampleIds):
 
 	_cdsMap = {}
 
@@ -127,7 +127,16 @@ def extractCDS(_inputStudyFolder, _panelFolderPath, _sampleMap):
 				_items = _line.rstrip("\n").rstrip('\r').split('\t')
 				_sampleID = _items[_posSampleId]
 				_panelID = _items[_posMutPanel]
+				
+                # assign CDS value, use 'NA' if panel ID is missing or invalid
+                if _panelID in ["NA", "", "None"] or _panelID not in _cdsMap:
+                    _cds = "NA"
+                else:
 				_cds = _cdsMap[_panelID]
+				
+                # If sample is sequenced but CDS is NA, assign default WES/WGS CDS
+                if _cds == "NA" and _sampleID in _seqSampleIds:
+                    _cds = WES_WGS_CDS
 
 				if _sampleMap.has_key(_sampleID):
 					_sampleMap[_sampleID]["cds"] = _cds
@@ -187,13 +196,24 @@ def calcTMB(_sampleMap):
 
 	_tmbs = []
 
-	for _sampleID in _sampleMap:
-		_tmb = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
-		if _sampleMap[_sampleID]["cds"] < PANEL_THRESHOLD:
-			_sampleMap[_sampleID]["tmb"] = PANEL_THRESHOLD_MSG
-		else:
-			_sampleMap[_sampleID]["tmb"] = _sampleMap[_sampleID]["vc_count"] / _sampleMap[_sampleID]["cds"]
-			_tmbs.append(_tmb)
+    for _sampleID in _sampleMap:
+        cds = _sampleMap[_sampleID]["cds"]
+        vc_count = _sampleMap[_sampleID]["vc_count"]
+
+        # correctly compute TMB
+        if cds == "NA":
+            _tmb = "NA"
+        else:
+            _tmb = vc_count / cds
+
+        # apply panel threshold
+        if cds != "NA" and cds < PANEL_THRESHOLD:
+            _sampleMap[_sampleID]["tmb"] = PANEL_THRESHOLD_MSG
+        else:
+            _sampleMap[_sampleID]["tmb"] = _tmb
+            if _tmb != "NA":
+                _tmbs.append(_tmb)
+                
 	if len(_tmbs) != 0:	
 		sys.stdout.write(str(max(_tmbs)) + "\t" + str(min(_tmbs)) + "\t" + str(numpy.median(_tmbs)) + "\n")
 	else: 
@@ -204,7 +224,7 @@ def calcTMB(_sampleMap):
 ###### 
 # add TMB column to clinical file
 ######
-def addTMB(_inputStudyFolder, _sampleTmbMap):
+def addTMB(_inputStudyFolder, _sampleTmbMap, _seqSampleIds):
 
 	# extract list of sequenced sample IDs
 	_seqSampleIds = [] 
@@ -217,7 +237,6 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 	else:
 		print("Can't find sequenced case list file!")
 		sys.exit(2)
-
 
 	# header for the new column in clinical sample file
 	_headerItems = [	
@@ -254,7 +273,11 @@ def addTMB(_inputStudyFolder, _sampleTmbMap):
 			else: 
 				_sampleID = _line.split("\t")[_posSampleID]
 				if _sampleID in _sampleTmbMap:
-					_newline = _line.rstrip("\n") + "\t" + str(_sampleTmbMap[_sampleID]["tmb"])
+                    # skip numeric TMB for unsequenced samples
+                    if _sampleID not in _seqSampleIds:
+                        _newline = _line.rstrip("\n") + "\tNA"
+                    else:
+                        _newline = _line.rstrip("\n") + "\t" + str(_sampleTmbMap[_sampleID]["tmb"])
 				else:
 					if _sampleID in _seqSampleIds:
 						_newline = _line.rstrip("\n") + "\t" + "0"
@@ -276,12 +299,24 @@ def main():
 	_sampleTmbMap = {}
 
 	sys.stdout.write(os.path.basename(_inputStudyFolder) + "\t")
+	
+    # extract list of sequenced sample IDs
+    _seqSampleIds = [] 
+    if os.path.isfile(_inputStudyFolder + "/case_lists/" + SEQ_CASE_LIST_FILE_NAME):
+        _caseListPath = _inputStudyFolder + "/case_lists/" + SEQ_CASE_LIST_FILE_NAME
+        with open(_caseListPath,'r') as _caseList:
+            for _line in _caseList:
+                if _line.startswith(SEQ_CASE_LIST_FIELD_NAME):
+                    _seqSampleIds = _line.split(':')[1].strip().split("\t")
+    else:
+        print("Can't find sequenced case list file!")
+        sys.exit(2)
 
 	if os.path.isdir(_inputStudyFolder) and os.path.isdir(_genePanelFolder):
 		# Find matrix file -> identify CDS for targeted panels 
 		if os.path.isfile(_inputStudyFolder + "/" + MATRIX_FILE_NAME):
 			sys.stdout.write("Targeted\t")
-			_sampleTmbMap = calcTMB(extractCDS(_inputStudyFolder, _genePanelFolder, cntVariants(_inputStudyFolder)))
+			_sampleTmbMap = calcTMB(extractCDS(_inputStudyFolder, _genePanelFolder, cntVariants(_inputStudyFolder),_seqSampleIds))
 		else: # No matrix file -> WGS/WES studies
 			sys.stdout.write("WGS/WES\t")
 			_sampleTmbMap = calcTMB(cntVariants(_inputStudyFolder))
@@ -292,7 +327,7 @@ def main():
 			if _sampleTmbInst["tmb"] != PANEL_THRESHOLD_MSG:
 				_update_flag = "true"
 		if _update_flag == "true":
-			addTMB(_inputStudyFolder, _sampleTmbMap)
+			addTMB(_inputStudyFolder, _sampleTmbMap, _seqSampleIds)
 	
 	else:
 		print("Error input folder path(s)!")
