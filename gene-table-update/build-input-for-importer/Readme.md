@@ -10,7 +10,7 @@ Scripts to build an input file, to be used by importer to build/update seedDB ge
 #### Step 1 - Download latest HGNC gene table
 
 ```
-wget ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
+wget https://storage.googleapis.com/public-download-files/hgnc/tsv/tsv/hgnc_complete_set.txt
 ```
 
 OR
