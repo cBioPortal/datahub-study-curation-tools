@@ -12,10 +12,10 @@ This page displays the gene changes between the latest version of HGNC (Oct 7, 2
 | symbol_old   | entrez_id_old   |   entrez_id_new | locus_type_old       | locus_type_new            |
 |:-------------|:----------------|----------------:|:---------------------|:--------------------------|
 | DDX11L7      |                 |       124906932 | pseudogene           | pseudogene                |
-| DDX11L13     |                 |       122526776 | pseudogene           | gene with protein product |
-| GLYATL1-AS1  |                 |       124900385 | RNA, long non-coding | RNA, long non-coding      |
-| PROK2-DT     |                 |       124901799 | RNA, long non-coding | RNA, long non-coding      |
-| LINC03137    |                 |       105378701 | RNA, long non-coding | RNA, long non-coding      |
+| DDX11L13     |                 |       138304584 | pseudogene           | gene with protein product |
+| GLYATL1-AS1  |                 |          283194 | RNA, long non-coding | RNA, long non-coding      |
+| PROK2-DT     |                 |       105377156 | RNA, long non-coding | RNA, long non-coding      |
+| LINC03137    |                 |       124903517 | RNA, long non-coding | RNA, long non-coding      |
                  
 ## 3. Genes where only Hugo symbols got updated
 
