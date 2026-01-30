@@ -39,12 +39,12 @@ class HTMLFormatter(logging.Formatter):
         return f'<div style="color:{message_color};"><strong style="color:{levelname_color};">[{levelname}]</strong>: {message}</div>'
 
 # Define paths for mappings and supplemental files
-TYPE_MAPPING_PATH = "/Users/bsatravada/Desktop/tets_hgnc_build/build-input-for-importer/mappings/type-mapping.txt"
-LOCATION_MAPPING_PATH = "/Users/bsatravada/Desktop/tets_hgnc_build/build-input-for-importer/mappings/location-mapping.txt"
-MAIN_SUPP_PATH = "/Users/bsatravada/Desktop/tets_hgnc_build/build-input-for-importer/supp-files/main-supp/complete-supp-main.txt"
-ALIAS_SUPP_PATH = "/Users/bsatravada/Desktop/tets_hgnc_build/build-input-for-importer/supp-files/alias-supp.txt"
-ENTREZ_ID_SUPP_PATH = "/Users/bsatravada/Desktop/tets_hgnc_build/build-input-for-importer/supp-files/entrez-id-supp.txt"
-LOCATION_SUPP_PATH = "/Users/bsatravada/Desktop/tets_hgnc_build/build-input-for-importer/supp-files/location-supp.txt"
+TYPE_MAPPING_PATH = "/Users/bsatravada/Desktop/HGNC_OCT_2025/build-input-for-importer/mappings/type-mapping.txt"
+LOCATION_MAPPING_PATH = "/Users/bsatravada/Desktop/HGNC_OCT_2025/build-input-for-importer/mappings/location-mapping.txt"
+MAIN_SUPP_PATH = "/Users/bsatravada/Desktop/HGNC_OCT_2025/build-input-for-importer/supp-files/main-supp/complete-supp-main.txt"
+ALIAS_SUPP_PATH = "/Users/bsatravada/Desktop/HGNC_OCT_2025/build-input-for-importer/supp-files/alias-supp.txt"
+ENTREZ_ID_SUPP_PATH = "/Users/bsatravada/Desktop/HGNC_OCT_2025/build-input-for-importer/supp-files/entrez-id-supp.txt"
+LOCATION_SUPP_PATH = "/Users/bsatravada/Desktop/HGNC_OCT_2025/build-input-for-importer/supp-files/location-supp.txt"
 
 gene_dict = {}
 
@@ -129,13 +129,13 @@ def cleanup_entrez_id(_input_file_name):
     return _exiting_flag
 
 # Removes all entries with locus_type value as RNA, micro
-def remove_mirna():
-    logging.info("Removing miRNA entries")
-    for _key in list(gene_dict.keys()):
-        _gene_obj = gene_dict[_key]
-        if _gene_obj["locus_type"] == "RNA, micro":
-            del gene_dict[_key]
-    logging.info("Finished removing miRNA entries")
+# def remove_mirna():
+#     logging.info("Removing miRNA entries")
+#     for _key in list(gene_dict.keys()):
+#         _gene_obj = gene_dict[_key]
+#         if _gene_obj["locus_type"] == "RNA, micro":
+#             del gene_dict[_key]
+#     logging.info("Finished removing miRNA entries")
 
 
 # Merge values locus_group and locus_type into one column type

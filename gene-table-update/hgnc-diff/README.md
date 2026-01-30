@@ -24,13 +24,13 @@ Example URLs:
 The tool can be run with the following command:
 
 ```
-python hgnc_combo.py --old_file <old_file_path> --new_file <new_file_path> --output_file <output_file_path>
+python compare_hgnc_version.py --old_file <old_file_path> --new_file <new_file_path> --output_file <output_file_path>
 
 ```
 
 #### Command Line
 ```
-python hgnc_combo.py --old_file /path/to/file/hgnc_complete_set_2023-10-01.txt --new_file /path/to/file/hgnc_complete_set_2024-08-23.txt --output_file gene_changes_diff.txt
+python compare_hgnc_version.py --old_file /path/to/file/hgnc_complete_set_2023-10-01.txt --new_file /path/to/file/hgnc_complete_set_2024-08-23.txt --output_file gene_changes.txt
 
 ```
 
