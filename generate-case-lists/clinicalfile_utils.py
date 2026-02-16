@@ -99,12 +99,12 @@ def get_all_metadata_mappings(file):
     return all_metadata_mapping
 
 def write_metadata_headers(metadata_lines,clinical_filename):
-    print '\t'.join(metadata_lines["DISPLAY_NAME"]).replace('\n', '')
-    print '\t'.join(metadata_lines["DESCRIPTION"]).replace('\n', '')
-    print '\t'.join(metadata_lines["DATATYPE"]).replace('\n', '')
+    print('\t'.join(metadata_lines["DISPLAY_NAME"]).replace('\n', ''))
+    print('\t'.join(metadata_lines["DESCRIPTION"]).replace('\n', ''))
+    print('\t'.join(metadata_lines["DATATYPE"]).replace('\n', ''))
     if is_old_format(clinical_filename):
-        print '\t'.join(metadata_lines["ATTRIBUTE_TYPE"]).replace('\n', '')
-    print '\t'.join(metadata_lines["PRIORITY"]).replace('\n', '')
+        print('\t'.join(metadata_lines["ATTRIBUTE_TYPE"]).replace('\n', ''))
+    print('\t'.join(metadata_lines["PRIORITY"]).replace('\n', ''))
 
 def write_header_line(line, output_file):
     os.write(output_file, '#')
