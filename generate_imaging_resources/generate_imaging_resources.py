@@ -32,8 +32,8 @@ df_tcga = pd.read_csv("idc_tcga.txt", sep='\t', dtype=str)
 df_tcga = df_tcga[~df_tcga['Modality'].isin(['ANN', 'SEG', 'SR', 'OT'])]
 
 # Group the patients by collection_id, PatientID, StudyInstanceUID, Modality
-cols = ['PatientID', 'StudyInstanceUID', 'Modality']
-resource_df = df_tcga[cols].drop_duplicates().reset_index(drop=True)
+cols = ['PatientID', 'StudyInstanceUID', 'SeriesInstanceUID', 'Modality']
+resource_df = df_tcga[cols].drop_duplicates(subset=['PatientID', 'StudyInstanceUID', 'Modality']).reset_index(drop=True)
 
 # Map modalities to cBioPortal resource IDs
 modality_map = {
@@ -52,8 +52,8 @@ resource_df['Modality'] = resource_df['Modality'].replace(modality_map)
 # SLIM viewer for slide microscopy, OHIF viewer for all other modalities
 resource_df['StudyInstanceUID'] = np.where(
     resource_df['Modality'] == 'IDC_SLIM',
-    'https://viewer.imaging.datacommons.cancer.gov/slim/studies/' + resource_df['StudyInstanceUID'],
-    'https://viewer.imaging.datacommons.cancer.gov/viewer/' + resource_df['StudyInstanceUID']
+    'https://viewer.imaging.datacommons.cancer.gov/slim/studies/' + resource_df['StudyInstanceUID'] + '/series/' + resource_df['SeriesInstanceUID'],
+    'https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=' + resource_df['StudyInstanceUID'] + '&initialSeriesInstanceUID=' + resource_df['SeriesInstanceUID']
 )
 
 # Rename columns to match cBioPortal format
