@@ -24,7 +24,7 @@ and left untouched. The transformation is idempotent.
 ## Usage
 
 ```bash
-python3 cna_merge.py [--check] path/to/data_cna.txt [more files ...]
+python3 cna_merge.py [--check] [--portal-url URL] path/to/data_cna.txt [more files ...]
 ```
 
 `--check` is a dry run: reports MERGED / FALLBACK / CLEAN per file, writes nothing.

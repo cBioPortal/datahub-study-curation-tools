@@ -46,7 +46,7 @@ import re
 import sys
 import urllib.request
 
-CBIOPORTAL_GENES_URL = "https://www.cbioportal.org/api/genes?pageSize=100000&projection=SUMMARY"
+DEFAULT_PORTAL_URL = "https://www.cbioportal.org"
 NCBI_GENE_INFO_URL = "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz"
 
 ENTREZ_HEADER = "Entrez_Gene_Id"
@@ -111,10 +111,11 @@ def read_alias_records_file(gene_alias_path):
     return alias_records
 
 
-def fetch_gene_records_api():
-    """Canonical genes from the public cBioPortal API (same table the portal
-    DB serves; 44k+ entries)."""
-    with urllib.request.urlopen(CBIOPORTAL_GENES_URL, timeout=120) as r:
+def fetch_gene_records_api(portal_url):
+    """Canonical genes from a cBioPortal instance's API (same table its
+    DB serves; 44k+ entries on the public portal)."""
+    url = portal_url.rstrip("/") + "/api/genes?pageSize=100000&projection=SUMMARY"
+    with urllib.request.urlopen(url, timeout=120) as r:
         genes = json.load(r)
     return [(g["hugoGeneSymbol"], g["entrezGeneId"]) for g in genes]
 
@@ -415,6 +416,9 @@ def main():
     ap.add_argument("--gene-alias", help="TSV dump of the portal `gene_alias` table "
                     "(entrez<TAB>alias); omit to fetch synonyms from NCBI gene_info "
                     "(close approximation — see docstring)")
+    ap.add_argument("--portal-url", default=DEFAULT_PORTAL_URL,
+                    help="cBioPortal instance to fetch canonical genes from "
+                         f"(default: {DEFAULT_PORTAL_URL})")
     ap.add_argument("--check", action="store_true", help="dry run, write nothing")
     ap.add_argument("files", nargs="+")
     args = ap.parse_args()
@@ -422,8 +426,8 @@ def main():
     if args.gene_table:
         gene_records = read_gene_records_file(args.gene_table)
     else:
-        print("fetching canonical genes from cBioPortal API ...", flush=True)
-        gene_records = fetch_gene_records_api()
+        print(f"fetching canonical genes from {args.portal_url} ...", flush=True)
+        gene_records = fetch_gene_records_api(args.portal_url)
     if args.gene_alias:
         alias_records = read_alias_records_file(args.gene_alias)
     else:
