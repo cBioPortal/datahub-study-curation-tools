@@ -39,8 +39,15 @@ Usage:
 Exit code: 0 unless a file could not be processed at all (ERROR status).
 """
 import argparse
+import gzip
+import io
+import json
 import re
 import sys
+import urllib.request
+
+CBIOPORTAL_GENES_URL = "https://www.cbioportal.org/api/genes?pageSize=100000&projection=SUMMARY"
+NCBI_GENE_INFO_URL = "https://ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz"
 
 ENTREZ_HEADER = "Entrez_Gene_Id"
 HUGO_HEADER = "Hugo_Symbol"
@@ -78,8 +85,8 @@ class ConflictError(Exception):
     pass
 
 
-def load_gene_maps(gene_table_path, gene_alias_path):
-    gene_table_symbols = set()
+def read_gene_records_file(gene_table_path):
+    """TSV: entrez_gene_id<TAB>hugo_gene_symbol (a `gene` table dump)."""
     gene_records = []
     with open(gene_table_path) as f:
         for line in f:
@@ -87,12 +94,12 @@ def load_gene_maps(gene_table_path, gene_alias_path):
             if not line:
                 continue
             entrez_s, hugo = line.split("\t")[:2]
-            gene_table_symbols.add(hugo)
             gene_records.append((hugo, int(entrez_s)))
-    hugo_to_entrez = {}
-    for hugo, entrez in gene_records:
-        if hugo not in hugo_to_entrez:
-            hugo_to_entrez[hugo] = entrez
+    return gene_records
+
+
+def read_alias_records_file(gene_alias_path):
+    """TSV: entrez_gene_id<TAB>gene_alias (a `gene_alias` table dump)."""
     alias_records = []
     with open(gene_alias_path) as f:
         for line in f:
@@ -101,7 +108,46 @@ def load_gene_maps(gene_table_path, gene_alias_path):
                 continue
             entrez_s, alias = line.split("\t")[:2]
             alias_records.append((int(entrez_s), alias))
-    alias_records.sort(key=lambda r: r[0])  # "lowest integer" wins
+    return alias_records
+
+
+def fetch_gene_records_api():
+    """Canonical genes from the public cBioPortal API (same table the portal
+    DB serves; 44k+ entries)."""
+    with urllib.request.urlopen(CBIOPORTAL_GENES_URL, timeout=120) as r:
+        genes = json.load(r)
+    return [(g["hugoGeneSymbol"], g["entrezGeneId"]) for g in genes]
+
+
+def fetch_alias_records_ncbi():
+    """Aliases from NCBI Homo_sapiens.gene_info (Synonyms column). The portal's
+    gene_alias table is seeded from NCBI, so this approximates it closely, but
+    it is not the identical snapshot — for exact JAR parity pass a real
+    gene_alias dump via --gene-alias."""
+    with urllib.request.urlopen(NCBI_GENE_INFO_URL, timeout=300) as r:
+        raw = r.read()
+    alias_records = []
+    with gzip.open(io.BytesIO(raw), "rt") as f:
+        for line in f:
+            if line.startswith("#"):
+                continue
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) < 5 or parts[0] != "9606" or parts[4] == "-":
+                continue
+            entrez = int(parts[1])
+            for synonym in parts[4].split("|"):
+                if synonym:
+                    alias_records.append((entrez, synonym))
+    return alias_records
+
+
+def build_gene_maps(gene_records, alias_records):
+    gene_table_symbols = {hugo for hugo, _ in gene_records}
+    hugo_to_entrez = {}
+    for hugo, entrez in gene_records:
+        if hugo not in hugo_to_entrez:
+            hugo_to_entrez[hugo] = entrez
+    alias_records = sorted(alias_records, key=lambda r: r[0])  # "lowest integer" wins
     for entrez, alias in alias_records:
         if alias not in hugo_to_entrez:
             hugo_to_entrez[alias] = entrez
@@ -364,13 +410,26 @@ def merge_file(path, gene_table_symbols, hugo_to_entrez, check_only):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--gene-table", required=True)
-    ap.add_argument("--gene-alias", required=True)
+    ap.add_argument("--gene-table", help="TSV dump of the portal `gene` table "
+                    "(entrez<TAB>hugo); omit to fetch from the public cBioPortal API")
+    ap.add_argument("--gene-alias", help="TSV dump of the portal `gene_alias` table "
+                    "(entrez<TAB>alias); omit to fetch synonyms from NCBI gene_info "
+                    "(close approximation — see docstring)")
     ap.add_argument("--check", action="store_true", help="dry run, write nothing")
     ap.add_argument("files", nargs="+")
     args = ap.parse_args()
 
-    gene_table_symbols, hugo_to_entrez = load_gene_maps(args.gene_table, args.gene_alias)
+    if args.gene_table:
+        gene_records = read_gene_records_file(args.gene_table)
+    else:
+        print("fetching canonical genes from cBioPortal API ...", flush=True)
+        gene_records = fetch_gene_records_api()
+    if args.gene_alias:
+        alias_records = read_alias_records_file(args.gene_alias)
+    else:
+        print("fetching gene synonyms from NCBI gene_info ...", flush=True)
+        alias_records = fetch_alias_records_ncbi()
+    gene_table_symbols, hugo_to_entrez = build_gene_maps(gene_records, alias_records)
     print(f"gene map: {len(gene_table_symbols)} gene-table symbols, "
           f"{len(hugo_to_entrez)} symbol->entrez entries", flush=True)
 

@@ -24,21 +24,29 @@ and left untouched. The transformation is idempotent.
 ## Usage
 
 ```bash
-python3 cna_merge.py --gene-table gene_table.tsv --gene-alias gene_alias_table.tsv \
-    [--check] path/to/data_cna.txt [more files ...]
+python3 cna_merge.py [--check] path/to/data_cna.txt [more files ...]
 ```
 
 `--check` is a dry run: reports MERGED / FALLBACK / CLEAN per file, writes nothing.
 
 ## Gene table inputs
 
-`gene_table.tsv` (`entrez_gene_id<TAB>hugo_gene_symbol`) and `gene_alias_table.tsv`
-(`entrez_gene_id<TAB>gene_alias`) are dumps of the portal's `gene` / `gene_alias`
-tables. The bundled copies were dumped 2026-08-19 from the public portal database
-(44,896 genes, 58,171 aliases). Refresh with:
+By default the script fetches gene data live: canonical genes from the public
+cBioPortal API (`/api/genes`, the same table the portal database serves) and
+symbol synonyms from NCBI `Homo_sapiens.gene_info`. The NCBI synonym set is a
+close approximation of the portal's `gene_alias` table (which is seeded from
+NCBI) but not the identical snapshot.
+
+For exact parity with a specific portal database, pass dumps of its tables:
+
+```bash
+python3 cna_merge.py --gene-table gene_table.tsv --gene-alias gene_alias_table.tsv ...
+```
 
 ```sql
+-- gene_table.tsv: entrez_gene_id<TAB>hugo_gene_symbol
 SELECT entrez_gene_id, hugo_gene_symbol FROM gene;
+-- gene_alias_table.tsv: entrez_gene_id<TAB>gene_alias
 SELECT entrez_gene_id, gene_alias FROM gene_alias;
 ```
 
