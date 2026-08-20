@@ -420,6 +420,8 @@ def main():
                     help="cBioPortal instance to fetch canonical genes from "
                          f"(default: {DEFAULT_PORTAL_URL})")
     ap.add_argument("--check", action="store_true", help="dry run, write nothing")
+    ap.add_argument("--report-json", metavar="PATH",
+                    help="also write per-file results as JSON (audit report)")
     ap.add_argument("files", nargs="+")
     args = ap.parse_args()
 
@@ -438,6 +440,7 @@ def main():
           f"{len(hugo_to_entrez)} symbol->entrez entries", flush=True)
 
     any_error = False
+    report = []
     for path in args.files:
         try:
             status, message = merge_file(path, gene_table_symbols, hugo_to_entrez, args.check)
@@ -445,7 +448,11 @@ def main():
             status, message = "error", str(e)
         if status == "error":
             any_error = True
+        report.append({"file": path, "status": status, "detail": message})
         print(f"{status.upper()}\t{path}\t{message}", flush=True)
+    if args.report_json:
+        with open(args.report_json, "w") as f:
+            json.dump(report, f, indent=1)
     sys.exit(1 if any_error else 0)
 
 
