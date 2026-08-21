@@ -1,0 +1,2 @@
+cancer_study_identifier: study_x
+type_of_cancer: mixed

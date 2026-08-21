@@ -1,0 +1,38 @@
+diff -ruN before/study_x/data_clinical_sample.txt after/study_x/data_clinical_sample.txt
+--- before/study_x/data_clinical_sample.txt	2026-08-21 12:33:25
++++ after/study_x/data_clinical_sample.txt	2026-08-21 12:33:25
+@@ -1,7 +1,7 @@
+-#Patient Identifier	Sample Identifier
+-#Patient identifier	Sample identifier
+-#STRING	STRING
+-#1	1
+-PATIENT_ID	SAMPLE_ID
+-P01	S01
+-P02	S02
++#Patient Identifier	Sample Identifier	Hypoxia Score
++#Patient identifier	Sample identifier	Hypoxia score
++#STRING	STRING	NUMBER
++#1	1	1
++PATIENT_ID	SAMPLE_ID	HYPOXIA_SCORE
++P01	S01	0.82
++P02	S02	0.13
+diff -ruN before/study_x/data_clinical_supp.txt after/study_x/data_clinical_supp.txt
+--- before/study_x/data_clinical_supp.txt	2026-08-21 12:33:25
++++ after/study_x/data_clinical_supp.txt	1969-12-31 19:00:00
+@@ -1,8 +0,0 @@
+-#Sample ID	Hypoxia Score
+-#Sample ID	Hypoxia score
+-#STRING	NUMBER
+-#SAMPLE	SAMPLE
+-#1	1
+-SAMPLE_ID	HYPOXIA_SCORE
+-S01	0.82
+-S02	0.13
+diff -ruN before/study_x/meta_clinical_supp.txt after/study_x/meta_clinical_supp.txt
+--- before/study_x/meta_clinical_supp.txt	2026-08-21 12:33:25
++++ after/study_x/meta_clinical_supp.txt	1969-12-31 19:00:00
+@@ -1,4 +0,0 @@
+-cancer_study_identifier: study_x
+-genetic_alteration_type: CLINICAL
+-datatype: SAMPLE_ATTRIBUTES
+-data_filename: data_clinical_supp.txt

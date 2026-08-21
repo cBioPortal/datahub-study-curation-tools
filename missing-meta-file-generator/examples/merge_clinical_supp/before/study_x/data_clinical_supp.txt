@@ -1,0 +1,8 @@
+#Sample ID	Hypoxia Score
+#Sample ID	Hypoxia score
+#STRING	NUMBER
+#SAMPLE	SAMPLE
+#1	1
+SAMPLE_ID	HYPOXIA_SCORE
+S01	0.82
+S02	0.13
