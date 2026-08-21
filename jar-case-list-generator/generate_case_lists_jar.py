@@ -116,14 +116,31 @@ def case_list_from_sequenced_samples_file(path):
     return out
 
 
+def resolve_staging_path(study_dir, staging_filename):
+    """Match the configured staging filename case-insensitively against the
+    study directory (observed live behavior: a config entry of data_CNA.txt
+    matches a study's data_cna.txt). Exact match wins."""
+    path = os.path.join(study_dir, staging_filename)
+    if os.path.exists(path):
+        return path
+    lower = staging_filename.lower()
+    try:
+        for name in os.listdir(study_dir):
+            if name.lower() == lower:
+                return os.path.join(study_dir, name)
+    except OSError:
+        pass
+    return None
+
+
 def case_list_from_staging_file(study_dir, staging_filename):
     """FileUtilsImpl.getCaseListFromStagingFile. Returns [] if file absent."""
-    if MUTATION_STAGING_GENERAL_PREFIX in staging_filename:
+    if MUTATION_STAGING_GENERAL_PREFIX in staging_filename.lower():
         seq = os.path.join(study_dir, SEQUENCED_SAMPLES_FILENAME)
         if os.path.exists(seq):
             return case_list_from_sequenced_samples_file(seq)
-    path = os.path.join(study_dir, staging_filename)
-    if not os.path.exists(path):
+    path = resolve_staging_path(study_dir, staging_filename)
+    if path is None:
         return []
     case_set = []
     seen = set()
@@ -210,7 +227,7 @@ def generate_for_study(study_dir, config_rows, dry_run):
         else:
             staging_filenames = [patterns]
         if intersection and not all(
-                os.path.exists(os.path.join(study_dir, s)) for s in staging_filenames):
+                resolve_staging_path(study_dir, s) is not None for s in staging_filenames):
             continue
         case_set = []       # LinkedHashSet semantics
         case_seen = set()
