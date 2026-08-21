@@ -1,2 +1,0 @@
-Hugo_Symbol	Tumor_Sample_Barcode
-TP53	SAMPLE_A

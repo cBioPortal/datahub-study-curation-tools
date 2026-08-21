@@ -1,6 +1,0 @@
-cancer_study_identifier: study_x
-stable_id: study_x_all
-case_list_name: All Tumors
-case_list_description: All tumor samples (2 samples)
-case_list_category: all_cases_in_study
-case_list_ids: SAMPLE_A	SAMPLE_B	

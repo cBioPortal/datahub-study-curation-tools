@@ -1,6 +1,0 @@
-#Patient ID	Extra
-#Patient ID	Extra attribute
-#STRING	STRING
-#1	1
-PATIENT_ID	EXTRA_ATTR
-P01	yes

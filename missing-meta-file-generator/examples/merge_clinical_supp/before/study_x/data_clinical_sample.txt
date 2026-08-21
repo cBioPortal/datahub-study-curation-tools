@@ -1,7 +1,0 @@
-#Patient Identifier	Sample Identifier
-#Patient identifier	Sample identifier
-#STRING	STRING
-#1	1
-PATIENT_ID	SAMPLE_ID
-P01	S01
-P02	S02
