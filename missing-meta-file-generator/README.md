@@ -50,3 +50,7 @@ study. `--dry-run` reports what would be written without writing.
 
 See also `../generate-meta-files` for generating the standard meta files of a
 full study.
+
+## Examples
+
+See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool (plus `run_output.txt` with the tool's console output).

@@ -37,3 +37,7 @@ reads from its configuration worksheet: filename, staging-file pattern with
 The bundled copy is byte-identical to the production deployment
 (`/data/portal-cron/scripts/case_list_config.tsv`) and to the copy in
 cmo-pipelines (`import-scripts/test/resources/generate_case_lists/case_list_config.tsv`).
+
+## Examples
+
+See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool (plus `run_output.txt` with the tool's console output).

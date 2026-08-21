@@ -48,3 +48,7 @@ Combined quick scan of a datahub-style `public/` tree: flags CNA files with
 duplicate gene rows (same-file key matching only — see
 `../cna-duplicate-gene-merger` for full alias-aware resolution) and Oncotree
 drift in clinical sample files. Skips Git LFS pointer files and reports them.
+
+## Examples
+
+See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool (plus `run_output.txt` with the tool's console output).

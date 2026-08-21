@@ -1,0 +1,40 @@
+diff -ruN before/study_x/case_lists/cases_all.txt after/study_x/case_lists/cases_all.txt
+--- before/study_x/case_lists/cases_all.txt	1969-12-31 19:00:00
++++ after/study_x/case_lists/cases_all.txt	2026-08-21 12:33:26
+@@ -0,0 +1,6 @@
++cancer_study_identifier: study_x
++stable_id: study_x_all
++case_list_name: All Tumors
++case_list_description: All tumor samples (2 samples)
++case_list_category: all_cases_in_study
++case_list_ids: SAMPLE_A	SAMPLE_B	
+diff -ruN before/study_x/case_lists/cases_cna.txt after/study_x/case_lists/cases_cna.txt
+--- before/study_x/case_lists/cases_cna.txt	1969-12-31 19:00:00
++++ after/study_x/case_lists/cases_cna.txt	2026-08-21 12:33:26
+@@ -0,0 +1,6 @@
++cancer_study_identifier: study_x
++stable_id: study_x_cna
++case_list_name: Tumor Samples with CNA data
++case_list_description: All tumors with CNA data (2 samples)
++case_list_category: all_cases_with_cna_data
++case_list_ids: SAMPLE_A	SAMPLE_B	
+diff -ruN before/study_x/case_lists/cases_cnaseq.txt after/study_x/case_lists/cases_cnaseq.txt
+--- before/study_x/case_lists/cases_cnaseq.txt	1969-12-31 19:00:00
++++ after/study_x/case_lists/cases_cnaseq.txt	2026-08-21 12:33:26
+@@ -0,0 +1,6 @@
++cancer_study_identifier: study_x
++stable_id: study_x_cnaseq
++case_list_name: Tumor Samples with sequencing and CNA data
++case_list_description: All tumor samples that have CNA and sequencing data (1 samples)
++case_list_category: all_cases_with_mutation_and_cna_data
++case_list_ids: SAMPLE_A	
+diff -ruN before/study_x/case_lists/cases_sequenced.txt after/study_x/case_lists/cases_sequenced.txt
+--- before/study_x/case_lists/cases_sequenced.txt	1969-12-31 19:00:00
++++ after/study_x/case_lists/cases_sequenced.txt	2026-08-21 12:33:26
+@@ -0,0 +1,6 @@
++cancer_study_identifier: study_x
++stable_id: study_x_sequenced
++case_list_name: Sequenced Tumors
++case_list_description: All (Next-Gen) sequenced samples (1 samples)
++case_list_category: all_cases_with_mutation_data
++case_list_ids: SAMPLE_A	

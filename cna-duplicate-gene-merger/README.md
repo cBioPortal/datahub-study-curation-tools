@@ -53,3 +53,7 @@ SELECT entrez_gene_id, gene_alias FROM gene_alias;
 Known deviations from the Java implementation are documented in the script
 docstring (output row ordering, alias tie-breaking, and the downstream
 importer's ambiguous-symbol/miRNA special cases).
+
+## Examples
+
+See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool (plus `run_output.txt` with the tool's console output).
