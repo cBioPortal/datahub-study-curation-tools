@@ -34,4 +34,6 @@ generated without writing.
 `case_list_config.tsv` defines the case lists (same 7-column schema the JAR
 reads from its configuration worksheet: filename, staging-file pattern with
 `|` union / `&` intersection, stable-id/category/name/description templates).
-The bundled copy matches the production import configuration.
+The bundled copy is byte-identical to the production deployment
+(`/data/portal-cron/scripts/case_list_config.tsv`) and to the copy in
+cmo-pipelines (`import-scripts/test/resources/generate_case_lists/case_list_config.tsv`).
