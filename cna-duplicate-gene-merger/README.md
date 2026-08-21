@@ -56,4 +56,4 @@ importer's ambiguous-symbol/miRNA special cases).
 
 ## Examples
 
-See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool (plus `run_output.txt` with the tool's console output).
+See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool.

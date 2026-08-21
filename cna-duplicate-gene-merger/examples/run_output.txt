@@ -1,2 +1,0 @@
-gene map: 3 gene-table symbols, 8 symbol->entrez entries
-MERGED	/Users/james/Code/datahub-study-curation-tools/cna-duplicate-gene-merger/examples/after.work/data_cna.txt	2 groups fused; merged 2 rows for entrez 5414 (SEPT4, C17orf47); merged 2 rows for entrez 7157 (TP53, p53)

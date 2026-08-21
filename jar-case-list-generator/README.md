@@ -40,4 +40,4 @@ cmo-pipelines (`import-scripts/test/resources/generate_case_lists/case_list_conf
 
 ## Examples
 
-See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool (plus `run_output.txt` with the tool's console output).
+See `examples/` — each contains `before/`, `after/`, and `changes.diff` produced by actually running the tool.

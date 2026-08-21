@@ -1,3 +1,0 @@
-/Users/james/Code/datahub-study-curation-tools/missing-meta-file-generator/examples/merge_clinical_supp/after/study_x/data_clinical_supp.txt: merging 1 columns into data_clinical_sample.txt (2/2 ids matched)
-removed /Users/james/Code/datahub-study-curation-tools/missing-meta-file-generator/examples/merge_clinical_supp/after/study_x/meta_clinical_supp.txt
-removed /Users/james/Code/datahub-study-curation-tools/missing-meta-file-generator/examples/merge_clinical_supp/after/study_x/data_clinical_supp.txt

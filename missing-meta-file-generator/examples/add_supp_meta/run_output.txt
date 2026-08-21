@@ -1,3 +1,0 @@
-wrote /Users/james/Code/datahub-study-curation-tools/missing-meta-file-generator/examples/add_supp_meta/after/study_x/meta_clinical_supp.txt (PATIENT_ATTRIBUTES)
-
-1 meta files written

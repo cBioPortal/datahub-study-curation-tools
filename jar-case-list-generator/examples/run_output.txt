@@ -1,1 +1,0 @@
-OK	study_x	generated: cases_all.txt (2 cases); cases_cna.txt (2 cases); cases_cnaseq.txt (1 cases); cases_sequenced.txt (1 cases); existing kept: 2
