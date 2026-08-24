@@ -74,7 +74,7 @@ def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, stu
         # check full header matches what we expect
         for column in CASE_LIST_CONFIG_HEADER_COLUMNS:
             if column not in header:
-                print >> sys.stderr, "ERROR: column '%s' is not in '%s'" % (column, case_list_config_filename)
+                print(f"ERROR: column '{column}' is not in '{case_list_config_filename}'", file=sys.stderr)
                 sys.exit(2)
 
         for line in case_list_config_file:
@@ -85,7 +85,7 @@ def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, stu
             case_list_file_full_path = os.path.join(case_list_dir, case_list_filename)
             if os.path.isfile(case_list_file_full_path) and not overwrite:
                 if verbose:
-                    print "LOG: generate_case_lists(), '%s' exists and overwrite is false, skipping caselist..." % (case_list_filename)
+                    print(f"LOG: generate_case_lists(), '{case_list_filename}' exists and overwrite is false, skipping caselist...")
                 continue
 
             # might be single staging file
@@ -97,7 +97,7 @@ def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, stu
             delimiter = CASE_LIST_UNION_DELIMITER if union_case_list else CASE_LIST_INTERSECTION_DELIMITER
             staging_filenames = staging_filename_list.split(delimiter)
             if verbose:
-                print "LOG: generate_case_lists(), staging filenames: %s" % (",".join(staging_filenames))
+                print(f"LOG: generate_case_lists(), staging filenames: {','.join(staging_filenames)}")
 
             # if this is intersection all staging files must exist
             if intersection_case_list and \
@@ -111,14 +111,14 @@ def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, stu
             num_staging_files_processed = 0
             for staging_filename in staging_filenames:
                 if verbose:
-                    print "LOG: generate_case_lists(), processing staging file '%s'" % (staging_filename)
+                    print(f"LOG: generate_case_lists(), processing staging file '{staging_filename}'")
                 # compute the case set
                 case_list = []
                 case_list = get_case_list_from_staging_file(study_dir, staging_filename, verbose)
 
                 if len(case_list) == 0:
                     if verbose:
-                        print "LOG: generate_case_lists(), no cases in '%s', skipping..." % (staging_filename)
+                        print(f"LOG: generate_case_lists(), no cases in '{staging_filename}', skipping...")
                     continue
 
                 if intersection_case_list:
@@ -136,20 +136,20 @@ def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, stu
             # write case list file (don't make empty case lists)
             if len(case_set) > 0:
                 if verbose:
-                    print "LOG: generate_case_lists(), calling write_case_list_file()..."
+                    print("LOG: generate_case_lists(), calling write_case_list_file()...")
 
                 # do not write out complete cases file unless we've processed all the files required
                 if intersection_case_list and num_staging_files_processed != len(staging_filenames):
                     if verbose:
-                        print "LOG: generate_case_lists(), number of staging files processed (%d) != number of staging files required (%d) for '%s', skipping call to write_case_list_file()..." % (num_staging_files_processed, len(staging_filenames), case_list_filename)
+                        print(f"LOG: generate_case_lists(), number of staging files processed ({num_staging_files_processed}) != number of staging files required ({len(staging_filenames)}) for '{case_list_filename}', skipping call to write_case_list_file()...")
                 else:
                     write_case_list_file(header, config_fields, study_id, case_list_file_full_path, case_set, verbose)
             elif verbose:
-                print "LOG: generate_case_lists(), case_set.size() == 0, skipping call to write_case_list_file()..."
+                print("LOG: generate_case_lists(), case_set.size() == 0, skipping call to write_case_list_file()...")
 
 def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
     if verbose:
-        print "LOG: get_case_list_from_staging_file(), '%s'" % (staging_filename)
+        print(f"LOG: get_case_list_from_staging_file(), '{staging_filename}'")
 
     case_set = set([])
 
@@ -158,7 +158,7 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
         sequenced_samples_full_path = os.path.join(study_dir, SEQUENCED_SAMPLES_FILENAME)
         if os.path.isfile(sequenced_samples_full_path):
             if verbose:
-                print "LOG: get_case_list_from_staging_file(), '%s' exists, calling get_case_list_from_sequenced_samples_file()" % (SEQUENCED_SAMPLES_FILENAME)
+                print(f"LOG: get_case_list_from_staging_file(), '{SEQUENCED_SAMPLES_FILENAME}' exists, using sequenced_samples_file()")
             return get_case_list_from_sequenced_samples_file(sequenced_samples_full_path, verbose)
 
     staging_file_full_path = os.path.join(study_dir, staging_filename)
@@ -185,7 +185,7 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
                 # we are assuming the header contains the case ids because SAMPLE_ID_COLUMN_HEADER is missing
                 if MUTATION_CASE_ID_COLUMN_HEADER not in values and SAMPLE_ID_COLUMN_HEADER not in [x.upper() for x in values]:
                     if verbose:
-                        print "LOG: get_case_list_from_staging_file(), this is not a MAF header but has no '%s' column, we assume it contains sample ids..." % (SAMPLE_ID_COLUMN_HEADER)
+                        print(f"LOG: get_case_list_from_staging_file(), this is not a MAF header but has no '{SAMPLE_ID_COLUMN_HEADER}' column, we assume it contains sample ids...")
                     for potential_case_id in values:
                         # check to filter out column headers other than sample ids
                         if potential_case_id.upper() in NON_CASE_IDS:
@@ -196,7 +196,7 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
                     # we know at this point one of these columns exists, so no fear of ValueError from index method
                     id_column_index = values.index(MUTATION_CASE_ID_COLUMN_HEADER) if MUTATION_CASE_ID_COLUMN_HEADER in values else [x.upper() for x in values].index(SAMPLE_ID_COLUMN_HEADER)
                     if verbose:
-                        print "LOG: get_case_list_from_staging_file(), this is a MAF or clinical file, samples ids in column with index: %d" % (id_column_index)
+                        print(f"LOG: get_case_list_from_staging_file(), this is a MAF or clinical file, samples ids in column with index: {id_column_index}")
                 process_header = False
                 continue # done with header, move on to next line
             case_set.add(values[id_column_index])
@@ -205,7 +205,7 @@ def get_case_list_from_staging_file(study_dir, staging_filename, verbose):
 
 def get_case_list_from_sequenced_samples_file(sequenced_samples_full_path, verbose):
     if verbose:
-        print "LOG: get_case_list_from_sequenced_samples_file, '%s'", sequenced_samples_full_path
+        print(f"LOG: get_case_list_from_sequenced_samples_file, '{sequenced_samples_full_path}'")
 
     case_set = set([])
     with open(sequenced_samples_full_path, 'r') as sequenced_samples_file:
@@ -213,13 +213,13 @@ def get_case_list_from_sequenced_samples_file(sequenced_samples_full_path, verbo
             case_set.add(line.rstrip('\n'))
 
     if verbose:
-        print "LOG: get_case_list_from_sequenced_samples_file, case set size: %d" % (len(case_set))
+        print(f"LOG: get_case_list_from_sequenced_samples_file, case set size: {len(case_set)}")
 
     return list(case_set)
 
 def write_case_list_file(case_list_config_header, case_list_config_fields, study_id, case_list_full_path, case_set, verbose):
     if verbose:
-        print "LOG: write_case_list_file(), '%s'" % (case_list_full_path)
+        print(f"LOG: write_case_list_file(), '{case_list_full_path}'")
     with open(case_list_full_path, 'w') as case_list_file:
         case_list_file.write("cancer_study_identifier: " + study_id + "\n")
         stable_id = case_list_config_fields[case_list_config_header.index("META_STABLE_ID")].replace(CANCER_STUDY_TAG, study_id)
@@ -248,25 +248,26 @@ def main():
     verbose = args.verbose
 
     if verbose:
-        print "LOG: case_list_config_file='%s'" % (case_list_config_filename)
-        print "LOG: case_list_dir='%s'" % (case_list_dir)
-        print "LOG: study_dir='%s'" % (study_dir)
-        print "LOG: study_id='%s'" % (study_id)
-        print "LOG: overwrite='%s'" % (overwrite)
-        print "LOG: verbose='%s'" % (verbose)
+        print(f"LOG: case_list_config_file='{case_list_config_filename}'")
+        print(f"LOG: case_list_dir='{case_list_dir}'")
+        print(f"LOG: study_dir='{study_dir}'")
+        print(f"LOG: study_id='{study_id}'")
+        print(f"LOG: overwrite='{overwrite}'")
+        print(f"LOG: verbose='{verbose}'")
 
     if not os.path.isfile(case_list_config_filename):
-        print >> sys.stderr, "ERROR: case list configuration file '%s' does not exist or is not a file" % (case_list_config_filename)
+        print(f"ERROR: case list configuration file '{case_list_config_filename}' does not exist or is not a file", file=sys.stderr)
+        sys.exit(2)
         parser.print_help()
         sys.exit(2)
 
     if not os.path.isdir(case_list_dir):
-        print >> sys.stderr, "ERROR: case list file directory '%s' does not exist or is not a directory" % (case_list_dir)
+        print(f"ERROR: case list file directory '{case_list_dir}' does not exist or is not a directory", file=sys.stderr)
         parser.print_help()
         sys.exit(2)
 
     if not os.path.isdir(study_dir):
-        print >> sys.stderr, "ERROR: study directory '%s' does not exist or is not a directory" % (study_dir)
+        print(f"ERROR: study directory '{study_dir}' does not exist or is not a directory", file=sys.stderr)
         parser.print_help()
         sys.exit(2)
 

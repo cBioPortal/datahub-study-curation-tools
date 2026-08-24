@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from clinicalfile_utils import *
 import argparse
@@ -7,7 +7,7 @@ import json
 import os
 import re
 import sys
-import urllib2
+import urllib.request
 
 # globals
 DEFAULT_ONCOTREE_BASE_URL = 'http://oncotree.mskcc.org/'
@@ -27,38 +27,31 @@ def extract_oncotree_code_mappings_from_oncotree_json(oncotree_json):
     oncotree_response = json.loads(oncotree_json)
     for node in oncotree_response:
         if not node['code']:
-            sys.stderr.write('Encountered oncotree node without oncotree code : ' + node + '\n')
+            sys.stderr.write('Encountered oncotree node without oncotree code : ' + str(node) + '\n')
             continue
         oncotree_code = node['code']
         main_type = node['mainType']
-        cancer_type = unicode('NA')
+        cancer_type = 'NA'
         if main_type:
-            cancer_type = unicode(main_type)
-        cancer_type_detailed = unicode(node['name'])
+            cancer_type = str(main_type)
+        cancer_type_detailed = str(node['name'])
         if not cancer_type_detailed:
-            cancer_type_detailed = unicode('NA')
+            cancer_type_detailed = 'NA'
         oncotree_code_to_info[oncotree_code] = { CANCER_TYPE : cancer_type, CANCER_TYPE_DETAILED : cancer_type_detailed }
     return oncotree_code_to_info
 
 def get_oncotree_code_mappings(oncotree_tumortype_api_endpoint_url):
-    oncotree_raw_response = urllib2.urlopen(oncotree_tumortype_api_endpoint_url).read()
+    oncotree_raw_response = urllib.request.urlopen(oncotree_tumortype_api_endpoint_url).read().decode()
     return extract_oncotree_code_mappings_from_oncotree_json(oncotree_raw_response)
 
 def get_oncotree_code_info(oncotree_code, oncotree_code_mappings):
     if not oncotree_code in oncotree_code_mappings:
-        return { CANCER_TYPE : unicode('NA'), CANCER_TYPE_DETAILED: unicode('NA') }
+        return {CANCER_TYPE : 'NA', CANCER_TYPE_DETAILED: 'NA'}
     return oncotree_code_mappings[oncotree_code]
 
 def format_output_line(fields):
-    """ each field can contain unicode that needs to be utf-8 encoded """
-    if not fields or len(fields) == 0:
-        return ''
-    output_line = ''.encode('utf-8')
-    for field in fields:
-        if len(output_line) != 0:
-            output_line = output_line + '\t'.encode('utf-8')
-        output_line = output_line + field.encode('utf-8')
-    return output_line
+    """ formats the output line by separating each field with tabs"""
+    return '\t'.join(str(field) for field in fields)
 
 def existing_data_is_not_available(data):
     if not data:
@@ -104,7 +97,7 @@ def process_clinical_file(oncotree_mappings, clinical_filename, force_cancer_typ
                     header.append(CANCER_TYPE)
                 if CANCER_TYPE_DETAILED not in header:
                     header.append(CANCER_TYPE_DETAILED)
-                print '\t'.join(header)
+                print('\t'.join(header))
                 continue
             data = line.split('\t')
             oncotree_code = data[header.index(ONCOTREE_CODE)]
@@ -125,7 +118,7 @@ def process_clinical_file(oncotree_mappings, clinical_filename, force_cancer_typ
                     data[header.index(CANCER_TYPE_DETAILED)] = oncotree_code_info[CANCER_TYPE_DETAILED]
             except IndexError:
                 data.append(oncotree_code_info[CANCER_TYPE_DETAILED])
-            print format_output_line(data)
+            print(format_output_line(data))
     finally:
         f.close()
 
@@ -142,8 +135,8 @@ def construct_oncotree_url(oncotree_base_url, oncotree_version):
     oncotree_versions_api_url = oncotree_api_base_url + 'versions'
     oncotree_versions_raw_response = ''
     try:
-        oncotree_versions_raw_response = urllib2.urlopen(oncotree_versions_api_url)
-    except urllib2.HTTPError as err:
+        oncotree_versions_raw_response = urllib.request.urlopen(oncotree_versions_api_url)
+    except urllib.error.HTTPError as err:
         #error trying to access oncotree api .. url must be bad
         sys.stderr.write('ERROR: failure during attempt to access oncotree through base url ' + oncotree_base_url + '\n')
         sys.stderr.write('        failure during access of versions web service (' + oncotree_versions_api_url + ')\n')
