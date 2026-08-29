@@ -3468,15 +3468,39 @@ class TimelineValidator(Validator):
     REQUIRE_COLUMN_ORDER = True
     ALLOW_BLANKS = True
 
+    def __init__(self, *args, **kwargs):
+        """Initialize TimelineValidator with tracking for duplicate SAMPLE_IDs per track."""
+        super(TimelineValidator, self).__init__(*args, **kwargs)
+        # Track seen SAMPLE_IDs per EVENT_TYPE (track)
+        # Format: {event_type: {sample_id: line_number}}
+        self.sample_ids_per_track = {}
+
     def checkLine(self, data):
         super(TimelineValidator, self).checkLine(data)
         # TODO check the values
+        
+        # Track duplicate SAMPLE_IDs per track (EVENT_TYPE)
+        event_type_index = None
+        sample_id_index = None
+        event_type_value = None
+        sample_id_value = None
+        
         for col_index, col_name in enumerate(self.cols):
             # treat cells beyond the end of the line as blanks,
             # super().checkLine() has already logged an error
             value = ''
             if col_index < len(data):
                 value = data[col_index].strip()
+            
+            # Store indices for duplicate checking
+            if col_name == 'EVENT_TYPE':
+                event_type_index = col_index
+                event_type_value = value
+            elif col_name == 'SAMPLE_ID':
+                sample_id_index = col_index
+                sample_id_value = value
+            
+            # Validate individual columns
             if col_name == 'START_DATE':
                 if not value.strip().lstrip('-').isdigit():
                     self.logger.error(
@@ -3498,6 +3522,25 @@ class TimelineValidator(Validator):
                         extra={'line_number': self.line_number,
                                'column_number': col_index + 1,
                                'cause': value})
+        
+        # Check for duplicate SAMPLE_ID within the same track (EVENT_TYPE)
+        if sample_id_index is not None and event_type_index is not None:
+            if sample_id_value:  # Only check non-empty SAMPLE_ID values
+                # Initialize track entry if not exists
+                if event_type_value not in self.sample_ids_per_track:
+                    self.sample_ids_per_track[event_type_value] = {}
+                
+                # Check if SAMPLE_ID already exists in this track
+                if sample_id_value in self.sample_ids_per_track[event_type_value]:
+                    self.logger.error(
+                        'Duplicate SAMPLE_ID in timeline track',
+                        extra={'line_number': self.line_number,
+                               'column_number': sample_id_index + 1,
+                               'cause': 'SAMPLE_ID `%s` already appears in %s track' % (sample_id_value, event_type_value)})
+                else:
+                    # Track this SAMPLE_ID for the track
+                    self.sample_ids_per_track[event_type_value][sample_id_value] = self.line_number
+
 
 class CancerTypeValidator(Validator):
 
