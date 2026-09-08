@@ -1,0 +1,7 @@
+#Patient Identifier	Sample Identifier	Hypoxia Score
+#Patient identifier	Sample identifier	Hypoxia score
+#STRING	STRING	NUMBER
+#1	1	1
+PATIENT_ID	SAMPLE_ID	HYPOXIA_SCORE
+P01	S01	0.82
+P02	S02	0.13
