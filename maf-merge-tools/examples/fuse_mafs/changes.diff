@@ -1,0 +1,21 @@
+diff -ruN before/study_x/data_mutations.txt after/study_x/data_mutations.txt
+--- before/study_x/data_mutations.txt	2026-08-28 13:41:59
++++ after/study_x/data_mutations.txt	2026-08-28 13:41:59
+@@ -1,2 +1,3 @@
+ Hugo_Symbol	Entrez_Gene_Id	Chromosome	Start_Position	End_Position	Variant_Classification	Tumor_Seq_Allele2	HGVSp_Short	Tumor_Sample_Barcode
+ TP53	7157	17	7577120	7577120	Missense_Mutation	T	p.R273H	S1
++KRAS	3845	12	25398284	25398284	Missense_Mutation	A	p.G12D	S1
+diff -ruN before/study_x/data_mutations_germline.txt after/study_x/data_mutations_germline.txt
+--- before/study_x/data_mutations_germline.txt	2026-08-28 13:41:59
++++ after/study_x/data_mutations_germline.txt	1969-12-31 19:00:00
+@@ -1,3 +0,0 @@
+-Hugo_Symbol	Entrez_Gene_Id	Chromosome	Start_Position	End_Position	Variant_Classification	Tumor_Seq_Allele2	HGVSp_Short	Tumor_Sample_Barcode	Center
+-KRAS	3845	12	25398284	25398284	Missense_Mutation	A	p.G12D	S1	c2
+-TP53	7157	17	7577120	7577120	Missense_Mutation	T	p.R273H	S1	c2
+diff -ruN before/study_x/meta_mutations_germline.txt after/study_x/meta_mutations_germline.txt
+--- before/study_x/meta_mutations_germline.txt	2026-08-28 13:41:59
++++ after/study_x/meta_mutations_germline.txt	1969-12-31 19:00:00
+@@ -1,3 +0,0 @@
+-cancer_study_identifier: study_x
+-genetic_alteration_type: MUTATION_EXTENDED
+-data_filename: data_mutations_germline.txt

@@ -1,0 +1,2 @@
+Hugo_Symbol	Entrez_Gene_Id	Chromosome	Start_Position	End_Position	Variant_Classification	Tumor_Seq_Allele2	HGVSp_Short	Tumor_Sample_Barcode
+TP53	7157	17	7577120	7577120	Missense_Mutation	T	p.R273H	S1

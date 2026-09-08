@@ -1,0 +1,3 @@
+Hugo_Symbol	Entrez_Gene_Id	Chromosome	Start_Position	End_Position	Variant_Classification	Tumor_Seq_Allele2	HGVSp_Short	Tumor_Sample_Barcode	Center
+TP53	7157	17	7577120	7577120	Missense_Mutation	T	p.R273H	SAMPLE_A	center1
+KRAS	3845	12	25398284	25398284	Missense_Mutation	A	p.G12D	SAMPLE_A	center1
