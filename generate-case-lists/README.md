@@ -17,3 +17,4 @@ python path/to/generate_case_lists.py -c path/to/case_list_conf.txt -d case_list
 ### Notes
 `case_list_conf.txt` and `clinicalfile_utils.py` are needed under the sample path. 
 `case_list_conf.txt` should be synced with the corresponding google config sheet.
+TCGA barcodes are normalized to the sample barcode (`TCGA-XX-XXXX-NN`) before case lists are built, as the pipelines importer does (`StableIdUtil.getSampleId`): aliquot barcodes are truncated, `Tumor`/`Normal` suffixes become `01`/`11`, and patient-only barcodes get `-01`. Non-TCGA ids are left untouched.

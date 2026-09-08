@@ -51,6 +51,7 @@
 # ------------------------------------------------------------------------------
 import os
 import os.path
+import re
 import sys
 import argparse
 
@@ -65,6 +66,29 @@ SAMPLE_ID_COLUMN_HEADER = "SAMPLE_ID"
 NON_CASE_IDS = frozenset(["MIRNA", "LOCUS", "ID", "GENE SYMBOL", "ENTREZ_GENE_ID", "HUGO_SYMBOL", "LOCUS ID", "CYTOBAND", "COMPOSITE.ELEMENT.REF", "HYBRIDIZATION REF"])
 CANCER_STUDY_TAG = "<CANCER_STUDY>"
 NUM_CASES_TAG = "<NUM_CASES>"
+
+# StableIdUtil.getSampleId in the pipelines importer: TCGA barcodes are
+# normalized to the 4-part sample barcode (TCGA-XX-XXXX-NN) before case lists
+# are built, so a MAF/clinical file listing full aliquot barcodes yields the
+# same case ids as the sample-level data files. Non-TCGA ids pass through.
+TCGA_SAMPLE_BARCODE_REGEX = re.compile(r"^(TCGA-\w\w-\w\w\w\w-\d\d).*$")
+
+def get_sample_id(barcode):
+    if not barcode.startswith("TCGA"):
+        return barcode
+    if "Tumor" in barcode:
+        cleaned = barcode.replace("Tumor", "01")
+    elif "Normal" in barcode:
+        cleaned = barcode.replace("Normal", "11")
+    else:
+        cleaned = barcode
+    parts = cleaned.split("-")
+    if len(parts) < 4:
+        # patient-level barcode: assume the primary tumor sample
+        return barcode + "-01"
+    sample_id = "-".join(parts[:4])
+    match = TCGA_SAMPLE_BARCODE_REGEX.match(sample_id)
+    return match.group(1) if match else sample_id
 
 def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, study_id, overwrite=False, verbose=False):
     header = []
@@ -120,6 +144,8 @@ def generate_case_lists(case_list_config_filename, case_list_dir, study_dir, stu
                     if verbose:
                         print "LOG: generate_case_lists(), no cases in '%s', skipping..." % (staging_filename)
                     continue
+
+                case_list = [get_sample_id(case_id) for case_id in case_list]
 
                 if intersection_case_list:
                     if len(case_set) == 0:
