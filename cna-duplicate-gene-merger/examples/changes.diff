@@ -1,0 +1,12 @@
+diff -ruN before/data_cna.txt after/data_cna.txt
+--- before/data_cna.txt	2026-08-21 12:33:24
++++ after/data_cna.txt	2026-08-21 12:33:25
+@@ -1,6 +1,4 @@
+ Hugo_Symbol	Entrez_Gene_Id	SAMPLE_A	SAMPLE_B	SAMPLE_C
+ A1BG	1	0	1	-1
+-SEPT4	5414	0	2	0
+-C17orf47		-1	0	0
+-TP53	7157	2	0	NA
+-p53		0	0	1
++SEPT4	5414	-1	2	0
++TP53	7157	2	0	1
