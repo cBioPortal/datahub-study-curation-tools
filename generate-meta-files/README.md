@@ -27,7 +27,9 @@ needs one meta file per data file with `datatype: TIMELINE`, or
 `SAMPLE_ATTRIBUTES` / `PATIENT_ATTRIBUTES` decided by whether the supp file's
 header carries `SAMPLE_ID`.
 
-Only writes meta files that are missing. Never touches existing meta files or
+Only writes meta files that are missing — a data file is covered if any
+existing `meta_*.txt` names it in `data_filename`, whatever that meta file is
+called. Never touches existing meta files or
 `meta_study.txt` (unlike `generate_meta_files.py`, which rewrites
 `meta_study.txt` on every run).
 

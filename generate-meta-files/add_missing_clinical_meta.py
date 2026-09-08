@@ -2,8 +2,11 @@
 """Add missing meta files for data_timeline*.txt and data_clinical_supp*.txt.
 
 Gap-fill only: scans every study directory under root (default: public/) and
-writes a meta file for each matching data file that has none. Existing meta
-files and meta_study.txt are never touched.
+writes a meta file for each matching data file that no existing meta file
+declares. A data file counts as covered when meta_<suffix>.txt exists for it OR
+any meta_*.txt in the study names it in data_filename (meta file names are
+free-form, e.g. meta_timeline.txt -> data_timeline_treatment.txt). Existing
+meta files and meta_study.txt are never touched.
 
     cancer_study_identifier: <from meta_study.txt>
     genetic_alteration_type: CLINICAL
@@ -45,6 +48,16 @@ def study_id_from_meta(study_dir):
     return None
 
 
+def declared_data_files(study_dir):
+    """data_filename values declared by the study's existing meta files."""
+    names = set()
+    for meta in study_dir.glob("meta_*.txt"):
+        for line in meta.read_text().splitlines():
+            if line.startswith("data_filename:"):
+                names.add(line.split(":", 1)[1].strip())
+    return names
+
+
 def supp_datatype(path):
     """Return (datatype, warning) from the supp file's leading '#' rows and
     column header. datatype is None for an empty file."""
@@ -75,12 +88,15 @@ def main():
     root = Path(args.root)
 
     created, skipped, warnings = 0, [], []
+    declared = {}  # study_dir -> data files already covered by a meta file
     targets = [(p, "TIMELINE") for p in root.glob("*/data_timeline*.txt")]
     targets += [(p, None) for p in root.glob("*/data_clinical_supp*.txt")]
     for data_file, datatype in sorted(targets):
         study_dir = data_file.parent
         meta_file = study_dir / ("meta_" + data_file.name[len("data_"):])
-        if meta_file.exists():
+        if study_dir not in declared:
+            declared[study_dir] = declared_data_files(study_dir)
+        if meta_file.exists() or data_file.name in declared[study_dir]:
             continue
         study_id = study_id_from_meta(study_dir)
         if study_id is None:
