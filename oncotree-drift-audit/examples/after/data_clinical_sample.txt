@@ -1,8 +1,0 @@
-#Patient Identifier	Sample Identifier	Oncotree Code	Cancer Type	Cancer Type Detailed
-#Patient identifier	Sample identifier	Oncotree code	Cancer type	Cancer type detailed
-#STRING	STRING	STRING	STRING	STRING
-#1	1	1	1	1
-PATIENT_ID	SAMPLE_ID	ONCOTREE_CODE	CANCER_TYPE	CANCER_TYPE_DETAILED
-P01	S01	PRAD	Prostate Cancer	Prostate Adenocarcinoma
-P02	S02	IDC	Breast Cancer	Breast Invasive Ductal Carcinoma
-P03	S03	GBM	NA	NA
