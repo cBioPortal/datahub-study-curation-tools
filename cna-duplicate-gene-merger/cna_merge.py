@@ -124,7 +124,40 @@ def fetch_alias_records_ncbi():
     return alias_records
 
 
-def build_gene_maps(gene_records, alias_records):
+class ValidatorGeneMap(dict):
+    """Reference-backed resolution policy used by the Python CNA validator.
+
+    Canonical symbols take precedence; ambiguous aliases remain unresolved.
+    Do not invent a lowest-ID assignment when case normalization merges aliases.
+    """
+    def __init__(self, gene_records, alias_records):
+        canonical, aliases = {}, {}
+        self.entrez_ids = {entrez for _, entrez in gene_records}
+        for symbol, entrez in gene_records:
+            canonical.setdefault(symbol.upper(), set()).add(entrez)
+        for entrez, symbol in alias_records:
+            aliases.setdefault(symbol.upper(), set()).add(entrez)
+        for symbol in canonical.keys() | aliases.keys():
+            ids = canonical[symbol] if symbol in canonical else aliases[symbol]
+            self[symbol] = next(iter(ids)) if len(ids) == 1 else UNRESOLVABLE
+
+    def get(self, symbol, default=None):
+        return super().get(symbol.upper(), default)
+
+
+class ValidatorSymbols(set):
+    def __contains__(self, symbol):
+        return super().__contains__(symbol.upper())
+
+
+def build_gene_maps(gene_records, alias_records, resolution='jar'):
+    if resolution == 'validator':
+        if not gene_records or not alias_records:
+            sys.exit('gene table or alias table is empty — refusing to run')
+        return (ValidatorSymbols(hugo.upper() for hugo, _ in gene_records),
+                ValidatorGeneMap(gene_records, alias_records))
+    if resolution != 'jar':
+        raise ValueError('Unknown gene resolution policy: ' + resolution)
     gene_table_symbols = {hugo for hugo, _ in gene_records}
     hugo_to_entrez = {}
     for hugo, entrez in gene_records:
@@ -206,6 +239,11 @@ def resolve_entrez_strict(columns, entrez_idx, hugo_idx, hugo_to_entrez):
     """Java groupCNARecordsByEntrezId: Integer.parseInt, so a non-integer
     Entrez entry raises -> whole-file merge abort. Integer.MIN_VALUE collides
     with the Java unresolvable-group sentinel, so such rows are unresolvable."""
+    if isinstance(hugo_to_entrez, ValidatorGeneMap):
+        resolved = resolve_entrez_validator(columns, entrez_idx, hugo_idx, hugo_to_entrez)
+        if resolved is DROP_LINE:
+            raise MergeAbort('invalid CNA Entrez identifier under validator policy')
+        return resolved
     if entrez_idx != -1:
         entry = columns[entrez_idx].strip()
         if entry:
@@ -227,6 +265,23 @@ def resolve_entrez_strict(columns, entrez_idx, hugo_idx, hugo_to_entrez):
 DROP_LINE = object()  # fallback: downstream would ignore this line entirely
 
 
+def resolve_entrez_validator(columns, entrez_idx, hugo_idx, gene_map):
+    """Match validator normalization without discarding unresolved identifiers."""
+    if entrez_idx >= 0 and entrez_idx < len(columns):
+        entry = columns[entrez_idx].strip()
+        if entry:
+            normalized = entry.lstrip('0') or '0'
+            if (not _DIGITS_ONLY_RE.fullmatch(entry) or len(normalized) > 10
+                    or not 0 < int(normalized) <= JAVA_INT_MAX):
+                return DROP_LINE
+            entrez = int(normalized)
+            return entrez if entrez in gene_map.entrez_ids else UNRESOLVABLE
+    if hugo_idx >= 0 and hugo_idx < len(columns):
+        symbol = columns[hugo_idx].strip().split('|', 1)[0]
+        return gene_map.get(symbol, UNRESOLVABLE)
+    return UNRESOLVABLE
+
+
 def resolve_entrez_fallback(columns, entrez_idx, hugo_idx, hugo_to_entrez):
     """Downstream ImportTabDelimData semantics (first-wins dedup happens there):
     - gene columns are NOT trimmed
@@ -237,6 +292,8 @@ def resolve_entrez_fallback(columns, entrez_idx, hugo_idx, hugo_to_entrez):
       '|' before lookup
     Returns an entrez id, UNRESOLVABLE (row kept, claims no gene), or DROP_LINE.
     """
+    if isinstance(hugo_to_entrez, ValidatorGeneMap):
+        return resolve_entrez_validator(columns, entrez_idx, hugo_idx, hugo_to_entrez)
     entrez = None
     if entrez_idx != -1 and entrez_idx < len(columns):
         cell = columns[entrez_idx]
@@ -404,6 +461,10 @@ def main():
     ap.add_argument("--check", action="store_true", help="dry run, write nothing")
     ap.add_argument("--report-json", metavar="PATH",
                     help="also write per-file results as JSON (audit report)")
+    ap.add_argument('--gene-resolution', choices=('jar', 'validator'), default='jar',
+                    help='Use validator for public preprocessing: case-insensitive, '
+                         'canonical-first, no arbitrary ambiguous-alias assignment. '
+                         'Default jar preserves the historical merger behavior.')
     ap.add_argument("files", nargs="+")
     args = ap.parse_args()
 
@@ -417,7 +478,7 @@ def main():
     else:
         print("fetching gene synonyms from NCBI gene_info ...", flush=True)
         alias_records = fetch_alias_records_ncbi()
-    gene_table_symbols, hugo_to_entrez = build_gene_maps(gene_records, alias_records)
+    gene_table_symbols, hugo_to_entrez = build_gene_maps(gene_records, alias_records, args.gene_resolution)
     print(f"gene map: {len(gene_table_symbols)} gene-table symbols, "
           f"{len(hugo_to_entrez)} symbol->entrez entries", flush=True)
 
@@ -430,7 +491,8 @@ def main():
             status, message = "error", str(e)
         if status == "error":
             any_error = True
-        report.append({"file": path, "status": status, "detail": message})
+        report.append({"file": path, "status": status, "detail": message,
+                       "gene_resolution": args.gene_resolution})
         print(f"{status.upper()}\t{path}\t{message}", flush=True)
     if args.report_json:
         with open(args.report_json, "w") as f:

@@ -29,6 +29,32 @@ python3 cna_merge.py [--check] [--portal-url URL] path/to/data_cna.txt [more fil
 
 `--check` is a dry run: reports MERGED / FALLBACK / CLEAN per file, writes nothing.
 
+### Public validator-aligned resolution
+
+For the containerized public rollout, use `--gene-resolution validator` with
+the same frozen gene/alias tables used by validation. This mode normalizes
+symbol/alias case, trims identifiers and strips `|` suffixes, prefers canonical
+symbols, and leaves ambiguous aliases unresolved instead of choosing an arbitrary
+lowest Entrez ID. Explicit known Entrez IDs take precedence. Unknown IDs/symbols
+are kept in the file for warning-only validation; they are not silently removed
+by preprocessing. Malformed Entrez values still enter the reported invalid-row
+path; the public preprocessing wrapper refuses outputs that would drop them.
+
+For example, a row named `PIH1` with no Entrez ID now resolves through reference
+alias `Pih1` to 55011 and is grouped with an existing `PIH1D1 / 55011` row. The
+same resolver is used for both successful merging and conflict fallback, so the
+collision cannot reappear just because a different group triggered fallback.
+
+This changes identification, not the merge-value/fallback policy. Conflicting
+events still cause whole-file first-row-wins fallback, and the report records
+that decision. The original input must be preserved by the caller. The default
+`--gene-resolution jar` retains the historical behavior described elsewhere in
+this document; validator mode is not a claim of complete Java-importer parity.
+
+Run regression tests with `python3 -m unittest -v test_cna_merge` in this directory.
+Set `CBIOPORTAL_SCRIPTS_DIR` to the candidate core `scripts/` directory to also
+run differential resolution checks against the actual Python validator.
+
 ## Gene table inputs
 
 By default the script fetches gene data live: canonical genes from the public
