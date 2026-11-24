@@ -2,6 +2,8 @@
 Data curation scripts for [cBioPortal](cbioportal.org). 
 Curated data sets can be found in [Datahub](https://github.com/cBioPortal/datahub).
 
+For the single-study preprocessing workflow, see [Preprocess a Datahub study](preprocess-study/README.md).
+
 # Directory layout
 ```
 .

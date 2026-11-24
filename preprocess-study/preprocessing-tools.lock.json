@@ -1,0 +1,51 @@
+[
+  {
+    "repo": "knowledgesystems/cmo-pipelines",
+    "commit": "cd98aef313566fc6e37acd5ff940056141995865",
+    "path": "import-scripts/generate_case_lists.py",
+    "file": "generate_case_lists.py",
+    "sha256": "87727ed011ff683dc56ec36a0d1018d105e905a8f9221f937b3bd88fb2de31a9"
+  },
+  {
+    "repo": "knowledgesystems/cmo-pipelines",
+    "commit": "83f6e0e4eb149b0b9d04d951e6c39f0949074000",
+    "path": "import-scripts/remove_duplicate_maf_variants.py",
+    "file": "remove_duplicate_maf_variants.py",
+    "sha256": "13965df5a58ba356c4cd4013bf2c8de34700cb3004810c2d75993df74a150537"
+  },
+  {
+    "repo": "knowledgesystems/cmo-pipelines",
+    "commit": "83f6e0e4eb149b0b9d04d951e6c39f0949074000",
+    "path": "import-scripts/oncotree_code_converter.py",
+    "file": "oncotree_code_converter.py",
+    "sha256": "8ee32a2ed511d1038ad83c10158640d187e73f3a766c1abda317b89ea2af7243"
+  },
+  {
+    "repo": "cBioPortal/cbioportal-core",
+    "commit": "a964d5bd194213145384027dd0a18d51838f39db",
+    "path": "scripts/importer/case_list_config.tsv",
+    "file": "case_list_config.tsv",
+    "sha256": "63861b143050ee99822de257159ec386d256c0461f094bf90b2b2c86fe798702"
+  },
+  {
+    "repo": "cBioPortal/datahub-study-curation-tools",
+    "commit": "82a6c6fd08afa2f887806ed1ab5d4256d9ded1dc",
+    "path": "cna-duplicate-gene-merger/cna_merge.py",
+    "file": "cna_merge.py",
+    "sha256": "ee1cb4ce39557210e9bfc16fd108c744089dcca793acd3fe937b08ca9dd00d07"
+  },
+  {
+    "repo": "cBioPortal/datahub-study-curation-tools",
+    "commit": "92fdb9e1e412ec020b3a2c4a43d659ddc7654a45",
+    "path": "generate-meta-files/add_missing_clinical_meta.py",
+    "file": "add_missing_clinical_meta.py",
+    "sha256": "fe84942bef1f7fbd5f02c0df54f0b51ed271872ee691d9734e828c559e76f1af"
+  },
+  {
+    "repo": "cBioPortal/datahub-study-curation-tools",
+    "commit": "51e36fac1fc680737f17b579309925f99e2ccd63",
+    "path": "maf-merge-tools/fuse_mafs.py",
+    "file": "fuse_mafs.py",
+    "sha256": "dc0610b68f1bf208bd15ff278c06783da606fd5af547f2ef46ceeb4e1840ea4e"
+  }
+]
