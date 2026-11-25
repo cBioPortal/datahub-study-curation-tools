@@ -15,6 +15,7 @@ Curated data sets can be found in [Datahub](https://github.com/cBioPortal/datahu
 ├── validation                      # validator wrapper and tools for validator 
 ├── oncotree-code-converter         # add `cancer_type` and `cancer_type_detailed` based on oncotree code
 ├── map-ids                         # rewrite IDs used in a study sample/patient ID maps
+├── publish-study                   # upload study archives to an S3 bucket
 ├── subset-data                     # subset study based on sample/patient ID list
 ├── zscores                         # calculate z-scores
 ├── LICENSE  
